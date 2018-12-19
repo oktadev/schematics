@@ -70,7 +70,6 @@ describe('Okta Schematic', () => {
       expect(routingModule).toContain(`path: 'home'`);
       expect(routingModule).toContain(`path: 'implicit/callback'`);
       done();
-      done();
     }, done.fail);
   });
 

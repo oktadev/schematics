@@ -1,0 +1,24 @@
+os:
+  - linux
+services:
+  - docker
+language: node_js
+node_js:
+  - "11.0.0"
+cache:
+  directories:
+    - node_modules
+branches:
+  only:
+    - master
+install:
+  - npm ci
+script:
+  - npm run build
+  - npm test
+  - npm run coverage
+notifications:
+  webhooks:
+    on_success: change
+    on_failure: always
+    on_start: false
