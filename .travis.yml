@@ -16,7 +16,7 @@ install:
 script:
   - npm run build
   - npm test
-  - npm coverage
+  - npm run coverage
 notifications:
   webhooks:
     on_success: change
