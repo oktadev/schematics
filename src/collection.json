@@ -1,7 +1,7 @@
 {
   "schematics": {
     "@okta/shield": {
-      "factory": ".",
+      "factory": "./index#oktaShield",
       "description": "Update an application with Okta Auth defaults.",
       "schema": "./schema.json",
       "private": true,

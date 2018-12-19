@@ -23,13 +23,14 @@ import {
   mergeWith,
   move,
   template,
-  url,
+  url, MergeStrategy,
 } from '@angular-devkit/schematics';
 
-export interface OktaOptions {
+/*export interface OktaOptions {
+  project: string;
   clientId: string;
   issuer: string;
-}
+}*/
 
 // From https://developer.okta.com/blog/2018/08/22/basic-crud-angular-7-and-spring-boot-2#oktas-angular-support
 // 0. npm install @okta/okta-angular@1.0.7
@@ -61,7 +62,7 @@ function getWorkspace(
   };
 }
 
-export default function (options: OktaOptions): Rule {
+export function oktaShield(options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
     const { workspace } = getWorkspace(host);
 
@@ -69,12 +70,11 @@ export default function (options: OktaOptions): Rule {
       throw new SchematicsException('You must specify an "issuer".');
     }
 
-    // todo: allow project to be selected
-    const project = workspace.projects[0];
+    const project = workspace.projects.authtest;
 
     // Setup sources to add to the project
     const sourcePath = join(normalize(project.root), 'src');
-    const templatesPath = join(sourcePath, 'src');
+    const templatesPath = join(sourcePath, '');
     const templateSource = apply(url('./files/src'), [
       template({ ...options }),
       move(getSystemPath(templatesPath)),
@@ -82,7 +82,7 @@ export default function (options: OktaOptions): Rule {
 
     // Chain the rules and return
     return chain([
-      mergeWith(templateSource),
+      mergeWith(templateSource, MergeStrategy.Overwrite),
     ])(host, context);
   };
 }

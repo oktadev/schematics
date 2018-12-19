@@ -7,7 +7,6 @@
  */
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { OktaOptions } from '.';
 
 // tslint:disable:max-line-length
 describe('Okta Schematic', () => {
@@ -15,7 +14,9 @@ describe('Okta Schematic', () => {
     '@okta/shield',
     path.join(__dirname, './collection.json'),
   );
-  const defaultOptions: OktaOptions = {
+
+  const defaultOptions: any = {
+    project: 'bar',
     issuer: 'https://dev-737523.oktapreview.com/oauth2/default',
     clientId: '0oaifymbuodpH8nAi0h7'
   };
@@ -46,7 +47,7 @@ describe('Okta Schematic', () => {
 
   it('should create home component files', (done) => {
     const files = ['home.component.css', 'home.component.html', 'home.component.spec.ts', 'home.component.ts'];
-    const homePath = '/projects/authtest/src/app/home';
+    const homePath = '/projects/authtest/src/app/home/';
     schematicRunner.runSchematicAsync('@okta/shield', defaultOptions, appTree).toPromise().then(tree => {
       files.forEach(f => {
         const path = `${homePath}${f}`;
@@ -58,7 +59,7 @@ describe('Okta Schematic', () => {
 
   it('should create an auth interceptor', (done) => {
     schematicRunner.runSchematicAsync('@okta/shield', defaultOptions, appTree).toPromise().then(tree => {
-      expect(tree.exists('/projects/authtest/src/shared/okta/auth.interceptor.ts')).toEqual(true);
+      expect(tree.exists('/projects/authtest/src/app/shared/okta/auth.interceptor.ts')).toEqual(true);
       done();
     }, done.fail);
   });
