@@ -1,6 +1,27 @@
-# Getting Started With Schematics
+[![Support](https://img.shields.io/badge/support-developer%20forum-blue.svg)][devforum] [![Build Status](https://travis-ci.org/oktadeveloper/okta-shield.svg?branch=master)](https://travis-ci.org/oktadeveloper/okta-shield)
 
-This repository is a basic Schematic implementation that serves as a starting point to create and publish Schematics to NPM.
+# Okta Shield
+
+This repository is a basic Schematic implementation that allows you to easily integrate Okta into your Angular projects. You can start using it by cloning it to your hard drive.
+
+```
+git clone git@github.com:oktadeveloper/okta-shield.git
+cd okta-shield
+npm link
+```
+
+First, create an empty project with the CLI:
+
+```
+ng new my-project
+```
+
+Then in your new project, link to to this project:
+
+```
+npm link okta-shield
+ng generate @okta/shield
+```
 
 ### Testing
 
@@ -26,3 +47,5 @@ npm publish
 ```
 
 That's it!
+
+[devforum]: https://devforum.okta.com
