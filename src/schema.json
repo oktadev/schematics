@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsOktaAuth",
+  "title": "Okta Auth Options Schema",
+  "type": "object",
+  "properties": {
+    "issuer": {
+      "type": "string",
+      "description": "What is your OIDC App's issuer URL?"
+    },
+    "clientId": {
+      "type": "string",
+      "description": "What is your OIDC App's client ID?"
+    }
+  },
+  "required": ["issuer", "clientId"]
+}
