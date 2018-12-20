@@ -5,6 +5,11 @@
       "factory": "./add-auth/index#addAuth",
       "description": "Update an application with Okta Auth defaults.",
       "schema": "./add-auth/schema.json"
+    },
+    "ng-add": {
+      "factory": "./add-auth/index#addAuth",
+      "description": "Add @okta/okta-angular and configure for an OIDC app.",
+      "schema": "./add-auth/schema.json"
     }
   }
 }
