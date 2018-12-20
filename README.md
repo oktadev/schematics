@@ -2,7 +2,7 @@
 
 # Okta Shield
 
-This repository is a basic Schematic implementation that allows you to easily integrate Okta into your Angular projects. You can start using it by cloning it to your hard drive.
+This repository is a Schematic implementation that allows you to easily integrate Okta into your Angular projects. You can start using it by cloning it to your hard drive.
 
 ```
 git clone git@github.com:oktadeveloper/okta-shield.git
@@ -16,11 +16,11 @@ First, create an empty project with the CLI:
 ng new my-project
 ```
 
-Then in your new project, link to to this project:
+Then in your new project, link to `@okta/shield` and run it:
 
 ```
-npm link okta-shield
-ng generate @okta/shield
+npm link @okta/shield
+ng g @okta/shield:add-auth
 ```
 
 ### Testing
