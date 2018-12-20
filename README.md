@@ -10,10 +10,10 @@ cd okta-shield
 npm link
 ```
 
-First, create an empty project with the CLI:
+First, create an empty project with Angular CLI. You **must** add Angular routing for this schematic to work.
 
 ```
-ng new my-project
+ng new my-secure-app
 ```
 
 Then in your new project, link to `@okta/shield` and run it:
