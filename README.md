@@ -16,10 +16,9 @@ First, create an empty project with Angular CLI. You **must** add Angular routin
 ng new my-secure-app
 ```
 
-Then in your new project, link to `@okta/shield` and run it:
+Then in your new project, run the `add-auth` schematic:
 
 ```
-npm link @okta/shield
 ng g @okta/shield:add-auth
 ```
 
