@@ -1,11 +1,10 @@
 {
+  "$schema": "./node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "@okta/shield": {
-      "factory": "./index#oktaShield",
+    "add-auth": {
+      "factory": "./add-auth/index#addAuth",
       "description": "Update an application with Okta Auth defaults.",
-      "schema": "./schema.json",
-      "private": true,
-      "hidden": true
+      "schema": "./add-auth/schema.json"
     }
   }
 }

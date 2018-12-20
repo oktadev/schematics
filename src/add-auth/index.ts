@@ -1,10 +1,3 @@
-/**
-* @license
-* Copyright Google Inc. All Rights Reserved.
-*
-* Use of this source code is governed by an MIT-style license that can be
-* found in the LICENSE file at https://angular.io/license
-*/
 import {
   JsonParseMode,
   experimental,
@@ -23,14 +16,14 @@ import {
   mergeWith,
   move,
   template,
-  url, MergeStrategy,
+  url, MergeStrategy, FileEntry, forEach, noop,
 } from '@angular-devkit/schematics';
-
-/*export interface OktaOptions {
-  project: string;
-  clientId: string;
-  issuer: string;
-}*/
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import {
+  addPackageJsonDependency,
+  NodeDependency,
+  NodeDependencyType
+} from 'schematics-utilities';
 
 // From https://developer.okta.com/blog/2018/08/22/basic-crud-angular-7-and-spring-boot-2#oktas-angular-support
 // 0. npm install @okta/okta-angular@1.0.7
@@ -40,6 +33,30 @@ import {
 // 4. Add login and logout buttons
 // 5. Add logic to app.component.ts
 // 6. Generate HomeComponent and configure with auth
+
+function addPackageJsonDependencies(): Rule {
+  return (host: Tree, context: SchematicContext) => {
+    const dependencies: NodeDependency[] = [
+      { type: NodeDependencyType.Default, version: '~1.0.7', name: '@okta/okta-angular' }
+    ];
+
+    dependencies.forEach(dependency => {
+      addPackageJsonDependency(host, dependency);
+      context.logger.log('info', `✅️ Added "${dependency.name}" into ${dependency.type}`);
+    });
+
+    return host;
+  };
+}
+
+function installPackageJsonDependencies(): Rule {
+  return (host: Tree, context: SchematicContext) => {
+    context.addTask(new NodePackageInstallTask());
+    context.logger.log('info', `🔍 Installing packages...`);
+
+    return host;
+  };
+}
 
 function getWorkspace(
   host: Tree,
@@ -62,7 +79,7 @@ function getWorkspace(
   };
 }
 
-export function oktaShield(options: any): Rule {
+export function addAuth(options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
     const { workspace } = getWorkspace(host);
 
@@ -70,7 +87,7 @@ export function oktaShield(options: any): Rule {
       throw new SchematicsException('You must specify an "issuer".');
     }
 
-    const project = workspace.projects.authtest;
+    const project = workspace.projects[Object.keys(workspace.projects)[0]];
 
     // Setup sources to add to the project
     const sourcePath = join(normalize(project.root), 'src');
@@ -78,10 +95,19 @@ export function oktaShield(options: any): Rule {
     const templateSource = apply(url('./files/src'), [
       template({ ...options }),
       move(getSystemPath(templatesPath)),
+      // fix for https://github.com/angular/angular-cli/issues/11337
+      forEach((fileEntry: FileEntry) => {
+        if (host.exists(fileEntry.path)) {
+          host.overwrite(fileEntry.path, fileEntry.content);
+        }
+        return fileEntry;
+      }),
     ]);
 
     // Chain the rules and return
     return chain([
+      options && options.skipPackageJson ? noop() : addPackageJsonDependencies(),
+      options && options.skipPackageJson ? noop() : installPackageJsonDependencies(),
       mergeWith(templateSource, MergeStrategy.Overwrite),
     ])(host, context);
   };
