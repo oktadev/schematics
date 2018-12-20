@@ -13,10 +13,13 @@ branches:
     - master
 install:
   - npm ci
+  - npm i -g codecov
 script:
   - npm run build
   - npm test
   - npm run coverage
+after_success:
+  - codecov
 notifications:
   webhooks:
     on_success: change
