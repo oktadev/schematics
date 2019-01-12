@@ -29,6 +29,6 @@
     "src/**/*"
   ],
   "exclude": [
-    "src/add-auth/files/**/*"
+    "src/add-auth/angular/**/*"
   ]
 }

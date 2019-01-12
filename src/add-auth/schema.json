@@ -1,16 +1,9 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsOktaAuth",
+  "id": "OktaDevSchematics",
   "title": "Okta Auth Options Schema",
   "type": "object",
   "properties": {
-    "project": {
-      "type": "string",
-      "description": "The name of the project.",
-      "$default": {
-        "$source": "projectName"
-      }
-    },
     "issuer": {
       "type": "string",
       "description": "Okta OIDC App issuer URL",

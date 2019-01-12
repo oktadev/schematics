@@ -4,13 +4,21 @@
 
 This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular projects.
 
+
 To use it, create an empty project with Angular CLI. You **must** add Angular routing for this schematic to work.
+This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, and Vue projects. You can start using it by cloning it to your hard drive.
 
 ```
 ng new my-secure-app --routing
+git clone git@github.com:oktadeveloper/schematics.git
+cd schematics
+npm link
 ```
 
 Then in your new project, add `@oktadev/schematics`:
+## Angular 
+
+First, create an empty project with Angular CLI. You **must** add Angular routing for this schematic to work.
 
 ```
 ng add @oktadev/schematics
@@ -21,7 +29,14 @@ You can also use the following syntax:
 ```
 npm i @oktadev/schematics
 ng g @oktadev/schematics:add-auth
+ng g @oktadev/schematics:add-auth
 ```
+
+Or, simply `ng add @oktadev/schematics`.
+
+## React
+
+## Vue
 
 ### Testing
 
