@@ -29,6 +29,10 @@
     "src/**/*"
   ],
   "exclude": [
-    "src/add-auth/angular/**/*"
+    "src/add-auth/angular/**/*",
+    "src/add-auth/react/**/*",
+    "src/add-auth/react-ts/**/*",
+    "src/add-auth/vue/**/*",
+    "src/add-auth/vue-ts/**/*"
   ]
 }

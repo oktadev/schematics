@@ -155,7 +155,7 @@ export function addAuth(options: any): Rule {
 
     // Chain the rules and return
     return chain([
-      options && options.skipPackageJson ? noop() : addPackageJsonDependencies(),
+      options && options.skipPackageJson ? noop() : addPackageJsonDependencies(framework),
       options && options.skipPackageJson ? noop() : installPackageJsonDependencies(),
       mergeWith(templateSource, MergeStrategy.Overwrite),
     ])(host, context);
