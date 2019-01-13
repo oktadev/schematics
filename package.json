@@ -1,5 +1,5 @@
 {
-  "name": "@okta/shield",
+  "name": "@oktadev/schematics",
   "version": "0.5.0",
   "description": "Auth schematics for Okta",
   "scripts": {
@@ -15,7 +15,7 @@
   ],
   "author": "OktaDev <devrel@okta.com>",
   "license": "Apache-2.0",
-  "repository": "git@github.com:oktadeveloper/okta-shield.git",
+  "repository": "git@github.com:oktadeveloper/schematics.git",
   "schematics": "./src/collection.json",
   "dependencies": {
     "@angular-devkit/core": "^7.1.4",
