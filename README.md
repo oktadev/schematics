@@ -13,7 +13,7 @@ npm link
 First, create an empty project with Angular CLI. You **must** add Angular routing for this schematic to work.
 
 ```
-ng new my-secure-app
+ng new my-secure-app --routing
 ```
 
 Then in your new project, run the `add-auth` schematic:
