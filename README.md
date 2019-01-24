@@ -1,25 +1,26 @@
-[![Support](https://img.shields.io/badge/support-developer%20forum-blue.svg)][devforum] [![Build Status](https://travis-ci.org/oktadeveloper/okta-shield.svg?branch=master)](https://travis-ci.org/oktadeveloper/okta-shield)
+[![Support](https://img.shields.io/badge/support-developer%20forum-blue.svg)][devforum] [![Build Status](https://travis-ci.org/oktadeveloper/schematics.svg?branch=master)](https://travis-ci.org/oktadeveloper/schematics)
 
-# Okta Shield
+# OktaDev Schematics
 
-This repository is a Schematic implementation that allows you to easily integrate Okta into your Angular projects. You can start using it by cloning it to your hard drive.
+This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular projects. You can start using it by cloning it to your hard drive.
 
 ```
-git clone git@github.com:oktadeveloper/okta-shield.git
-cd okta-shield
+git clone git@github.com:oktadeveloper/schematics.git
+cd schematics
 npm link
 ```
 
 First, create an empty project with Angular CLI. You **must** add Angular routing for this schematic to work.
 
 ```
-ng new my-secure-app
+ng new my-secure-app --routing
 ```
 
-Then in your new project, run the `add-auth` schematic:
+Then in your new project, add `@oktadev/schematics` and run the `add-auth` schematic:
 
 ```
-ng g @okta/shield:add-auth
+npm i @oktadev/schematics
+ng g @oktadev/schematics:add-auth
 ```
 
 ### Testing

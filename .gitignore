@@ -4,6 +4,7 @@ src/**/*.js.map
 src/**/*.d.ts
 coverage/
 dist/
+my-secure-app/
 
 # IDEs
 .idea/
