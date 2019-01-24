@@ -1,11 +1,12 @@
 {
   "name": "@oktadev/schematics",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Auth schematics for Okta",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && jasmine src/**/*_spec.js",
-    "coverage": "istanbul cover --include-all-sources jasmine-node src/**/*_spec.js"
+    "coverage": "istanbul cover --include-all-sources jasmine-node src/**/*_spec.js",
+    "prepublish": "rm -rf coverage my-secure-app"
   },
   "keywords": [
     "schematics",
