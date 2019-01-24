@@ -1,18 +1,9 @@
-import {
-  Rule,
-  SchematicContext,
-  Tree,
-  chain,
-  externalSchematic,
-} from '@angular-devkit/schematics';
+import { chain, Rule, schematic, SchematicContext, Tree, } from '@angular-devkit/schematics';
 
-export default function(options: any): Rule {
+export default function (options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
     return chain([
-      externalSchematic('@oktadev/schematics', 'add-auth', {
-        ...options,
-        root: true,
-      }),
+      schematic('add-auth', options),
     ])(host, context);
   };
 }

@@ -7,8 +7,8 @@
       "schema": "./add-auth/schema.json"
     },
     "ng-add": {
-      "factory": "./add-auth/index#addAuth",
-      "description": "Add @okta/okta-angular and configure for an OIDC app.",
+      "factory": "./ng-add/index",
+      "description": "Add schematic and configure",
       "schema": "./add-auth/schema.json"
     }
   }

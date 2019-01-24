@@ -1,6 +1,6 @@
 {
   "name": "@oktadev/schematics",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Auth schematics for Okta",
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -22,7 +22,8 @@
     "@angular-devkit/core": "^7.1.4",
     "@angular-devkit/schematics": "^7.1.4",
     "@schematics/angular": "^7.1.4",
-    "rxjs": "6.3.3"
+    "rxjs": "6.3.3",
+    "schematics-utilities": "^1.1.1"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.4",
@@ -30,7 +31,6 @@
     "istanbul": "^0.4.5",
     "jasmine": "^3.3.1",
     "jasmine-node": "^2.0.1",
-    "schematics-utilities": "^1.1.1",
     "typescript": "~3.2.2"
   }
 }
