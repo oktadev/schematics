@@ -16,10 +16,16 @@ First, create an empty project with Angular CLI. You **must** add Angular routin
 ng new my-secure-app --routing
 ```
 
-Then in your new project, add `@oktadev/schematics` and run the `add-auth` schematic:
+Then in your new project, add `@oktadev/schematics`:
 
 ```
 npm i @oktadev/schematics
+ng add @oktadev/schematics
+```
+
+You can also use the following syntax:
+
+```
 ng g @oktadev/schematics:add-auth
 ```
 
