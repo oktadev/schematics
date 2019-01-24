@@ -14,12 +14,12 @@
     "issuer": {
       "type": "string",
       "description": "Okta OIDC App issuer URL",
-      "x-prompt": "What is your OIDC App's issuer URL?"
+      "x-prompt": "What is your OIDC app's issuer URL?"
     },
     "clientId": {
       "type": "string",
       "description": "Okta OIDC App client ID",
-      "x-prompt": "What is your OIDC App's client ID?"
+      "x-prompt": "What is your OIDC app's client ID?"
     }
   },
   "required": ["issuer", "clientId"]
