@@ -9,7 +9,7 @@ import {
 export default function(options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
     return chain([
-      externalSchematic('@okta/shield', 'add-auth', {
+      externalSchematic('@oktadev/schematics', 'add-auth', {
         ...options,
         root: true,
       }),
