@@ -1,29 +1,22 @@
+import { experimental, getSystemPath, join, JsonParseMode, normalize, parseJson } from '@angular-devkit/core';
 import {
-  JsonParseMode,
-  experimental,
-  getSystemPath,
-  join,
-  normalize,
-  parseJson,
-} from '@angular-devkit/core';
-import {
+  apply,
+  chain,
+  FileEntry,
+  forEach,
+  MergeStrategy,
+  mergeWith,
+  move,
+  noop,
   Rule,
   SchematicContext,
   SchematicsException,
-  Tree,
-  apply,
-  chain,
-  mergeWith,
-  move,
   template,
-  url, MergeStrategy, FileEntry, forEach, noop,
+  Tree,
+  url
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import {
-  addPackageJsonDependency,
-  NodeDependency,
-  NodeDependencyType
-} from 'schematics-utilities';
+import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from 'schematics-utilities';
 
 // From https://developer.okta.com/blog/2018/08/22/basic-crud-angular-7-and-spring-boot-2#oktas-angular-support
 // 0. npm install @okta/okta-angular@1.0.7
@@ -37,7 +30,7 @@ import {
 function addPackageJsonDependencies(): Rule {
   return (host: Tree, context: SchematicContext) => {
     const dependencies: NodeDependency[] = [
-      { type: NodeDependencyType.Default, version: '~1.0.7', name: '@okta/okta-angular' }
+      {type: NodeDependencyType.Default, version: '~1.0.7', name: '@okta/okta-angular'}
     ];
 
     dependencies.forEach(dependency => {
@@ -61,7 +54,7 @@ function installPackageJsonDependencies(): Rule {
 function getWorkspace(
   host: Tree,
 ): { path: string, workspace: experimental.workspace.WorkspaceSchema } {
-  const possibleFiles = [ '/angular.json', '/.angular.json' ];
+  const possibleFiles = ['/angular.json', '/.angular.json'];
   const path = possibleFiles.filter(path => host.exists(path))[0];
 
   const configBuffer = host.read(path);
@@ -81,7 +74,7 @@ function getWorkspace(
 
 export function addAuth(options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const { workspace } = getWorkspace(host);
+    const {workspace} = getWorkspace(host);
 
     if (!options.issuer) {
       throw new SchematicsException('You must specify an "issuer".');
@@ -93,7 +86,7 @@ export function addAuth(options: any): Rule {
     const sourcePath = join(normalize(project.root), 'src');
     const templatesPath = join(sourcePath, '');
     const templateSource = apply(url('./files/src'), [
-      template({ ...options }),
+      template({...options}),
       move(getSystemPath(templatesPath)),
       // fix for https://github.com/angular/angular-cli/issues/11337
       forEach((fileEntry: FileEntry) => {

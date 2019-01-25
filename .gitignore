@@ -5,6 +5,7 @@ src/**/*.d.ts
 coverage/
 dist/
 my-secure-app/
+*.tgz
 
 # IDEs
 .idea/
