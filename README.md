@@ -2,15 +2,9 @@
 
 # OktaDev Schematics
 
-This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular projects. You can start using it by cloning it to your hard drive.
+This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular projects.
 
-```
-git clone git@github.com:oktadeveloper/schematics.git
-cd schematics
-npm link
-```
-
-First, create an empty project with Angular CLI. You **must** add Angular routing for this schematic to work.
+To use it, create an empty project with Angular CLI. You **must** add Angular routing for this schematic to work.
 
 ```
 ng new my-secure-app --routing
@@ -31,17 +25,11 @@ ng g @oktadev/schematics:add-auth
 
 ### Testing
 
-To test locally, install `@angular-devkit/schematics-cli` globally and use the `schematics` command line tool. That tool acts the same as the `generate` command of the Angular CLI, but also has a debug mode.
-
-Check the documentation with
-
-```bash
-schematics --help
-```
-
-### Unit Testing
+This project supports unit tests and integration tests.
 
 `npm run test` will run the unit tests, using Jasmine as a runner and test framework.
+
+`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass.
 
 ### Publishing
 
