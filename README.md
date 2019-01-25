@@ -19,13 +19,13 @@ ng new my-secure-app --routing
 Then in your new project, add `@oktadev/schematics`:
 
 ```
-npm i @oktadev/schematics
 ng add @oktadev/schematics
 ```
 
 You can also use the following syntax:
 
 ```
+npm i @oktadev/schematics
 ng g @oktadev/schematics:add-auth
 ```
 
