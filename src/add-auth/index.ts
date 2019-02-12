@@ -18,23 +18,6 @@ import {
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from 'schematics-utilities';
 
-// Angular
-// ---------------------------------------
-// From https://developer.okta.com/blog/2018/08/22/basic-crud-angular-7-and-spring-boot-2#oktas-angular-support
-// 0. npm install @okta/okta-angular@1.0.7
-// 1. Update app.module.ts to add config and initialize
-// 2. Add callback to app-routing.module.ts
-// 3. Add and configure HttpInterceptor
-// 4. Add login and logout buttons
-// 5. Add logic to app.component.ts
-// 6. Generate HomeComponent and configure with auth
-
-// React (TypeScript)
-// ---------------------------------------
-
-// Vue (TypeScript)
-// ---------------------------------------
-
 function addPackageJsonDependencies(framework: string): Rule {
   return (host: Tree, context: SchematicContext) => {
     const dependencies: NodeDependency[] = [];
