@@ -6,9 +6,7 @@ This repository is a Schematics implementation that allows you to easily integra
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
-* [Angular](#angular)
-* [React](#react)
-* [Vue](#vue)
+* [Angular](#angular) | [React](#react) | [Vue](#vue)
 * [Testing](#vue)
 * [Contributing](#contributing)
 * [Links](#links)
@@ -102,7 +100,9 @@ This project supports unit tests and integration tests.
 
 `npm run test` will run the unit tests, using Jasmine as a runner and test framework.
 
-`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass.
+`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, and `vue-ts`.
+
+`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, and Vue with TypeScript.
 
 ## Publishing
 
