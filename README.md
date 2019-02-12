@@ -4,12 +4,25 @@
 
 This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, and Vue projects.
 
+**Prerequisites:** [Node.js](https://nodejs.org/). 
+
+* [Angular](#angular)
+* [React](#react)
+* [Vue](#vue)
+* [Testing](#vue)
+* [Contributing](#contributing)
+* [Links](#links)
+* [Help](#help)
+* [License](#license)
+
 ## Angular 
 
 First, create an empty project with Angular CLI. You **must** add Angular routing for this schematic to work.
 
 ```
-ng new my-secure-app --routing
+npm i -g @angular/cli
+ng new secure-angular --routing
+cd secure-angular
 ```
 
 Then in your new project, add `@oktadev/schematics`:
@@ -25,11 +38,65 @@ npm i @oktadev/schematics
 ng g @oktadev/schematics:add-auth
 ```
 
+See the [Okta Angular SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-angular) for more information.
+
 ## React
+
+Create a new project with Create React App.
+
+```
+npx create-react-app secure-react
+cd secure-react
+```
+
+If you'd like to use TypeScript, add the `--typescript` flag.
+
+```
+npx create-react-app secure-react --typescript
+cd secure-react
+```
+
+Install Schematics globally.
+
+```
+npm install -g @angular-devkit/schematics-cli
+```
+
+Then install and run the `add-auth` schematic in your project.
+
+```
+npm i @oktadev/schematics
+schematics @oktadev/schematics:add-auth
+```
+
+See the [Okta React SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react) for more information.
 
 ## Vue
 
-### Testing
+Create a new project with Vue CLI. You **must** add routing for this schematic to work. If you specify TypeScript, a `src/router.ts` will be used.
+
+```
+npm i -g @vue/cli
+vue create secure-vue
+cd secure-vue
+```
+
+Install Schematics globally.
+
+```
+npm install -g @angular-devkit/schematics-cli
+```
+
+Then install and run the `add-auth` schematic in your project.
+
+```
+npm i @oktadev/schematics
+schematics @oktadev/schematics:add-auth
+```
+
+See the [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-vue) for more information.
+
+## Testing
 
 This project supports unit tests and integration tests.
 
@@ -37,7 +104,7 @@ This project supports unit tests and integration tests.
 
 `./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass.
 
-### Publishing
+## Publishing
 
 To publish, simply do:
 
@@ -48,7 +115,7 @@ npm publish
 
 That's it!
 
-### Contributing
+## Contributing
 
 If you'd like to modify this library, and contribute your changes, you can start by forking it to your own GitHub repository. Then, clone it to your hard drive.
 
@@ -72,6 +139,22 @@ npm link /path/to/schematics
 You'll need to run `npm run build` whenever you change anything in the schematics project.
 
 **NOTE:** You can also use `npm pack` in your schematics project, then `npm install /path/to/artifact.tar.gz` in your test project. This mimics `npm install` more than `npm link`.
+
+## Links
+
+This project uses the following open source libraries from Okta:
+
+* [Okta Angular SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-angular)
+* [Okta React SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react)
+* [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-vue)
+
+## Help
+
+Please post any questions as issues or as a question on the [Okta Developer Forums](https://devforum.okta.com/).
+
+## License
+
+Apache 2.0, see [LICENSE](LICENSE).
 
 [devforum]: https://devforum.okta.com
 
