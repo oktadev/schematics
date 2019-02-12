@@ -4,7 +4,7 @@ src/**/*.js.map
 src/**/*.d.ts
 coverage/
 dist/
-my-secure-app/
+apps/
 *.tgz
 
 # IDEs

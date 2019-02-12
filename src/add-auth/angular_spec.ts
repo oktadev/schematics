@@ -1,6 +1,6 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { Schema as ComponentOptions } from './schema';
+// import { Schema as ComponentOptions } from './schema';
 
 // tslint:disable:max-line-length
 describe('OktaDev Schematics: Angular', () => {
@@ -9,7 +9,8 @@ describe('OktaDev Schematics: Angular', () => {
     path.join(__dirname, './../collection.json'),
   );
 
-  const defaultOptions: ComponentOptions = {
+  const defaultOptions: any = {
+    project: 'bar',
     issuer: 'https://dev-737523.oktapreview.com/oauth2/default',
     clientId: '0oaifymbuodpH8nAi0h7'
   };

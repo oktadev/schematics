@@ -1,13 +1,16 @@
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-import { Schema as ComponentOptions } from './schema';
+// const { spawnSync } = require('child_process');
+// import { Schema as ComponentOptions } from './schema';
 
 const collectionPath = path.join(__dirname, '../collection.json');
 
-const defaultOptions: ComponentOptions = {
+const defaultOptions: any = {
   issuer: 'https://dev-737523.oktapreview.com/oauth2/default',
-  clientId: '0oaifymbuodpH8nAi0h7'
+  clientId: '0oaifymbuodpH8nAi0h7',
+  framework: 'react-ts',
+  skipPackageJson: true
 };
 
 describe('OktaDev Schematics: React', () => {
@@ -18,6 +21,8 @@ describe('OktaDev Schematics: React', () => {
   });
 
   it('works', () => {
+    //spawnSync('npx', ['create-react-app', 'my-react-app']);
+
     const runner = new SchematicTestRunner('schematics', collectionPath);
     const tree = runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
 

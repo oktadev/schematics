@@ -68,8 +68,8 @@ export default withAuth(class Home extends React.Component<HomeProps, HomeState>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo"/>
           <h1 className="App-title">Welcome to React</h1>
+          {body}
         </header>
-        {body}
       </div>
     );
   }

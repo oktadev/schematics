@@ -40,12 +40,12 @@ function addPackageJsonDependencies(framework: string): Rule {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({ type: NodeDependencyType.Default, version: '1.0.7', name: '@okta/okta-angular' })
+      dependencies.push({ type: NodeDependencyType.Default, version: '~1.0.7', name: '@okta/okta-angular' })
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({ type: NodeDependencyType.Default, version: '1.1.4', name: '@okta/okta-react' });
-      dependencies.push({ type: NodeDependencyType.Default, version: '4.3.1', name: 'react-router-dom' });
+      dependencies.push({ type: NodeDependencyType.Default, version: '~1.1.4', name: '@okta/okta-react' });
+      dependencies.push({ type: NodeDependencyType.Default, version: '~4.3.1', name: 'react-router-dom' });
       if (framework === REACT_TS) {
-        dependencies.push({ type: NodeDependencyType.Dev, version: '4.2.7', name: '@types/react-router-dom' });
+        dependencies.push({ type: NodeDependencyType.Dev, version: '~4.2.7', name: '@types/react-router-dom' });
       }
     }
 
@@ -70,7 +70,7 @@ function installPackageJsonDependencies(): Rule {
 function getWorkspace(
   host: Tree,
 ): { path: string, workspace: experimental.workspace.WorkspaceSchema } {
-  const possibleFiles = [ '/angular.json' ];
+  const possibleFiles = ['/angular.json', '/.angular.json'];
   const path = possibleFiles.filter(path => host.exists(path))[0];
 
   const configBuffer = host.read(path);
@@ -103,15 +103,15 @@ function getFramework(host: Tree): string {
     throw new SchematicsException(`Could not find (${path})`);
   } else {
     const content = JSON.parse(configBuffer.toString());
-    if (content.dependencies['@angular/core'].length) {
+    if (content.dependencies['@angular/core']) {
       return ANGULAR;
-    } else if (content.dependencies['react'].length) {
-      if (content.devDependencies['typescript'].length) {
+    } else if (content.dependencies['react']) {
+      if (content.dependencies['typescript']) {
         return REACT_TS
       }
       return REACT;
-    } else if (content.dependencies['vue'].length) {
-      if (content.devDependencies['typescript'].length) {
+    } else if (content.dependencies['vue']) {
+      if (content.devDependencies['typescript']) {
         return VUE_TS
       }
       return VUE;
@@ -123,15 +123,23 @@ function getFramework(host: Tree): string {
 
 export function addAuth(options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const framework = getFramework(host);
+    // allow passing the framework in (for testing)
+    let framework = options.framework;
 
-    let projectPath = __dirname;
+    // if no framework defined, try to detect it
+    if (!framework) {
+      framework = getFramework(host);
+    }
+
+    // console.log('framework set to: ' + framework);
+
+    let projectPath = './';
 
     if (framework === ANGULAR) {
       const { workspace } = getWorkspace(host);
 
       if (!options.issuer) {
-        throw new SchematicsException("You must specify an 'issuer'.");
+        throw new SchematicsException('You must specify an "issuer".');
       }
 
       const project = workspace.projects[Object.keys(workspace.projects)[0]];
