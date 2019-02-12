@@ -2,6 +2,7 @@
 src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts
+!src/add-auth/react-ts/src/okta.d.ts
 coverage/
 dist/
 apps/
