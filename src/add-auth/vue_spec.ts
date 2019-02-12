@@ -1,5 +1,5 @@
-import { Tree } from '@angular-devkit/schematics';
-import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
+import { HostTree, Tree } from '@angular-devkit/schematics';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 
 const collectionPath = path.join(__dirname, '../collection.json');
@@ -18,19 +18,19 @@ describe('OktaDev Schematics: Vue', () => {
     expect(() => runner.runSchematic('add-auth', {}, Tree.empty())).toThrow();
   });
 
-  it('works', (done) => {
-    const files = ['/src/App.vue', '/src/router.js'];
+  it('works', () => {
+    const tree = new UnitTestTree(new HostTree);
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    runner.runSchematicAsync('add-auth', {...defaultOptions}, Tree.empty()).toPromise().then(tree => {
-      files.forEach(file => {
-        expect(tree.exists(file)).toEqual(true);
-      });
-      const routerContent = tree.readContent('/src/router.js');
+    runner.runSchematic('add-auth', {...defaultOptions}, tree);
 
-      expect(routerContent).toMatch(/Auth\.handleCallback\(\)/);
-      expect(routerContent).toContain(`issuer: '${defaultOptions.issuer}'`);
-      expect(routerContent).toContain(`client_id: '${defaultOptions.clientId}'`);
-      done();
-    }, done.fail);
+    console.log('vue.files', tree.files);
+    expect(tree.files.length).toEqual(2);
+    expect(tree.files.sort()).toEqual(['/src/App.vue', '/src/router.js']);
+
+    const routerContent = tree.readContent('/src/router.js');
+
+    expect(routerContent).toMatch(/Auth\.handleCallback\(\)/);
+    expect(routerContent).toContain(`issuer: '${defaultOptions.issuer}'`);
+    expect(routerContent).toContain(`client_id: '${defaultOptions.clientId}'`);
   });
 });

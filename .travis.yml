@@ -28,8 +28,7 @@ install:
   - npm ci
 script:
   - npm run build
-  - npm test
-  - npm run coverage
+  - npm test && npm run coverage
   # create apps and confirm tests still pass
   - ./test-all.sh
 after_success:
