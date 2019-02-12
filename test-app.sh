@@ -9,7 +9,7 @@ npm run build
 npm pack
 
 # create directory to store created apps
-mkdir apps
+mkdir -p apps
 cd apps
 
 if [ "$1" == "angular" ] || [ "$1" == "a" ]
