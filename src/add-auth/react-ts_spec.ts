@@ -25,7 +25,6 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     runner.runSchematic('add-auth', {...defaultOptions}, tree);
 
-    console.log('tree', tree.files);
     expect(tree.files.length).toEqual(3);
     expect(tree.files.sort()).toEqual(['/src/App.tsx', '/src/Home.tsx', '/src/okta.d.ts']);
 
@@ -35,5 +34,4 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
     expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
   });
-
 });
