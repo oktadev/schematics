@@ -18,19 +18,20 @@ describe('OktaDev Schematics: React', () => {
     expect(() => runner.runSchematic('add-auth', {}, Tree.empty())).toThrow();
   });
 
-  it('works', () => {
-
+  it('works', (done) => {
+    const files = ['/src/App.js', '/src/Home.js'];
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const tree = runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
+    runner.runSchematicAsync('add-auth', {...defaultOptions}, Tree.empty()).toPromise().then(tree => {
+      files.forEach(file => {
+        expect(tree.exists(file)).toEqual(true);
+      });
+      const componentContent = tree.readContent('/src/App.js');
 
-    expect(tree.files.length).toEqual(2);
-    expect(tree.files.sort()).toEqual(['/src/App.js', '/src/Home.js']);
+      expect(componentContent).toMatch(/class App extends Component/);
+      expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
+      expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
 
-    const componentContent = tree.readContent('/src/App.js');
-
-    expect(componentContent).toMatch(/class App extends Component/);
-    expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
-    expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
+      done();
+    }, done.fail);
   });
-
 });

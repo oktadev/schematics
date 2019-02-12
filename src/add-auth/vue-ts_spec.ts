@@ -18,19 +18,19 @@ describe('OktaDev Schematics: Vue + TypeScript', () => {
     expect(() => runner.runSchematic('add-auth', {}, Tree.empty())).toThrow();
   });
 
-  it('works', () => {
-
+  it('works', (done) => {
+    const files = ['/src/App.vue', '/src/router.ts'];
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const tree = runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
+    runner.runSchematicAsync('add-auth', {...defaultOptions}, Tree.empty()).toPromise().then(tree => {
+      files.forEach(file => {
+        expect(tree.exists(file)).toEqual(true);
+      });
+      const routerContent = tree.readContent('/src/router.ts');
 
-    expect(tree.files.length).toEqual(2);
-    expect(tree.files.sort()).toEqual(['/src/App.vue', '/src/router.ts']);
-
-    const componentContent = tree.readContent('/src/router.ts');
-
-    expect(componentContent).toMatch(/OktaVuePlugin\.handleCallback\(\)/);
-    expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
-    expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
+      expect(routerContent).toMatch(/OktaVuePlugin\.handleCallback\(\)/);
+      expect(routerContent).toContain(`issuer: '${defaultOptions.issuer}'`);
+      expect(routerContent).toContain(`client_id: '${defaultOptions.clientId}'`);
+      done();
+    }, done.fail);
   });
-
 });

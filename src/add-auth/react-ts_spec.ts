@@ -20,20 +20,20 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     expect(() => runner.runSchematic('add-auth', {}, Tree.empty())).toThrow();
   });
 
-  it('works', () => {
-    //spawnSync('npx', ['create-react-app', 'my-react-app']);
-
+  it('works', (done) => {
+    const files = ['/src/App.tsx', '/src/Home.tsx', '/src/okta.d.ts'];
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const tree = runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
+    runner.runSchematicAsync('add-auth', {...defaultOptions}, Tree.empty()).toPromise().then(tree => {
+      files.forEach(file => {
+        expect(tree.exists(file)).toEqual(true);
+      });
+      const componentContent = tree.readContent('/src/App.tsx');
 
-    expect(tree.files.length).toEqual(3);
-    expect(tree.files.sort()).toEqual(['/src/App.tsx', '/src/Home.tsx', '/src/okta.d.ts']);
+      expect(componentContent).toMatch(/class App extends React\.Component/);
+      expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
+      expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
 
-    const componentContent = tree.readContent('/src/App.tsx');
-
-    expect(componentContent).toMatch(/class App extends React\.Component/);
-    expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
-    expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
+      done();
+    }, done.fail);
   });
-
 });
