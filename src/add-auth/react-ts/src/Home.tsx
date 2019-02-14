@@ -1,8 +1,8 @@
-import * as React from 'react';
-import './App.css';
+import React, { Component } from 'react';
 import { withAuth } from '@okta/okta-react';
 import { Auth } from './App';
 
+import './App.css';
 import logo from './logo.svg';
 
 interface HomeProps {
@@ -13,7 +13,7 @@ interface HomeState {
   authenticated: boolean;
 }
 
-export default withAuth(class Home extends React.Component<HomeProps, HomeState> {
+export default withAuth(class Home extends Component<HomeProps, HomeState> {
   constructor(props: HomeProps) {
     super(props);
     this.state = {authenticated: false};

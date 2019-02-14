@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Security, ImplicitCallback } from '@okta/okta-react';
 import Home from './Home';
