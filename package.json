@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && jasmine src/**/*_spec.js",
-    "coverage": "istanbul cover --include-all-sources jasmine-node src/**/*_spec.js"
+    "coverage": "istanbul cover -x 'src/**/*_spec.js' jasmine-node src/**/*_spec.js"
   },
   "keywords": [
     "schematics",
@@ -21,15 +21,15 @@
     "@angular-devkit/core": "^7.1.4",
     "@angular-devkit/schematics": "^7.1.4",
     "@schematics/angular": "^7.1.4",
-    "rxjs": "6.3.3",
+    "rxjs": "6.4.0",
     "schematics-utilities": "^1.1.1"
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.4",
-    "@types/node": "^10.12.17",
+    "@types/node": "^11.9.2",
     "istanbul": "^0.4.5",
     "jasmine": "^3.3.1",
     "jasmine-node": "^2.0.1",
-    "typescript": "~3.2.2"
+    "typescript": "~3.3.3"
   }
 }

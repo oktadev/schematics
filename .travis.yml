@@ -11,13 +11,26 @@ cache:
 branches:
   only:
     - master
+# Install Chrome
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+before_install:
+  # setup protractor
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli codecov
 install:
   - npm ci
-  - npm i -g codecov
 script:
   - npm run build
-  - npm test
-  - npm run coverage
+  - npm test && npm run coverage
+  # create apps and confirm tests still pass
+  - ./test-all.sh
 after_success:
   - codecov
 notifications:

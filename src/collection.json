@@ -2,6 +2,7 @@
   "$schema": "./node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "add-auth": {
+      "aliases": [ "a" ],
       "factory": "./add-auth/index#addAuth",
       "description": "Update an application with Okta Auth defaults.",
       "schema": "./add-auth/schema.json"
