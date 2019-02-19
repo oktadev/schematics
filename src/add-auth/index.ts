@@ -119,8 +119,6 @@ export function addAuth(options: any): Rule {
       framework = getFramework(host);
     }
 
-    // console.log('framework set to: ' + framework);
-
     let projectPath = './';
 
     if (framework === ANGULAR) {
