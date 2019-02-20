@@ -1,4 +1,5 @@
-[![Support](https://img.shields.io/badge/support-developer%20forum-blue.svg)][devforum] [![Build Status](https://travis-ci.org/oktadeveloper/schematics.svg?branch=master)](https://travis-ci.org/oktadeveloper/schematics)
+[![Support](https://img.shields.io/badge/support-developer%20forum-blue.svg)][devforum] [![npm version](https://img.shields.io/npm/v/@oktadev/schematics.svg)](https://www.npmjs.com/package/@oktadev/schematics)
+ [![Build Status](https://travis-ci.org/oktadeveloper/schematics.svg?branch=master)](https://travis-ci.org/oktadeveloper/schematics)
 
 # OktaDev Schematics
 
