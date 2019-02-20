@@ -23,15 +23,15 @@ function addPackageJsonDependencies(framework: string): Rule {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({ type: NodeDependencyType.Default, version: '~1.0.7', name: '@okta/okta-angular' })
+      dependencies.push({ type: NodeDependencyType.Default, version: '~1.1.0', name: '@okta/okta-angular' })
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({ type: NodeDependencyType.Default, version: '~1.1.4', name: '@okta/okta-react' });
+      dependencies.push({ type: NodeDependencyType.Default, version: '~1.2.0', name: '@okta/okta-react' });
       dependencies.push({ type: NodeDependencyType.Default, version: '~4.3.1', name: 'react-router-dom' });
       if (framework === REACT_TS) {
         dependencies.push({ type: NodeDependencyType.Default, version: '~4.2.7', name: '@types/react-router-dom' });
       }
     } else if (framework === VUE || framework == VUE_TS) {
-      dependencies.push({ type: NodeDependencyType.Default, version: '~1.0.7', name: '@okta/okta-vue' });
+      dependencies.push({ type: NodeDependencyType.Default, version: '~1.1.0', name: '@okta/okta-vue' });
       if (framework === VUE_TS) {
         dependencies.push({ type: NodeDependencyType.Dev, version: '~1.0.1', name: '@types/okta__okta-vue' });
       }
