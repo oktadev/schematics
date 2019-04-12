@@ -1,11 +1,15 @@
 import { Platform } from '@ionic/angular';
 import { Injectable, NgZone } from '@angular/core';
+import { map, skipWhile, take } from 'rxjs/operators';
 
 import { AuthActions, IAuthAction, IonicAuth } from 'ionic-appauth';
-import { StorageService } from './storage.service';
-import { RequestorService } from './requestor.service';
-import { CordovaBrowser, CordovaRequestor, CordovaSecureStorage } from 'ionic-appauth/lib/cordova';
-import { map, skipWhile, take } from 'rxjs/operators';
+import { StorageService } from '../src/app/auth/storage.service';
+import { RequestorService } from '../src/app/auth/requestor.service';
+<% if (container === 'cordova') { %>import { CordovaBrowser, CordovaRequestor, CordovaSecureStorage } from 'ionic-appauth/lib/cordova';
+<% } else { %>import { Plugins, AppLaunchUrl } from '@capacitor/core';
+import { CapacitorBrowser, CapacitorStorage } from 'ionic-appauth/lib/capacitor';
+
+const { App } = Plugins;<% } %>
 
 @Injectable({
   providedIn: 'root'
@@ -13,22 +17,30 @@ import { map, skipWhile, take } from 'rxjs/operators';
 export class AuthService extends IonicAuth {
 
   constructor(requestor: RequestorService, storage: StorageService,
-              private platform: Platform, private ngZone: NgZone) {
-    super((platform.is('cordova')) ? new CordovaBrowser() : undefined,
-      (platform.is('cordova')) ? new CordovaSecureStorage() : storage,
-      (platform.is('cordova')) ? new CordovaRequestor() : requestor);
+              private platform: Platform, private ngZone: NgZone) {<% if (container === 'cordova') { %>
+      super((platform.is('cordova')) ? new CordovaBrowser() : undefined,
+        (platform.is('cordova')) ? new CordovaSecureStorage() : storage,
+        (platform.is('cordova')) ? new CordovaRequestor() : requestor);<% } else { %>
+      super(platform.is('mobile') && !platform.is('mobileweb')) ? new CapacitorBrowser() : undefined,
+        (platform.is('mobile') && !platform.is('mobileweb')) ? new CapacitorStorage() : storage,
+        requestor);<% } %>
 
     this.addConfig();
   }
 
   public async startUpAsync() {
-    if (this.platform.is('cordova')) {
+    <% if (container === 'cordova') { %>if (this.platform.is('cordova')) {
       (<any>window).handleOpenURL = (callbackUrl) => {
         this.ngZone.run(() => {
           this.handleCallback(callbackUrl);
         });
       };
-    }
+    }<% } else { %>if (this.platform.is('mobile') && !this.platform.is('mobileweb')) {
+      const appLaunchUrl : AppLaunchUrl = await App.getLaunchUrl();
+      if (appLaunchUrl.url !== undefined) {
+        this.handleCallback(appLaunchUrl.url);
+      }
+    }<% } %>
 
     super.startUpAsync();
   }
@@ -38,7 +50,7 @@ export class AuthService extends IonicAuth {
     const issuer = '<%= issuer %>';
     const scopes = 'openid profile offline_access';
 
-    if (this.platform.is('cordova')) {
+    if (<% if (container === 'cordova') { %>this.platform.is('cordova')<% } else { %>this.platform.is('mobile') && !this.platform.is('mobileweb')<% } %>) {
       this.authConfig = {
         identity_client: clientId,
         identity_server: issuer,

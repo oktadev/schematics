@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthActions } from 'ionic-appauth';
 import { skipWhile, take } from 'rxjs/operators';
-import { AuthService } from '../../auth.service';
+import { AuthServiceCordova } from '../../../../../cordova/auth.service';
 
 @Component({
   template: '<p style="margin-left: 10px">Signing in...</p>'
@@ -11,7 +11,7 @@ import { AuthService } from '../../auth.service';
 export class AuthCallbackPage implements OnInit {
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthServiceCordova,
     private navCtrl: NavController,
     private router: Router
   ) {

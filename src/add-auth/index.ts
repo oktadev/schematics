@@ -16,28 +16,36 @@ import {
   url
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from 'schematics-utilities';
+import {
+  addModuleImportToModule,
+  addPackageJsonDependency,
+  NodeDependency,
+  NodeDependencyType
+} from 'schematics-utilities';
 
-function addPackageJsonDependencies(framework: string): Rule {
+function addPackageJsonDependencies(framework: string, options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({ type: NodeDependencyType.Default, version: '~1.1.0', name: '@okta/okta-angular' })
+      dependencies.push({type: NodeDependencyType.Default, version: '~1.1.0', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({ type: NodeDependencyType.Default, version: '~1.2.0', name: '@okta/okta-react' });
-      dependencies.push({ type: NodeDependencyType.Default, version: '~4.3.1', name: 'react-router-dom' });
+      dependencies.push({type: NodeDependencyType.Default, version: '~1.2.0', name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: '~4.3.1', name: 'react-router-dom'});
       if (framework === REACT_TS) {
-        dependencies.push({ type: NodeDependencyType.Default, version: '~4.2.7', name: '@types/react-router-dom' });
+        dependencies.push({type: NodeDependencyType.Default, version: '~4.2.7', name: '@types/react-router-dom'});
       }
     } else if (framework === VUE || framework == VUE_TS) {
-      dependencies.push({ type: NodeDependencyType.Default, version: '~1.1.0', name: '@okta/okta-vue' });
+      dependencies.push({type: NodeDependencyType.Default, version: '~1.1.0', name: '@okta/okta-vue'});
       if (framework === VUE_TS) {
-        dependencies.push({ type: NodeDependencyType.Dev, version: '~1.0.1', name: '@types/okta__okta-vue' });
+        dependencies.push({type: NodeDependencyType.Dev, version: '~1.0.1', name: '@types/okta__okta-vue'});
       }
     } else if (framework === IONIC_ANGULAR) {
-      dependencies.push({ type: NodeDependencyType.Default, version: '0.2.9', name: 'ionic-appauth' });
-      dependencies.push({ type: NodeDependencyType.Default, version: '^2.2.0', name: '@ionic/storage' });
+      dependencies.push({type: NodeDependencyType.Default, version: '0.3.3', name: 'ionic-appauth'});
+      dependencies.push({type: NodeDependencyType.Default, version: '^2.2.0', name: '@ionic/storage'});
+      if (options.container === 'capacitor') {
+        dependencies.push({type: NodeDependencyType.Default, version: '^1.0.0-beta.19', name: '@capacitor/core'});
+      }
     }
 
     dependencies.forEach(dependency => {
@@ -87,7 +95,7 @@ export const VUE_TS = 'vue-ts';
 export const IONIC_ANGULAR = 'ionic/angular';
 
 function getFramework(host: Tree): string {
-  let possibleFiles = [ '/package.json' ];
+  let possibleFiles = ['/package.json'];
   const path = possibleFiles.filter(path => host.exists(path))[0];
 
   const configBuffer = host.read(path);
@@ -110,7 +118,7 @@ function getFramework(host: Tree): string {
     } else if (content.dependencies['@ionic/angular']) {
       return IONIC_ANGULAR;
     } else {
-      throw new SchematicsException('No JS frameworks found in your package.json!');
+      throw new SchematicsException('No supported frameworks found in your package.json!');
     }
   }
 }
@@ -128,7 +136,7 @@ export function addAuth(options: any): Rule {
     let projectPath = './';
 
     if (framework === ANGULAR) {
-      const { workspace } = getWorkspace(host);
+      const {workspace} = getWorkspace(host);
 
       if (!options.issuer) {
         throw new SchematicsException('You must specify an "issuer".');
@@ -146,14 +154,28 @@ export function addAuth(options: any): Rule {
         + parts[1] + '.'
         + parts[0].substring(parts[0].lastIndexOf('/') + 1);
 
-      // todo: add cordova key to package.json instead of replacing
+      // add cordova to package.json
+      if (options.container === 'cordova') {
+        const content: Buffer | null = host.read('./package.json');
+        if (content) {
+          const pkgJson: any = JSON.parse(content.toString());
+          pkgJson.cordova = cordovaPlugins(options.packageName);
+          host.overwrite('./package.json', JSON.stringify(pkgJson));
+        }
+      }
+
+      // add imports to app.module.ts instead of replacing it
+      addModuleImportToModule(host, 'src/app/app.module.ts',
+        'HttpClientModule', '@angular/common/http');
+      addModuleImportToModule(host, 'src/app/app.module.ts',
+        'AuthModule', './auth/auth.module');
     }
 
     // Setup sources to add to the project
     const sourcePath = join(normalize(projectPath), 'src');
     const templatesPath = join(sourcePath, '');
     const templateSource = apply(url('./' + framework + '/src'), [
-      template({ ...options }),
+      template({...options}),
       move(getSystemPath(templatesPath)),
       // fix for https://github.com/angular/angular-cli/issues/11337
       forEach((fileEntry: FileEntry) => {
@@ -166,9 +188,37 @@ export function addAuth(options: any): Rule {
 
     // Chain the rules and return
     return chain([
-      options && options.skipPackageJson ? noop() : addPackageJsonDependencies(framework),
+      options && options.skipPackageJson ? noop() : addPackageJsonDependencies(framework, options),
       options && options.skipPackageJson ? noop() : installPackageJsonDependencies(),
       mergeWith(templateSource, MergeStrategy.Overwrite),
     ])(host, context);
   };
+}
+
+export function cordovaPlugins(packageName: string) {
+  return {
+    'cordova': {
+      'plugins': {
+        'cordova-plugin-advanced-http': {},
+        'cordova-plugin-safariviewcontroller': {},
+        'cordova-plugin-inappbrowser': {},
+        'cordova-plugin-secure-storage': {},
+        'cordova-plugin-customurlscheme': {
+          'URL_SCHEME': packageName
+        },
+        'cordova-plugin-whitelist': {},
+        'cordova-plugin-statusbar': {},
+        'cordova-plugin-device': {},
+        'cordova-plugin-splashscreen': {},
+        'cordova-plugin-ionic-webview': {
+          'ANDROID_SUPPORT_ANNOTATIONS_VERSION': '27.+'
+        },
+        'cordova-plugin-ionic-keyboard': {}
+      },
+      'platforms': [
+        'android',
+        'ios'
+      ]
+    }
+  }
 }
