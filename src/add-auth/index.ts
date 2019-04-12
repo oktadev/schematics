@@ -43,7 +43,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: '0.3.3', name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: '^2.2.0', name: '@ionic/storage'});
-      if (options.container === 'capacitor') {
+      if (options.platform === 'capacitor') {
         dependencies.push({type: NodeDependencyType.Default, version: '^1.0.0-beta.19', name: '@capacitor/core'});
       }
     }
@@ -155,7 +155,7 @@ export function addAuth(options: any): Rule {
         + parts[0].substring(parts[0].lastIndexOf('/') + 1);
 
       // add cordova to package.json
-      if (options.container === 'cordova') {
+      if (options.platform === 'cordova') {
         const content: Buffer | null = host.read('./package.json');
         if (content) {
           const pkgJson: any = JSON.parse(content.toString());
@@ -169,6 +169,8 @@ export function addAuth(options: any): Rule {
         'HttpClientModule', '@angular/common/http');
       addModuleImportToModule(host, 'src/app/app.module.ts',
         'AuthModule', './auth/auth.module');
+      addModuleImportToModule(host, 'src/app/app.module.ts',
+        'IonicStorageModule.forRoot()', '@ionic/storage');
     }
 
     // Setup sources to add to the project

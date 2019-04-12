@@ -3,9 +3,9 @@ import { Injectable, NgZone } from '@angular/core';
 import { map, skipWhile, take } from 'rxjs/operators';
 
 import { AuthActions, IAuthAction, IonicAuth } from 'ionic-appauth';
-import { StorageService } from '../src/app/auth/storage.service';
-import { RequestorService } from '../src/app/auth/requestor.service';
-<% if (container === 'cordova') { %>import { CordovaBrowser, CordovaRequestor, CordovaSecureStorage } from 'ionic-appauth/lib/cordova';
+import { StorageService } from './storage.service';
+import { RequestorService } from './requestor.service';
+<% if (platform === 'cordova') { %>import { CordovaBrowser, CordovaRequestor, CordovaSecureStorage } from 'ionic-appauth/lib/cordova';
 <% } else { %>import { Plugins, AppLaunchUrl } from '@capacitor/core';
 import { CapacitorBrowser, CapacitorStorage } from 'ionic-appauth/lib/capacitor';
 
@@ -17,11 +17,11 @@ const { App } = Plugins;<% } %>
 export class AuthService extends IonicAuth {
 
   constructor(requestor: RequestorService, storage: StorageService,
-              private platform: Platform, private ngZone: NgZone) {<% if (container === 'cordova') { %>
+              private platform: Platform, private ngZone: NgZone) {<% if (platform === 'cordova') { %>
       super((platform.is('cordova')) ? new CordovaBrowser() : undefined,
         (platform.is('cordova')) ? new CordovaSecureStorage() : storage,
         (platform.is('cordova')) ? new CordovaRequestor() : requestor);<% } else { %>
-      super(platform.is('mobile') && !platform.is('mobileweb')) ? new CapacitorBrowser() : undefined,
+      super((platform.is('mobile') && !platform.is('mobileweb')) ? new CapacitorBrowser() : undefined,
         (platform.is('mobile') && !platform.is('mobileweb')) ? new CapacitorStorage() : storage,
         requestor);<% } %>
 
@@ -29,7 +29,7 @@ export class AuthService extends IonicAuth {
   }
 
   public async startUpAsync() {
-    <% if (container === 'cordova') { %>if (this.platform.is('cordova')) {
+    <% if (platform === 'cordova') { %>if (this.platform.is('cordova')) {
       (<any>window).handleOpenURL = (callbackUrl) => {
         this.ngZone.run(() => {
           this.handleCallback(callbackUrl);
@@ -50,7 +50,7 @@ export class AuthService extends IonicAuth {
     const issuer = '<%= issuer %>';
     const scopes = 'openid profile offline_access';
 
-    if (<% if (container === 'cordova') { %>this.platform.is('cordova')<% } else { %>this.platform.is('mobile') && !this.platform.is('mobileweb')<% } %>) {
+    if (<% if (platform === 'cordova') { %>this.platform.is('cordova')<% } else { %>this.platform.is('mobile') && !this.platform.is('mobileweb')<% } %>) {
       this.authConfig = {
         identity_client: clientId,
         identity_server: issuer,

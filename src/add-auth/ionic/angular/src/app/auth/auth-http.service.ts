@@ -2,7 +2,7 @@ import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { Requestor, TokenResponse } from '@openid/appauth';
 
-import { AuthServiceCordova } from '../../../cordova/auth.service';
+import { AuthService } from './auth.service';
 import { CordovaRequestor } from 'ionic-appauth/lib/cordova';
 import { RequestorService } from './requestor.service';
 
@@ -17,7 +17,7 @@ export class AuthHttpService {
     angularRequestor: RequestorService,
     cordovaRequestor: CordovaRequestor,
     platform: Platform,
-    private auth: AuthServiceCordova
+    private auth: AuthService
   ) {
     this.requestor = platform.is('cordova') ? cordovaRequestor : angularRequestor;
 

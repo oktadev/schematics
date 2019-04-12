@@ -1,7 +1,7 @@
 import { map, skipWhile, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
-import { AuthServiceCordova } from '../../../cordova/auth.service';
+import { AuthService } from './auth.service';
 import { AuthActions, IAuthAction } from 'ionic-appauth';
 import { NavController } from '@ionic/angular';
 
@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular';
 })
 export class AuthGuardService implements CanActivate {
 
-  constructor(private authService: AuthServiceCordova, private navCtrl: NavController) {
+  constructor(private authService: AuthService, private navCtrl: NavController) {
   }
 
   public async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {

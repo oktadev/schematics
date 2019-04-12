@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AuthServiceCordova } from '../../../cordova/auth.service';
+import { AuthService } from './../auth/auth.service';
 import { IUserInfo } from '../auth/user-info.model';
 import { AuthActions, IAuthAction } from 'ionic-appauth';
 
@@ -13,7 +13,7 @@ export class Tab1Page implements OnInit {
   userInfo: IUserInfo;
   action: IAuthAction;
 
-  constructor(private navCtrl: NavController, private authService: AuthServiceCordova) {
+  constructor(private navCtrl: NavController, private authService: AuthService) {
   }
 
   ngOnInit() {

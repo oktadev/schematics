@@ -21,7 +21,7 @@
       "description": "Okta OIDC App client ID",
       "x-prompt": "What is your OIDC app's client ID?"
     },
-    "container": {
+    "platform": {
       "type": "string",
       "default": "cordova"
     }

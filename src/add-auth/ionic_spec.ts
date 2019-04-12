@@ -53,9 +53,10 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     runner.runSchematic('add-auth', {...defaultOptions}, tree);
 
-    expect(tree.files.length).toEqual(22);
+    expect(tree.files.length).toEqual(24);
     expect(tree.files.sort()).toEqual([ '/package.json',
       '/src/app/app-routing.module.ts',
+      '/src/app/app.component.spec.ts',
       '/src/app/app.component.ts',
       '/src/app/app.module.ts',
       '/src/app/auth/auth-guard.service.ts',
@@ -75,6 +76,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
       '/src/app/login/login.page.spec.ts',
       '/src/app/login/login.page.ts',
       '/src/app/tab1/tab1.page.html',
+      '/src/app/tab1/tab1.page.spec.ts',
       '/src/app/tab1/tab1.page.ts' ]);
 
     const appModule = tree.readContent('/src/app/app.module.ts');
@@ -97,12 +99,12 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     tree.create('/src/app/app.module.ts', defaultAppModule);
 
     const capacitorOptions: any = {...defaultOptions};
-    capacitorOptions.container = 'capacitor';
+    capacitorOptions.platform = 'capacitor';
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
     runner.runSchematic('add-auth', capacitorOptions, tree);
 
-    expect(tree.files.length).toEqual(22);
+    expect(tree.files.length).toEqual(24);
 
     const appModule = tree.readContent('/src/app/app.module.ts');
 

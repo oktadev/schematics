@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthActions, IAuthAction } from 'ionic-appauth';
-import { AuthServiceCordova } from '../../../cordova/auth.service';
+import { AuthService } from './../auth/auth.service';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -11,7 +11,7 @@ import { NavController } from '@ionic/angular';
 export class LoginPage implements OnInit {
   action: IAuthAction;
 
-  constructor(private auth: AuthServiceCordova, private navCtrl: NavController) {
+  constructor(private auth: AuthService, private navCtrl: NavController) {
   }
 
   ngOnInit() {

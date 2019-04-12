@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AuthServiceCordova } from '../../../../../cordova/auth.service';
+import { AuthService } from './../../auth.service';
 
 @Component({
   template: '<p>Signing Out...</p>'
@@ -8,7 +8,7 @@ import { AuthServiceCordova } from '../../../../../cordova/auth.service';
 export class EndSessionPage implements OnInit {
 
   constructor(
-    private authService: AuthServiceCordova,
+    private authService: AuthService,
     private navCtrl: NavController,
   ) {
   }

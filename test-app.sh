@@ -92,12 +92,12 @@ then
   cd ionic-cordova
   npm install ../../oktadev*.tgz
   ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
-  CI=true npm test
+  ng test --watch=false
 elif [ "$1" == "ionic-cap" ] || [ "$1" == "icap" ]
 then
   ionic start ionic-capacitor tabs --no-interactive
   cd ionic-capacitor
   npm install ../../oktadev*.tgz
-  ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId --container=capacitor
-  npm test --watch=false
+  ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId --platform=capacitor
+  ng test --watch=false
 fi
