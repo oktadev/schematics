@@ -35,6 +35,9 @@ function addPackageJsonDependencies(framework: string): Rule {
       if (framework === VUE_TS) {
         dependencies.push({ type: NodeDependencyType.Dev, version: '~1.0.1', name: '@types/okta__okta-vue' });
       }
+    } else if (framework === IONIC_ANGULAR) {
+      dependencies.push({ type: NodeDependencyType.Default, version: '0.2.9', name: 'ionic-appauth' });
+      dependencies.push({ type: NodeDependencyType.Default, version: '^2.2.0', name: '@ionic/storage' });
     }
 
     dependencies.forEach(dependency => {
@@ -81,6 +84,7 @@ export const REACT = 'react';
 export const REACT_TS = 'react-ts';
 export const VUE = 'vue';
 export const VUE_TS = 'vue-ts';
+export const IONIC_ANGULAR = 'ionic/angular';
 
 function getFramework(host: Tree): string {
   let possibleFiles = [ '/package.json' ];
@@ -91,7 +95,7 @@ function getFramework(host: Tree): string {
     throw new SchematicsException(`Could not find (${path})`);
   } else {
     const content = JSON.parse(configBuffer.toString());
-    if (content.dependencies['@angular/core']) {
+    if (content.dependencies['@angular/core'] && !content.dependencies['@ionic/angular']) {
       return ANGULAR;
     } else if (content.dependencies['react']) {
       if (content.dependencies['typescript']) {
@@ -103,6 +107,8 @@ function getFramework(host: Tree): string {
         return VUE_TS
       }
       return VUE;
+    } else if (content.dependencies['@ionic/angular']) {
+      return IONIC_ANGULAR;
     } else {
       throw new SchematicsException('No JS frameworks found in your package.json!');
     }
@@ -130,6 +136,17 @@ export function addAuth(options: any): Rule {
 
       const project = workspace.projects[Object.keys(workspace.projects)[0]];
       projectPath = project.root;
+    }
+
+    if (framework == IONIC_ANGULAR) {
+      // add a package name from the issuer (for Ionic and React Native)
+      const parts = options.issuer.split('.');
+      options.packageName =
+        parts[2].substring(0, parts[2].indexOf('/')) + '.'
+        + parts[1] + '.'
+        + parts[0].substring(parts[0].lastIndexOf('/') + 1);
+
+      // todo: add cordova key to package.json instead of replacing
     }
 
     // Setup sources to add to the project

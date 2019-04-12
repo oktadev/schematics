@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Tab One
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card class="welcome-card">
+      <ion-img src="/assets/shapes.svg"></ion-img>
+      <ion-card-header>
+        <ion-card-subtitle>Get Started</ion-card-subtitle>
+        <ion-card-title>Welcome to Ionic</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-button (click)="getUserInfo()">Get User Details</ion-button>
+        <ion-button (click)="signOut()">Sign Out</ion-button>
+      </ion-card-header>
+
+      <ion-card *ngIf="userInfo">
+        <ion-card-header>
+          User Info
+        </ion-card-header>
+        <ion-card-content>
+          {{userInfo | json}}
+        </ion-card-content>
+      </ion-card>
+      <ion-card *ngIf="action">
+        <ion-card-header>
+          Action Data
+        </ion-card-header>
+        <ion-card-content>
+          {{action | json}}
+        </ion-card-content>
+      </ion-card>
+    </ion-card>
+
+
+</ion-content>
