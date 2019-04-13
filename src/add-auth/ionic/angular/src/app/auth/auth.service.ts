@@ -2,12 +2,13 @@ import { Platform } from '@ionic/angular';
 import { Injectable, NgZone } from '@angular/core';
 import { map, skipWhile, take } from 'rxjs/operators';
 
-import { AuthActions, IAuthAction, IonicAuth } from 'ionic-appauth';
+import { AuthActions, IAuthAction, IonicAuth, IonicAuthorizationRequestHandler } from 'ionic-appauth';
+import { BrowserService } from './browser.service';
+import { SecureStorageService } from './secure-storage.service';
 import { StorageService } from './storage.service';
 import { RequestorService } from './requestor.service';
-<% if (platform === 'cordova') { %>import { CordovaBrowser, CordovaRequestor, CordovaSecureStorage } from 'ionic-appauth/lib/cordova';
+<% if (platform === 'cordova') { %>import { CordovaRequestor } from 'ionic-appauth/lib/cordova';
 <% } else { %>import { Plugins, AppLaunchUrl } from '@capacitor/core';
-import { CapacitorBrowser, CapacitorStorage } from 'ionic-appauth/lib/capacitor';
 
 const { App } = Plugins;<% } %>
 
@@ -17,13 +18,18 @@ const { App } = Plugins;<% } %>
 export class AuthService extends IonicAuth {
 
   constructor(requestor: RequestorService, storage: StorageService,
+              secureStorage: SecureStorageService, browser: BrowserService,
               private platform: Platform, private ngZone: NgZone) {<% if (platform === 'cordova') { %>
-      super((platform.is('cordova')) ? new CordovaBrowser() : undefined,
-        (platform.is('cordova')) ? new CordovaSecureStorage() : storage,
+      super((platform.is('cordova')) ? browser : undefined,
+        (platform.is('cordova')) ? secureStorage : storage,
         (platform.is('cordova')) ? new CordovaRequestor() : requestor);<% } else { %>
-      super((platform.is('mobile') && !platform.is('mobileweb')) ? new CapacitorBrowser() : undefined,
-        (platform.is('mobile') && !platform.is('mobileweb')) ? new CapacitorStorage() : storage,
-        requestor);<% } %>
+      super((platform.is('mobile') && !platform.is('mobileweb')) ? browser : undefined,
+        (platform.is('mobile') && !platform.is('mobileweb')) ? secureStorage : storage,
+        requestor, undefined, undefined,
+        (platform.is('mobile') && !platform.is('mobileweb')) ?
+          new IonicAuthorizationRequestHandler(browser, secureStorage) :
+          new IonicAuthorizationRequestHandler(browser, storage)
+      );<% } %>
 
     this.addConfig();
   }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AuthService } from './../../auth.service';
+import { AuthService } from '../../auth.service';
 
 @Component({
-  template: '<p>Signing Out...</p>'
+  template: '<p style="margin-left: 10px">Signing out...</p>'
 })
 export class EndSessionPage implements OnInit {
 

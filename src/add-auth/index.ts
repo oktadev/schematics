@@ -44,7 +44,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: '0.3.3', name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: '^2.2.0', name: '@ionic/storage'});
       if (options.platform === 'capacitor') {
-        dependencies.push({type: NodeDependencyType.Default, version: '^1.0.0-beta.19', name: '@capacitor/core'});
+        dependencies.push({type: NodeDependencyType.Default, version: '^3.0.1', name: 'cordova-plugin-secure-storage'});
       }
     }
 
@@ -164,7 +164,7 @@ export function addAuth(options: any): Rule {
         }
       }
 
-      // add imports to app.module.ts instead of replacing it
+      // add imports to app.module.ts
       addModuleImportToModule(host, 'src/app/app.module.ts',
         'HttpClientModule', '@angular/common/http');
       addModuleImportToModule(host, 'src/app/app.module.ts',
@@ -173,7 +173,7 @@ export function addAuth(options: any): Rule {
         'IonicStorageModule.forRoot()', '@ionic/storage');
     }
 
-    // Setup sources to add to the project
+    // Setup templates to add to the project
     const sourcePath = join(normalize(projectPath), 'src');
     const templatesPath = join(sourcePath, '');
     const templateSource = apply(url('./' + framework + '/src'), [
@@ -199,28 +199,26 @@ export function addAuth(options: any): Rule {
 
 export function cordovaPlugins(packageName: string) {
   return {
-    'cordova': {
-      'plugins': {
-        'cordova-plugin-advanced-http': {},
-        'cordova-plugin-safariviewcontroller': {},
-        'cordova-plugin-inappbrowser': {},
-        'cordova-plugin-secure-storage': {},
-        'cordova-plugin-customurlscheme': {
-          'URL_SCHEME': packageName
-        },
-        'cordova-plugin-whitelist': {},
-        'cordova-plugin-statusbar': {},
-        'cordova-plugin-device': {},
-        'cordova-plugin-splashscreen': {},
-        'cordova-plugin-ionic-webview': {
-          'ANDROID_SUPPORT_ANNOTATIONS_VERSION': '27.+'
-        },
-        'cordova-plugin-ionic-keyboard': {}
+    'plugins': {
+      'cordova-plugin-advanced-http': {},
+      'cordova-plugin-safariviewcontroller': {},
+      'cordova-plugin-inappbrowser': {},
+      'cordova-plugin-secure-storage': {},
+      'cordova-plugin-customurlscheme': {
+        'URL_SCHEME': packageName
       },
-      'platforms': [
-        'android',
-        'ios'
-      ]
-    }
+      'cordova-plugin-whitelist': {},
+      'cordova-plugin-statusbar': {},
+      'cordova-plugin-device': {},
+      'cordova-plugin-splashscreen': {},
+      'cordova-plugin-ionic-webview': {
+        'ANDROID_SUPPORT_ANNOTATIONS_VERSION': '27.+'
+      },
+      'cordova-plugin-ionic-keyboard': {}
+    },
+    'platforms': [
+      'android',
+      'ios'
+    ]
   }
 }

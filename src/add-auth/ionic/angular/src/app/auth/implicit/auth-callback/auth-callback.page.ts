@@ -3,10 +3,10 @@ import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthActions } from 'ionic-appauth';
 import { skipWhile, take } from 'rxjs/operators';
-import { AuthService } from './../../auth.service';
+import { AuthService } from '../../auth.service';
 
 @Component({
-  template: '<p style="margin-left: 10px">Signing in...</p>'
+  template: '<p style="margin-left: 10px">Authorizing...</p>'
 })
 export class AuthCallbackPage implements OnInit {
 

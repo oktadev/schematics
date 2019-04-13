@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AuthService } from './../auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { IUserInfo } from '../auth/user-info.model';
 import { AuthActions, IAuthAction } from 'ionic-appauth';
 
@@ -12,6 +12,7 @@ import { AuthActions, IAuthAction } from 'ionic-appauth';
 export class Tab1Page implements OnInit {
   userInfo: IUserInfo;
   action: IAuthAction;
+  authenticated: boolean;
 
   constructor(private navCtrl: NavController, private authService: AuthService) {
   }
@@ -19,14 +20,20 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     this.authService.authObservable.subscribe((action) => {
       this.action = action;
-      if (action.action === AuthActions.SignOutSuccess) {
-        this.navCtrl.navigateRoot('login');
+      if (action.action === AuthActions.SignInSuccess || action.action === AuthActions.AuthSignInSuccess) {
+        this.authenticated = true;
+      } else if (action.action === AuthActions.SignOutSuccess) {
+        this.authenticated = false;
       }
     });
   }
 
   signOut() {
     this.authService.signOut();
+  }
+
+  signIn() {
+    this.authService.signIn();
   }
 
   public async getUserInfo(): Promise<void> {

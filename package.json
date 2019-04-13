@@ -18,18 +18,18 @@
   "repository": "git@github.com:oktadeveloper/schematics.git",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-devkit/core": "^7.1.4",
-    "@angular-devkit/schematics": "^7.1.4",
-    "@schematics/angular": "^7.1.4",
+    "@angular-devkit/core": "^7.3.8",
+    "@angular-devkit/schematics": "^7.3.8",
+    "@schematics/angular": "^7.3.8",
     "rxjs": "6.4.0",
-    "schematics-utilities": "^1.1.1"
+    "schematics-utilities": "^1.1.2"
   },
   "devDependencies": {
-    "@types/jasmine": "^3.3.4",
-    "@types/node": "^11.9.2",
+    "@types/jasmine": "^3.3.12",
+    "@types/node": "^11.13.4",
     "istanbul": "^0.4.5",
-    "jasmine": "^3.3.1",
+    "jasmine": "^3.4.0",
     "jasmine-node": "^2.0.1",
-    "typescript": "~3.3.3"
+    "typescript": "~3.4.3"
   }
 }
