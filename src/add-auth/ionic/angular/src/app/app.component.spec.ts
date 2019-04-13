@@ -24,8 +24,7 @@ describe('AppComponent', () => {
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [HttpClientTestingModule,  IonicStorageModule.forRoot()],
-      providers: [
-        <% if (platform === 'cordova') { %>{ provide: StatusBar, useValue: statusBarSpy },
+      providers: [<% if (platform === 'cordova') { %>{ provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },<% } %>
         { provide: Platform, useValue: platformSpy }
       ],
@@ -41,8 +40,7 @@ describe('AppComponent', () => {
   it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
     expect(platformSpy.ready).toHaveBeenCalled();
-    await platformReadySpy;
-    <% if (platform === 'cordova') { %>expect(statusBarSpy.styleDefault).toHaveBeenCalled();
+    await platformReadySpy;<% if (platform === 'cordova') { %>expect(statusBarSpy.styleDefault).toHaveBeenCalled();
     expect(splashScreenSpy.hide).toHaveBeenCalled();<% } %>
   });
 
