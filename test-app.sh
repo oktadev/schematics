@@ -2,7 +2,7 @@
 
 framework="$1"
 issuer="https://dev-737523.oktapreview.com/oauth2/default"
-clientId="0oaj68gvwfOWDh9Yd0h7"
+clientId="0oak8qpmhim2MmwF20h7"
 
 # build and package this project
 npm run build
@@ -86,4 +86,18 @@ EOF
   npm install ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm run test:unit
+elif [ "$1" == "ionic" ] || [ "$1" == "i" ]
+then
+  ionic start ionic-cordova tabs --no-interactive
+  cd ionic-cordova
+  npm install ../../oktadev*.tgz
+  ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
+  ng test --watch=false
+elif [ "$1" == "ionic-cap" ] || [ "$1" == "icap" ]
+then
+  ionic start ionic-capacitor tabs --no-interactive
+  cd ionic-capacitor
+  npm install ../../oktadev*.tgz
+  ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId --platform=capacitor
+  ng test --watch=false
 fi

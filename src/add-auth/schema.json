@@ -20,6 +20,10 @@
       "type": "string",
       "description": "Okta OIDC App client ID",
       "x-prompt": "What is your OIDC app's client ID?"
+    },
+    "platform": {
+      "type": "string",
+      "default": "cordova"
     }
   },
   "required": ["issuer", "clientId"]
