@@ -3,7 +3,7 @@
 
 # OktaDev Schematics
 
-This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, and Vue projects.
+This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, and Ionic projects.
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
@@ -24,18 +24,18 @@ ng new secure-angular --routing
 cd secure-angular
 ```
 
-Then in your new project, add `@oktadev/schematics`:
+### Add an OpenID Connect App in Okta
+
+* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
+* Choose **Single Page App (SPA)** as the platform, add `http://localhost:4200/implicit/callback` as a Login redirect URI, and click **Done**.
+
+In your `secure-angular` project, add `@oktadev/schematics`:
 
 ```
 ng add @oktadev/schematics
 ```
 
-You can also use the following syntax:
-
-```
-npm i @oktadev/schematics
-ng g @oktadev/schematics:add-auth
-```
+You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
 
 See the [Okta Angular SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-angular) for more information.
 
@@ -55,18 +55,25 @@ npx create-react-app secure-react --typescript
 cd secure-react
 ```
 
+### Add an OpenID Connect App in Okta
+
+* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
+* Choose **Single Page App (SPA)** as the platform, add `http://localhost:3000/implicit/callback` as a Login redirect URI, and click **Done**.
+
 Install Schematics globally.
 
 ```
 npm install -g @angular-devkit/schematics-cli
 ```
 
-Then install and run the `add-auth` schematic in your project.
+Then install and run the `add-auth` schematic in your `secure-react` project.
 
 ```
 npm i @oktadev/schematics
 schematics @oktadev/schematics:add-auth
 ```
+
+You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
 
 See the [Okta React SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react) for more information.
 
@@ -80,18 +87,25 @@ vue create secure-vue
 cd secure-vue
 ```
 
+### Add an OpenID Connect App in Okta
+
+* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
+* Choose **Single Page App (SPA)** as the platform and click **Done**.
+
 Install Schematics globally.
 
 ```
 npm install -g @angular-devkit/schematics-cli
 ```
 
-Then install and run the `add-auth` schematic in your project.
+Then install and run the `add-auth` schematic in your `secure-vue` project.
 
 ```
 npm i @oktadev/schematics
 schematics @oktadev/schematics:add-auth
 ```
+
+You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
 
 See the [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-vue) for more information.
 
@@ -105,7 +119,7 @@ ionic start $appName tabs
 cd $appName
 ```
 
-**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova.
+**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova. 
 
 You will an `issuer` and `clientId` to begin. You can obtain those from Okta by completing the following steps.
 
@@ -135,7 +149,7 @@ You can also use the following syntax:
 
 ```
 npm i @oktadev/schematics
-ng g @oktadev/schematics:add-auth
+ng g @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
 ```
 
 Start your app and you should be able to authenticate with Okta. 🎉
@@ -251,6 +265,8 @@ This project uses the following open source libraries from Okta:
 * [Okta Angular SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-angular)
 * [Okta React SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react)
 * [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-vue)
+
+For Ionic, it uses [Ionic AppAuth](https://github.com/wi3land/ionic-appauth).
 
 ## Help
 

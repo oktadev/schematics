@@ -1,6 +1,6 @@
 {
   "name": "@oktadev/schematics",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Schematics for Okta Auth",
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -11,7 +11,11 @@
     "schematics",
     "authentication",
     "authorization",
-    "okta"
+    "okta",
+    "angular",
+    "react",
+    "vue",
+    "ionic"
   ],
   "author": "OktaDev <devrel@okta.com>",
   "license": "Apache-2.0",
