@@ -24,7 +24,7 @@ ng new secure-angular --routing
 cd secure-angular
 ```
 
-### Add an OpenID Connect Client in Okta
+### Add an OpenID Connect App in Okta
 
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Single Page App (SPA)** as the platform, add `http://localhost:4200/implicit/callback` as a Login redirect URI, and click **Done**.
@@ -55,7 +55,7 @@ npx create-react-app secure-react --typescript
 cd secure-react
 ```
 
-### Add an OpenID Connect Client in Okta
+### Add an OpenID Connect App in Okta
 
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Single Page App (SPA)** as the platform, add `http://localhost:3000/implicit/callback` as a Login redirect URI, and click **Done**.
@@ -87,7 +87,7 @@ vue create secure-vue
 cd secure-vue
 ```
 
-### Add an OpenID Connect Client in Okta
+### Add an OpenID Connect App in Okta
 
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Single Page App (SPA)** as the platform and click **Done**.
