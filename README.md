@@ -35,7 +35,7 @@ In your `secure-angular` project, add `@oktadev/schematics`:
 ng add @oktadev/schematics
 ```
 
-You'll be prompted for an issuer, which you can find at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
+You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
 
 See the [Okta Angular SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-angular) for more information.
 
@@ -73,7 +73,7 @@ npm i @oktadev/schematics
 schematics @oktadev/schematics:add-auth
 ```
 
-You'll be prompted for an issuer, which you can find at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
+You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
 
 See the [Okta React SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react) for more information.
 
@@ -105,7 +105,7 @@ npm i @oktadev/schematics
 schematics @oktadev/schematics:add-auth
 ```
 
-You'll be prompted for an issuer, which you can find at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
+You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
 
 See the [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-vue) for more information.
 
