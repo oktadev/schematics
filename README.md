@@ -3,7 +3,7 @@
 
 # OktaDev Schematics
 
-This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, and Vue projects.
+This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, and Ionic projects.
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
