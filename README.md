@@ -119,7 +119,7 @@ ionic start secure-ionic tabs
 cd secure-ionic
 ```
 
-**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova. If you use Capacitor, you'll need to add `http://localhost` as a Trusted Origin in Okta (**API** > **Trusted Origins**).
+**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova.
 
 You will an `issuer` and `clientId` to begin. You can obtain those from Okta by completing the following steps.
 
@@ -174,11 +174,31 @@ ionic build
 ionic capacitor add ios
 ```
 
-Open your project in Xcode, configure code signing, and run your app.
+Open your project in Xcode and configure code signing.
 
 ```
 ionic capacitor open ios
 ```
+
+Add your custom scheme to `ios/App/App/Info.plist`:
+
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLName</key>
+    <string>com.getcapacitor.capacitor</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>capacitor</string>
+      <string>com.okta.dev-737523</string>
+    </array>
+  </dict>
+</array>
+```
+
+Then run your app from Xcode.
 
 ### Android
 
