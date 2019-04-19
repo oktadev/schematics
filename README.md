@@ -115,11 +115,11 @@ Create a new Ionic + Angular project with Ionic CLI. You **must** use the `tabs`
 
 ```
 npm install -g ionic
-ionic start $appName tabs
-cd $appName
+ionic start secure-ionic tabs
+cd secure-ionic
 ```
 
-**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova. 
+**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova. If you use Capacitor, you'll need to add `http://localhost` as a Trusted Origin in Okta (**API** > **Trusted Origins**).
 
 You will an `issuer` and `clientId` to begin. You can obtain those from Okta by completing the following steps.
 
@@ -143,13 +143,6 @@ Copy your issuer (found under **API** > **Authorization Servers**), and client I
 
 ```
 ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
-```
-
-You can also use the following syntax:
-
-```
-npm i @oktadev/schematics
-ng g @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
 ```
 
 Start your app and you should be able to authenticate with Okta. 🎉

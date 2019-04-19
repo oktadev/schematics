@@ -80,11 +80,15 @@ export class AuthService extends IonicAuth {
   private handleCallback(callbackUrl: string): void {
     if ((callbackUrl).indexOf(this.authConfig.redirect_url) === 0) {
       // todo: don't ignore promise or refactor
-      this.AuthorizationCallBack(callbackUrl);
+      this.AuthorizationCallBack(callbackUrl).catch((error: string) => {
+        console.error(`Authorization callback failed! ${error}`);
+      });
     }
 
     if ((callbackUrl).indexOf(this.authConfig.end_session_redirect_url) === 0) {
-      this.EndSessionCallBack();
+      this.EndSessionCallBack().catch((error: string) => {
+        console.error(`End session callback failed! ${error}`);
+      });
     }
   }
 
