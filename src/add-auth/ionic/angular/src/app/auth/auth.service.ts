@@ -1,14 +1,12 @@
 import { Platform } from '@ionic/angular';
 import { Injectable, NgZone } from '@angular/core';
-import { map, skipWhile, take } from 'rxjs/operators';
-
-import { AuthActions, IAuthAction, IonicAuth, IonicAuthorizationRequestHandler } from 'ionic-appauth';
+import { IonicAuth, IonicAuthorizationRequestHandler } from 'ionic-appauth';
 import { BrowserService } from './browser.service';
+import { CordovaRequestorService } from './cordova-requestor.service';
 import { SecureStorageService } from './secure-storage.service';
 import { StorageService } from './storage.service';
 import { RequestorService } from './requestor.service';
-<% if (platform === 'cordova') { %>import { CordovaRequestor } from 'ionic-appauth/lib/cordova';
-<% } else { %>import { Plugins, AppLaunchUrl } from '@capacitor/core';
+<% if (platform === 'capacitor') { %>import { Plugins, AppUrlOpen } from '@capacitor/core';
 
 const { App } = Plugins;<% } %>
 
@@ -17,15 +15,16 @@ const { App } = Plugins;<% } %>
 })
 export class AuthService extends IonicAuth {
 
-  constructor(requestor: RequestorService, storage: StorageService,
-              secureStorage: SecureStorageService, browser: BrowserService,
+  constructor(requestor: RequestorService, cordovaRequestor: CordovaRequestorService,
+              storage: StorageService, secureStorage: SecureStorageService, browser: BrowserService,
               private platform: Platform, private ngZone: NgZone) {<% if (platform === 'cordova') { %>
       super((platform.is('cordova')) ? browser : undefined,
         (platform.is('cordova')) ? secureStorage : storage,
-        (platform.is('cordova')) ? new CordovaRequestor() : requestor);<% } else { %>
+        (platform.is('cordova')) ? cordovaRequestor : requestor);<% } else { %>
       super((platform.is('mobile') && !platform.is('mobileweb')) ? browser : undefined,
         (platform.is('mobile') && !platform.is('mobileweb')) ? secureStorage : storage,
-        requestor, undefined, undefined,
+        (platform.is('mobile') && !platform.is('mobileweb')) ? cordovaRequestor : requestor,
+        undefined, undefined,
         (platform.is('mobile') && !platform.is('mobileweb')) ?
           new IonicAuthorizationRequestHandler(browser, secureStorage) :
           new IonicAuthorizationRequestHandler(browser, storage)
@@ -42,10 +41,11 @@ export class AuthService extends IonicAuth {
         });
       };
     }<% } else { %>if (this.platform.is('mobile') && !this.platform.is('mobileweb')) {
-      const appLaunchUrl : AppLaunchUrl = await App.getLaunchUrl();
-      if (appLaunchUrl.url !== undefined) {
-        this.handleCallback(appLaunchUrl.url);
-      }
+      App.addListener('appUrlOpen', (data: AppUrlOpen) => {
+        this.ngZone.run(() => {
+          this.handleCallback(data.url);
+        });
+      });
     }<% } %>
 
     super.startUpAsync();
@@ -80,19 +80,15 @@ export class AuthService extends IonicAuth {
 
   private handleCallback(callbackUrl: string): void {
     if ((callbackUrl).indexOf(this.authConfig.redirect_url) === 0) {
-      // todo: don't ignore promise or refactor
-      this.AuthorizationCallBack(callbackUrl);
+      this.AuthorizationCallBack(callbackUrl).catch((error: string) => {
+        console.error(`Authorization callback failed! ${error}`);
+      });
     }
 
     if ((callbackUrl).indexOf(this.authConfig.end_session_redirect_url) === 0) {
-      this.EndSessionCallBack();
+      this.EndSessionCallBack().catch((error: string) => {
+        console.error(`End session callback failed! ${error}`);
+      });
     }
-  }
-
-  public isAuthenticated() {
-    return this.authObservable
-      .pipe(skipWhile(action => action.action === AuthActions.Default),
-        take(1),
-        map((action: IAuthAction) => action.tokenResponse !== undefined)).toPromise();
   }
 }

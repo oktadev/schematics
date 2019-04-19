@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && jasmine src/**/*_spec.js",
-    "coverage": "istanbul cover -x 'src/**/*_spec.js' jasmine-node src/**/*_spec.js"
+    "coverage": "istanbul cover -x 'src/**/*_spec.js' jasmine src/**/*_spec.js"
   },
   "keywords": [
     "schematics",
@@ -33,7 +33,6 @@
     "@types/node": "^11.13.4",
     "istanbul": "^0.4.5",
     "jasmine": "^3.4.0",
-    "jasmine-node": "^2.0.1",
     "typescript": "~3.4.3"
   }
 }

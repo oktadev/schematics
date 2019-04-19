@@ -33,7 +33,7 @@ export class Tab1Page implements OnInit {
   }
 
   signIn() {
-    this.authService.signIn();
+    this.authService.signIn().catch(error => console.error(`Sign in error: ${error}`));
   }
 
   public async getUserInfo(): Promise<void> {

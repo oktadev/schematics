@@ -115,11 +115,11 @@ Create a new Ionic + Angular project with Ionic CLI. You **must** use the `tabs`
 
 ```
 npm install -g ionic
-ionic start $appName tabs
-cd $appName
+ionic start secure-ionic tabs
+cd secure-ionic
 ```
 
-**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova. 
+**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova.
 
 You will an `issuer` and `clientId` to begin. You can obtain those from Okta by completing the following steps.
 
@@ -143,13 +143,6 @@ Copy your issuer (found under **API** > **Authorization Servers**), and client I
 
 ```
 ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
-```
-
-You can also use the following syntax:
-
-```
-npm i @oktadev/schematics
-ng g @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
 ```
 
 Start your app and you should be able to authenticate with Okta. 🎉
@@ -177,15 +170,35 @@ If you want to use Capacitor, you **must** integrate this library with `ng add @
 Then, run:
 
 ```
-npm run build
+ionic build
 ionic capacitor add ios
 ```
 
-Open your project in Xcode, configure code signing, and run your app.
+Open your project in Xcode and configure code signing.
 
 ```
 ionic capacitor open ios
 ```
+
+Add your custom scheme to `ios/App/App/Info.plist`:
+
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLName</key>
+    <string>com.getcapacitor.capacitor</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>capacitor</string>
+      <string>com.okta.dev-737523</string>
+    </array>
+  </dict>
+</array>
+```
+
+Then run your app from Xcode.
 
 ### Android
 
@@ -200,8 +213,25 @@ If you want to use Capacitor, you **must** add this library with `ng add @oktade
 Then, run:
 
 ```
-npm run build
+ionic build
 ionic capacitor add android
+```
+
+Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use your reverse domain name:
+
+```xml
+<string name="custom_url_scheme">com.okta.dev-737523</string>
+```
+
+For both Capacitor and Cordova, set the launchMode to singleTask so the URL does not trigger a new instance of the app in `android/app/src/main/AndroidManifest.xml`:
+
+```xml
+<activity
+      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+      android:name="com.mydomain.app.MainActivity"
+      android:label="@string/title_activity_main"
+      android:launchMode="singleTask"
+      android:theme="@style/AppTheme.NoActionBarLaunch">
 ```
 
 Open your project in Android Studio and run your app.
@@ -218,9 +248,9 @@ This project supports unit tests and integration tests.
 
 `npm run test` will run the unit tests, using Jasmine as a runner and test framework.
 
-`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, and `vue-ts`.
+`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic` and `ionic-cap`.
 
-`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, and Vue with TypeScript.
+`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Cordova, and Ionic with Capacitor.
 
 ## Publishing
 
