@@ -177,7 +177,7 @@ If you want to use Capacitor, you **must** integrate this library with `ng add @
 Then, run:
 
 ```
-npm run build
+ionic build
 ionic capacitor add ios
 ```
 
@@ -200,8 +200,25 @@ If you want to use Capacitor, you **must** add this library with `ng add @oktade
 Then, run:
 
 ```
-npm run build
+ionic build
 ionic capacitor add android
+```
+
+Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use your reverse domain name:
+
+```xml
+<string name="custom_url_scheme">com.okta.dev-737523</string>
+```
+
+For both Capacitor and Cordova, set the launchMode to singleTask so the URL does not trigger a new instance of the app in `android/app/src/main/AndroidManifest.xml`:
+
+```xml
+<activity
+      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+      android:name="com.mydomain.app.MainActivity"
+      android:label="@string/title_activity_main"
+      android:launchMode="singleTask"
+      android:theme="@style/AppTheme.NoActionBarLaunch">
 ```
 
 Open your project in Android Studio and run your app.
@@ -218,9 +235,9 @@ This project supports unit tests and integration tests.
 
 `npm run test` will run the unit tests, using Jasmine as a runner and test framework.
 
-`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, and `vue-ts`.
+`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic` and `ionic-cap`.
 
-`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, and Vue with TypeScript.
+`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Cordova, and Ionic with Capacitor.
 
 ## Publishing
 

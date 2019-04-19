@@ -8,7 +8,7 @@ import { SecureStorageService } from './secure-storage.service';
 import { StorageService } from './storage.service';
 import { RequestorService } from './requestor.service';
 <% if (platform === 'cordova') { %>import { CordovaRequestor } from 'ionic-appauth/lib/cordova';
-<% } else { %>import { Plugins, AppLaunchUrl } from '@capacitor/core';
+<% } else { %>import { Plugins, AppUrlOpen } from '@capacitor/core';
 
 const { App } = Plugins;<% } %>
 
@@ -42,10 +42,9 @@ export class AuthService extends IonicAuth {
         });
       };
     }<% } else { %>if (this.platform.is('mobile') && !this.platform.is('mobileweb')) {
-      const appLaunchUrl : AppLaunchUrl = await App.getLaunchUrl();
-      if (appLaunchUrl.url !== undefined) {
-        this.handleCallback(appLaunchUrl.url);
-      }
+      App.addListener('appUrlOpen', (data: AppUrlOpen) => {
+        this.handleCallback(data.url);
+      });
     }<% } %>
 
     super.startUpAsync();
