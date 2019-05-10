@@ -119,19 +119,19 @@ ionic start secure-ionic tabs
 cd secure-ionic
 ```
 
-**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova.
+You will need an `issuer` and a `clientId` to begin. You can obtain those from Okta by completing the following steps.
 
-You will an `issuer` and `clientId` to begin. You can obtain those from Okta by completing the following steps.
+> **NOTE:** OIDC Login for Ionic is made possible thanks to the excellent [Ionic AppAuth](https://github.com/wi3land/ionic-appauth#readme) project and its examples. This integration is not Okta-specific and should work with any identity provider that supports PKCE for browser and mobile apps.
 
 ### Create an Application in Okta
 
 Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
 
-From the **Applications** page, choose **Add Application**. On the Create New Application page, select **SPA**. Give your app a memorable name, and configure it as follows:
+From the **Applications** page, choose **Add Application**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
  
 * Login redirect URIs: 
   * `http://localhost:8100/implicit/callback`
-  * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta URL)
+  * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta Org URL)
 * Grant type allowed: **Authorization Code**
 * Click **Done**
 * Click **Edit** and add Logout redirect URIs:
@@ -144,6 +144,8 @@ Copy your issuer (found under **API** > **Authorization Servers**), and client I
 ```
 ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
 ```
+
+**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova.
 
 Start your app and you should be able to authenticate with Okta. 🎉
 
@@ -164,6 +166,8 @@ Open your project in Xcode, configure code signing, and run your app.
 ```
 open platforms/ios/MyApp.xcworkspace
 ```
+
+### iOS and Capacitor
 
 If you want to use Capacitor, you **must** integrate this library with `ng add @oktadev/schematics --platform=capacitor`.
 
@@ -208,6 +212,21 @@ If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your p
 ionic cordova prepare android
 ```
 
+Set the launchMode to `singleTask` so the URL does not trigger a new instance of the app in `platforms/android/app/src/main/AndroidManifest.xml`:
+
+```xml
+<activity
+      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+      android:name="com.mydomain.app.MainActivity"
+      android:label="@string/title_activity_main"
+      android:launchMode="singleTask"
+      android:theme="@style/AppTheme.NoActionBarLaunch">
+```
+
+Open your project in Android Studio and run your app.
+
+### Android and Capacitor
+
 If you want to use Capacitor, you **must** add this library with `ng add @oktadev/schematics --platform=capacitor`.
 
 Then, run:
@@ -223,7 +242,7 @@ Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use
 <string name="custom_url_scheme">com.okta.dev-737523</string>
 ```
 
-For both Capacitor and Cordova, set the launchMode to singleTask so the URL does not trigger a new instance of the app in `android/app/src/main/AndroidManifest.xml`:
+Set the launchMode to `singleTask` so the URL does not trigger a new instance of the app in `android/app/src/main/AndroidManifest.xml`:
 
 ```xml
 <activity
