@@ -41,4 +41,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class OidcRoutingModule { }
+export class AuthRoutingModule { }

@@ -153,7 +153,7 @@ export function addAuth(options: any): Rule {
 
       // add imports to app.module.ts
       addModuleImportToModule(host, projectPath + 'src/app/app.module.ts',
-        'OidcRoutingModule', './oidc-routing.module');
+        'AuthRoutingModule', './auth-routing.module');
     }
 
     if (framework == IONIC_ANGULAR) {
