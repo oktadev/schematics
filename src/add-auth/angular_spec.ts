@@ -1,6 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-// import { Schema as ComponentOptions } from './schema';
 
 // tslint:disable:max-line-length
 describe('OktaDev Schematics: Angular', () => {
@@ -60,16 +59,24 @@ describe('OktaDev Schematics: Angular', () => {
 
   it('should add routes for callback', (done) => {
     schematicRunner.runSchematicAsync('add-auth', defaultOptions, appTree).toPromise().then(tree => {
-      const routingModule = tree.readContent('/projects/authtest/src/app/app-routing.module.ts');
+      const routingModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
       expect(routingModule).toContain(`path: 'home'`);
       expect(routingModule).toContain(`path: 'implicit/callback'`);
       done();
     }, done.fail);
   });
 
-  it('should set the issuer & clientId in the app module file', (done) => {
+  it('should import the auth-routing module in the app module file', (done) => {
     schematicRunner.runSchematicAsync('add-auth', defaultOptions, appTree).toPromise().then(tree => {
       const appModule = tree.readContent('/projects/authtest/src/app/app.module.ts');
+      expect(appModule).toMatch(/AuthRoutingModule/);
+      done();
+    }, done.fail);
+  });
+
+  it('should set the issuer & clientId in the auth-routing module file', (done) => {
+    schematicRunner.runSchematicAsync('add-auth', defaultOptions, appTree).toPromise().then(tree => {
+      const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
       expect(appModule).toContain(`issuer: '${defaultOptions.issuer}'`);
       expect(appModule).toContain(`clientId: '${defaultOptions.clientId}'`);
       done();
