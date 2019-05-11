@@ -147,6 +147,10 @@ export function addAuth(options: any): Rule {
       const project = workspace.projects[Object.keys(workspace.projects)[0]];
       projectPath = project.root;
 
+      if (!options.project) {
+        options.project = Object.keys(workspace.projects)[0]
+      }
+
       // add imports to app.module.ts
       addModuleImportToModule(host, projectPath + 'src/app/app.module.ts',
         'OidcRoutingModule', './oidc-routing.module');
