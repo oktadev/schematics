@@ -152,7 +152,7 @@ export function addAuth(options: any): Rule {
       }
 
       // add imports to app.module.ts
-      addModuleImportToModule(host, projectPath + 'src/app/app.module.ts',
+      addModuleImportToModule(host, projectPath + '/src/app/app.module.ts',
         'AuthRoutingModule', './auth-routing.module');
     }
 
