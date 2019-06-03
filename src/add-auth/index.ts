@@ -41,7 +41,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Dev, version: '~1.0.2', name: '@types/okta__okta-vue'});
       }
     } else if (framework === IONIC_ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '0.3.3', name: 'ionic-appauth'});
+      dependencies.push({type: NodeDependencyType.Default, version: '0.3.5', name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: '^2.2.0', name: '@ionic/storage'});
       if (options.platform === 'capacitor') {
         dependencies.push({type: NodeDependencyType.Default, version: '^3.0.2', name: 'cordova-plugin-secure-storage'});
