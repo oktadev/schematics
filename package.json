@@ -33,6 +33,6 @@
     "@types/node": "^11.13.4",
     "istanbul": "^0.4.5",
     "jasmine": "^3.4.0",
-    "typescript": "~3.4.3"
+    "typescript": "~3.5.1"
   }
 }
