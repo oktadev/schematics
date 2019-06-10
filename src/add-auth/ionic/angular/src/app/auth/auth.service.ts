@@ -1,5 +1,6 @@
 import { Platform } from '@ionic/angular';
 import { Injectable, NgZone } from '@angular/core';
+<% if (configUri) { %>import { HttpClient } from '@angular/common/http';<% } %>
 import { IonicAuth, IonicAuthorizationRequestHandler } from 'ionic-appauth';
 import { BrowserService } from './browser.service';
 import { CordovaRequestorService } from './cordova-requestor.service';
@@ -10,6 +11,11 @@ import { RequestorService } from './requestor.service';
 
 const { App } = Plugins;<% } %>
 
+<% if (configUri) { %>interface AuthConfig {
+  issuer: string;
+  clientId: string;
+}<% } %>
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +23,7 @@ export class AuthService extends IonicAuth {
 
   constructor(requestor: RequestorService, cordovaRequestor: CordovaRequestorService,
               storage: StorageService, secureStorage: SecureStorageService, browser: BrowserService,
-              private platform: Platform, private ngZone: NgZone) {<% if (platform === 'cordova') { %>
+              private platform: Platform, private ngZone: NgZone<% if (configUri) { %>, private http: HttpClient<% } %>) {<% if (platform === 'cordova') { %>
       super((platform.is('cordova')) ? browser : undefined,
         (platform.is('cordova')) ? secureStorage : storage,
         (platform.is('cordova')) ? cordovaRequestor : requestor);<% } else { %>
@@ -51,31 +57,49 @@ export class AuthService extends IonicAuth {
     super.startUpAsync();
   }
 
+  private onDevice(): boolean {
+    return <% if (platform === 'cordova') { %>this.platform.is('cordova')<% } else { %>this.platform.is('mobile') && !this.platform.is('mobileweb')<% } %>;
+  }
+
   private addConfig() {
+    const scopes = 'openid profile offline_access';
+  <% if (configUri) { %>
+    const AUTH_CONFIG: string = '<%= configUri %>';
+    if (localStorage.getItem(AUTH_CONFIG)) {
+      const authConfig: AuthConfig = JSON.parse(localStorage.getItem(AUTH_CONFIG));
+      localStorage.removeItem(AUTH_CONFIG);
+    } else {
+      // try to get the oauth settings from the server
+      this.http.get('<%= configUri %>').subscribe((data: any) => {
+        this.authConfig = {
+          identity_client: data.clientId,
+          identity_server: data.issuer,
+          // todo: change localhost to production URL before deploying
+          redirect_url: onDevice() ? '<%= packageName %>:/callback' : 'http://localhost:8100/implicit/callback',
+          scopes,
+          usePkce: true,
+          response_type: 'code',
+          end_session_redirect_url: onDevice() ? <%= packageName %>:/logout' : 'http://localhost:8100/implicit/logout'
+        }
+      });
+  <% } else { %>
     const clientId = '<%= clientId %>';
     const issuer = '<%= issuer %>';
-    const scopes = 'openid profile offline_access';
+    const authConfig = {
+      identity_client: clientId,
+      identity_server: issuer,
+      scopes,
+      usePkce: true,
+    };
 
-    if (<% if (platform === 'cordova') { %>this.platform.is('cordova')<% } else { %>this.platform.is('mobile') && !this.platform.is('mobileweb')<% } %>) {
-      this.authConfig = {
-        identity_client: clientId,
-        identity_server: issuer,
-        redirect_url: '<%= packageName %>:/callback',
-        scopes: scopes,
-        usePkce: true,
-        end_session_redirect_url: '<%= packageName %>:/logout',
-      };
+    if (onDevice()) {
+      this.authConfig.redirect_url = '<%= packageName %>:/callback';
+      this.authConfig.end_session_redirect_url = '<%= packageName %>:/logout';
     } else {
-      this.authConfig = {
-        identity_client: clientId,
-        identity_server: issuer,
-        redirect_url: 'http://localhost:8100/implicit/callback',
-        scopes: scopes,
-        usePkce: true,
-        response_type: 'code',
-        end_session_redirect_url: 'http://localhost:8100/implicit/logout',
-      };
+      this.authConfig.redirect_url = 'http://localhost:8100/implicit/callback';
+      this.authConfig.end_session_redirect_url = 'http://localhost:8100/implicit/logout';
     }
+  <% } %>
   }
 
   private handleCallback(callbackUrl: string): void {

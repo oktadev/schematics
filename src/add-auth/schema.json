@@ -24,6 +24,9 @@
     "platform": {
       "type": "string",
       "default": "cordova"
+    },
+    "configUri": {
+      "type": "string"
     }
   },
   "required": ["issuer", "clientId"]
