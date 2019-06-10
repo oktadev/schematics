@@ -157,12 +157,17 @@ export function addAuth(options: any): Rule {
     }
 
     if (framework == IONIC_ANGULAR) {
-      // add a package name from the issuer (for Ionic and React Native)
+      // add a package name from the issuer
       const parts = options.issuer.split('.');
-      options.packageName =
-        parts[2].substring(0, parts[2].indexOf('/')) + '.'
-        + parts[1] + '.'
-        + parts[0].substring(parts[0].lastIndexOf('/') + 1);
+      if (options.issuer.indexOf('.') === -1) {
+        // hard-code a package name for localhost
+        options.packageName = 'dev.localhost.ionic';
+      } else {
+        options.packageName =
+          parts[2].substring(0, parts[2].indexOf('/')) + '.'
+          + parts[1] + '.'
+          + parts[0].substring(parts[0].lastIndexOf('/') + 1);
+      }
 
       // add cordova to package.json
       if (options.platform === 'cordova') {

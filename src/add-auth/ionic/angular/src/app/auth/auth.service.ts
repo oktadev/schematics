@@ -9,6 +9,10 @@ import { RequestorService } from './requestor.service';
 <% if (platform === 'capacitor') { %>import { Plugins, AppUrlOpen } from '@capacitor/core';
 
 const { App } = Plugins;<% } %>
+<% if (configUri) { %>interface AuthConfig {
+  issuer: string;
+  clientId: string;
+}<% } %>
 
 @Injectable({
   providedIn: 'root'
@@ -51,31 +55,55 @@ export class AuthService extends IonicAuth {
     super.startUpAsync();
   }
 
-  private addConfig() {
-    const clientId = '<%= clientId %>';
-    const issuer = '<%= issuer %>';
-    const scopes = 'openid profile offline_access';
+  private onDevice(): boolean {
+    return <% if (platform === 'cordova') { %>this.platform.is('cordova')<% } else { %>this.platform.is('mobile') && !this.platform.is('mobileweb')<% } %>;
+  }
 
-    if (<% if (platform === 'cordova') { %>this.platform.is('cordova')<% } else { %>this.platform.is('mobile') && !this.platform.is('mobileweb')<% } %>) {
-      this.authConfig = {
-        identity_client: clientId,
-        identity_server: issuer,
-        redirect_url: '<%= packageName %>:/callback',
-        scopes: scopes,
-        usePkce: true,
-        end_session_redirect_url: '<%= packageName %>:/logout',
-      };
+  private async addConfig() {
+    const scopes = 'openid profile offline_access';
+    const redirectUri = this.onDevice() ? '<%= packageName %>:/callback' : 'http://localhost:8100/implicit/callback';
+    const logoutRedirectUri = this.onDevice() ? '<%= packageName %>:/logout' : 'http://localhost:8100/implicit/logout';
+    <% if (configUri) { %>const AUTH_CONFIG_URI: string = '<%= configUri %>';
+
+    if (await this.storage.getItem(AUTH_CONFIG_URI)) {
+      this.authConfig = JSON.parse(await this.storage.getItem(AUTH_CONFIG_URI));
+      await this.storage.removeItem(AUTH_CONFIG_URI);
     } else {
-      this.authConfig = {
-        identity_client: clientId,
-        identity_server: issuer,
-        redirect_url: 'http://localhost:8100/implicit/callback',
-        scopes: scopes,
-        usePkce: true,
-        response_type: 'code',
-        end_session_redirect_url: 'http://localhost:8100/implicit/logout',
-      };
-    }
+      // try to get the oauth settings from the server
+      this.requestor.xhr({method: 'GET', url: AUTH_CONFIG_URI}).then(async (data: any) => {
+        this.authConfig = {
+          identity_client: data.clientId,
+          identity_server: data.issuer,
+          redirect_url: redirectUri,
+          end_session_redirect_url: logoutRedirectUri,
+          scopes,
+          usePkce: true
+        };
+        await this.storage.setItem(AUTH_CONFIG_URI, JSON.stringify(this.authConfig));
+      }, error => {
+        console.error('ERROR fetching authentication information, defaulting to Keycloak settings');
+        console.error(error);
+        this.authConfig = {
+          identity_client: 'web_app',
+          identity_server: 'http://localhost:9080/auth/realms/jhipster',
+          redirect_url: redirectUri,
+          end_session_redirect_url: logoutRedirectUri,
+          scopes,
+          usePkce: true
+        };
+      });
+    }<% } else { %>const clientId = '<%= clientId %>';
+    const issuer = '<%= issuer %>';
+    const authConfig: any = {
+      identity_client: clientId,
+      identity_server: issuer,
+      redirect_url: redirectUri,
+      end_session_redirect_url: logoutRedirectUri,
+      scopes,
+      usePkce: true,
+    };
+
+    this.authConfig = {...authConfig};<% } %>
   }
 
   private handleCallback(callbackUrl: string): void {

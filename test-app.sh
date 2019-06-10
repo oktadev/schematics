@@ -92,6 +92,7 @@ then
   cd ionic-cordova
   npm install -D ../../oktadev*.tgz
   ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
+  # ng add @oktadev/schematics --configUri=http://localhost:8080/api/auth-info --issuer=1 --clientId=2
   ng test --watch=false
 elif [ "$1" == "ionic-cap" ] || [ "$1" == "icap" ]
 then
