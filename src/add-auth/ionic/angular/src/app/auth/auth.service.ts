@@ -10,8 +10,8 @@ import { RequestorService } from './requestor.service';
 <% if (platform === 'capacitor') { %>import { Plugins, AppUrlOpen } from '@capacitor/core';
 
 const { App } = Plugins;<% } %>
-
-<% if (configUri) { %>interface AuthConfig {
+<% if (configUri) { %>
+interface AuthConfig {
   issuer: string;
   clientId: string;
 }<% } %>
@@ -66,40 +66,44 @@ export class AuthService extends IonicAuth {
   <% if (configUri) { %>
     const AUTH_CONFIG: string = '<%= configUri %>';
     if (localStorage.getItem(AUTH_CONFIG)) {
-      const authConfig: AuthConfig = JSON.parse(localStorage.getItem(AUTH_CONFIG));
+      this.authConfig = JSON.parse(localStorage.getItem(AUTH_CONFIG));
       localStorage.removeItem(AUTH_CONFIG);
     } else {
       // try to get the oauth settings from the server
-      this.http.get('<%= configUri %>').subscribe((data: any) => {
+      this.http.get(AUTH_CONFIG).subscribe((data: any) => {
         this.authConfig = {
           identity_client: data.clientId,
           identity_server: data.issuer,
           // todo: change localhost to production URL before deploying
-          redirect_url: onDevice() ? '<%= packageName %>:/callback' : 'http://localhost:8100/implicit/callback',
+          redirect_url: this.onDevice() ? '<%= packageName %>:/callback' : 'http://localhost:8100/implicit/callback',
           scopes,
           usePkce: true,
           response_type: 'code',
-          end_session_redirect_url: onDevice() ? <%= packageName %>:/logout' : 'http://localhost:8100/implicit/logout'
-        }
+          end_session_redirect_url: this.onDevice() ? '<%= packageName %>:/logout' : 'http://localhost:8100/implicit/logout'
+        };
+        localStorage.setItem(AUTH_CONFIG, JSON.stringify(this.authConfig));
       });
   <% } else { %>
     const clientId = '<%= clientId %>';
     const issuer = '<%= issuer %>';
-    const authConfig = {
+    const authConfig: any = {
       identity_client: clientId,
       identity_server: issuer,
       scopes,
       usePkce: true,
     };
 
-    if (onDevice()) {
-      this.authConfig.redirect_url = '<%= packageName %>:/callback';
-      this.authConfig.end_session_redirect_url = '<%= packageName %>:/logout';
+    if (this.onDevice()) {
+      authConfig.redirect_url = 'com.oktapreview.dev-737523:/callback';
+      authConfig.end_session_redirect_url = 'com.oktapreview.dev-737523:/logout';
     } else {
-      this.authConfig.redirect_url = 'http://localhost:8100/implicit/callback';
-      this.authConfig.end_session_redirect_url = 'http://localhost:8100/implicit/logout';
+      authConfig.redirect_url = 'http://localhost:8100/implicit/callback';
+      authConfig.end_session_redirect_url = 'http://localhost:8100/implicit/logout';
     }
+
+    this.authConfig = {...authConfig};
   <% } %>
+    }
   }
 
   private handleCallback(callbackUrl: string): void {
