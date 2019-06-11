@@ -1,6 +1,6 @@
 {
   "name": "@oktadev/schematics",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Schematics for Okta Auth",
   "scripts": {
     "build": "tsc -p tsconfig.json",

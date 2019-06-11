@@ -177,9 +177,10 @@ export function addAuth(options: any): Rule {
           // save any pre-existing plugins
           if (pkgJson.cordova && pkgJson.cordova.plugins) {
             const existingPlugins = pkgJson.cordova.plugins;
-            pkgJson.cordova = {...cordovaPlugins(options.packageName), ...existingPlugins}
+            pkgJson.cordova.plugins = {...cordovaNode(options.packageName).plugins, ...existingPlugins};
+            pkgJson.cordova.platforms = cordovaNode(options.packageName).platforms;
           } else {
-            pkgJson.cordova = cordovaPlugins(options.packageName);
+            pkgJson.cordova = cordovaNode(options.packageName);
           }
           host.overwrite('./package.json', JSON.stringify(pkgJson));
         }
@@ -218,7 +219,7 @@ export function addAuth(options: any): Rule {
   };
 }
 
-export function cordovaPlugins(packageName: string) {
+export function cordovaNode(packageName: string) {
   return {
     'plugins': {
       'cordova-plugin-advanced-http': {},
