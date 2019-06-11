@@ -34,6 +34,14 @@ import { AppComponent } from './app.component';
 })
 export class AppModule {}`;
 
+const existingPlugins = {
+  plugins: {
+    "cordova-plugin-camera": {
+      "CAMERA_USAGE_DESCRIPTION": "Need camera access to take pictures",
+      "PHOTOLIBRARY_USAGE_DESCRIPTION": "Need photo library access to get pictures from there"
+    }
+  }
+};
 
 describe('OktaDev Schematics: Ionic/Angular', () => {
   it('requires required issuer option', () => {
@@ -44,9 +52,11 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
 
   it('works with cordova', () => {
     const tree = new UnitTestTree(new HostTree);
+    const pkg: any = {...packageJson};
+    pkg.cordova = {...existingPlugins};
 
     // Add package.json
-    tree.create('/package.json', JSON.stringify(packageJson));
+    tree.create('/package.json', JSON.stringify(pkg));
     // Add app.module.ts
     tree.create('/src/app/app.module.ts', defaultAppModule);
 
@@ -93,6 +103,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
 
     const pkgJson = tree.readContent('/package.json');
     expect(pkgJson).toContain('"cordova":');
+    expect(pkgJson).toContain('"PHOTOLIBRARY_USAGE_DESCRIPTION"');
   });
 
   it('works with capacitor', () => {

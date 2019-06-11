@@ -174,7 +174,14 @@ export function addAuth(options: any): Rule {
         const content: Buffer | null = host.read('./package.json');
         if (content) {
           const pkgJson: any = JSON.parse(content.toString());
-          pkgJson.cordova = cordovaPlugins(options.packageName);
+          // save any pre-existing plugins
+          if (pkgJson.cordova && pkgJson.cordova.plugins) {
+            const existingPlugins = pkgJson.cordova.plugins;
+            pkgJson.cordova.plugins = {...cordovaNode(options.packageName).plugins, ...existingPlugins};
+            pkgJson.cordova.platforms = cordovaNode(options.packageName).platforms;
+          } else {
+            pkgJson.cordova = cordovaNode(options.packageName);
+          }
           host.overwrite('./package.json', JSON.stringify(pkgJson));
         }
       }
@@ -212,7 +219,7 @@ export function addAuth(options: any): Rule {
   };
 }
 
-export function cordovaPlugins(packageName: string) {
+export function cordovaNode(packageName: string) {
   return {
     'plugins': {
       'cordova-plugin-advanced-http': {},
