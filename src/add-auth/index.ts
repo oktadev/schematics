@@ -174,7 +174,13 @@ export function addAuth(options: any): Rule {
         const content: Buffer | null = host.read('./package.json');
         if (content) {
           const pkgJson: any = JSON.parse(content.toString());
-          pkgJson.cordova = cordovaPlugins(options.packageName);
+          // save any pre-existing plugins
+          if (pkgJson.cordova && pkgJson.cordova.plugins) {
+            const existingPlugins = pkgJson.cordova.plugins;
+            pkgJson.cordova = {...cordovaPlugins(options.packageName), ...existingPlugins}
+          } else {
+            pkgJson.cordova = cordovaPlugins(options.packageName);
+          }
           host.overwrite('./package.json', JSON.stringify(pkgJson));
         }
       }
