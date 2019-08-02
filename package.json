@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@types/jasmine": "3.3.16",
-    "@types/node": "12.6.8",
+    "@types/node": "12.6.9",
     "istanbul": "0.4.5",
     "jasmine": "3.4.0",
     "typescript": "3.5.3"
