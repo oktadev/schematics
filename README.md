@@ -8,8 +8,9 @@ This repository is a Schematics implementation that allows you to easily integra
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
 * [Angular](#angular) | [React](#react) | [Vue](#vue) | [Ionic](#ionic)
-* [Testing](#vue)
+* [Testing](#testing)
 * [Contributing](#contributing)
+* [Tutorials](#tutorials)
 * [Links](#links)
 * [Help](#help)
 * [License](#license)
@@ -306,6 +307,15 @@ npm link /path/to/schematics
 You'll need to run `npm run build` whenever you change anything in the schematics project.
 
 **NOTE:** You can also use `npm pack` in your schematics project, then `npm install /path/to/artifact.tar.gz` in your test project. This mimics `npm install` more than `npm link`.
+
+## Tutorials
+
+See the following blog posts to see OktaDev Schematics in action.
+
+* [Use Angular Schematics to Simplify Your Life](https://developer.okta.com/blog/2019/02/13/angular-schematics)
+* [Use Schematics with Vue and Add Authentication in 5 Minutes](https://developer.okta.com/blog/2019/05/21/vue-schematics)
+* [Use Schematics with React and Add OpenID Connect Authentication in 5 Minutes](https://developer.okta.com/blog/2019/03/05/react-schematics)
+* [Tutorial: User Login and Registration in Ionic 4](https://developer.okta.com/blog/2019/06/20/ionic-4-tutorial-user-authentication-and-registration)
 
 ## Links
 
