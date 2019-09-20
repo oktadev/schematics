@@ -16,6 +16,8 @@ if [ "$1" == "angular" ] || [ "$1" == "a" ]
 then
   ng new angular-app --routing --style css
   cd angular-app
+  # https://github.com/angular/protractor/issues/5312#issuecomment-530905920
+  ./node_modules/protractor/bin/webdriver-manager update --versions.chrome=77.0.3865.75
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   ng test --watch=false && ng e2e

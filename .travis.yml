@@ -22,8 +22,6 @@ addons:
       - google-chrome-stable
 before_install:
   - npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli ionic codecov
-  # https://github.com/angular/protractor/issues/5312#issuecomment-530905920
-  - ./node_modules/protractor/bin/webdriver-manager update --versions.chrome=77.0.3865.75
 install:
   - npm ci
 script:
