@@ -19,6 +19,7 @@ addons:
     sources:
       - google-chrome
     packages:
+      - dpkg
       - google-chrome-stable
 before_install:
   - npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli ionic codecov
