@@ -10,7 +10,8 @@ import { AuthInterceptor } from './shared/okta/auth.interceptor';
 const oktaConfig = {
   issuer: '<%= issuer %>',
   redirectUri: window.location.origin + '/implicit/callback',
-  clientId: '<%= clientId %>'
+  clientId: '<%= clientId %>',
+  pkce: true
 };
 
 const routes: Routes = [
