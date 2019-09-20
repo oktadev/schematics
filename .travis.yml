@@ -16,11 +16,9 @@ branches:
 # Install Chrome
 addons:
   apt:
-    sources:
-      - google-chrome
     packages:
       - dpkg
-      - google-chrome-stable
+  chrome: stable
 before_install:
   - npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli ionic codecov
 install:
