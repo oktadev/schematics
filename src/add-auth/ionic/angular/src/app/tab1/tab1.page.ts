@@ -20,7 +20,7 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     this.authService.authObservable.subscribe((action) => {
       this.action = action;
-      if (action.action === AuthActions.SignInSuccess || action.action === AuthActions.AuthSignInSuccess) {
+      if (action.action === AuthActions.SignInSuccess || action.action === AuthActions.AutoSignInSuccess) {
         this.authenticated = true;
       } else if (action.action === AuthActions.SignOutSuccess) {
         this.authenticated = false;
