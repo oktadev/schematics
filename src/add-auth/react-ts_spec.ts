@@ -32,7 +32,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
 
     const componentContent = tree.readContent('/src/App.tsx');
 
-    expect(componentContent).toMatch(/class App extends React\.Component/);
+    expect(componentContent).toMatch(/class App extends Component/);
     expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
     expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
   });
