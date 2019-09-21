@@ -8,6 +8,7 @@ Vue.use(OktaVuePlugin, {
   issuer: '<%= issuer %>',
   client_id: '<%= clientId %>',
   redirect_uri: window.location.origin + '/implicit/callback',
+  pkce: true
 });
 
 const router = new Router({

@@ -6,7 +6,8 @@ import Home from './Home';
 const config = {
   issuer: '<%= issuer %>',
   redirect_uri: window.location.origin + '/implicit/callback',
-  client_id: '<%= clientId %>'
+  client_id: '<%= clientId %>',
+  pkce: true
 };
 
 export interface Auth {
@@ -16,7 +17,7 @@ export interface Auth {
   getAccessToken(): string;
 }
 
-class App extends React.Component {
+class App extends Component {
 
   render() {
     return (

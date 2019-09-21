@@ -28,25 +28,25 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '~1.2.1', name: '@okta/okta-angular'})
+      dependencies.push({type: NodeDependencyType.Default, version: '1.2.2', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '~1.2.0', name: '@okta/okta-react'});
-      dependencies.push({type: NodeDependencyType.Default, version: '~5.0.0', name: 'react-router-dom'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.2.3', name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: '5.0.1', name: 'react-router-dom'});
       if (framework === REACT_TS) {
-        dependencies.push({type: NodeDependencyType.Default, version: '~4.3.2', name: '@types/react-router-dom'});
+        dependencies.push({type: NodeDependencyType.Default, version: '4.3.5', name: '@types/react-router-dom'});
       }
     } else if (framework === VUE || framework == VUE_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '~1.1.0', name: '@okta/okta-vue'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.1.1', name: '@okta/okta-vue'});
       if (framework === VUE_TS) {
-        dependencies.push({type: NodeDependencyType.Dev, version: '~1.0.2', name: '@types/okta__okta-vue'});
+        dependencies.push({type: NodeDependencyType.Dev, version: '1.1.0', name: '@types/okta__okta-vue'});
       }
     } else if (framework === IONIC_ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '0.3.5', name: 'ionic-appauth'});
-      dependencies.push({type: NodeDependencyType.Default, version: '^2.2.0', name: '@ionic/storage'});
+      dependencies.push({type: NodeDependencyType.Default, version: '0.4.4', name: 'ionic-appauth'});
+      dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
       if (options.platform === 'capacitor') {
-        dependencies.push({type: NodeDependencyType.Default, version: '^3.0.2', name: 'cordova-plugin-secure-storage'});
-        dependencies.push({type: NodeDependencyType.Default, version: '^2.0.9', name: 'cordova-plugin-advanced-http'});
-        dependencies.push({type: NodeDependencyType.Default, version: '^5.4.0', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '3.0.2', name: 'cordova-plugin-secure-storage'});
+        dependencies.push({type: NodeDependencyType.Default, version: '2.1.1', name: 'cordova-plugin-advanced-http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.14.0', name: '@ionic-native/http'});
       }
     }
 
