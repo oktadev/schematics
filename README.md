@@ -7,7 +7,7 @@ This repository is a Schematics implementation that allows you to easily integra
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
-* [Angular](#angular) | [React](#react) | [Vue](#vue) | [Ionic](#ionic)
+* [Angular](#angular) | [React](#react) | [Vue](#vue) | [Ionic](#ionic) | [React Native](#react-native)
 * [Testing](#testing)
 * [Contributing](#contributing)
 * [Tutorials](#tutorials)
@@ -264,6 +264,81 @@ ionic capacitor open android
 ```
 
 See [Ionic's iOS](https://ionicframework.com/docs/building/ios) and [Android Development](https://ionicframework.com/docs/building/android) docs for more information.
+
+## React Native
+
+Create a new React native project with React Native CLI. 
+
+```
+npm install -g react-native-cli
+react-native init SecureApp
+```
+
+You will need an `issuer` and a `clientId` to begin. You can obtain those from Okta by completing the following steps.
+
+### Create an Application in Okta
+
+Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
+
+* From the **Applications** page, choose **Add Application**. 
+* On the Create New Application page, select **Native**. 
+* Give your app a memorable name, and click **Done**. 
+* Click the **Edit** button and add a Logout redirect URI that matches the default Login redirect URI (e.g., `com.okta.dev-123456:/callback`). 
+* Click **Save**.
+
+Install Schematics globally.
+
+```
+npm install -g @angular-devkit/schematics-cli
+```
+
+Install and run the `add-auth` schematic in your `SecureApp` project. You can find your issuer under **API** > **Authorization Servers** on Okta.
+
+```
+cd SecureApp
+npm i @oktadev/schematics
+schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+```
+
+### iOS
+
+To run your app on iOS, edit `ios/Podfile` and change it to use iOS 11.
+
+```
+platform :ios, '11.0'
+```
+
+Configure your [iOS project to use Swift](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native#swift-configuration), since the Okta React Native library is a Swift wrapper.
+
+Then run `pod install` from the `ios` directory.
+
+Start your app and you should be able to authenticate with Okta. 🎉
+
+```
+react-native run-ios
+```
+
+### Android
+
+To run your app on Android, edit `android/build.gradle` and add the following under `allprojects` > `repositories`:
+
+```groovy
+maven {
+  url("https://dl.bintray.com/okta/com.okta.android")
+}
+```
+
+Make sure your `minSdkVersion` is **19** in `android/build.gradle`.
+
+In `android/app/build.gradle`, under `android` > `defaultConfig`, add:
+
+```groovy
+manifestPlaceholders = [
+  appAuthRedirectScheme: '{yourReversedOktaDomain}' // com.okta.dev-123456
+]
+```
+
+For more information, see the [Android Setup documentation](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native#android-setup) for the Okta React Native SDK.
 
 ## Testing
 
