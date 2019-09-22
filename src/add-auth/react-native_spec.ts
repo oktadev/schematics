@@ -1,0 +1,44 @@
+import { HostTree, Tree } from '@angular-devkit/schematics';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+import * as path from 'path';
+import packageJson from './react-native-pkg.json';
+
+const collectionPath = path.join(__dirname, '../collection.json');
+
+const defaultOptions: any = {
+  issuer: 'https://dev-737523.okta.com/oauth2/default',
+  clientId: '0oaifymbuodpH8nAi0h7'
+};
+
+describe('OktaDev Schematics: React Native', () => {
+  it('requires required issuer option', () => {
+    const runner = new SchematicTestRunner('schematics', collectionPath);
+
+    expect(() => runner.runSchematic('add-auth', {}, Tree.empty())).toThrow();
+  });
+
+  it('works', () => {
+    const tree = new UnitTestTree(new HostTree);
+
+    // Add package.json
+    tree.create('/package.json', JSON.stringify(packageJson));
+
+    const runner = new SchematicTestRunner('schematics', collectionPath);
+    runner.runSchematic('add-auth', {...defaultOptions}, tree);
+
+    expect(tree.files.length).toEqual(4);
+    expect(tree.files.sort()).toEqual(['/App.js', '/Auth.js', '/auth.config.js', '/package.json']);
+
+    const authComponent = tree.readContent('/Auth.js');
+    expect(authComponent).toMatch(/class Auth extends Component/);
+
+    const config = tree.readContent('/auth.config.js');
+    expect(config).toContain(`discoveryUri: '${defaultOptions.issuer}'`);
+    expect(config).toContain(`clientId: '${defaultOptions.clientId}'`);
+  });
+
+  it('fail with no package.json', () => {
+    const runner = new SchematicTestRunner('schematics', collectionPath);
+    expect(() => runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty())).toThrow();
+  });
+});

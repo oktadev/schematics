@@ -101,4 +101,11 @@ then
   npm install -D ../../oktadev*.tgz
   ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId --platform=capacitor
   ng test --watch=false
+elif [ "$1" == "react-native" ] || [ "$1" == "rn" ]
+then
+  react-native init SecureApp
+  cd SecureApp
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  npm test
 fi

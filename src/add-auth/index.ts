@@ -35,6 +35,8 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       if (framework === REACT_TS) {
         dependencies.push({type: NodeDependencyType.Default, version: '4.3.5', name: '@types/react-router-dom'});
       }
+    } else if (framework === REACT_NATIVE) {
+      dependencies.push({type: NodeDependencyType.Default, version: '1.2.0', name: '@okta/okta-react-native'})
     } else if (framework === VUE || framework == VUE_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.1.1', name: '@okta/okta-vue'});
       if (framework === VUE_TS) {
@@ -92,6 +94,7 @@ function getWorkspace(
 export const ANGULAR = 'angular';
 export const REACT = 'react';
 export const REACT_TS = 'react-ts';
+export const REACT_NATIVE = 'react-native';
 export const VUE = 'vue';
 export const VUE_TS = 'vue-ts';
 export const IONIC_ANGULAR = 'ionic/angular';
@@ -108,6 +111,9 @@ function getFramework(host: Tree): string {
     if (content.dependencies['@angular/core'] && !content.dependencies['@ionic/angular']) {
       return ANGULAR;
     } else if (content.dependencies['react']) {
+      if (content.dependencies['react-native']) {
+        return REACT_NATIVE;
+      }
       if (content.dependencies['typescript']) {
         return REACT_TS
       }
@@ -195,10 +201,18 @@ export function addAuth(options: any): Rule {
         'IonicStorageModule.forRoot()', '@ionic/storage');
     }
 
+    if (framework === REACT_NATIVE) {
+      // add a package name from the issuer
+      const parts = options.issuer.split('.');
+      options.packageName = parts[2].substring(0, parts[2].indexOf('/')) + '.'
+        + parts[1] + '.' + parts[0].substring(parts[0].lastIndexOf('/') + 1);
+    }
+
     // Setup templates to add to the project
-    const sourcePath = join(normalize(projectPath), 'src');
+    const sourceDir = (framework !== REACT_NATIVE) ? 'src' : '';
+    const sourcePath = join(normalize(projectPath), sourceDir);
     const templatesPath = join(sourcePath, '');
-    const templateSource = apply(url('./' + framework + '/src'), [
+    const templateSource = apply(url(`./${framework}/${sourceDir}`), [
       template({...options}),
       move(getSystemPath(templatesPath)),
       // fix for https://github.com/angular/angular-cli/issues/11337
