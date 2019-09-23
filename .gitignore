@@ -1,11 +1,9 @@
 # Outputs
-src/**/*.js
-!src/add-auth/react/src/App.js
-!src/add-auth/react/src/Home.js
-!src/add-auth/vue/src/router.js
 src/**/*.js.map
 src/**/*.d.ts
 !src/add-auth/react-ts/src/okta.d.ts
+src/add-auth/*.js
+src/ng-add/*.js
 coverage/
 dist/
 apps/
