@@ -302,12 +302,6 @@ schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
 
 ### iOS
 
-To run your app on iOS, edit `ios/Podfile` and change it to use iOS 11.
-
-```
-platform :ios, '11.0'
-```
-
 Configure your [iOS project to use Swift](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native#swift-configuration), since the Okta React Native library is a Swift wrapper.
 
 Then run `pod install` from the `ios` directory.
