@@ -17,14 +17,14 @@ describe('OktaDev Schematics: React Native', () => {
     expect(() => runner.runSchematic('add-auth', {}, Tree.empty())).toThrow();
   });
 
-  it('works', async () => {
+  it('works',() => {
     const tree = new UnitTestTree(new HostTree);
 
     // Add package.json
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
+    runner.runSchematic('add-auth', {...defaultOptions}, tree);
 
     expect(tree.files.length).toEqual(7);
     expect(tree.files.sort()).toEqual(['/App.js', '/Auth.js', '/auth.config.js', '/package.json',
