@@ -88,7 +88,7 @@ EOF
   npm run test:unit
 elif [ "$1" == "ionic" ] || [ "$1" == "i" ]
 then
-  ionic start ionic-cordova tabs --no-interactive
+  ionic start ionic-cordova tabs --type angular --no-interactive
   cd ionic-cordova
   npm install -D ../../oktadev*.tgz
   ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
@@ -96,7 +96,7 @@ then
   ng test --watch=false
 elif [ "$1" == "ionic-cap" ] || [ "$1" == "icap" ]
 then
-  ionic start ionic-capacitor tabs --no-interactive
+  ionic start ionic-capacitor tabs --type angular --no-interactive
   cd ionic-capacitor
   npm install -D ../../oktadev*.tgz
   ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId --platform=capacitor
