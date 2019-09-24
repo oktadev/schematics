@@ -3,7 +3,12 @@
 
 # OktaDev Schematics
 
-This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, and Ionic projects.
+This project is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, Ionic, or React Native projects.
+
+This library currently supports:
+
+- [OAuth 2.0 Authorization Code Flow](https://tools.ietf.org/html/rfc6749#section-1.3.1)
+- [Proof Key for Code Exchange (PKCE)](https://tools.ietf.org/html/rfc7636)
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
