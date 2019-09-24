@@ -224,6 +224,10 @@ export function addAuth(options: any): Rule {
           "setupFiles": [
             "./setupJest.js"
           ]
+          // The reason tests are in `tests` instead of `__tests__` is because
+          // schematics uses double underscore as a substitution indicator in filenames.
+          // If you try to put tests in __tests__, you'll get an error:
+          // Error: Option "tests" is not defined.
         };
         host.overwrite('./package.json', JSON.stringify(pkgJson));
 
