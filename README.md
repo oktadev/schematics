@@ -350,7 +350,7 @@ For more information, see the [Okta React Native SDK documentation](https://gith
 
 This project supports unit tests and integration tests.
 
-`npm run test` will run the unit tests, using Jasmine as a runner and test framework.
+`npm test` will run the unit tests, using Jasmine as a runner and test framework.
 
 `./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic-cap`, and `react-native`.
 
@@ -408,12 +408,13 @@ This project uses the following open source libraries from Okta:
 * [Okta Angular SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-angular)
 * [Okta React SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react)
 * [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-vue)
+* [Okta React Native SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native)
 
 For Ionic, it uses [Ionic AppAuth](https://github.com/wi3land/ionic-appauth).
 
 ## Help
 
-Please post any questions as issues or as a question on the [Okta Developer Forums](https://devforum.okta.com/).
+Please post any questions as issues or ask them on the [Okta Developer Forums](https://devforum.okta.com/).
 
 ## License
 
