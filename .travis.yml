@@ -20,10 +20,11 @@ addons:
       - dpkg
   chrome: stable
 before_install:
-  - npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli ionic codecov
+  - npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli ionic codecov react-native-cli
 install:
   - npm ci
 script:
+  - set -e
   - npm run build
   - npm test && npm run coverage
   # create apps and confirm tests still pass

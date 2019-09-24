@@ -106,7 +106,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     expect(pkgJson).toContain('"PHOTOLIBRARY_USAGE_DESCRIPTION"');
   });
 
-  it('works with capacitor', () => {
+  it('works with capacitor', async () => {
     const tree = new UnitTestTree(new HostTree);
 
     tree.create('/package.json', JSON.stringify(packageJson));
@@ -116,7 +116,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     capacitorOptions.platform = 'capacitor';
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    runner.runSchematic('add-auth', capacitorOptions, tree);
+    await runner.runSchematicAsync('add-auth', capacitorOptions, tree).toPromise();
 
     expect(tree.files.length).toEqual(27);
 
