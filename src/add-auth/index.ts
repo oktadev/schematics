@@ -40,7 +40,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: '3.10.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.14.0', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '16.8.6', name: 'react-dom'});
+      dependencies.push({type: NodeDependencyType.Dev, version: '16.9.0', name: 'react-dom'});
     } else if (framework === VUE || framework == VUE_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.1.1', name: '@okta/okta-vue'});
       if (framework === VUE_TS) {
@@ -229,6 +229,9 @@ export function addAuth(options: any): Rule {
           // If you try to put tests in __tests__, you'll get an error:
           // Error: Option "tests" is not defined.
         };
+        // Downgrade React Native to latest 0.60.0 release because 0.61.0 doesn't work with test setup.
+        // https://github.com/okta/samples-js-react-native/pull/18
+        pkgJson.dependencies['react-native'] = '0.60.6';
         host.overwrite('./package.json', JSON.stringify(pkgJson));
 
         // Upgrade iOS to v11
