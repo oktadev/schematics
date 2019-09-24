@@ -282,7 +282,7 @@ You will need an `issuer` and a `clientId` to begin. You can obtain those from O
 Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
 
 * From the **Applications** page, choose **Add Application**. 
-* On the Create New Application page, select **Native**. 
+* On the Create New Application page, select **Native** as the platform and click **Next**.
 * Give your app a memorable name, and click **Done**. 
 * Click the **Edit** button and add a Logout redirect URI that matches the default Login redirect URI (e.g., `com.okta.dev-123456:/callback`). 
 * Click **Save**.
