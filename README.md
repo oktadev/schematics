@@ -3,11 +3,17 @@
 
 # OktaDev Schematics
 
-This repository is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, and Ionic projects.
+This project is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, Ionic, or React Native projects.
+
+This library currently supports:
+
+- [OAuth 2.0 Authorization Code Flow](https://tools.ietf.org/html/rfc6749#section-1.3.1)
+- [Proof Key for Code Exchange (PKCE)](https://tools.ietf.org/html/rfc7636)
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
-* [Angular](#angular) | [React](#react) | [Vue](#vue) | [Ionic](#ionic) | [React Native](#react-native)
+* [Angular](#angular) | [React](#react) | [Vue](#vue) 
+* [Ionic](#ionic) | [React Native](#react-native)
 * [Testing](#testing)
 * [Contributing](#contributing)
 * [Tutorials](#tutorials)
@@ -267,7 +273,7 @@ See [Ionic's iOS](https://ionicframework.com/docs/building/ios) and [Android Dev
 
 ## React Native
 
-Create a new React native project with React Native CLI. 
+Create a new React Native project with React Native CLI. 
 
 ```
 npm install -g react-native-cli
@@ -281,7 +287,7 @@ You will need an `issuer` and a `clientId` to begin. You can obtain those from O
 Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
 
 * From the **Applications** page, choose **Add Application**. 
-* On the Create New Application page, select **Native**. 
+* On the Create New Application page, select **Native** as the platform and click **Next**.
 * Give your app a memorable name, and click **Done**. 
 * Click the **Edit** button and add a Logout redirect URI that matches the default Login redirect URI (e.g., `com.okta.dev-123456:/callback`). 
 * Click **Save**.
@@ -344,11 +350,11 @@ For more information, see the [Okta React Native SDK documentation](https://gith
 
 This project supports unit tests and integration tests.
 
-`npm run test` will run the unit tests, using Jasmine as a runner and test framework.
+`npm test` will run the unit tests, using Jasmine as a runner and test framework.
 
-`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic` and `ionic-cap`.
+`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic-cap`, and `react-native`.
 
-`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Cordova, and Ionic with Capacitor.
+`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Cordova, Ionic with Capacitor, and React Native.
 
 ## Publishing
 
@@ -402,12 +408,13 @@ This project uses the following open source libraries from Okta:
 * [Okta Angular SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-angular)
 * [Okta React SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react)
 * [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-vue)
+* [Okta React Native SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native)
 
 For Ionic, it uses [Ionic AppAuth](https://github.com/wi3land/ionic-appauth).
 
 ## Help
 
-Please post any questions as issues or as a question on the [Okta Developer Forums](https://devforum.okta.com/).
+Please post any questions as issues or ask them on the [Okta Developer Forums](https://devforum.okta.com/).
 
 ## License
 
