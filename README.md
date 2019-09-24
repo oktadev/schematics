@@ -273,7 +273,7 @@ See [Ionic's iOS](https://ionicframework.com/docs/building/ios) and [Android Dev
 
 ## React Native
 
-Create a new React native project with React Native CLI. 
+Create a new React Native project with React Native CLI. 
 
 ```
 npm install -g react-native-cli
@@ -352,9 +352,9 @@ This project supports unit tests and integration tests.
 
 `npm run test` will run the unit tests, using Jasmine as a runner and test framework.
 
-`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `react-native`, `vue`, `vue-ts`, `ionic`, and `ionic-cap`.
+`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic-cap`, and `react-native`.
 
-`./test-all.sh` will test all the options: Angular, React, React with TypeScript, React Native, Vue, Vue with TypeScript, Ionic with Cordova, and Ionic with Capacitor.
+`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Cordova, Ionic with Capacitor, and React Native.
 
 ## Publishing
 
