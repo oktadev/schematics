@@ -332,7 +332,13 @@ manifestPlaceholders = [
 ]
 ```
 
-For more information, see the [Android Setup documentation](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native#android-setup) for the Okta React Native SDK.
+Start your app and you should be able to authenticate with Okta. 🎊
+
+```
+react-native run-android
+```
+
+For more information, see the [Okta React Native SDK documentation](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native#readme).
 
 ## Testing
 

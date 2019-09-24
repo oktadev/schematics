@@ -44,7 +44,10 @@ export default class Auth extends Component {
   }
 
   componentWillUnmount() {
-    EventEmitter.removeAllListeners();
+    EventEmitter.removeAllListeners('signInSuccess');
+    EventEmitter.removeAllListeners('signOutSuccess');
+    EventEmitter.removeAllListeners('onError');
+    EventEmitter.removeAllListeners('onCancelled');
   }
 
   async componentDidUpdate() {

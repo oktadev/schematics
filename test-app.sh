@@ -107,5 +107,5 @@ then
   cd SecureApp
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm test
+  npm test -- -u
 fi
