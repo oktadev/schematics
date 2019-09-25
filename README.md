@@ -328,8 +328,8 @@ ext {
     minSdkVersion = 19
     ...
 }
-```groovy
-    
+```
+
 And add Okta's Bintray repo under `allprojects` > `repositories`:
 
 ```groovy
