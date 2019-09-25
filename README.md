@@ -320,15 +320,23 @@ react-native run-ios
 
 ### Android
 
-To run your app on Android, edit `android/build.gradle` and add the following under `allprojects` > `repositories`:
+To run your app on Android, edit `android/build.gradle` and change the `minSkdVersion` to `19`:
+
+```groovy
+ext {
+    ...
+    minSdkVersion = 19
+    ...
+}
+```groovy
+    
+And add Okta's Bintray repo under `allprojects` > `repositories`:
 
 ```groovy
 maven {
   url("https://dl.bintray.com/okta/com.okta.android")
 }
 ```
-
-Make sure your `minSdkVersion` is **19** in `android/build.gradle`.
 
 In `android/app/build.gradle`, under `android` > `defaultConfig`, add:
 
