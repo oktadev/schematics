@@ -229,9 +229,6 @@ export function addAuth(options: any): Rule {
           // If you try to put tests in __tests__, you'll get an error:
           // Error: Option "tests" is not defined.
         };
-        // Downgrade React Native to latest 0.60.0 release because 0.61.0 doesn't work with test setup.
-        // https://github.com/okta/samples-js-react-native/pull/18
-        pkgJson.dependencies['react-native'] = '0.60.6';
         host.overwrite('./package.json', JSON.stringify(pkgJson));
 
         // Upgrade iOS to v11

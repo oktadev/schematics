@@ -3,32 +3,9 @@ import Auth from '../Auth';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import { waitForState } from 'enzyme-async-helpers';
-import { NativeModules, NativeEventEmitter } from 'react-native';
-
-jest.mock('NativeEventEmitter');
+import { NativeEventEmitter } from 'react-native';
 
 const nativeEmitter = new NativeEventEmitter();
-
-jest.mock('NativeModules', () => {
-  return {
-    OktaSdkBridge: {
-      createConfig: jest.fn(),
-      signIn: jest.fn(),
-      signOut: jest.fn(),
-      getAccessToken: jest.fn(),
-      getIdToken: jest.fn(),
-      getUser: jest.fn(),
-      isAuthenticated: jest.fn(),
-      revokeAccessToken: jest.fn(),
-      revokeIdToken: jest.fn(),
-      revokeRefreshToken: jest.fn(),
-      introspectAccessToken: jest.fn(),
-      introspectIdToken: jest.fn(),
-      introspectRefreshToken: jest.fn(),
-      refreshTokens: jest.fn(),
-    }
-  }
-});
 
 jest
   .mock(
@@ -38,6 +15,9 @@ jest
   .mock(
     '../node_modules/react-native/Libraries/Components/ScrollView/ScrollView',
     () => 'ScrollView',
+  )
+  .mock(
+    '../node_modules/react-native/Libraries/EventEmitter/NativeEventEmitter',
   );
 
 global.fetch = jest
