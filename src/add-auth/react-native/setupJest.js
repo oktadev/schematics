@@ -2,6 +2,7 @@
 
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { NativeModules } from 'react-native';
 
 configure({ adapter: new Adapter() });
 
@@ -13,11 +14,19 @@ if (typeof window !== 'object') {
   global.window.navigator = {};
 }
 
-const EventEmitter = require('EventEmitter');
-const RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
-
-class NativeEventEmitter extends EventEmitter {
-  constructor() {
-    super(RCTDeviceEventEmitter.sharedSubscriber);
-  }
-}
+NativeModules.OktaSdkBridge = {
+  createConfig: jest.fn(),
+  signIn: jest.fn(),
+  signOut: jest.fn(),
+  getAccessToken: jest.fn(),
+  getIdToken: jest.fn(),
+  getUser: jest.fn(),
+  isAuthenticated: jest.fn(),
+  revokeAccessToken: jest.fn(),
+  revokeIdToken: jest.fn(),
+  revokeRefreshToken: jest.fn(),
+  introspectAccessToken: jest.fn(),
+  introspectIdToken: jest.fn(),
+  introspectRefreshToken: jest.fn(),
+  refreshTokens: jest.fn(),
+};
