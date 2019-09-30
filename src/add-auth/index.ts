@@ -234,8 +234,26 @@ export function addAuth(options: any): Rule {
         // Upgrade iOS to v11
         const podfile: Buffer | null = host.read('./ios/Podfile');
         if (podfile) {
-          const ios11 = podfile.toString().replace("platform :ios, '9.0'","platform :ios, '11.0'");
+          const ios11 = podfile.toString('UTF-8').replace("platform :ios, '9.0'","platform :ios, '11.0'");
           host.overwrite('ios/Podfile', ios11);
+        }
+
+        // Configure Gradle for Android
+        const androidBuild: Buffer | null = host.read('./android/build.gradle');
+        if (androidBuild) {
+          const minSDK = androidBuild.toString('UTF-8').replace('minSdkVersion = 16', 'minSdkVersion = 19');
+          const maven = minSDK.toString()
+            .replace("maven { url 'https://jitpack.io' }", "maven { url 'https://jitpack.io' }\n" +
+            "        maven { url 'https://dl.bintray.com/okta/com.okta.android' }");
+          host.overwrite('android/build.gradle', maven);
+        }
+
+        // Configure Gradle for App
+        const appBuild: Buffer | null = host.read('./android/app/build.gradle');
+        if (appBuild) {
+          const redirectScheme = appBuild.toString('UTF-8')
+            .replace('versionName "1.0"', 'versionName "1.0"\n        manifestPlaceholders = [ appAuthRedirectScheme: "' + options.packageName + '" ]\n');
+          host.overwrite('android/app/build.gradle', redirectScheme);
         }
       }
     }
