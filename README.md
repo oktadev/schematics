@@ -322,7 +322,7 @@ react-native run-ios
 
 A number of changes are made to Android build files to integrate Okta. 
 
-1. The `android/build.gradle` is updated to use a `minSkdVersion` of `19`
+1. The `android/build.gradle` is updated to use a `minSkdVersion` of `19`.
 2. Okta's Bintray repo is added under `allprojects` > `repositories`.
 3. In `android/app/build.gradle`, an `appAuthRedirectScheme` is added in `android` > `defaultConfig`.
 
