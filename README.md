@@ -320,33 +320,13 @@ react-native run-ios
 
 ### Android
 
-To run your app on Android, edit `android/build.gradle` and change the `minSkdVersion` to `19`:
+A number of changes are made to Android build files to integrate Okta. 
 
-```groovy
-ext {
-    ...
-    minSdkVersion = 19
-    ...
-}
-```
+1. The `android/build.gradle` is updated to use a `minSkdVersion` of `19`.
+2. Okta's Bintray repo is added under `allprojects` > `repositories`.
+3. In `android/app/build.gradle`, an `appAuthRedirectScheme` is added in `android` > `defaultConfig`.
 
-And add Okta's Bintray repo under `allprojects` > `repositories`:
-
-```groovy
-maven {
-  url("https://dl.bintray.com/okta/com.okta.android")
-}
-```
-
-In `android/app/build.gradle`, under `android` > `defaultConfig`, add:
-
-```groovy
-manifestPlaceholders = [
-  appAuthRedirectScheme: '{yourReversedOktaDomain}' // com.okta.dev-123456
-]
-```
-
-Start your app and you should be able to authenticate with Okta. 🎊
+Since all of these modifications are done for you, you can simply start your app and authenticate with Okta. 🎊
 
 ```
 react-native run-android
