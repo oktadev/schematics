@@ -243,7 +243,7 @@ export function addAuth(options: any): Rule {
         if (androidBuild) {
           const minSDK = androidBuild.toString('UTF-8').replace('minSdkVersion = 16', 'minSdkVersion = 19');
           const maven = minSDK.toString()
-            .replace("maven { url 'https://jitpack.io' }", "maven { url 'https://jitpack.io' }\n" +
+            .replace("maven { url 'https://jitpack.io' }", "maven { url 'https://www.jitpack.io' }\n" +
             "        maven { url 'https://dl.bintray.com/okta/com.okta.android' }");
           host.overwrite('android/build.gradle', maven);
         }
@@ -252,7 +252,7 @@ export function addAuth(options: any): Rule {
         const appBuild: Buffer | null = host.read('./android/app/build.gradle');
         if (appBuild) {
           const redirectScheme = appBuild.toString('UTF-8')
-            .replace('versionName "1.0"', 'versionName "1.0"\n        manifestPlaceholders = [ appAuthRedirectScheme: "' + options.packageName + '" ]\n');
+            .replace('versionName "1.0"', 'versionName "1.0"\n        manifestPlaceholders = [ appAuthRedirectScheme: "' + options.packageName + '" ]');
           host.overwrite('android/app/build.gradle', redirectScheme);
         }
       }
