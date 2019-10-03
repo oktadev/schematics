@@ -15,7 +15,8 @@
     "angular",
     "react",
     "vue",
-    "ionic"
+    "ionic",
+    "react native"
   ],
   "author": "OktaDev <devrel@okta.com>",
   "license": "Apache-2.0",
@@ -34,5 +35,8 @@
     "istanbul": "0.4.5",
     "jasmine": "3.5.0",
     "typescript": "3.6.3"
+  },
+  "resolutions": {
+    "handlebars": "4.4.2"
   }
 }
