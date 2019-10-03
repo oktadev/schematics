@@ -1,7 +1,6 @@
-[![Support](https://img.shields.io/badge/support-developer%20forum-blue.svg)][devforum] [![npm version](https://img.shields.io/npm/v/@oktadev/schematics.svg)](https://www.npmjs.com/package/@oktadev/schematics)
- [![Build Status](https://travis-ci.org/oktadeveloper/schematics.svg?branch=master)](https://travis-ci.org/oktadeveloper/schematics)
-
 # OktaDev Schematics
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Support][devforum-image]][devforum-url]
+> Fast and easy installation of Okta's OIDC SDKs
 
 This project is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, Ionic, or React Native projects.
 
@@ -402,11 +401,17 @@ For Ionic, it uses [Ionic AppAuth](https://github.com/wi3land/ionic-appauth).
 
 ## Help
 
-Please post any questions as issues or ask them on the [Okta Developer Forums](https://devforum.okta.com/).
+Please post any questions as issues or ask them on the [Okta Developer Forums][devforum-url].
 
 ## License
 
 Apache 2.0, see [LICENSE](LICENSE).
 
+[npm-image]: https://img.shields.io/npm/v/@oktadev/schematics.svg
+[npm-url]: https://www.npmjs.com/package/@oktadev/schematics
+[travis-image]: https://travis-ci.org/oktadeveloper/schematics.svg?branch=master
+[travis-url]: https://travis-ci.org/oktadeveloper/schematic
+[daviddm-image]: https://david-dm.org/oktadeveloper/schematics.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/oktadeveloper/schematics
+[devforum-image]: https://img.shields.io/badge/support-developer%20forum-blue.svg
 [devforum]: https://devforum.okta.com
-
