@@ -414,4 +414,4 @@ Apache 2.0, see [LICENSE](LICENSE).
 [daviddm-image]: https://david-dm.org/oktadeveloper/schematics.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/oktadeveloper/schematics
 [devforum-image]: https://img.shields.io/badge/support-developer%20forum-blue.svg
-[devforum]: https://devforum.okta.com
+[devforum-url]: https://devforum.okta.com
