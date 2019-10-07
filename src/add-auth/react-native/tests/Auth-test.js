@@ -121,7 +121,7 @@ describe('authentication flow', () => {
     expect(wrapper.state().context).toBe('Logged out!');
   });
 
-  it('should return user profile information from id token' , async () => {
+  it('should return user profile information from id token', async () => {
     const mockGetIdToken = require('react-native').NativeModules.OktaSdkBridge.getIdToken;
     mockGetIdToken.mockImplementationOnce(() => {
       // id_token returns { a: 'b' }
@@ -136,7 +136,7 @@ describe('authentication flow', () => {
     expect(wrapper.state().context).toContain('"a": "b"');
   });
 
-  it('should return user profile information from getUser method' , async () => {
+  it('should return user profile information from getUser method', async () => {
     const wrapper = shallow(<Auth />);
     wrapper.setState({authenticated: true});
     const profileButton = wrapper.find('Button').get(2);

@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react';
 import { SafeAreaView, ScrollView, Button, StyleSheet, Text, View } from 'react-native';
 import { createConfig, signIn, signOut, isAuthenticated, getUser, getUserFromIdToken, EventEmitter } from '@okta/okta-react-native';
 import configFile from './auth.config';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 export default class Auth extends Component {
   constructor() {
