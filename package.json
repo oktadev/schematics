@@ -25,7 +25,7 @@
   "schematics": "./src/collection.json",
   "dependencies": {
     "@angular-devkit/core": "8.3.16",
-    "@angular-devkit/schematics": "8.3.15",
+    "@angular-devkit/schematics": "8.3.16",
     "@schematics/angular": "8.3.15",
     "rxjs": "6.5.3",
     "schematics-utilities": "1.1.3"
