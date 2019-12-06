@@ -31,16 +31,16 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: '1.2.2', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.2.3', name: '@okta/okta-react'});
-      dependencies.push({type: NodeDependencyType.Default, version: '5.0.1', name: 'react-router-dom'});
+      dependencies.push({type: NodeDependencyType.Default, version: '5.1.2', name: 'react-router-dom'});
       if (framework === REACT_TS) {
-        dependencies.push({type: NodeDependencyType.Default, version: '4.3.5', name: '@types/react-router-dom'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.1.3', name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.2.1', name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.2.2', name: '@okta/okta-react-native'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.10.0', name: 'enzyme'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '1.14.0', name: 'enzyme-adapter-react-16'});
+      dependencies.push({type: NodeDependencyType.Dev, version: '1.15.1', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '16.9.0', name: 'react-dom'});
+      dependencies.push({type: NodeDependencyType.Dev, version: '16.12.0', name: 'react-dom'});
     } else if (framework === VUE || framework == VUE_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.1.1', name: '@okta/okta-vue'});
       if (framework === VUE_TS) {
@@ -51,8 +51,8 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
       if (options.platform === 'capacitor') {
         dependencies.push({type: NodeDependencyType.Default, version: '3.0.2', name: 'cordova-plugin-secure-storage'});
-        dependencies.push({type: NodeDependencyType.Default, version: '2.1.1', name: 'cordova-plugin-advanced-http'});
-        dependencies.push({type: NodeDependencyType.Default, version: '5.14.0', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '2.3.0', name: 'cordova-plugin-advanced-http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.17.1', name: '@ionic-native/http'});
       }
     }
 
