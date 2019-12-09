@@ -28,9 +28,9 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.2.2', name: '@okta/okta-angular'})
+      dependencies.push({type: NodeDependencyType.Default, version: '1.3.0', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.2.3', name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.3.0', name: '@okta/okta-react'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.1.2', name: 'react-router-dom'});
       if (framework === REACT_TS) {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.3', name: '@types/react-router-dom'});
@@ -42,7 +42,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
       dependencies.push({type: NodeDependencyType.Dev, version: '16.12.0', name: 'react-dom'});
     } else if (framework === VUE || framework == VUE_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.1.1', name: '@okta/okta-vue'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.2.0', name: '@okta/okta-vue'});
       if (framework === VUE_TS) {
         dependencies.push({type: NodeDependencyType.Dev, version: '1.1.0', name: '@types/okta__okta-vue'});
       }
@@ -52,7 +52,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       if (options.platform === 'capacitor') {
         dependencies.push({type: NodeDependencyType.Default, version: '3.0.2', name: 'cordova-plugin-secure-storage'});
         dependencies.push({type: NodeDependencyType.Default, version: '2.3.0', name: 'cordova-plugin-advanced-http'});
-        dependencies.push({type: NodeDependencyType.Default, version: '5.17.1', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.18.0', name: '@ionic-native/http'});
       }
     }
 
