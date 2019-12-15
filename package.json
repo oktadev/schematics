@@ -5,8 +5,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && jasmine src/**/*_spec.js",
-    "coverage": "istanbul cover -x 'src/**/*_spec.js' jasmine src/**/*_spec.js",
-    "preinstall": "npx npm-force-resolutions"
+    "coverage": "istanbul cover -x 'src/**/*_spec.js' jasmine src/**/*_spec.js"
   },
   "keywords": [
     "schematics",
