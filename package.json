@@ -36,7 +36,7 @@
     "chalk": "3.0.0",
     "istanbul": "0.4.5",
     "jasmine": "3.5.0",
-    "typescript": "3.6.4"
+    "typescript": "3.7.4"
   },
   "resolutions": {
     "handlebars": "4.5.3"
