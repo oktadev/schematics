@@ -28,7 +28,7 @@
     "@angular-devkit/schematics": "8.3.21",
     "@schematics/angular": "8.3.21",
     "rxjs": "6.5.4",
-    "schematics-utilities": "2.0.0"
+    "schematics-utilities": "2.0.1"
   },
   "devDependencies": {
     "@types/jasmine": "3.5.0",
