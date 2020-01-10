@@ -24,7 +24,7 @@
   "repository": "git@github.com:oktadeveloper/schematics.git",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-devkit/core": "8.3.21",
+    "@angular-devkit/core": "8.3.22",
     "@angular-devkit/schematics": "8.3.22",
     "@schematics/angular": "8.3.22",
     "rxjs": "6.5.4",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@types/jasmine": "3.5.0",
-    "@types/node": "13.1.5",
+    "@types/node": "13.1.6",
     "chalk": "3.0.0",
     "istanbul": "0.4.5",
     "jasmine": "3.5.0",
