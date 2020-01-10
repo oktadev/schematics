@@ -18,6 +18,7 @@ then
   cd angular-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  cat package.json
   ng test --watch=false && ng e2e
 elif [ "$1" == "react-ts" ] || [ "$1" == "rts" ]
 then
