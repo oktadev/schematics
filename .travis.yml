@@ -23,6 +23,7 @@ before_install:
   - npm i -g @angular-devkit/schematics-cli @angular/cli@9.0.0-rc.10 @vue/cli ionic codecov react-native-cli
 install:
   - npm ci
+  - ng --version
 script:
   - set -e
   - npm run build
