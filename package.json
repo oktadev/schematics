@@ -25,8 +25,8 @@
   "schematics": "./src/collection.json",
   "dependencies": {
     "@angular-devkit/core": "8.3.23",
-    "@angular-devkit/schematics": "8.3.22",
-    "@schematics/angular": "8.3.22",
+    "@angular-devkit/schematics": "8.3.23",
+    "@schematics/angular": "8.3.23",
     "rxjs": "6.5.4",
     "schematics-utilities": "2.0.0"
   },
@@ -36,7 +36,7 @@
     "chalk": "3.0.0",
     "istanbul": "0.4.5",
     "jasmine": "3.5.0",
-    "typescript": "3.6.4"
+    "typescript": "3.7.5"
   },
   "resolutions": {
     "handlebars": "4.5.3"
