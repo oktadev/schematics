@@ -158,7 +158,14 @@ export function addAuth(options: any): Rule {
       projectPath = project.root;
 
       if (!options.project) {
-        options.project = Object.keys(workspace.projects)[0]
+        options.project = Object.keys(workspace.projects)[0];
+      }
+
+      let style = project.architect?.build.options.styles[0];
+      if (style) {
+        options.style = style.substring(style.lastIndexOf('.') + 1, style.length);
+      } else {
+        options.style = 'css';
       }
 
       // add imports to app.module.ts
