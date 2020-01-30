@@ -348,7 +348,6 @@ This project supports unit tests and integration tests.
 To publish, simply do:
 
 ```bash
-npm run build
 npm publish
 ```
 
