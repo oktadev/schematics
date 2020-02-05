@@ -27,7 +27,7 @@
   "dependencies": {
     "@angular-devkit/core": "8.3.24",
     "@angular-devkit/schematics": "8.3.23",
-    "@schematics/angular": "8.3.23",
+    "@schematics/angular": "8.3.24",
     "rxjs": "6.5.4",
     "schematics-utilities": "2.0.0"
   },
