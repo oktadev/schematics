@@ -141,12 +141,11 @@ From the **Applications** page, choose **Add Application**. On the Create New Ap
 * Login redirect URIs: 
   * `http://localhost:8100/implicit/callback`
   * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta Org URL)
-* Grant type allowed: **Authorization Code**
-* Click **Done**
-* Click **Edit** and add Logout redirect URIs:
+* Logout redirect URIs:
   * `http://localhost:8100/implicit/logout`
   * `com.okta.dev-737523:/logout`
-* Click **Save**
+* Grant type allowed: **Authorization Code**
+* Click **Done**
 
 Copy your issuer (found under **API** > **Authorization Servers**), and client ID into the following command and run it:
 
@@ -287,9 +286,9 @@ Log in to your Okta Developer account (or [sign up](https://developer.okta.com/s
 
 * From the **Applications** page, choose **Add Application**. 
 * On the Create New Application page, select **Native** as the platform and click **Next**.
-* Give your app a memorable name, and click **Done**. 
-* Click the **Edit** button and add a Logout redirect URI that matches the default Login redirect URI (e.g., `com.okta.dev-123456:/callback`). 
-* Click **Save**.
+* Give your app a memorable name. 
+* Add a Logout redirect URI that matches the default Login redirect URI (e.g., `com.okta.dev-123456:/callback`). 
+* Click **Done**.
 
 Install Schematics globally.
 
