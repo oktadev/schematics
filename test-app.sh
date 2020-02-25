@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 framework="$1"
-issuer="https://dev-737523.oktapreview.com/oauth2/default"
-clientId="0oakbx29c18zmcNyb0h7"
+issuer="https://dev-133320.okta.com/oauth2/default"
+clientId="0oa2yegp7m3BlG8VM357"
 
 # build and package this project
 npm run build

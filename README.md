@@ -147,6 +147,8 @@ From the **Applications** page, choose **Add Application**. On the Create New Ap
 * Grant type allowed: **Authorization Code**
 * Click **Done**
 
+You will also need to add `http://localhost:8100` as a Trusted Origin in **API** > **Trusted Origins**.
+
 Copy your issuer (found under **API** > **Authorization Servers**), and client ID into the following command and run it:
 
 ```
@@ -183,17 +185,16 @@ Then, run:
 
 ```
 ionic build
-ionic capacitor add ios
+npx cap add ios
 ```
 
 Open your project in Xcode and configure code signing.
 
 ```
-ionic capacitor open ios
+npx cap open ios
 ```
 
 Add your custom scheme to `ios/App/App/Info.plist`:
-
 
 ```xml
 <key>CFBundleURLTypes</key>
@@ -241,7 +242,7 @@ Then, run:
 
 ```
 ionic build
-ionic capacitor add android
+npx cap add android
 ```
 
 Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use your reverse domain name:
@@ -264,7 +265,7 @@ Set the launchMode to `singleTask` so the URL does not trigger a new instance of
 Open your project in Android Studio and run your app.
 
 ```
-ionic capacitor open android
+npx cap open android
 ```
 
 See [Ionic's iOS](https://ionicframework.com/docs/building/ios) and [Android Development](https://ionicframework.com/docs/building/android) docs for more information.

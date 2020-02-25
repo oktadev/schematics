@@ -52,6 +52,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       if (options.platform === 'capacitor') {
         dependencies.push({type: NodeDependencyType.Default, version: '3.0.2', name: 'cordova-plugin-secure-storage'});
         dependencies.push({type: NodeDependencyType.Default, version: '2.4.1', name: 'cordova-plugin-advanced-http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '1.6.0', name: 'cordova-plugin-safariviewcontroller'});
         dependencies.push({type: NodeDependencyType.Default, version: '5.21.6', name: '@ionic-native/http'});
       }
     }
