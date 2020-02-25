@@ -11,20 +11,21 @@ const defaultOptions: any = {
 };
 
 describe('OktaDev Schematics: React', () => {
-  it('requires required issuer option', () => {
+  it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    expect(() => runner.runSchematic('add-auth', {}, Tree.empty())).toThrow();
+    const schematic = await runner.runSchematicAsync('add-auth', {}, Tree.empty());
+    await expectAsync(schematic.toPromise()).toBeRejected();
   });
 
-  it('works', () => {
+  it('works', async () => {
     const tree = new UnitTestTree(new HostTree);
 
     // Add package.json
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    runner.runSchematic('add-auth', {...defaultOptions}, tree);
+    await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
     expect(tree.files.length).toEqual(3);
     expect(tree.files.sort()).toEqual(['/package.json', '/src/App.js', '/src/Home.js']);

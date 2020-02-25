@@ -12,20 +12,21 @@ const defaultOptions: any = {
 };
 
 describe('OktaDev Schematics: React + TypeScript', () => {
-  it('requires required issuer option', () => {
+  it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    expect(() => runner.runSchematic('add-auth', {}, Tree.empty())).toThrow();
+    const schematic = await runner.runSchematicAsync('add-auth', {}, Tree.empty());
+    await expectAsync(schematic.toPromise()).toBeRejected();
   });
 
-  it('works', () => {
+  it('works', async() => {
     const tree = new UnitTestTree(new HostTree);
 
     // Add package.json
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    runner.runSchematic('add-auth', {...defaultOptions}, tree);
+    await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
     expect(tree.files.length).toEqual(4);
     expect(tree.files.sort()).toEqual(['/package.json', '/src/App.tsx', '/src/Home.tsx', '/src/okta.d.ts']);
@@ -37,18 +38,20 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
   });
 
-  it('fail with no package.json', () => {
+  it('fail with no package.json', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    expect(() => runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty())).toThrow();
+    const schematic = await runner.runSchematicAsync('add-auth', {...defaultOptions}, Tree.empty());
+    await expectAsync(schematic.toPromise()).toBeRejected();
   });
 
-  it('fail when no frameworks', () => {
+  it('fail when no frameworks', async () => {
     const pkgNoFrameworks = {...packageJson};
     delete pkgNoFrameworks.dependencies;
     const tree = new UnitTestTree(new HostTree);
     tree.create('/package.json', JSON.stringify(pkgNoFrameworks));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    expect(() => runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty())).toThrow();
+    const schematic = await runner.runSchematicAsync('add-auth', {...defaultOptions}, Tree.empty());
+    await expectAsync(schematic.toPromise()).toBeRejected();
   });
 });
