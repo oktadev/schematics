@@ -59,7 +59,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
 
     dependencies.forEach(dependency => {
       addPackageJsonDependency(host, dependency);
-      context.logger.log('info', `✅️ Added '${dependency.name} v${dependency.version}' into ${dependency.type}`);
+      context.logger.log('info', `✅️ Added '${dependency.name}' into ${dependency.type}`);
     });
 
     return host;
