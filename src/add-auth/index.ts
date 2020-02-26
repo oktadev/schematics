@@ -47,12 +47,13 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Dev, version: '1.2.0', name: '@types/okta__okta-vue'});
       }
     } else if (framework === IONIC_ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '0.4.4', name: 'ionic-appauth'});
+      dependencies.push({type: NodeDependencyType.Default, version: '0.4.6', name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
       if (options.platform === 'capacitor') {
         dependencies.push({type: NodeDependencyType.Default, version: '3.0.2', name: 'cordova-plugin-secure-storage'});
-        dependencies.push({type: NodeDependencyType.Default, version: '2.3.1', name: 'cordova-plugin-advanced-http'});
-        dependencies.push({type: NodeDependencyType.Default, version: '5.19.1', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '2.4.1', name: 'cordova-plugin-advanced-http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '1.6.0', name: 'cordova-plugin-safariviewcontroller'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.21.6', name: '@ionic-native/http'});
       }
     }
 

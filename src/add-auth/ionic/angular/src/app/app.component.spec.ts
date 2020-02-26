@@ -1,13 +1,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TestBed, async } from '@angular/core/testing';
-
 import { Platform } from '@ionic/angular';<% if (platform === 'cordova') { %>
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';<% } %>
-
-import { AppComponent } from './app.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { IonicStorageModule } from '@ionic/storage';
+import { async, TestBed } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
 
 describe('AppComponent', () => {
 
@@ -22,12 +20,12 @@ describe('AppComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [HttpClientTestingModule,  IonicStorageModule.forRoot()],
+      imports: [HttpClientTestingModule, AuthModule],
       providers: [<% if (platform === 'cordova') { %>{ provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },<% } %>
         { provide: Platform, useValue: platformSpy }
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

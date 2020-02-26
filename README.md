@@ -141,12 +141,13 @@ From the **Applications** page, choose **Add Application**. On the Create New Ap
 * Login redirect URIs: 
   * `http://localhost:8100/implicit/callback`
   * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta Org URL)
-* Grant type allowed: **Authorization Code**
-* Click **Done**
-* Click **Edit** and add Logout redirect URIs:
+* Logout redirect URIs:
   * `http://localhost:8100/implicit/logout`
   * `com.okta.dev-737523:/logout`
-* Click **Save**
+* Grant type allowed: **Authorization Code**
+* Click **Done**
+
+You will also need to add `http://localhost:8100` as a Trusted Origin in **API** > **Trusted Origins**.
 
 Copy your issuer (found under **API** > **Authorization Servers**), and client ID into the following command and run it:
 
@@ -184,17 +185,16 @@ Then, run:
 
 ```
 ionic build
-ionic capacitor add ios
+npx cap add ios
 ```
 
 Open your project in Xcode and configure code signing.
 
 ```
-ionic capacitor open ios
+npx cap open ios
 ```
 
 Add your custom scheme to `ios/App/App/Info.plist`:
-
 
 ```xml
 <key>CFBundleURLTypes</key>
@@ -242,7 +242,7 @@ Then, run:
 
 ```
 ionic build
-ionic capacitor add android
+npx cap add android
 ```
 
 Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use your reverse domain name:
@@ -265,7 +265,7 @@ Set the launchMode to `singleTask` so the URL does not trigger a new instance of
 Open your project in Android Studio and run your app.
 
 ```
-ionic capacitor open android
+npx cap open android
 ```
 
 See [Ionic's iOS](https://ionicframework.com/docs/building/ios) and [Android Development](https://ionicframework.com/docs/building/android) docs for more information.
@@ -287,9 +287,9 @@ Log in to your Okta Developer account (or [sign up](https://developer.okta.com/s
 
 * From the **Applications** page, choose **Add Application**. 
 * On the Create New Application page, select **Native** as the platform and click **Next**.
-* Give your app a memorable name, and click **Done**. 
-* Click the **Edit** button and add a Logout redirect URI that matches the default Login redirect URI (e.g., `com.okta.dev-123456:/callback`). 
-* Click **Save**.
+* Give your app a memorable name. 
+* Add a Logout redirect URI that matches the default Login redirect URI (e.g., `com.okta.dev-123456:/callback`). 
+* Click **Done**.
 
 Install Schematics globally.
 

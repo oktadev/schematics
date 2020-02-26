@@ -24,7 +24,7 @@ import { AppComponent } from './app.component';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule, AppRoutingModule],
   providers: [
     StatusBar,
     SplashScreen,
@@ -44,13 +44,14 @@ const existingPlugins = {
 };
 
 describe('OktaDev Schematics: Ionic/Angular', () => {
-  it('requires required issuer option', () => {
+  it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    expect(() => runner.runSchematic('add-auth', {}, Tree.empty())).toThrow();
+    const schematic = await runner.runSchematicAsync('add-auth', {}, Tree.empty());
+    await expectAsync(schematic.toPromise()).toBeRejected();
   });
 
-  it('works with cordova', () => {
+  it('works with cordova', async() => {
     const tree = new UnitTestTree(new HostTree);
     const pkg: any = {...packageJson};
     pkg.cordova = {...existingPlugins};
@@ -61,7 +62,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     tree.create('/src/app/app.module.ts', defaultAppModule);
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    runner.runSchematic('add-auth', {...defaultOptions}, tree);
+    await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
     expect(tree.files.length).toEqual(27);
     expect(tree.files.sort()).toEqual([ '/package.json',
@@ -73,15 +74,15 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
       '/src/app/auth/auth-http.service.ts',
       '/src/app/auth/auth.module.ts',
       '/src/app/auth/auth.service.ts',
-      '/src/app/auth/browser.service.ts',
-      '/src/app/auth/cordova-requestor.service.ts',
+      '/src/app/auth/factories/browser.factory.ts',
+      '/src/app/auth/factories/http.factory.ts',
+      '/src/app/auth/factories/index.ts',
+      '/src/app/auth/factories/storage.factory.ts',
       '/src/app/auth/implicit/auth-callback/auth-callback.module.ts',
       '/src/app/auth/implicit/auth-callback/auth-callback.page.ts',
       '/src/app/auth/implicit/end-session/end-session.module.ts',
       '/src/app/auth/implicit/end-session/end-session.page.ts',
-      '/src/app/auth/requestor.service.ts',
-      '/src/app/auth/secure-storage.service.ts',
-      '/src/app/auth/storage.service.ts',
+      '/src/app/auth/ng-http.service.ts',
       '/src/app/auth/user-info.model.ts',
       '/src/app/login/login.module.ts',
       '/src/app/login/login.page.html',

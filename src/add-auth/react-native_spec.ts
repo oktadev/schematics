@@ -11,10 +11,11 @@ const defaultOptions: any = {
 };
 
 describe('OktaDev Schematics: React Native', () => {
-  it('requires required issuer option', () => {
+  it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    expect(() => runner.runSchematic('add-auth', {}, Tree.empty())).toThrow();
+    const schematic = await runner.runSchematicAsync('add-auth', {}, Tree.empty());
+    await expectAsync(schematic.toPromise()).toBeRejected();
   });
 
   it('works', async () => {
@@ -38,8 +39,9 @@ describe('OktaDev Schematics: React Native', () => {
     expect(config).toContain(`clientId: '${defaultOptions.clientId}'`);
   });
 
-  it('fail with no package.json', () => {
+  it('fail with no package.json', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    expect(() => runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty())).toThrow();
+    const schematic = await runner.runSchematicAsync('add-auth', {...defaultOptions}, Tree.empty());
+    await expectAsync(schematic.toPromise()).toBeRejected();
   });
 });

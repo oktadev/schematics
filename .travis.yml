@@ -6,7 +6,7 @@ services:
   - xvfb
 language: node_js
 node_js:
-  - "12.16.0"
+  - "12.16.1"
 cache:
   directories:
     - node_modules
@@ -20,7 +20,7 @@ addons:
       - dpkg
   chrome: stable
 before_install:
-  - npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli ionic codecov react-native-cli
+  - npm i -g @angular-devkit/schematics-cli@0.803.25 @angular/cli @vue/cli @ionic/cli codecov react-native-cli
 install:
   - npm ci
 script:
@@ -33,6 +33,6 @@ after_success:
   - codecov
 notifications:
   webhooks:
-    on_success: change
+    on_success: always
     on_failure: always
-    on_start: false
+    on_start: never

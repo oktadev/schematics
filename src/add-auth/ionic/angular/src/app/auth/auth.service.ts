@@ -1,11 +1,7 @@
+import { Requestor, StorageBackend } from '@openid/appauth';
 import { Platform } from '@ionic/angular';
 import { Injectable, NgZone } from '@angular/core';
-import { IonicAuth, IonicAuthorizationRequestHandler } from 'ionic-appauth';
-import { BrowserService } from './browser.service';
-import { CordovaRequestorService } from './cordova-requestor.service';
-import { SecureStorageService } from './secure-storage.service';
-import { StorageService } from './storage.service';
-import { RequestorService } from './requestor.service';
+import { IonicAuth, Browser} from 'ionic-appauth';
 <% if (platform === 'capacitor') { %>import { Plugins, AppUrlOpen } from '@capacitor/core';
 
 const { App } = Plugins;<% } %>
@@ -19,20 +15,12 @@ const { App } = Plugins;<% } %>
 })
 export class AuthService extends IonicAuth {
 
-  constructor(requestor: RequestorService, cordovaRequestor: CordovaRequestorService,
-              storage: StorageService, secureStorage: SecureStorageService, browser: BrowserService,
-              private platform: Platform, private ngZone: NgZone) {<% if (platform === 'cordova') { %>
-      super((platform.is('cordova')) ? browser : undefined,
-        (platform.is('cordova')) ? secureStorage : storage,
-        (platform.is('cordova')) ? cordovaRequestor : requestor);<% } else { %>
-      super((platform.is('mobile') && !platform.is('mobileweb')) ? browser : undefined,
-        (platform.is('mobile') && !platform.is('mobileweb')) ? secureStorage : storage,
-        (platform.is('mobile') && !platform.is('mobileweb')) ? cordovaRequestor : requestor,
-        undefined, undefined,
-        (platform.is('mobile') && !platform.is('mobileweb')) ?
-          new IonicAuthorizationRequestHandler(browser, secureStorage) :
-          new IonicAuthorizationRequestHandler(browser, storage)
-      );<% } %>
+  constructor(requestor: Requestor,
+              storage: StorageBackend,
+              browser: Browser,
+              private platform: Platform,
+              private ngZone: NgZone) {
+    super(browser, storage, requestor);
 
     this.addConfig();
   }
