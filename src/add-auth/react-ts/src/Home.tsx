@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withAuth } from '@okta/okta-react';
+import { withOktaAuth } from '@okta/okta-react';
 import { Auth } from './App';
 
 import './App.css';
@@ -13,7 +13,7 @@ interface HomeState {
   authenticated: boolean;
 }
 
-export default withAuth(class Home extends Component<HomeProps, HomeState> {
+export default withOktaAuth(class Home extends Component<HomeProps, HomeState> {
   constructor(props: HomeProps) {
     super(props);
     this.state = {authenticated: false};

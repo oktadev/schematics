@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { withAuth } from '@okta/okta-react';
+import { withOktaAuth } from '@okta/okta-react';
 import './App.css';
 import logo from './logo.svg';
 
-export default withAuth(class Home extends Component {
+export default withOktaAuth(class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {authenticated: false};
