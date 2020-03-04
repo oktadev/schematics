@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Security, LoginCallback } from '@okta/okta-react';
+import { LoginCallback, Security } from '@okta/okta-react';
 import Home from './Home';
 
 const config = {
