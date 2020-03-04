@@ -5,6 +5,7 @@ issuer="https://dev-133320.okta.com/oauth2/default"
 clientId="0oa2yegp7m3BlG8VM357"
 
 # build and package this project
+rm *.tgz
 npm run build
 npm pack
 

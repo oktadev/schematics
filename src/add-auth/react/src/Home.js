@@ -6,25 +6,8 @@ import logo from './logo.svg';
 export default withOktaAuth(class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {authenticated: false};
-    this.checkAuthentication = this.checkAuthentication.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-  }
-
-  async checkAuthentication() {
-    const authenticated = this.props.authState.isAuthenticated();
-    if (authenticated !== this.state.authenticated) {
-      this.setState({authenticated});
-    }
-  }
-
-  async componentDidMount() {
-    await this.checkAuthentication();
-  }
-
-  async componentDidUpdate() {
-    await this.checkAuthentication();
   }
 
   async login() {
@@ -36,9 +19,8 @@ export default withOktaAuth(class Home extends Component {
   }
 
   render() {
-    const {authenticated} = this.state;
     let body = null;
-    if (authenticated) {
+    if (this.props.authState.isAuthenticated) {
       body = (
         <div className="Buttons">
           <button onClick={this.logout}>Logout</button>
@@ -57,7 +39,9 @@ export default withOktaAuth(class Home extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo"/>
-          <h1 className="App-title">Welcome to React</h1>
+          <p>
+            Edit <code>src/Home.js</code> and save to reload.
+          </p>
           <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
             Learn React
           </a>
