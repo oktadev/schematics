@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withAuth } from '@okta/okta-react';
+import { withOktaAuth } from '@okta/okta-react';
 import { Auth } from './App';
 
 import './App.css';
@@ -13,42 +13,24 @@ interface HomeState {
   authenticated: boolean;
 }
 
-export default withAuth(class Home extends Component<HomeProps, HomeState> {
+export default withOktaAuth(class Home extends Component<HomeProps, HomeState> {
   constructor(props: HomeProps) {
     super(props);
-    this.state = {authenticated: false};
-    this.checkAuthentication = this.checkAuthentication.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
 
-  async checkAuthentication() {
-    const authenticated = await this.props.auth.isAuthenticated();
-    if (authenticated !== this.state.authenticated) {
-      this.setState({authenticated});
-    }
-  }
-
-  async componentDidMount() {
-    await this.checkAuthentication();
-  }
-
-  async componentDidUpdate() {
-    await this.checkAuthentication();
-  }
-
   async login() {
-    this.props.auth.login('/');
+    this.props.authService.login('/');
   }
 
   async logout() {
-    this.props.auth.logout('/');
+    this.props.authService.logout('/');
   }
 
   render() {
-    const {authenticated} = this.state;
     let body = null;
-    if (authenticated) {
+    if (this.props.authState.isAuthenticated) {
       body = (
         <div className="Buttons">
           <button onClick={this.logout}>Logout</button>
@@ -67,7 +49,9 @@ export default withAuth(class Home extends Component<HomeProps, HomeState> {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo"/>
-          <h1 className="App-title">Welcome to React</h1>
+          <p>
+            Edit <code>src/Home.tsx</code> and save to reload.
+          </p>
           <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
             Learn React
           </a>

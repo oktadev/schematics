@@ -5,6 +5,7 @@ issuer="https://dev-133320.okta.com/oauth2/default"
 clientId="0oa2yegp7m3BlG8VM357"
 
 # build and package this project
+rm *.tgz
 npm run build
 npm pack
 
@@ -21,7 +22,7 @@ then
   ng test --watch=false && ng e2e
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then
-  npx create-react-app react-app-ts --typescript
+  npx create-react-app react-app-ts --template typescript
   cd react-app-ts
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
@@ -91,15 +92,14 @@ then
   ionic start ionic-cordova tabs --type angular --cordova --no-interactive
   cd ionic-cordova
   npm install -D ../../oktadev*.tgz
-  ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
-  # ng add @oktadev/schematics --configUri=http://localhost:8080/api/auth-info --issuer=1 --clientId=2
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   ng test --watch=false
 elif [ $framework == "ionic-cap" ] || [ $framework == "icap" ]
 then
   ionic start ionic-capacitor tabs --type angular --capacitor
   cd ionic-capacitor
   npm install -D ../../oktadev*.tgz
-  ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId --platform=capacitor
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --platform=capacitor
   ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
