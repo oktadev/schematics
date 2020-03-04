@@ -10,7 +10,7 @@ const config = {
   pkce: true
 };
 
-export interface AuthService {
+export interface Auth {
   login(redirectUri: string): {};
   logout(redirectUri: string): {};
   isAuthenticated(): boolean;
