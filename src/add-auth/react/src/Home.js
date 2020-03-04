@@ -13,7 +13,7 @@ export default withOktaAuth(class Home extends Component {
   }
 
   async checkAuthentication() {
-    const authenticated = await this.props.authService.isAuthenticated();
+    const authenticated = this.props.authState.isAuthenticated();
     if (authenticated !== this.state.authenticated) {
       this.setState({authenticated});
     }
@@ -28,11 +28,11 @@ export default withOktaAuth(class Home extends Component {
   }
 
   async login() {
-    this.props.auth.login('/');
+    this.props.authService.login('/');
   }
 
   async logout() {
-    this.props.auth.logout('/');
+    this.props.authService.logout('/');
   }
 
   render() {
