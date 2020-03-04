@@ -55,10 +55,10 @@ npx create-react-app secure-react
 cd secure-react
 ```
 
-If you'd like to use TypeScript, add the `--typescript` flag.
+If you'd like to use TypeScript, add the `--template typescript` flag.
 
 ```
-npx create-react-app secure-react --typescript
+npx create-react-app secure-react --template typescript
 cd secure-react
 ```
 
