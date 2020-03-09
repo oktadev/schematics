@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@types/jasmine": "3.5.7",
-    "@types/node": "13.7.7",
+    "@types/node": "13.9.0",
     "chalk": "3.0.0",
     "istanbul": "0.4.5",
     "jasmine": "3.5.0",
