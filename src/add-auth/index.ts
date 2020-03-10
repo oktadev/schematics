@@ -28,7 +28,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '2.0.0, name: '@okta/okta-angular'})
+      dependencies.push({type: NodeDependencyType.Default, version: '2.0.0', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '2.0.0', name: '@okta/okta-react'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.1.2', name: 'react-router-dom'});
