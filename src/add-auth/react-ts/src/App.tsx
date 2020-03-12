@@ -10,13 +10,6 @@ const config = {
   pkce: true
 };
 
-export interface Auth {
-  login(redirectUri: string): {};
-  logout(redirectUri: string): {};
-  isAuthenticated(): boolean;
-  getAccessToken(): string;
-}
-
 class App extends Component {
 
   render() {
