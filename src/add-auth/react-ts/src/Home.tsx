@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { withOktaAuth } from '@okta/okta-react';
-import { Auth } from './App';
-
 import './App.css';
 import logo from './logo.svg';
 
 interface HomeProps {
-  auth: Auth;
+  authService: any;
+  authState: any;
 }
 
 interface HomeState {
-  authenticated: boolean;
 }
 
 export default withOktaAuth(class Home extends Component<HomeProps, HomeState> {
@@ -21,11 +19,11 @@ export default withOktaAuth(class Home extends Component<HomeProps, HomeState> {
   }
 
   async login() {
-    this.props.authService.login('/');
+    await this.props.authService.login();
   }
 
   async logout() {
-    this.props.authService.logout('/');
+    await this.props.authService.logout();
   }
 
   render() {
