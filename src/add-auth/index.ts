@@ -40,20 +40,20 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.2', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '16.12.0', name: 'react-dom'});
+      dependencies.push({type: NodeDependencyType.Dev, version: '16.13.0', name: 'react-dom'});
     } else if (framework === VUE || framework == VUE_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.3.0', name: '@okta/okta-vue'});
       if (framework === VUE_TS) {
         dependencies.push({type: NodeDependencyType.Dev, version: '1.2.0', name: '@types/okta__okta-vue'});
       }
     } else if (framework === IONIC_ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '0.4.7', name: 'ionic-appauth'});
+      dependencies.push({type: NodeDependencyType.Default, version: '0.5.1', name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
       if (options.platform === 'capacitor') {
         dependencies.push({type: NodeDependencyType.Default, version: '3.0.2', name: 'cordova-plugin-secure-storage'});
         dependencies.push({type: NodeDependencyType.Default, version: '2.4.1', name: 'cordova-plugin-advanced-http'});
         dependencies.push({type: NodeDependencyType.Default, version: '1.6.0', name: 'cordova-plugin-safariviewcontroller'});
-        dependencies.push({type: NodeDependencyType.Default, version: '5.21.6', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.22.0', name: '@ionic-native/http'});
       }
     }
 
