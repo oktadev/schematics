@@ -29,7 +29,7 @@
     "@angular-devkit/schematics": "9.0.7",
     "@schematics/angular": "9.0.7",
     "rxjs": "6.5.4",
-    "schematics-utilities": "2.0.1"
+    "schematics-utilities": "2.0.0"
   },
   "devDependencies": {
     "@types/jasmine": "3.5.10",
