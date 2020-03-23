@@ -26,14 +26,14 @@
   "schematics": "./src/collection.json",
   "dependencies": {
     "@angular-devkit/core": "9.0.7",
-    "@angular-devkit/schematics": "9.0.6",
+    "@angular-devkit/schematics": "9.0.7",
     "@schematics/angular": "9.0.7",
     "rxjs": "6.5.4",
-    "schematics-utilities": "2.0.0"
+    "schematics-utilities": "2.0.1"
   },
   "devDependencies": {
     "@types/jasmine": "3.5.9",
-    "@types/node": "13.9.1",
+    "@types/node": "13.9.3",
     "chalk": "3.0.0",
     "istanbul": "0.4.5",
     "jasmine": "3.5.0",
