@@ -7,7 +7,7 @@
     "test": "npm run build && jasmine src/**/*_spec.js",
     "coverage": "istanbul cover -x 'src/**/*_spec.js' jasmine src/**/*_spec.js",
     "prepublishOnly": "npm run build",
-    "check-deps": "ncu --packageFile dependencies.json"
+    "check-deps": "ncu --packageFile package-sdks.json"
   },
   "keywords": [
     "schematics",
