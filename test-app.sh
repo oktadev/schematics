@@ -2,7 +2,7 @@
 
 framework="$1"
 issuer="https://dev-133320.okta.com/oauth2/default"
-clientId="0oa2yegp7m3BlG8VM357"
+clientId="0oa3gtg790ZSIjPD5357"
 
 # build and package this project
 rm *.tgz
@@ -43,17 +43,20 @@ then
     "@vue/cli-plugin-babel": {},
     "@vue/cli-plugin-typescript": {
       "classComponent": true,
-      "tsLint": true,
-      "lintOn": [
-        "save"
-      ],
       "useTsWithBabel": true
     },
-    "@vue/cli-plugin-unit-jest": {},
+    "@vue/cli-plugin-router": {
+      "historyMode": true
+    },
+    "@vue/cli-plugin-eslint": {
+      "config": "base",
+      "lintOn": [
+        "save"
+      ]
+    },
+    "@vue/cli-plugin-unit-mocha": {},
     "@vue/cli-plugin-e2e-cypress": {}
-  },
-  "router": true,
-  "routerHistoryMode": false
+  }
 }
 EOF
 )
@@ -69,6 +72,9 @@ then
   "useConfigFiles": true,
   "plugins": {
     "@vue/cli-plugin-babel": {},
+    "@vue/cli-plugin-router": {
+      "historyMode": true
+    },
     "@vue/cli-plugin-eslint": {
       "config": "base",
       "lintOn": [
@@ -76,9 +82,7 @@ then
       ]
     },
     "@vue/cli-plugin-unit-jest": {}
-  },
-  "router": true,
-  "routerHistoryMode": true
+  }
 }
 EOF
 )

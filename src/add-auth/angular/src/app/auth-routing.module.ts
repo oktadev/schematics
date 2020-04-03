@@ -11,8 +11,7 @@ const oktaConfig = {
   issuer: '<%= issuer %>',
   redirectUri: window.location.origin + '/implicit/callback',
   clientId: '<%= clientId %>',
-  scopes: ['openid', 'profile'],
-  pkce: true
+  scopes: ['openid', 'profile']
 };
 
 const routes: Routes = [
