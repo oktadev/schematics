@@ -6,8 +6,7 @@ import Home from './Home';
 const config = {
   issuer: '<%= issuer %>',
   redirect_uri: window.location.origin + '/implicit/callback',
-  client_id: '<%= clientId %>',
-  pkce: true
+  client_id: '<%= clientId %>'
 };
 
 class App extends Component {

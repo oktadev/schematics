@@ -7,8 +7,7 @@ Vue.use(Router)
 Vue.use(Auth, {
   issuer: '<%= issuer %>',
   client_id: '<%= clientId %>',
-  redirect_uri: window.location.origin + '/implicit/callback',
-  pkce: true
+  redirect_uri: window.location.origin + '/implicit/callback'
 })
 
 const router = new Router({
