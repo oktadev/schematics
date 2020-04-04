@@ -48,12 +48,14 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       }
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: '0.5.1', name: 'ionic-appauth'});
-      dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
+      dependencies.push({type: NodeDependencyType.Default, version: '5.23.0', name: '@ionic-native/secure-storage'});
       if (options.platform === 'capacitor') {
         dependencies.push({type: NodeDependencyType.Default, version: '5.0.1', name: 'cordova-plugin-secure-storage-echo'});
         dependencies.push({type: NodeDependencyType.Default, version: '2.4.1', name: 'cordova-plugin-advanced-http'});
         dependencies.push({type: NodeDependencyType.Default, version: '1.6.0', name: 'cordova-plugin-safariviewcontroller'});
         dependencies.push({type: NodeDependencyType.Default, version: '5.23.0', name: '@ionic-native/http'});
+      } else {
+        dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
       }
     }
 
@@ -202,6 +204,8 @@ export function addAuth(options: any): Rule {
           }
           host.overwrite('./package.json', JSON.stringify(pkgJson));
         }
+        addModuleImportToModule(host, 'src/app/app.module.ts',
+          'IonicStorageModule.forRoot()', '@ionic/storage');
       }
 
       // add imports to app.module.ts
@@ -209,8 +213,6 @@ export function addAuth(options: any): Rule {
         'HttpClientModule', '@angular/common/http');
       addModuleImportToModule(host, 'src/app/app.module.ts',
         'AuthModule', './auth/auth.module');
-      addModuleImportToModule(host, 'src/app/app.module.ts',
-        'IonicStorageModule.forRoot()', '@ionic/storage');
     }
 
     if (framework === REACT_NATIVE) {
