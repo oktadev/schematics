@@ -50,7 +50,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: '0.5.1', name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
       if (options.platform === 'capacitor') {
-        dependencies.push({type: NodeDependencyType.Default, version: '3.0.2', name: 'cordova-plugin-secure-storage'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.0.1', name: 'cordova-plugin-secure-storage-echo'});
         dependencies.push({type: NodeDependencyType.Default, version: '2.4.1', name: 'cordova-plugin-advanced-http'});
         dependencies.push({type: NodeDependencyType.Default, version: '1.6.0', name: 'cordova-plugin-safariviewcontroller'});
         dependencies.push({type: NodeDependencyType.Default, version: '5.23.0', name: '@ionic-native/http'});
@@ -297,7 +297,7 @@ export function cordovaNode(packageName: string) {
       'cordova-plugin-advanced-http': {},
       'cordova-plugin-safariviewcontroller': {},
       'cordova-plugin-inappbrowser': {},
-      'cordova-plugin-secure-storage': {},
+      'cordova-plugin-secure-storage-echo': {},
       'cordova-plugin-customurlscheme': {
         'URL_SCHEME': packageName
       },
