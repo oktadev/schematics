@@ -144,7 +144,9 @@ From the **Applications** page, choose **Add Application**. On the Create New Ap
 * Logout redirect URIs:
   * `http://localhost:8100/implicit/logout`
   * `com.okta.dev-737523:/logout`
-* Grant type allowed: **Authorization Code**
+* Grant type allowed: 
+  - [x] **Authorization Code**
+  - [x] **Refresh Token**
 * Click **Done**
 
 You will also need to add `http://localhost:8100` as a Trusted Origin in **API** > **Trusted Origins**.
