@@ -2,6 +2,7 @@ import { Requestor, StorageBackend } from '@openid/appauth';
 import { Platform } from '@ionic/angular';
 import { Injectable, NgZone } from '@angular/core';
 import { IonicAuth, Browser} from 'ionic-appauth';
+import { environment } from '../../environments/environment';
 <% if (platform === 'capacitor') { %>import { Plugins, AppUrlOpen } from '@capacitor/core';
 
 const { App } = Plugins;<% } %>
@@ -51,7 +52,7 @@ export class AuthService extends IonicAuth {
     const scopes = 'openid profile' + (this.onDevice() ? ' offline_access' : '');
     const redirectUri = this.onDevice() ? '<%= packageName %>:/callback' : window.location.origin + '/implicit/callback';
     const logoutRedirectUri = this.onDevice() ? '<%= packageName %>:/logout' : window.location.origin + '/implicit/logout';
-    <% if (configUri) { %>const AUTH_CONFIG_URI = '<%= configUri %>';
+    <% if (configUri) { %>const AUTH_CONFIG_URI = `${environment.apiUrl}/<%= configUri %>`;
 
     if (await this.storage.getItem(AUTH_CONFIG_URI)) {
       this.authConfig = JSON.parse(await this.storage.getItem(AUTH_CONFIG_URI));
