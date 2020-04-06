@@ -100,7 +100,7 @@ then
   ng test --watch=false
 elif [ $framework == "ionic-cap" ] || [ $framework == "icap" ]
 then
-  ionic start ionic-capacitor tabs --type angular --capacitor
+  ionic start ionic-capacitor tabs --type angular --capacitor --no-interactive
   cd ionic-capacitor
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --platform=capacitor
@@ -112,4 +112,6 @@ then
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm test -- -u
+else
+  echo "No '${framework}' framework found!"
 fi
