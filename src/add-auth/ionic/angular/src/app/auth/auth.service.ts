@@ -48,16 +48,16 @@ export class AuthService extends IonicAuth {
   }
 
   private async addConfig() {
-    const scopes = 'openid profile offline_access';
+    const scopes = 'openid profile' + (this.onDevice() ? ' offline_access' : '');
     const redirectUri = this.onDevice() ? '<%= packageName %>:/callback' : window.location.origin + '/implicit/callback';
-    const logoutRedirectUri = this.onDevice() ? '<%= packageName %>:/logout' : window.location.origin + '/implicit/callback';
+    const logoutRedirectUri = this.onDevice() ? '<%= packageName %>:/logout' : window.location.origin + '/implicit/logout';
     <% if (configUri) { %>const AUTH_CONFIG_URI = '<%= configUri %>';
 
     if (await this.storage.getItem(AUTH_CONFIG_URI)) {
       this.authConfig = JSON.parse(await this.storage.getItem(AUTH_CONFIG_URI));
       await this.storage.removeItem(AUTH_CONFIG_URI);
     } else {
-      // try to get the oauth settings from the server
+      // try to get the OIDC settings from the server
       this.requestor.xhr({method: 'GET', url: AUTH_CONFIG_URI}).then(async (data: any) => {
         this.authConfig = {
           identity_client: data.clientId,
