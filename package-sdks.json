@@ -4,9 +4,9 @@
   "description": "Dependencies for npm-check-updates",
   "dependencies": {
     "@okta/okta-angular": "2.0.0",
-    "@okta/okta-react": "3.0.0",
+    "@okta/okta-react": "3.0.1",
     "react-router-dom": "5.1.2",
-    "@types/react-router-dom": "5.1.3",
+    "@types/react-router-dom": "5.1.4",
     "@okta/okta-react-native": "1.3.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
@@ -19,6 +19,6 @@
     "cordova-plugin-secure-storage": "3.0.2",
     "cordova-plugin-advanced-http": "2.4.1",
     "cordova-plugin-safariviewcontroller": "1.6.0",
-    "@ionic-native/http": "5.23.0"
+    "@ionic-native/http": "5.24.0"
   }
 }
