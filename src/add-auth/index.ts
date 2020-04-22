@@ -31,12 +31,12 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: '2.0.0', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '3.0.1', name: '@okta/okta-react'});
-      dependencies.push({type: NodeDependencyType.Default, version: '5.1.4', name: 'react-router-dom'});
+      dependencies.push({type: NodeDependencyType.Default, version: '5.1.2', name: 'react-router-dom'});
       if (framework === REACT_TS) {
-        dependencies.push({type: NodeDependencyType.Default, version: '5.1.3', name: '@types/react-router-dom'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.1.4', name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.3.0', name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.4.0', name: '@okta/okta-react-native'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.2', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
