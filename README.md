@@ -123,8 +123,8 @@ See the [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages
 Create a new Ionic + Angular project with Ionic CLI. You **must** use the `tabs` layout for everything to work currently. 
 
 ```
-npm install -g ionic
-ionic start secure-ionic tabs
+npm install -g @ionic/cli
+ionic start secure-ionic tabs --type=angular
 cd secure-ionic
 ```
 
