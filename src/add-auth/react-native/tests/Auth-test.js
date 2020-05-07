@@ -137,6 +137,8 @@ describe('authentication flow', () => {
   });
 
   it('should return user profile information from getUser method', async () => {
+    const mockGetUser = require('react-native').NativeModules.OktaSdkBridge.getUser;
+    mockGetUser.mockResolvedValue({ "name": "Mock User" });
     const wrapper = shallow(<Auth />);
     wrapper.setState({authenticated: true});
     const profileButton = wrapper.find('Button').get(2);
