@@ -33,7 +33,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: '3.0.1', name: '@okta/okta-react'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.1.2', name: 'react-router-dom'});
       if (framework === REACT_TS) {
-        dependencies.push({type: NodeDependencyType.Default, version: '5.1.4', name: '@types/react-router-dom'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.1.5', name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.4.0', name: '@okta/okta-react-native'});
@@ -53,7 +53,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: '5.0.1', name: 'cordova-plugin-secure-storage-echo'});
         dependencies.push({type: NodeDependencyType.Default, version: '2.4.1', name: 'cordova-plugin-advanced-http'});
         dependencies.push({type: NodeDependencyType.Default, version: '1.6.0', name: 'cordova-plugin-safariviewcontroller'});
-        dependencies.push({type: NodeDependencyType.Default, version: '5.24.0', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.25.0', name: '@ionic-native/http'});
       } else {
         dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
       }
