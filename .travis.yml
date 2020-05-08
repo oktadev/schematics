@@ -21,6 +21,16 @@ addons:
   chrome: stable
 before_install:
   - npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli @ionic/cli codecov react-native-cli
+env:
+  matrix:
+    - APP=angular
+    - APP=react
+    - APP=react-ts
+    - APP=vue
+    - APP=vue-ts
+    - APP=ionic
+    - APP=ionic-capacitor
+    - APP=react-native
 install:
   - npm ci
 script:
@@ -28,7 +38,7 @@ script:
   - npm run build
   - npm test && npm run coverage
   # create apps and confirm tests still pass
-  - ./test-all.sh
+  - ./test-app.sh $APP
 after_success:
   - codecov
 notifications:
