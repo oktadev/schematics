@@ -3,11 +3,11 @@ import Auth from '../Auth';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import { waitForState } from 'enzyme-async-helpers';
-import { NativeEventEmitter } from 'react-native';
+import { NativeEventEmitter, NativeModules } from 'react-native';
 
 const nativeEmitter = new NativeEventEmitter();
-const mockGetIdToken = require('react-native').NativeModules.OktaSdkBridge.getIdToken;
-const mockGetUser = require('react-native').NativeModules.OktaSdkBridge.getUser;
+const mockGetIdToken = NativeModules.OktaSdkBridge.getIdToken;
+const mockGetUser = NativeModules.OktaSdkBridge.getUser;
 
 jest
   .mock(
