@@ -37,6 +37,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       }
     } else if (framework === REACT_NATIVE) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.4.0', name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: '3.1.0', name: 'events'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.2', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
