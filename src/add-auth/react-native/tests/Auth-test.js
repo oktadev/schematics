@@ -137,7 +137,7 @@ describe('authentication flow', () => {
     expect(wrapper.state().context).toContain('"a": "b"');
   });
 
-  it('should return user profile information from getUser method', async () => {
+  xit('should return user profile information from getUser method', async () => {
     mockGetUser.mockResolvedValue({ "name": "Mock User" });
     const wrapper = shallow(<Auth />);
     wrapper.setState({authenticated: true});
