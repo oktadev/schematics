@@ -7,7 +7,7 @@ Vue.use(Router)
 Vue.use(Auth, {
   issuer: '<%= issuer %>',
   client_id: '<%= clientId %>',
-  redirect_uri: window.location.origin + '/implicit/callback'
+  redirect_uri: window.location.origin + '/callback'
 })
 
 const router = new Router({
@@ -28,7 +28,7 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
-      path: '/implicit/callback',
+      path: '/callback',
       component: Auth.handleCallback()
     }
   ]

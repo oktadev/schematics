@@ -5,7 +5,7 @@
   "dependencies": {
     "@okta/okta-angular": "2.0.0",
     "@okta/okta-react": "3.0.1",
-    "react-router-dom": "5.1.2",
+    "react-router-dom": "5.2.0",
     "@types/react-router-dom": "5.1.5",
     "@okta/okta-react-native": "1.4.0",
     "enzyme": "3.11.0",
@@ -16,9 +16,11 @@
     "@types/okta__okta-vue": "1.2.0",
     "ionic-appauth": "0.5.1",
     "@ionic/storage": "2.2.0",
-    "cordova-plugin-secure-storage": "3.0.2",
+    "cordova-plugin-secure-storage-echo": "5.0.1",
     "cordova-plugin-advanced-http": "2.4.1",
     "cordova-plugin-safariviewcontroller": "1.6.0",
-    "@ionic-native/http": "5.25.0"
+    "@ionic-native/http": "5.26.0",
+    "express-session": "1.17.1",
+    "@okta/oidc-middleware": "4.0.1"
   }
 }

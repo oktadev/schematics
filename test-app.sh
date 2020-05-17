@@ -2,7 +2,7 @@
 
 framework="$1"
 issuer="https://dev-133320.okta.com/oauth2/default"
-clientId="0oa3gtg790ZSIjPD5357"
+clientId="0oa3xgdx75k0Pto4B357"
 
 # build and package this project
 rm *.tgz
@@ -109,6 +109,14 @@ elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
   react-native init SecureApp
   cd SecureApp
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  npm test -- -u
+elif [ $framework == "express" ] || [ $framework == "e" ]
+then
+  mkdir express-app && cd express-app
+  npx express-generator --pug
+  npm i
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm test -- -u

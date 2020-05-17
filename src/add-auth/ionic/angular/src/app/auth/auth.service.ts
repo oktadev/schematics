@@ -50,8 +50,8 @@ export class AuthService extends IonicAuth {
 
   private async addConfig() {
     const scopes = 'openid profile' + (this.onDevice() ? ' offline_access' : '');
-    const redirectUri = this.onDevice() ? '<%= packageName %>:/callback' : window.location.origin + '/implicit/callback';
-    const logoutRedirectUri = this.onDevice() ? '<%= packageName %>:/logout' : window.location.origin + '/implicit/logout';
+    const redirectUri = this.onDevice() ? '<%= packageName %>:/callback' : window.location.origin + '/callback';
+    const logoutRedirectUri = this.onDevice() ? '<%= packageName %>:/logout' : window.location.origin + '/logout';
     <% if (configUri) { %>const AUTH_CONFIG_URI = `${environment.apiUrl}/<%= configUri %>`;
 
     if (await this.storage.getItem(AUTH_CONFIG_URI)) {

@@ -13,6 +13,7 @@ This library currently supports:
 
 * [Angular](#angular) | [React](#react) | [Vue](#vue) 
 * [Ionic](#ionic) | [React Native](#react-native)
+* [Express](#express)
 * [Testing](#testing)
 * [Contributing](#contributing)
 * [Tutorials](#tutorials)
@@ -34,7 +35,7 @@ cd secure-angular
 
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Single Page App (SPA)** as the platform and click **Next**. 
-* Add `http://localhost:4200/implicit/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
+* Add `http://localhost:4200/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
 
 In your `secure-angular` project, add `@oktadev/schematics`:
 
@@ -66,7 +67,7 @@ cd secure-react
 
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Single Page App (SPA)** as the platform and click **Next**.
-* Add `http://localhost:3000/implicit/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
+* Add `http://localhost:3000/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
 
 Install Schematics globally.
 
@@ -139,10 +140,10 @@ Log in to your Okta Developer account (or [sign up](https://developer.okta.com/s
 From the **Applications** page, choose **Add Application**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
  
 * Login redirect URIs: 
-  * `http://localhost:8100/implicit/callback`
+  * `http://localhost:8100/callback`
   * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta Org URL)
 * Logout redirect URIs:
-  * `http://localhost:8100/implicit/logout`
+  * `http://localhost:8100/logout`
   * `com.okta.dev-737523:/logout`
 * Grant type allowed: 
   - [x] **Authorization Code**
@@ -316,7 +317,7 @@ Then run `pod install` from the `ios` directory.
 Start your app and you should be able to authenticate with Okta. 🎉
 
 ```
-react-native run-ios
+npm run ios
 ```
 
 ### Android
@@ -330,10 +331,54 @@ A number of changes are made to Android build files to integrate Okta.
 Since all of these modifications are done for you, you can simply start your app and authenticate with Okta. 🎊
 
 ```
-react-native run-android
+npm run android
 ```
 
 For more information, see the [Okta React Native SDK documentation](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native#readme).
+
+## Express
+
+Create a new project with express-generator and pug.
+
+```
+mkdir express-app
+cd express-app
+npx express-generator --pug
+```
+
+### Add an OpenID Connect App in Okta
+
+* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
+* Choose **Web** as the platform and click **Next**.
+* Change the **Login redirect URI** to `http://localhost:3000/callback`
+* Change the **Logout redirect URI** to `http://localhost:3000`
+
+Install Schematics globally.
+
+```
+npm install -g @angular-devkit/schematics-cli
+```
+
+Then install and run the `add-auth` schematic in your `express-app` project.
+
+```
+npm i @oktadev/schematics
+schematics @oktadev/schematics:add-auth
+```
+
+You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
+
+🚨 You'll need to copy/paste the client secret into the generated `app.js` file! You'll also need to change the session secret. 
+
+After you've added your secret to `app.js`, start your app and authenticate with Okta. 🎊
+
+```
+npm start
+```
+
+See the [Okta OIDC Middleware SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/oidc-middleware#readme) for more information.
+
+NOTE: If you'd like to see TypeScript support for Express, please https://github.com/oktadeveloper/schematics/issues/new[enter an issue] and include your preferred Express + TypeScript project generator.
 
 ## Testing
 
@@ -341,9 +386,9 @@ This project supports unit tests and integration tests.
 
 `npm test` will run the unit tests, using Jasmine as a runner and test framework.
 
-`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic-cap`, and `react-native`.
+`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic-capacitor`, `react-native`, and `express`.
 
-`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Cordova, Ionic with Capacitor, and React Native.
+`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Cordova, Ionic with Capacitor, React Native, and Express.
 
 ## Publishing
 

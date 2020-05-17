@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}, #{user.userinfo.name}!
+  form(method='POST' action='/logout')
+    button(type='submit') Logout
