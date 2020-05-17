@@ -1,53 +1,20 @@
 name: Schematics
 on: [push, pull_request]
-env:
-  TZ: America/Denver
-  NG_CLI_ANALYTICS: false
 jobs:
   build:
-    name: ${{ matrix.framework }}
-    runs-on: ${{ matrix.os }}
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
-    timeout-minutes: 40
+    timeout-minutes: 5
     strategy:
-      fail-fast: false
-      matrix:
-        node_version: [12.16.3]
-        os: [ubuntu-latest]
-        framework:
-          - angular
-          - react
-          - react-ts
-          - vue
-          - vue-ts
-          - ionic
-          - ionic-capacitor
-          - react-native
-    env:
-      APP: ${{ matrix.framework }}
-
+      fail-fast: true
     steps:
-      #----------------------------------------------------------------------
-      # Install all tools and check configuration
-      #----------------------------------------------------------------------
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node_version }}
-      - name: Install latest Chrome
-        run: |
-          sudo apt update
-          sudo apt --only-upgrade install google-chrome-stable
-          google-chrome --version
-      - name: Install Tools
-        run: npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli @ionic/cli codecov react-native-cli
       - run: npm install
-      - name: Run tests
-        run: |
-          set -e
-          npm run build
-          npm test && npm run coverage
-          codecov
-      - name: Create ${{ matrix.framework }} app and test
-        run: ./test-app.sh $APP
+      - name: Install codecov
+        run: npm i -g codecov
+      - run: npm test
+      - run: npm run coverage
+      - run: codecov
 
