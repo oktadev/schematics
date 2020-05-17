@@ -36,12 +36,13 @@ jobs:
           node-version: ${{ matrix.node_version }}
       - name: Install Tools
         run: npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli @ionic/cli codecov react-native-cli
-      - name: Run Tests
+      - run: npm install
+      - name: Run tests
         run: |
           set -e
           npm run build
           npm test && npm run coverage
           codecov
-      - name: Create App and Test
+      - name: Create ${{ matrix.framework }} app and test
         run: ./test-app $APP
 
