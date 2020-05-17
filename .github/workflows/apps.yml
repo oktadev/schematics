@@ -1,4 +1,4 @@
-name: Schematics
+name: Apps
 on: [push, pull_request]
 env:
   TZ: America/Denver
