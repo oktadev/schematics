@@ -250,7 +250,7 @@ export function addAuth(options: any): Rule {
         // Upgrade iOS to v11
         const podfile: Buffer | null = host.read('./ios/Podfile');
         if (podfile) {
-          const ios11 = podfile.toString('UTF-8').replace("platform :ios, '9.0'","platform :ios, '11.0'");
+          const ios11 = podfile.toString('utf-8').replace("platform :ios, '9.0'","platform :ios, '11.0'");
           host.overwrite('ios/Podfile', ios11);
         }
 
@@ -267,7 +267,7 @@ export function addAuth(options: any): Rule {
         // Configure Gradle for App
         const appBuild: Buffer | null = host.read('./android/app/build.gradle');
         if (appBuild) {
-          const redirectScheme = appBuild.toString('UTF-8')
+          const redirectScheme = appBuild.toString('utf-8')
             .replace('versionName "1.0"', 'versionName "1.0"\n        manifestPlaceholders = [ appAuthRedirectScheme: "' + options.packageName + '" ]');
           host.overwrite('android/app/build.gradle', redirectScheme);
         }
