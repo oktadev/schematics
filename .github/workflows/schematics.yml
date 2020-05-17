@@ -44,5 +44,5 @@ jobs:
           npm test && npm run coverage
           codecov
       - name: Create ${{ matrix.framework }} app and test
-        run: ./test-app $APP
+        run: ./test-app.sh $APP
 
