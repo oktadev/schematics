@@ -257,7 +257,7 @@ export function addAuth(options: any): Rule {
         // Configure Gradle for Android
         const androidBuild: Buffer | null = host.read('./android/build.gradle');
         if (androidBuild) {
-          const minSDK = androidBuild.toString('UTF-8').replace('minSdkVersion = 16', 'minSdkVersion = 19');
+          const minSDK = androidBuild.toString('utf-8').replace('minSdkVersion = 16', 'minSdkVersion = 19');
           const maven = minSDK.toString()
             .replace("maven { url 'https://www.jitpack.io' }", "maven { url 'https://www.jitpack.io' }\n" +
             "        maven { url 'https://dl.bintray.com/okta/com.okta.android' }");
