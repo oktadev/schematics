@@ -34,6 +34,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node_version }}
+      - name: Install latest Chrome
+        run: |
+          sudo apt update
+          sudo apt --only-upgrade install google-chrome-stable
+          google-chrome --version
       - name: Install Tools
         run: npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli @ionic/cli codecov react-native-cli
       - run: npm install
