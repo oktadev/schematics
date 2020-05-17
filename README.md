@@ -359,7 +359,7 @@ Install Schematics globally.
 npm install -g @angular-devkit/schematics-cli
 ```
 
-Then install and run the `add-auth` schematic in your `secure-vue` project.
+Then install and run the `add-auth` schematic in your `express-app` project.
 
 ```
 npm i @oktadev/schematics
@@ -370,7 +370,15 @@ You'll be prompted for an issuer, which you can find in your Okta dashboard at *
 
 🚨 You'll need to copy/paste the client secret into the generated `app.js` file! You'll also need to change the session secret. 
 
+After you've added your secret to `app.js`, start your app and authenticate with Okta. 🎊
+
+```
+npm start
+```
+
 See the [Okta OIDC Middleware SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/oidc-middleware#readme) for more information.
+
+NOTE: If you'd like to see TypeScript support for Express, please https://github.com/oktadeveloper/schematics/issues/new[enter an issue] and include your preferred Express + TypeScript project generator.
 
 ## Testing
 
