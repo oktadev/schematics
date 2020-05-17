@@ -1,0 +1,46 @@
+name: Schematics
+on: [push, pull_request]
+env:
+  TZ: America/Denver
+  NG_CLI_ANALYTICS: false
+jobs:
+  build:
+    name: ${{ matrix.app-type }}
+    runs-on: ${{ matrix.os }}
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        node_version: [12.16.3]
+        os: [ubuntu-latest]
+        framework:
+          - angular
+          - react
+          - react-ts
+          - vue
+          - vue-ts
+          - ionic
+          - ionic-capacitor
+          - react-native
+    env:
+      APP: ${{ matrix.framework }}
+
+    steps:
+      #----------------------------------------------------------------------
+      # Install all tools and check configuration
+      #----------------------------------------------------------------------
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+      - name: Install Tools
+        - npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli @ionic/cli codecov react-native-cli
+      - name: Run Tests
+        - set -e
+        - npm run build
+        - npm test && npm run coverage
+        - codecov
+      - name: Create App and Test
+        run: ./test-app $APP
+
