@@ -3,11 +3,9 @@ import Auth from '../Auth';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import { waitForState } from 'enzyme-async-helpers';
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import { NativeEventEmitter } from 'react-native';
 
 const nativeEmitter = new NativeEventEmitter();
-const mockGetIdToken = NativeModules.OktaSdkBridge.getIdToken;
-const mockGetUser = NativeModules.OktaSdkBridge.getUser;
 
 jest
   .mock(
@@ -124,6 +122,7 @@ describe('authentication flow', () => {
   });
 
   it('should return user profile information from id token', async () => {
+    const mockGetIdToken = require('react-native').NativeModules.OktaSdkBridge.getIdToken;
     mockGetIdToken.mockImplementationOnce(() => {
       // id_token returns { a: 'b' }
       return {'id_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhIjoiYiJ9.jiMyrsmD8AoHWeQgmxZ5yq8z0lXS67_QGs52AzC8Ru8'};
@@ -135,5 +134,16 @@ describe('authentication flow', () => {
     await waitForState(wrapper, state => state.context !== null);
     expect(profileButton.props.title).toBe('Get User From Id Token');
     expect(wrapper.state().context).toContain('"a": "b"');
+  });
+
+  it('should return user profile information from getUser method', async () => {
+    const mockGetUser = require('react-native').NativeModules.OktaSdkBridge.getUser;
+    mockGetUser.mockResolvedValue({ "name": "Mock User" });
+    const wrapper = shallow(<Auth />);
+    wrapper.setState({authenticated: true});
+    const profileButton = wrapper.find('Button').get(2);
+    await profileButton.props.onPress();
+    await waitForState(wrapper, state => state.context !== null);
+    expect(profileButton.props.title).toBe('Get User From Request');
   });
 });
