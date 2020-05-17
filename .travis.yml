@@ -31,6 +31,7 @@ env:
     - APP=ionic
     - APP=ionic-capacitor
     - APP=react-native
+    - APP=express
 install:
   - npm ci
 script:
