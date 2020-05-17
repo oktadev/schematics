@@ -5,7 +5,7 @@ import Home from './Home';
 
 const config = {
   issuer: '<%= issuer %>',
-  redirect_uri: window.location.origin + '/implicit/callback',
+  redirect_uri: window.location.origin + '/callback',
   client_id: '<%= clientId %>'
 };
 
@@ -16,7 +16,7 @@ class App extends Component {
       <Router>
         <Security {...config}>
           <Route path="/" exact={true} component={Home}/>
-          <Route path="/implicit/callback" component={LoginCallback}/>
+          <Route path="/callback" component={LoginCallback}/>
         </Security>
       </Router>
     );

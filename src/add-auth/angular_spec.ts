@@ -61,7 +61,7 @@ describe('OktaDev Schematics: Angular', () => {
     schematicRunner.runSchematicAsync('add-auth', defaultOptions, appTree).toPromise().then(tree => {
       const routingModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
       expect(routingModule).toContain(`path: 'home'`);
-      expect(routingModule).toContain(`path: 'implicit/callback'`);
+      expect(routingModule).toContain(`path: 'callback'`);
       done();
     }, done.fail);
   });

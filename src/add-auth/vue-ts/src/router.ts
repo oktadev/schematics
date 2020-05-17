@@ -7,7 +7,7 @@ Vue.use(Router);
 Vue.use(OktaVuePlugin, {
   issuer: '<%= issuer %>',
   client_id: '<%= clientId %>',
-  redirect_uri: window.location.origin + '/implicit/callback'
+  redirect_uri: window.location.origin + '/callback'
 });
 
 const router = new Router({
@@ -27,7 +27,7 @@ const router = new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
-    { path: '/implicit/callback', component: OktaVuePlugin.handleCallback() },
+    { path: '/callback', component: OktaVuePlugin.handleCallback() },
   ],
 });
 
