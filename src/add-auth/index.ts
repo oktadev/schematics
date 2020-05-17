@@ -30,13 +30,13 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     if (framework === ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: '2.0.0', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '3.0.0', name: '@okta/okta-react'});
-      dependencies.push({type: NodeDependencyType.Default, version: '5.1.2', name: 'react-router-dom'});
+      dependencies.push({type: NodeDependencyType.Default, version: '3.0.1', name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: '5.2.0', name: 'react-router-dom'});
       if (framework === REACT_TS) {
-        dependencies.push({type: NodeDependencyType.Default, version: '5.1.3', name: '@types/react-router-dom'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.1.5', name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.3.0', name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.4.0', name: '@okta/okta-react-native'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.2', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
@@ -53,10 +53,13 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: '5.0.1', name: 'cordova-plugin-secure-storage-echo'});
         dependencies.push({type: NodeDependencyType.Default, version: '2.4.1', name: 'cordova-plugin-advanced-http'});
         dependencies.push({type: NodeDependencyType.Default, version: '1.6.0', name: 'cordova-plugin-safariviewcontroller'});
-        dependencies.push({type: NodeDependencyType.Default, version: '5.23.0', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.26.0', name: '@ionic-native/http'});
       } else {
         dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
       }
+    } else if (framework === EXPRESS) {
+      dependencies.push({type: NodeDependencyType.Default, version: '1.17.1', name: 'express-session'});
+      dependencies.push({type: NodeDependencyType.Default, version: '4.0.1', name: '@okta/oidc-middleware'});
     }
 
     dependencies.forEach(dependency => {
@@ -105,6 +108,7 @@ export const REACT_NATIVE = 'react-native';
 export const VUE = 'vue';
 export const VUE_TS = 'vue-ts';
 export const IONIC_ANGULAR = 'ionic/angular';
+export const EXPRESS = 'express';
 
 function getFramework(host: Tree): string {
   let possibleFiles = ['/package.json'];
@@ -132,6 +136,8 @@ function getFramework(host: Tree): string {
       return VUE;
     } else if (content.dependencies['@ionic/angular']) {
       return IONIC_ANGULAR;
+    } else if (content.dependencies('express')) {
+      return EXPRESS;
     } else {
       throw new SchematicsException('No supported frameworks found in your package.json!');
     }
@@ -253,7 +259,7 @@ export function addAuth(options: any): Rule {
         if (androidBuild) {
           const minSDK = androidBuild.toString('UTF-8').replace('minSdkVersion = 16', 'minSdkVersion = 19');
           const maven = minSDK.toString()
-            .replace("maven { url 'https://jitpack.io' }", "maven { url 'https://www.jitpack.io' }\n" +
+            .replace("maven { url 'https://www.jitpack.io' }", "maven { url 'https://www.jitpack.io' }\n" +
             "        maven { url 'https://dl.bintray.com/okta/com.okta.android' }");
           host.overwrite('android/build.gradle', maven);
         }
