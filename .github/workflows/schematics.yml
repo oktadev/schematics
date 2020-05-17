@@ -35,9 +35,9 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
       - name: Install Tools
-        - run: npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli @ionic/cli codecov react-native-cli
+        run: npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli @ionic/cli codecov react-native-cli
       - name: Run Tests
-        - run: |
+        run: |
           set -e
           npm run build
           npm test && npm run coverage
