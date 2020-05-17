@@ -12,7 +12,7 @@
     "enzyme-adapter-react-16": "1.15.2",
     "enzyme-async-helpers": "0.9.1",
     "react-dom": "16.13.1",
-    "@okta/okta-vue": "2.0.04",
+    "@okta/okta-vue": "2.0.0",
     "@types/okta__okta-vue": "1.2.0",
     "ionic-appauth": "0.5.1",
     "@ionic/storage": "2.2.0",
