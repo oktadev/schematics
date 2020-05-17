@@ -1,8 +1,7 @@
 name: Apps
+
 on: [push, pull_request]
-env:
-  TZ: America/Denver
-  NG_CLI_ANALYTICS: false
+
 jobs:
   build:
     name: ${{ matrix.framework }}
