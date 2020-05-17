@@ -34,7 +34,7 @@ cd secure-angular
 
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Single Page App (SPA)** as the platform and click **Next**. 
-* Add `http://localhost:4200/implicit/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
+* Add `http://localhost:4200/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
 
 In your `secure-angular` project, add `@oktadev/schematics`:
 
@@ -66,7 +66,7 @@ cd secure-react
 
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Single Page App (SPA)** as the platform and click **Next**.
-* Add `http://localhost:3000/implicit/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
+* Add `http://localhost:3000/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
 
 Install Schematics globally.
 
@@ -139,10 +139,10 @@ Log in to your Okta Developer account (or [sign up](https://developer.okta.com/s
 From the **Applications** page, choose **Add Application**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
  
 * Login redirect URIs: 
-  * `http://localhost:8100/implicit/callback`
+  * `http://localhost:8100/callback`
   * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta Org URL)
 * Logout redirect URIs:
-  * `http://localhost:8100/implicit/logout`
+  * `http://localhost:8100/logout`
   * `com.okta.dev-737523:/logout`
 * Grant type allowed: 
   - [x] **Authorization Code**
