@@ -3,8 +3,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
-  { path: 'implicit/callback', loadChildren: './auth/auth-callback/auth-callback.module#AuthCallbackPageModule' },
-  { path: 'implicit/logout', loadChildren: './auth/end-session/end-session.module#EndSessionPageModule' },
+  { path: 'callback', loadChildren: './auth/auth-callback/auth-callback.module#AuthCallbackPageModule' },
+  { path: 'logout', loadChildren: './auth/end-session/end-session.module#EndSessionPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
 ];
 @NgModule({
