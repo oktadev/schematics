@@ -1,5 +1,5 @@
 # OktaDev Schematics
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][github-actions-image]][github-actions-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > Fast and easy installation of Okta's OIDC SDKs
 
 This project is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, Ionic, or React Native projects.
@@ -411,8 +411,8 @@ Apache 2.0, see [LICENSE](LICENSE).
 
 [npm-image]: https://img.shields.io/npm/v/@oktadev/schematics.svg
 [npm-url]: https://www.npmjs.com/package/@oktadev/schematics
-[travis-image]: https://travis-ci.org/oktadeveloper/schematics.svg?branch=master
-[travis-url]: https://travis-ci.org/oktadeveloper/schematic
+[github-actions-image]: https://github.com/oktadeveloper/schematics/workflows/Schematics/badge.svg
+[github-actions-url]: https://github.com/oktadeveloper/schematics/actions
 [daviddm-image]: https://david-dm.org/oktadeveloper/schematics.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/oktadeveloper/schematics
 [devforum-image]: https://img.shields.io/badge/support-developer%20forum-blue.svg

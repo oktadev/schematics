@@ -111,7 +111,7 @@ then
   cd SecureApp
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  # npm test -- -u
+  npm test
 else
   echo "No '${framework}' framework found!"
 fi
