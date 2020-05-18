@@ -41,7 +41,6 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.2', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
       dependencies.push({type: NodeDependencyType.Dev, version: '16.13.1', name: 'react-dom'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '16.8.6', name: 'react-test-renderer'});
     } else if (framework === VUE || framework == VUE_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '2.0.0', name: '@okta/okta-vue'});
       if (framework === VUE_TS) {
