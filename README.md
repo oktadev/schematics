@@ -343,7 +343,7 @@ Create a new project with express-generator and pug.
 ```
 mkdir express-app
 cd express-app
-npx express-generator --pug
+npx express-generator --view=pug
 ```
 
 ### Add an OpenID Connect App in Okta
@@ -378,7 +378,7 @@ npm start
 
 See the [Okta OIDC Middleware SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/oidc-middleware#readme) for more information.
 
-NOTE: If you'd like to see TypeScript support for Express, please https://github.com/oktadeveloper/schematics/issues/new[enter an issue] and include your preferred Express + TypeScript project generator.
+NOTE: If you'd like to see TypeScript support for Express, please [enter an issue](https://github.com/oktadeveloper/schematics/issues/new) and include your preferred Express + TypeScript project generator.
 
 ## Testing
 

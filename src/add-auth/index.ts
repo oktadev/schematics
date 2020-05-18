@@ -136,7 +136,7 @@ function getFramework(host: Tree): string {
       return VUE;
     } else if (content.dependencies['@ionic/angular']) {
       return IONIC_ANGULAR;
-    } else if (content.dependencies('express')) {
+    } else if (content.dependencies['express']) {
       return EXPRESS;
     } else {
       throw new SchematicsException('No supported frameworks found in your package.json!');
@@ -275,7 +275,7 @@ export function addAuth(options: any): Rule {
     }
 
     // Setup templates to add to the project
-    const sourceDir = (framework !== REACT_NATIVE) ? 'src' : '';
+    const sourceDir = (framework !== REACT_NATIVE && framework !== EXPRESS) ? 'src' : '';
     const sourcePath = join(normalize(projectPath), sourceDir);
     const templatesPath = join(sourcePath, '');
     const templateSource = apply(url(`./${framework}/${sourceDir}`), [

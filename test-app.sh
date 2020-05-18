@@ -111,15 +111,15 @@ then
   cd SecureApp
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm test -- -u
+  # npm test -- -u
 elif [ $framework == "express" ] || [ $framework == "e" ]
 then
   mkdir express-app && cd express-app
-  npx express-generator --pug
+  npx express-generator --view=pug
   npm i
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm test -- -u
+  # npm test -- -u
 else
   echo "No '${framework}' framework found!"
 fi
