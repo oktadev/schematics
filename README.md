@@ -343,7 +343,7 @@ Create a new project with express-generator and pug.
 ```
 mkdir express-app
 cd express-app
-npx express-generator --pug
+npx express-generator --view=pug
 ```
 
 ### Add an OpenID Connect App in Okta
