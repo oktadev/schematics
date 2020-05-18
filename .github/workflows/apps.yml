@@ -22,6 +22,7 @@ jobs:
           - ionic
           - ionic-capacitor
           - react-native
+          - express
     env:
       APP: ${{ matrix.framework }}
 
