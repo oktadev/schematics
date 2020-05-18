@@ -12,9 +12,8 @@ jobs:
         with:
           node-version: 12
       - run: npm install
-      - name: Install codecov
-        run: npm i -g codecov
+      - run: npm i -g codecov
       - run: npm test
       - run: npm run coverage
-      - run: codecov
+      - uses: codecov/codecov-action@v1
 
