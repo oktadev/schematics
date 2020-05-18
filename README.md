@@ -2,7 +2,7 @@
 [![NPM version][npm-image]][npm-url] [![Build Status][github-actions-image]][github-actions-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > Fast and easy installation of Okta's OIDC SDKs
 
-This project is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, Ionic, or React Native projects.
+This project is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, Ionic, React Native, and Express projects.
 
 This library currently supports:
 
