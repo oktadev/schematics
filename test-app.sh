@@ -97,14 +97,14 @@ then
   cd ionic-cordova
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  ng test --watch=false
+  npm run build && ng test --watch=false
 elif [ $framework == "ionic-capacitor" ] || [ $framework == "icap" ]
 then
   ionic start ionic-capacitor tabs --type angular --capacitor --no-interactive
   cd ionic-capacitor
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --platform=capacitor
-  ng test --watch=false
+  npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
   react-native init SecureApp
