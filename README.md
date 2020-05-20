@@ -350,8 +350,9 @@ npx express-generator --view=pug
 
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Web** as the platform and click **Next**.
-* Change the **Login redirect URI** to `http://localhost:3000/callback`
-* Change the **Logout redirect URI** to `http://localhost:3000`
+* Change the **Login redirect URI** to `http://localhost:3000/callback`.
+* Change the **Logout redirect URI** to `http://localhost:3000`.
+* Select **Done**.
 
 Install Schematics globally.
 
@@ -359,18 +360,17 @@ Install Schematics globally.
 npm install -g @angular-devkit/schematics-cli
 ```
 
-Then install and run the `add-auth` schematic in your `express-app` project.
+Then install and run the `add-auth` schematic in your `express-app` project. The value for `$clientId` and `$clientSecret` should come from the app you created on Okta. You can find your `issuer` in your Okta dashboard at **API** > **Authorization Servers**.
 
 ```
 npm i @oktadev/schematics
-schematics @oktadev/schematics:add-auth
+schematics @oktadev/schematics:add-auth --issuer=$issuer \
+  --clientId=$clientId --clientSecret=$clientSecret
 ```
 
-You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
+🚨 These values are stored in a `.env` file. Add this file to `.gitignore` and don't check it into source control!
 
-🚨 You'll need to copy/paste the client secret into the generated `app.js` file! You'll also need to change the session secret. 
-
-After you've added your secret to `app.js`, start your app and authenticate with Okta. 🎊
+Start your app and authenticate with Okta. 🎊
 
 ```
 npm start
