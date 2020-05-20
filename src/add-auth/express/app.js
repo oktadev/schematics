@@ -9,13 +9,15 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+require('dotenv').config()
+
 var app = express();
 const oidc = new ExpressOIDC({
-  issuer: '<%= issuer %>',
-  client_id: '<%= clientId %>',
-  client_secret: 'todo: add-your-secret',
-  appBaseUrl: 'http://localhost:3000',
-  loginRedirectUri: 'http://localhost:3000/callback',
+  issuer: process.env.OIDC_ISSUER,
+  client_id: process.env.OIDC_CLIENT_ID,
+  client_secret: process.env.OIDC_CLIENT_SECRET,
+  appBaseUrl: process.env.BASE_URL,
+  loginRedirectUri: `${process.env.BASE_URL}/callback`,
   scope: 'openid profile',
   routes: {
     loginCallback: {
@@ -24,7 +26,7 @@ const oidc = new ExpressOIDC({
   }
 });
 app.use(session({
-  secret: 'todo: make-this-more-secure',
+  secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: false
 }));
