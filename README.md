@@ -360,7 +360,7 @@ Install Schematics globally.
 npm install -g @angular-devkit/schematics-cli
 ```
 
-Then install and run the `add-auth` schematic in your `express-app` project. The value for `$clientId` and `$clientSecret` should come from the app you created on Okta. You can find your `issuer` in your Okta dashboard at **API** > **Authorization Servers**.
+Then install and run the `add-auth` schematic in your `express-app` project. The value for `$clientId` and `$clientSecret` are in the app you created on Okta. You can find your `issuer` in your Okta dashboard at **API** > **Authorization Servers**.
 
 ```
 npm i @oktadev/schematics
@@ -368,7 +368,7 @@ schematics @oktadev/schematics:add-auth --issuer=$issuer \
   --clientId=$clientId --clientSecret=$clientSecret
 ```
 
-🚨 These values are stored in a `.env` file. Add this file to `.gitignore` and don't check it into source control!
+🚨 An `.env` file will be generated with these values. Make sure to add `*.env` to `.gitignore` and don't check it into source control!
 
 Start your app and authenticate with Okta. 🎊
 
