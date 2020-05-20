@@ -7,7 +7,8 @@ const collectionPath = path.join(__dirname, '../collection.json');
 
 const defaultOptions: any = {
   issuer: 'https://dev-737523.okta.com/oauth2/default',
-  clientId: '0oaifymbuodpH8nAi0h7'
+  clientId: '0oaifymbuodpH8nAi0h7',
+  clientSecret: 'take me home, country roads'
 };
 
 describe('OktaDev Schematics: Express', () => {
@@ -27,13 +28,19 @@ describe('OktaDev Schematics: Express', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
-    expect(tree.files.length).toEqual(5);
-    expect(tree.files.sort()).toEqual(['/app.js', '/package.json', '/routes/index.js', '/views/index.pug', '/views/login.pug']);
+    expect(tree.files.length).toEqual(6);
+    expect(tree.files.sort()).toEqual(['/.env','/app.js', '/package.json',
+      '/routes/index.js', '/views/index.pug', '/views/login.pug']);
 
     const componentContent = tree.readContent('/app.js');
 
     expect(componentContent).toMatch(/const oidc = new ExpressOIDC/);
-    expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
-    expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
+
+    const dotenv = tree.readContent('/.env');
+
+    expect(dotenv).toContain(`OIDC_ISSUER=${defaultOptions.issuer}`);
+    expect(dotenv).toContain(`OIDC_CLIENT_ID=${defaultOptions.clientId}`);
+    expect(dotenv).toContain(`OIDC_CLIENT_SECRET=${defaultOptions.clientSecret}`);
+
   });
 });
