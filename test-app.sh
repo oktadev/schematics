@@ -118,7 +118,7 @@ then
   npx express-generator --view=pug
   npm i
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --clientSecret='may the auth be with you'
   # npm test -- -u
 else
   echo "No '${framework}' framework found!"

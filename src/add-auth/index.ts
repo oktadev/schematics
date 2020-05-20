@@ -60,6 +60,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     } else if (framework === EXPRESS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.17.1', name: 'express-session'});
       dependencies.push({type: NodeDependencyType.Default, version: '4.0.1', name: '@okta/oidc-middleware'});
+      dependencies.push({type: NodeDependencyType.Default, version: '8.0.2', name: 'dotenv'});
     }
 
     dependencies.forEach(dependency => {
