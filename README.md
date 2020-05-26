@@ -125,7 +125,7 @@ Create a new Ionic + Angular project with Ionic CLI. You **must** use the `tabs`
 
 ```
 npm install -g @ionic/cli
-ionic start secure-ionic tabs --type=angular
+ionic start secure-ionic tabs --type=angular --no-interactive
 cd secure-ionic
 ```
 
@@ -235,7 +235,7 @@ Set the launchMode to `singleTask` so the URL does not trigger a new instance of
       android:theme="@style/AppTheme.NoActionBarLaunch">
 ```
 
-Open your project in Android Studio and run your app.
+Open `platforms/android` in Android Studio and run your app.
 
 ### Android and Capacitor
 
