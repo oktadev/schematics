@@ -2,7 +2,7 @@
 
 framework="$1"
 issuer="https://dev-133320.okta.com/oauth2/default"
-clientId="0oa3xgdx75k0Pto4B357"
+clientId="0oa4f47t5iMnGD9b0357"
 
 # build and package this project
 rm *.tgz
