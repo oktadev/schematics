@@ -36,7 +36,7 @@
     "schematics-utilities": "2.0.0"
   },
   "devDependencies": {
-    "@types/jasmine": "3.5.11",
+    "@types/jasmine": "3.5.12",
     "@types/node": "14.0.13",
     "chalk": "4.1.0",
     "istanbul": "0.4.5",
