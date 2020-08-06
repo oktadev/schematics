@@ -19,6 +19,7 @@ cd apps
 # install snapshot version of schematics-utilities
 git clone -b angular10 https://github.com/mraible/schematics-utilities.git
 cd schematics-utilities && npm link
+cd ..
 
 if [ $framework == "angular" ] || [ $framework == "a" ]
 then
