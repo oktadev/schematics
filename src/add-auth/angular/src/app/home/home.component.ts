@@ -7,7 +7,7 @@ import { OktaAuthService } from '@okta/okta-angular';
   styleUrls: ['./home.component.<%= style %>']
 })
 export class HomeComponent implements OnInit {
-  isAuthenticated: boolean;
+  isAuthenticated: boolean = false;
 
   constructor(public oktaAuth: OktaAuthService) {
   }

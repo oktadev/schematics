@@ -2,7 +2,7 @@
 
 framework="$1"
 issuer="https://dev-133320.okta.com/oauth2/default"
-clientId="0oa4f47t5iMnGD9b0357"
+clientId="0oa50oyo7l3H4EjO9357"
 
 # build and package this project
 rm *.tgz
@@ -15,9 +15,12 @@ cd apps
 
 if [ $framework == "angular" ] || [ $framework == "a" ]
 then
-  ng new angular-app --routing --style css
+  ng new angular-app --routing --style css --strict
   cd angular-app
   npm install -D ../../oktadev*.tgz
+  cd .. && git clone -b angular10 git@github.com:mraible/schematics-utilities.git
+  cd schematic-utilities && npm link
+  cd ../angular-app && npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   ng test --watch=false && ng e2e
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
