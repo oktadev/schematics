@@ -21,7 +21,7 @@ then
   ng new angular-app --routing --style css --strict
   cd angular-app
   npm install -D ../../oktadev*.tgz
-  cd .. && git clone -b angular10 git@github.com:mraible/schematics-utilities.git
+  cd .. && git clone -b angular10 https://github.com/mraible/schematics-utilities.git
   cd schematics-utilities && npm link
   cd ../angular-app && npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
