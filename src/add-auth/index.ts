@@ -28,9 +28,9 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '2.0.0', name: '@okta/okta-angular'})
+      dependencies.push({type: NodeDependencyType.Default, version: '2.1.0', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '3.0.2', name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: '3.0.4', name: '@okta/okta-react'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.2.0', name: 'react-router-dom'});
       if (framework === REACT_TS) {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.5', name: '@types/react-router-dom'});
@@ -51,11 +51,11 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: '5.23.0', name: '@ionic-native/secure-storage'});
       if (options.platform === 'capacitor') {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.1', name: 'cordova-plugin-secure-storage-echo'});
-        dependencies.push({type: NodeDependencyType.Default, version: '2.5.1', name: 'cordova-plugin-advanced-http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '3.0.0', name: 'cordova-plugin-advanced-http'});
         dependencies.push({type: NodeDependencyType.Default, version: '1.6.0', name: 'cordova-plugin-safariviewcontroller'});
         dependencies.push({type: NodeDependencyType.Default, version: '5.27.0', name: '@ionic-native/http'});
       } else {
-        dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
+        dependencies.push({type: NodeDependencyType.Default, version: '2.3.0', name: '@ionic/storage'});
       }
     } else if (framework === EXPRESS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.17.1', name: 'express-session'});

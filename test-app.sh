@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# exit when any command fails
+set -e
+
 framework="$1"
 issuer="https://dev-133320.okta.com/oauth2/default"
 clientId="0oa50oyo7l3H4EjO9357"
@@ -19,7 +22,7 @@ then
   cd angular-app
   npm install -D ../../oktadev*.tgz
   cd .. && git clone -b angular10 git@github.com:mraible/schematics-utilities.git
-  cd schematic-utilities && npm link
+  cd schematics-utilities && npm link
   cd ../angular-app && npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   ng test --watch=false && ng e2e
