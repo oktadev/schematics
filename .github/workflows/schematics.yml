@@ -12,6 +12,11 @@ jobs:
         with:
           node-version: 12
       - run: npm install
+      - name: Install Schematics Utilities snapshot
+        run: |
+          git clone -b angular10 git@github.com:mraible/schematics-utilities.git
+          cd schematics-utilities && npm link
+          cd .. && npm link schematics-utilities
       - run: npm i -g codecov
       - run: npm test
       - run: npm run coverage
