@@ -17,7 +17,9 @@ mkdir -p apps
 cd apps
 
 # install snapshot version of schematics-utilities
-git clone -b angular10 https://github.com/mraible/schematics-utilities.git
+if [ ! -d schematics-utilities ]; then
+  git clone -b angular10 https://github.com/mraible/schematics-utilities.git
+fi
 cd schematics-utilities && npm link
 cd ..
 
