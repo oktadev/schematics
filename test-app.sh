@@ -18,7 +18,7 @@ cd apps
 
 # install snapshot version of schematics-utilities
 if [ ! -d schematics-utilities ]; then
-  git clone -b angular10 https://github.com/mraible/schematics-utilities.git
+  git clone -b refactor/restore-angular-cdk-clone https://github.com/nitayneeman/schematics-utilities.git
 fi
 cd schematics-utilities && npm link
 cd ..
