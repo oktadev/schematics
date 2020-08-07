@@ -20,7 +20,7 @@ cd apps
 if [ ! -d okta-auth-js ]; then
   git clone -b dev-4.0 https://github.com/okta/okta-auth-js.git
 fi
-cd okta-auth-js && npm run build
+cd okta-auth-js && npm install && npm run build
 cd dist && npm link
 cd ../..
 
