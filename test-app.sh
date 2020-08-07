@@ -29,8 +29,7 @@ fi
 if [ ! -d ../../okta-oidc-js ]; then
   cd ../..
   git clone -b ag-angular-auth-instance-OKTA-283293 https://github.com/okta/okta-oidc-js.git
-  cd okta-oidc-js && yarn install
-  cd packages/okta-angular && npm link @okta/okta-auth-js
+  cd okta-oidc-js/packages/okta-angular && npm link @okta/okta-auth-js
   yarn && cd dist && npm link
 else
   cd ../../okta-oidc-js/packages/okta-angular/dist && npm link
