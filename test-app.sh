@@ -17,11 +17,11 @@ mkdir -p apps
 cd apps
 
 # install snapshot version of schematics-utilities
-if [ ! -d schematics-utilities ]; then
-  git clone -b refactor/restore-angular-cdk-clone https://github.com/nitayneeman/schematics-utilities.git
-fi
-cd schematics-utilities && npm link
-cd ..
+# if [ ! -d schematics-utilities ]; then
+#  git clone -b refactor/restore-angular-cdk-clone https://github.com/nitayneeman/schematics-utilities.git
+# fi
+# cd schematics-utilities && npm link
+# cd ..
 
 if [ $framework == "angular" ] || [ $framework == "a" ]
 then
