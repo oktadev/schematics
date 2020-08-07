@@ -28,7 +28,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '2.0.0', name: '@okta/okta-angular'})
+      dependencies.push({type: NodeDependencyType.Default, version: '2.1.0', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '3.0.1', name: '@okta/okta-react'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.2.0', name: 'react-router-dom'});
@@ -36,7 +36,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.5', name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.4.0', name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.4.1', name: '@okta/okta-react-native'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.2', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
@@ -50,12 +50,12 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: '0.5.1', name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.23.0', name: '@ionic-native/secure-storage'});
       if (options.platform === 'capacitor') {
-        dependencies.push({type: NodeDependencyType.Default, version: '5.0.1', name: 'cordova-plugin-secure-storage-echo'});
-        dependencies.push({type: NodeDependencyType.Default, version: '2.4.1', name: 'cordova-plugin-advanced-http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.1.1', name: 'cordova-plugin-secure-storage-echo'});
+        dependencies.push({type: NodeDependencyType.Default, version: '3.0.0', name: 'cordova-plugin-advanced-http'});
         dependencies.push({type: NodeDependencyType.Default, version: '1.6.0', name: 'cordova-plugin-safariviewcontroller'});
-        dependencies.push({type: NodeDependencyType.Default, version: '5.26.0', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.27.0', name: '@ionic-native/http'});
       } else {
-        dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@ionic/storage'});
+        dependencies.push({type: NodeDependencyType.Default, version: '2.3.0', name: '@ionic/storage'});
       }
     } else if (framework === EXPRESS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.17.1', name: 'express-session'});
@@ -65,6 +65,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
 
     dependencies.forEach(dependency => {
       addPackageJsonDependency(host, dependency);
+      // @ts-ignore
       context.logger.log('info', `✅️ Added '${dependency.name}' into ${dependency.type}`);
     });
 
