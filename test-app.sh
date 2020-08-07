@@ -25,7 +25,18 @@ if [ ! -d ../../okta-auth-js ]; then
 else
   cd ../../okta-auth-js/dist && npm link
 fi
-cd ../../schematics/apps
+# install snapshot version of Okta Angular SDK
+if [ ! -d ../../okta-oidc-js ]; then
+  cd ../..
+  git clone -b ag-angular-auth-instance-OKTA-283293 https://github.com/okta/okta-oidc-js.git
+  cd okta-oidc-js && yarn install
+  cd packages/okta-angular && npm link @okta/okta-auth-js
+  yarn && cd dist && npm link
+else
+  cd ../../okta-oidc-js/packages/okta-angular/dist && npm link
+fi
+
+cd ../../../../schematics/apps
 
 if [ $framework == "angular" ] || [ $framework == "a" ]
 then
@@ -33,7 +44,7 @@ then
   cd angular-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm link @okta/okta-auth-js
+  npm link @okta/okta-angular
   ng test --watch=false && ng e2e
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then
