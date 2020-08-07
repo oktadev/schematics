@@ -17,12 +17,15 @@ mkdir -p apps
 cd apps
 
 # install snapshot version of Okta Auth JS SDK
-if [ ! -d okta-auth-js ]; then
+if [ ! -d ../../okta-auth-js ]; then
+  cd ../..
   git clone -b dev-4.0 https://github.com/okta/okta-auth-js.git
+  cd okta-auth-js && yarn
+  cd dist && npm link
+else
+  cd ../../okta-auth-js/dist && npm link
 fi
-cd okta-auth-js && npm install && npm run build
-cd dist && npm link
-cd ../..
+cd ../../schematics/apps
 
 if [ $framework == "angular" ] || [ $framework == "a" ]
 then
@@ -30,7 +33,7 @@ then
   cd angular-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm link okta-auth-js
+  npm link @okta/okta-auth-js
   ng test --watch=false && ng e2e
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then
@@ -38,7 +41,7 @@ then
   cd react-app-ts
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm link okta-auth-js
+  npm link @okta/okta-auth-js
   CI=true npm test
 elif [ $framework == "react" ] || [ $framework == "r" ]
 then
@@ -46,7 +49,7 @@ then
   cd react-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm link okta-auth-js
+  npm link @okta/okta-auth-js
   CI=true npm test
 elif [ $framework == "vue-ts" ] || [ $framework == "vts" ]
 then
@@ -78,7 +81,7 @@ EOF
   cd vue-app-ts
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm link okta-auth-js
+  npm link @okta/okta-auth-js
   npm run test:unit
 elif [ $framework == "vue" ] || [ $framework == "v" ]
 then
@@ -105,7 +108,7 @@ EOF
   cd vue-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm link okta-auth-js
+  npm link @okta/okta-auth-js
   npm run test:unit
 elif [ $framework == "ionic" ] || [ $framework == "i" ]
 then
@@ -113,7 +116,7 @@ then
   cd ionic-cordova
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm link okta-auth-js
+  npm link @okta/okta-auth-js
   npm run build && ng test --watch=false
 elif [ $framework == "ionic-capacitor" ] || [ $framework == "icap" ]
 then
@@ -121,7 +124,7 @@ then
   cd ionic-capacitor
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --platform=capacitor
-  npm link okta-auth-js
+  npm link @okta/okta-auth-js
   npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
@@ -129,7 +132,7 @@ then
   cd SecureApp
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm link okta-auth-js
+  npm link @okta/okta-auth-js
   # npm test -- -u
 elif [ $framework == "express" ] || [ $framework == "e" ]
 then
@@ -138,7 +141,7 @@ then
   npm i
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --clientSecret='may the auth be with you'
-  npm link okta-auth-js
+  npm link @okta/okta-auth-js
   # npm test -- -u
 else
   echo "No '${framework}' framework found!"
