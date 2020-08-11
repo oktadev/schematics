@@ -28,23 +28,24 @@ then
   ng new angular-app --routing --style css --strict
   cd angular-app
   npm install -D ../../oktadev*.tgz
-  npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   ng test --watch=false && ng e2e
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then
   npx create-react-app react-app-ts --template typescript
   cd react-app-ts
+  # Test with React 17
+  npm install react@17.0.0-rc.0 react-dom@17.0.0-rc.0
   npm install -D ../../oktadev*.tgz
-  npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   CI=true npm test
 elif [ $framework == "react" ] || [ $framework == "r" ]
 then
   npx create-react-app react-app
   cd react-app
+  # Test with React 17
+  npm install react@17.0.0-rc.0 react-dom@17.0.0-rc.0
   npm install -D ../../oktadev*.tgz
-  npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   CI=true npm test
 elif [ $framework == "vue-ts" ] || [ $framework == "vts" ]
@@ -76,7 +77,6 @@ EOF
   vue create vue-app-ts -i "$config"
   cd vue-app-ts
   npm install -D ../../oktadev*.tgz
-  npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm run test:unit
 elif [ $framework == "vue" ] || [ $framework == "v" ]
@@ -103,7 +103,6 @@ EOF
   vue create vue-app -i "$config"
   cd vue-app
   npm install -D ../../oktadev*.tgz
-  npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm run test:unit
 elif [ $framework == "ionic" ] || [ $framework == "i" ]
@@ -111,7 +110,6 @@ then
   ionic start ionic-cordova tabs --type angular --cordova --no-interactive
   cd ionic-cordova
   npm install -D ../../oktadev*.tgz
-  npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm run build && ng test --watch=false
 elif [ $framework == "ionic-capacitor" ] || [ $framework == "icap" ]
@@ -119,7 +117,6 @@ then
   ionic start ionic-capacitor tabs --type angular --capacitor --no-interactive
   cd ionic-capacitor
   npm install -D ../../oktadev*.tgz
-  npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --platform=capacitor
   npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
@@ -127,7 +124,6 @@ then
   react-native init SecureApp
   cd SecureApp
   npm install -D ../../oktadev*.tgz
-  npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   # npm test -- -u
 elif [ $framework == "express" ] || [ $framework == "e" ]
@@ -136,7 +132,6 @@ then
   npx express-generator --view=pug
   npm i
   npm install -D ../../oktadev*.tgz
-  npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --clientSecret='may the auth be with you'
   # npm test -- -u
 else
