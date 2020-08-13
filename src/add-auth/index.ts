@@ -50,9 +50,17 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: '0.5.1', name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.23.0', name: '@ionic-native/secure-storage'});
       if (options.platform === 'capacitor') {
-        dependencies.push({type: NodeDependencyType.Default, version: '5.1.1', name: 'cordova-plugin-secure-storage-echo'});
+        dependencies.push({
+          type: NodeDependencyType.Default,
+          version: '5.1.1',
+          name: 'cordova-plugin-secure-storage-echo'
+        });
         dependencies.push({type: NodeDependencyType.Default, version: '3.0.0', name: 'cordova-plugin-advanced-http'});
-        dependencies.push({type: NodeDependencyType.Default, version: '1.6.0', name: 'cordova-plugin-safariviewcontroller'});
+        dependencies.push({
+          type: NodeDependencyType.Default,
+          version: '1.6.0',
+          name: 'cordova-plugin-safariviewcontroller'
+        });
         dependencies.push({type: NodeDependencyType.Default, version: '5.27.0', name: '@ionic-native/http'});
       } else {
         dependencies.push({type: NodeDependencyType.Default, version: '2.3.0', name: '@ionic/storage'});
@@ -223,6 +231,20 @@ export function addAuth(options: any): Rule {
         'AuthModule', './auth/auth.module');
     }
 
+    if (framework === REACT || framework === REACT_TS) {
+      const jestConfig = {
+        'moduleNameMapper': {
+          '^@okta/okta-auth-js$': '<rootDir>/node_modules/@okta/okta-auth-js/dist/okta-auth-js.min.js'
+        }
+      }
+      const content: Buffer | null = host.read('./package.json');
+      if (content) {
+        const pkgJson: any = JSON.parse(content.toString());
+        pkgJson.jest = jestConfig;
+        host.overwrite('./package.json', JSON.stringify(pkgJson));
+      }
+    }
+
     if (framework === REACT_NATIVE) {
       // add a package name from the issuer
       const parts = options.issuer.split('.');
@@ -233,14 +255,14 @@ export function addAuth(options: any): Rule {
         const pkgJson: any = JSON.parse(content.toString());
         // add jest config for tests
         pkgJson.jest = {
-          "preset": "react-native",
-          "automock": false,
-          "transformIgnorePatterns": [
-            "node_modules/(?!@okta|react-native)"
+          'preset': 'react-native',
+          'automock': false,
+          'transformIgnorePatterns': [
+            'node_modules/(?!@okta|react-native)'
           ],
-          "testMatch": ["**/tests/*.js?(x)", "**/?(*.)(spec|test).js?(x)"],
-          "setupFiles": [
-            "./setupJest.js"
+          'testMatch': ['**/tests/*.js?(x)', '**/?(*.)(spec|test).js?(x)'],
+          'setupFiles': [
+            './setupJest.js'
           ]
           // The reason tests are in `tests` instead of `__tests__` is because
           // schematics uses double underscore as a substitution indicator in filenames.
@@ -252,7 +274,7 @@ export function addAuth(options: any): Rule {
         // Upgrade iOS to v11
         const podfile: Buffer | null = host.read('./ios/Podfile');
         if (podfile) {
-          const ios11 = podfile.toString('utf-8').replace("platform :ios, '9.0'","platform :ios, '11.0'");
+          const ios11 = podfile.toString('utf-8').replace('platform :ios, \'9.0\'', 'platform :ios, \'11.0\'');
           host.overwrite('ios/Podfile', ios11);
         }
 
@@ -261,8 +283,8 @@ export function addAuth(options: any): Rule {
         if (androidBuild) {
           const minSDK = androidBuild.toString('utf-8').replace('minSdkVersion = 16', 'minSdkVersion = 19');
           const maven = minSDK.toString()
-            .replace("maven { url 'https://www.jitpack.io' }", "maven { url 'https://www.jitpack.io' }\n" +
-            "        maven { url 'https://dl.bintray.com/okta/com.okta.android' }");
+            .replace('maven { url \'https://www.jitpack.io\' }', 'maven { url \'https://www.jitpack.io\' }\n' +
+              '        maven { url \'https://dl.bintray.com/okta/com.okta.android\' }');
           host.overwrite('android/build.gradle', maven);
         }
 
