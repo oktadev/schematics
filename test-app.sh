@@ -106,7 +106,6 @@ then
   ionic start ionic-cordova tabs --type angular --cordova --no-interactive
   cd ionic-cordova
   npm install -D ../../oktadev*.tgz
-  npm link schematics-utilities
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm run build && ng test --watch=false
 elif [ $framework == "ionic-capacitor" ] || [ $framework == "icap" ]
