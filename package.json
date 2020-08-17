@@ -31,7 +31,7 @@
   "dependencies": {
     "@angular-devkit/core": "10.0.5",
     "@angular-devkit/schematics": "10.0.5",
-    "@schematics/angular": "10.0.5",
+    "@schematics/angular": "10.0.6",
     "rxjs": "6.6.2",
     "schematics-utilities": "2.0.2"
   },
