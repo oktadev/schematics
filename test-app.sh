@@ -4,8 +4,8 @@
 set -e
 
 framework="$1"
-issuer="https://dev-133320.okta.com/oauth2/default"
-clientId="0oa50oyo7l3H4EjO9357"
+issuer="https://id.mattraible.com/oauth2/default"
+clientId="0oa5683af4tMweYI6357"
 
 # build and package this project
 rm -f *.tgz
@@ -23,19 +23,25 @@ if [ ! -d ../../okta-oidc-angular ]; then
   cd okta-oidc-angular/packages/okta-angular && yarn add @okta/okta-auth-js@4.0.0
   yarn && cd dist && npm pack
 else
-  cd ../../okta-oidc-angular/packages/okta-angular/dist && npm pack
+  cd ../../okta-oidc-angular/packages/okta-angular
+  git pull
+  cd dist && npm pack
 fi
+cd ../../../../schematics/apps
+
 # install snapshot version of Okta React SDK
 if [ ! -d ../../okta-oidc-react ]; then
   cd ../..
   git clone -b ag-authjs-4.0 https://github.com/okta/okta-oidc-js.git okta-oidc-react
   cd okta-oidc-react/packages/okta-react && yarn add @okta/okta-auth-js@4.0.0
-  yarn && cd dist && npm pack
+  yarn && npm pack
 else
-  cd ../../okta-oidc-react/packages/okta-react/dist && npm pack
+  cd ../../okta-oidc-react/packages/okta-react
+  git pull
+  npm pack
 fi
+cd ../../../schematics/apps
 
-cd ../../../../schematics/apps
 
 if [ $framework == "angular" ] || [ $framework == "a" ]
 then
@@ -44,7 +50,6 @@ then
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm install ../../../okta-oidc-angular/packages/okta-angular/dist/*.tgz
-  yarn add @okta/okta-auth-js@4.0.0
   ng test --watch=false && ng e2e
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then
@@ -52,8 +57,7 @@ then
   cd react-app-ts
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm install ../../../okta-oidc-react/packages/okta-react/dist/*.tgz
-  yarn add @okta/okta-auth-js@4.0.0
+  npm install ../../../okta-oidc-react/packages/okta-react/*.tgz
   CI=true npm test
 elif [ $framework == "react" ] || [ $framework == "r" ]
 then
@@ -61,8 +65,7 @@ then
   cd react-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm install ../../../okta-oidc-react/packages/okta-react/dist/*.tgz
-  yarn add @okta/okta-auth-js@4.0.0
+  npm install ../../../okta-oidc-react/packages/okta-react/*.tgz
   CI=true npm test
 elif [ $framework == "vue-ts" ] || [ $framework == "vts" ]
 then
