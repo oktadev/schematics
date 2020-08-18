@@ -29,9 +29,9 @@
   "repository": "git@github.com:oktadeveloper/schematics.git",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-devkit/core": "10.0.5",
-    "@angular-devkit/schematics": "10.0.5",
-    "@schematics/angular": "10.0.5",
+    "@angular-devkit/core": "10.0.6",
+    "@angular-devkit/schematics": "10.0.6",
+    "@schematics/angular": "10.0.6",
     "rxjs": "6.6.2",
     "schematics-utilities": "2.0.2"
   },
