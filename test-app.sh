@@ -26,13 +26,22 @@ else
   cd ../../okta-auth-js/dist && yarn link && npm link
 fi
 # install snapshot version of Okta Angular SDK
-if [ ! -d ../../okta-oidc-js ]; then
+if [ ! -d ../../okta-oidc-angular ]; then
   cd ../..
-  git clone -b ag-angular-auth-instance-OKTA-283293 https://github.com/okta/okta-oidc-js.git
-  cd okta-oidc-js/packages/okta-angular && yarn link @okta/okta-auth-js
+  git clone -b ag-angular-auth-instance-OKTA-283293 https://github.com/okta/okta-oidc-js.git okta-oidc-angular
+  cd okta-oidc-angular/packages/okta-angular && yarn link @okta/okta-auth-js
   yarn && cd dist && npm pack
 else
-  cd ../../okta-oidc-js/packages/okta-angular/dist && npm pack
+  cd ../../okta-oidc-angular/packages/okta-angular/dist && npm pack
+fi
+# install snapshot version of Okta React SDK
+if [ ! -d ../../okta-oidc-react ]; then
+  cd ../..
+  git clone -b ag-authjs-4.0 https://github.com/okta/okta-oidc-js.git okta-oidc-react
+  cd okta-oidc-react/packages/okta-react && yarn link @okta/okta-auth-js
+  yarn && cd dist && npm pack
+else
+  cd ../../okta-oidc-react/packages/okta-react/dist && npm pack
 fi
 
 cd ../../../../schematics/apps
@@ -43,7 +52,7 @@ then
   cd angular-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm install ../../../okta-oidc-js/packages/okta-angular/dist/*.tgz
+  npm install ../../../okta-oidc-angular/packages/okta-angular/dist/*.tgz
   yarn link @okta/okta-auth-js
   ng test --watch=false && ng e2e
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
@@ -52,6 +61,7 @@ then
   cd react-app-ts
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  npm install ../../../okta-oidc-react/packages/okta-react/dist/*.tgz
   yarn link @okta/okta-auth-js
   CI=true npm test
 elif [ $framework == "react" ] || [ $framework == "r" ]
@@ -60,6 +70,7 @@ then
   cd react-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  npm install ../../../okta-oidc-react/packages/okta-react/dist/*.tgz
   yarn link @okta/okta-auth-js
   CI=true npm test
 elif [ $framework == "vue-ts" ] || [ $framework == "vts" ]
