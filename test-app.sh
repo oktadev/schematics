@@ -16,20 +16,11 @@ npm pack
 mkdir -p apps
 cd apps
 
-# install snapshot version of Okta Auth JS SDK
-if [ ! -d ../../okta-auth-js ]; then
-  cd ../..
-  git clone -b dev-4.0 https://github.com/okta/okta-auth-js.git
-  cd okta-auth-js && yarn
-  cd dist && npm link && yarn link
-else
-  cd ../../okta-auth-js/dist && yarn link && npm link
-fi
 # install snapshot version of Okta Angular SDK
 if [ ! -d ../../okta-oidc-angular ]; then
   cd ../..
   git clone -b ag-angular-auth-instance-OKTA-283293 https://github.com/okta/okta-oidc-js.git okta-oidc-angular
-  cd okta-oidc-angular/packages/okta-angular && yarn link @okta/okta-auth-js
+  cd okta-oidc-angular/packages/okta-angular && yarn add @okta/okta-auth-js@4.0.0
   yarn && cd dist && npm pack
 else
   cd ../../okta-oidc-angular/packages/okta-angular/dist && npm pack
@@ -38,7 +29,7 @@ fi
 if [ ! -d ../../okta-oidc-react ]; then
   cd ../..
   git clone -b ag-authjs-4.0 https://github.com/okta/okta-oidc-js.git okta-oidc-react
-  cd okta-oidc-react/packages/okta-react && yarn link @okta/okta-auth-js
+  cd okta-oidc-react/packages/okta-react && yarn add @okta/okta-auth-js@4.0.0
   yarn && cd dist && npm pack
 else
   cd ../../okta-oidc-react/packages/okta-react/dist && npm pack
