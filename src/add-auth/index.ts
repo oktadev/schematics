@@ -234,7 +234,7 @@ export function addAuth(options: any): Rule {
     if (framework === REACT || framework === REACT_TS) {
       const jestConfig = {
         'moduleNameMapper': {
-          '^@okta/okta-auth-js$': '<rootDir>/node_modules/@okta/okta-auth-js/dist/okta-auth-js.min.js'
+          '^@okta/okta-auth-js$': '<rootDir>/node_modules/@okta/okta-auth-js/dist/okta-auth-js.umd.js'
         }
       }
       const content: Buffer | null = host.read('./package.json');
