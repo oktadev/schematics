@@ -1,7 +1,6 @@
 import { HostTree, Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
-// const { spawnSync } = require('child_process');
 import packageJson from './react-ts-pkg.json';
 
 const collectionPath = path.join(__dirname, '../collection.json');
@@ -47,6 +46,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
 
   it('fail when no frameworks', async () => {
     const pkgNoFrameworks = {...packageJson};
+    // @ts-ignore
     delete pkgNoFrameworks.dependencies;
     const tree = new UnitTestTree(new HostTree);
     tree.create('/package.json', JSON.stringify(pkgNoFrameworks));
