@@ -30,5 +30,4 @@ import { Browser } from 'ionic-appauth';
     }
   ]
 })
-export class AuthModule {
-}
+export class AuthModule { }
