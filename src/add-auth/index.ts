@@ -28,9 +28,9 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '2.1.0', name: '@okta/okta-angular'})
+      dependencies.push({type: NodeDependencyType.Default, version: '2.2.0', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '3.0.4', name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: '3.0.7', name: '@okta/okta-react'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.2.0', name: 'react-router-dom'});
       if (framework === REACT_TS) {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.5', name: '@types/react-router-dom'});
@@ -38,16 +38,16 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     } else if (framework === REACT_NATIVE) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.4.1', name: '@okta/okta-react-native'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '1.15.2', name: 'enzyme-adapter-react-16'});
+      dependencies.push({type: NodeDependencyType.Dev, version: '1.15.4', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
       dependencies.push({type: NodeDependencyType.Dev, version: '16.13.1', name: 'react-dom'});
     } else if (framework === VUE || framework == VUE_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '2.0.0', name: '@okta/okta-vue'});
+      dependencies.push({type: NodeDependencyType.Default, version: '2.1.1', name: '@okta/okta-vue'});
       if (framework === VUE_TS) {
-        dependencies.push({type: NodeDependencyType.Dev, version: '1.2.0', name: '@types/okta__okta-vue'});
+        dependencies.push({type: NodeDependencyType.Dev, version: '1.2.1', name: '@types/okta__okta-vue'});
       }
     } else if (framework === IONIC_ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '0.5.1', name: 'ionic-appauth'});
+      dependencies.push({type: NodeDependencyType.Default, version: '0.7.2', name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.23.0', name: '@ionic-native/secure-storage'});
       if (options.platform === 'capacitor') {
         dependencies.push({
@@ -55,15 +55,15 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
           version: '5.1.1',
           name: 'cordova-plugin-secure-storage-echo'
         });
-        dependencies.push({type: NodeDependencyType.Default, version: '3.0.0', name: 'cordova-plugin-advanced-http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '3.0.1', name: 'cordova-plugin-advanced-http'});
         dependencies.push({
           type: NodeDependencyType.Default,
           version: '1.6.0',
           name: 'cordova-plugin-safariviewcontroller'
         });
-        dependencies.push({type: NodeDependencyType.Default, version: '5.27.0', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.28.0', name: '@ionic-native/http'});
       } else {
-        dependencies.push({type: NodeDependencyType.Default, version: '2.3.0', name: '@ionic/storage'});
+        dependencies.push({type: NodeDependencyType.Default, version: '2.3.1', name: '@ionic/storage'});
       }
     } else if (framework === EXPRESS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.17.1', name: 'express-session'});
@@ -203,6 +203,11 @@ export function addAuth(options: any): Rule {
           parts[2].substring(0, parts[2].indexOf('/')) + '.'
           + parts[1] + '.'
           + parts[0].substring(parts[0].lastIndexOf('/') + 1);
+      }
+
+      // create AuthConfigService for JHipster
+      if (options.configUri) {
+        host.create('src/app/auth/auth-config.service.ts', ionicRemoteConfig(options.configUri));
       }
 
       // add cordova to package.json
@@ -347,4 +352,31 @@ export function cordovaNode(packageName: string) {
       'ios'
     ]
   }
+}
+
+export function ionicRemoteConfig(configUri: string) {
+  return `import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthConfigService {
+  private authConfig;
+
+  constructor(private http: HttpClient) { }
+
+  loadAuthConfig() {
+    return this.http.get(\`\${environment.apiUrl}/${configUri}\`)
+      .toPromise()
+      .then(data => {
+        this.authConfig = data;
+      });
+  }
+
+  getConfig() {
+    return this.authConfig;
+  }
+}`;
 }

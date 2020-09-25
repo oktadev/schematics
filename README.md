@@ -131,7 +131,7 @@ cd secure-ionic
 
 You will need an `issuer` and a `clientId` to begin. You can obtain those from Okta by completing the following steps.
 
-> **NOTE:** OIDC Login for Ionic is made possible thanks to the excellent [Ionic AppAuth](https://github.com/wi3land/ionic-appauth#readme) project and its examples. This integration is not Okta-specific and should work with any identity provider that supports PKCE for browser and mobile apps.
+> **NOTE:** OIDC Login for Ionic is possible thanks to the excellent [Ionic AppAuth](https://github.com/wi3land/ionic-appauth#readme) project and its examples. This integration is not Okta-specific and should work with any identity provider that supports PKCE for browser and mobile apps.
 
 ### Create an Application in Okta
 
@@ -158,9 +158,9 @@ Copy your issuer (found under **API** > **Authorization Servers**), and client I
 ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
 ```
 
-**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova.
+**NOTE:** You can switch to Cordova by passing in `--platform=cordova`. The default is Capacitor.
 
-Start your app and you should be able to authenticate with Okta. 🎉
+Start your app, and you should be able to authenticate with Okta. 🎉
 
 ```
 ionic serve
@@ -168,23 +168,7 @@ ionic serve
 
 ### iOS
 
-If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your project has been configured for Cordova. Generate a native project with the following command:
-
-```
-ionic cordova prepare ios
-```
-
-Open your project in Xcode, configure code signing, and run your app.
-
-```
-open platforms/ios/MyApp.xcworkspace
-```
-
-### iOS and Capacitor
-
-If you want to use Capacitor, you **must** integrate this library with `ng add @oktadev/schematics --platform=capacitor`.
-
-Then, run:
+If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your project has been configured for Capacitor. Build and add Capacitor for iOS with the following commands:
 
 ```
 ionic build
@@ -216,32 +200,25 @@ Add your custom scheme to `ios/App/App/Info.plist`:
 
 Then run your app from Xcode.
 
+### iOS and Cordova
+
+If you want to use Cordova, you **must** integrate this library with `ng add @oktadev/schematics --platform=cordova`.
+
+Then, generate a native project with the following command:
+
+```
+ionic cordova prepare ios
+```
+
+Open your project in Xcode, configure code signing, and run your app.
+
+```
+open platforms/ios/MyApp.xcworkspace
+```
+
 ### Android
 
-If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your project has been configured for Cordova. Generate a native project with the following command:
-
-```
-ionic cordova prepare android
-```
-
-Set the launchMode to `singleTask` so the URL does not trigger a new instance of the app in `platforms/android/app/src/main/AndroidManifest.xml`:
-
-```xml
-<activity
-      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-      android:name="com.mydomain.app.MainActivity"
-      android:label="@string/title_activity_main"
-      android:launchMode="singleTask"
-      android:theme="@style/AppTheme.NoActionBarLaunch">
-```
-
-Open `platforms/android` in Android Studio and run your app.
-
-### Android and Capacitor
-
-If you want to use Capacitor, you **must** add this library with `ng add @oktadev/schematics --platform=capacitor`.
-
-Then, run:
+If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your project has been configured for Capacitor. Build and add Capacitor for Android with the following commands:
 
 ```
 ionic build
@@ -270,6 +247,29 @@ Open your project in Android Studio and run your app.
 ```
 npx cap open android
 ```
+
+### Android and Cordova
+
+If you want to use Cordova, you **must** add this library with `ng add @oktadev/schematics --platform=cordova`.
+
+Then, generate a native project with the following command:
+
+```
+ionic cordova prepare android
+```
+
+Set the launchMode to `singleTask` so the URL does not trigger a new instance of the app in `platforms/android/app/src/main/AndroidManifest.xml`:
+
+```xml
+<activity
+      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+      android:name="com.mydomain.app.MainActivity"
+      android:label="@string/title_activity_main"
+      android:launchMode="singleTask"
+      android:theme="@style/AppTheme.NoActionBarLaunch">
+```
+
+Open `platforms/android` in Android Studio and run your app.
 
 See [Ionic's iOS](https://ionicframework.com/docs/building/ios) and [Android Development](https://ionicframework.com/docs/building/android) docs for more information.
 

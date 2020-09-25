@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab One
+      Tab 1
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,12 +15,13 @@
     </ion-card-header>
     <ion-card-content>
       <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
-      <ion-button margin-top (click)="signIn()" *ngIf="!authenticated">Login</ion-button>
+      <ion-button margin-top (click)="signIn()" *ngIf="!action">Login</ion-button>
     </ion-card-content>
   </ion-card>
-  <ion-card *ngIf="authenticated">
+  <ion-card *ngIf="action">
     <ion-card-header>
       <ion-button (click)="getUserInfo()">Get User Details</ion-button>
+      <!--<ion-button (click)="refreshToken()">Refresh Token</ion-button>-->
       <ion-button (click)="signOut()">Sign Out</ion-button>
     </ion-card-header>
 
