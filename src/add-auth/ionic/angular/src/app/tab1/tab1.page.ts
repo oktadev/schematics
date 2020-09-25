@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { IUserInfo } from '../auth/user-info.model';
 import { AuthActions, AuthObserver, AuthService, IAuthAction } from 'ionic-appauth';
 
 @Component({
@@ -11,41 +10,28 @@ import { AuthActions, AuthObserver, AuthService, IAuthAction } from 'ionic-appau
 export class Tab1Page implements OnInit, OnDestroy {
   userInfo = this.auth.session.user;
   action: IAuthAction;
-  loginObserver: AuthObserver;
-  logoutObserver: AuthObserver;
-  userObserver: AuthObserver;
+  authObserver: AuthObserver;
 
   constructor(private navCtrl: NavController, private auth: AuthService) {
   }
 
   ngOnInit() {
     this.auth.loadTokenFromStorage();
-    this.loginObserver = this.auth.addActionListener((action) => this.onSignInSuccess(action));
-    this.logoutObserver = this.auth.addActionListener((action) => this.onSignOutSuccess(action));
-    this.userObserver = this.auth.addActionListener((action) => this.onUserInfoSuccess(action));
+    this.authObserver = this.auth.addActionListener((action) => this.onAction(action));
   }
 
   ngOnDestroy() {
-    this.auth.removeActionObserver(this.loginObserver);
-    this.auth.removeActionObserver(this.logoutObserver);
-    this.auth.removeActionObserver(this.userObserver);
+    this.auth.removeActionObserver(this.authObserver);
   }
 
-  private onSignInSuccess(action: IAuthAction) {
-    this.action = action;
-  }
-
-  private onUserInfoSuccess(action: IAuthAction): void {
-    if (action.action === AuthActions.LoadUserInfoSuccess) {
-      this.userInfo = action.user;
-    }
-  }
-
-  private onSignOutSuccess(action: IAuthAction) {
-    this.action = action;
-
-    if (action.action === AuthActions.SignOutSuccess) {
+  private onAction(action: IAuthAction) {
+    if (action.action === AuthActions.LoadTokenFromStorageFailed ||
+      action.action === AuthActions.SignOutSuccess) {
       delete this.action;
+    } else if (action.action === AuthActions.LoadUserInfoSuccess) {
+      this.userInfo = action.user;
+    } else {
+      this.action = action;
     }
   }
 

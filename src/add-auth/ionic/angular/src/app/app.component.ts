@@ -25,8 +25,7 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.authService.startUpAsync();<% if (platform === 'cordova') { %>
+    this.platform.ready().then(() => {<% if (platform === 'cordova') { %>
       this.statusBar.styleDefault();
       this.splashScreen.hide();<% } else { %>
       if (this.platform.is('mobile') && !this.platform.is('mobileweb')) {

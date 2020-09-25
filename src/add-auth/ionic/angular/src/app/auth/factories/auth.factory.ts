@@ -24,7 +24,7 @@ export const authFactory = (platform: Platform, ngZone: NgZone,<% if (configUri)
   environment.oidcConfig.client_id = config.issuer;<% } %>
   authService.authConfig = environment.oidcConfig;
 
-  <% if (platform === 'cordova') { %>if (this.platform.is('cordova')) {
+  <% if (platform === 'cordova') { %>if (platform.is('cordova')) {
     (window as any).handleOpenURL = (callbackUrl) => {
       ngZone.run(() => {
         authService.authorizationCallback(callbackUrl);
@@ -34,7 +34,7 @@ export const authFactory = (platform: Platform, ngZone: NgZone,<% if (configUri)
     App.addListener('appUrlOpen', (data: any) => {
       if (data.url !== undefined) {
         ngZone.run(() => {
-          authService.handleCallback(data.url);
+          authService.authorizationCallback(data.url);
         });
       }
     });
