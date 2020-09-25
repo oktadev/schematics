@@ -158,7 +158,7 @@ Copy your issuer (found under **API** > **Authorization Servers**), and client I
 ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
 ```
 
-**NOTE:** You can switch to Capacitor by passing in `--platform=capacitor`. The default is Cordova.
+**NOTE:** You can switch to Cordova by passing in `--platform=cordova`. The default is Capacitor.
 
 Start your app, and you should be able to authenticate with Okta. 🎉
 
