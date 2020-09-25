@@ -26,6 +26,7 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   private onAction(action: IAuthAction) {
     if (action.action === AuthActions.LoadTokenFromStorageFailed ||
+      action.action === AuthActions.SignInFailed ||
       action.action === AuthActions.SignOutSuccess) {
       delete this.action;
     } else if (action.action === AuthActions.LoadUserInfoSuccess) {
