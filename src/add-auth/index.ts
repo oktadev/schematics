@@ -205,6 +205,11 @@ export function addAuth(options: any): Rule {
           + parts[0].substring(parts[0].lastIndexOf('/') + 1);
       }
 
+      // create AuthConfigService for JHipster
+      if (options.configUri) {
+        host.create('src/app/auth/auth-config.service.ts', ionicRemoteConfig(options.configUri));
+      }
+
       // add cordova to package.json
       if (options.platform === 'cordova') {
         const content: Buffer | null = host.read('./package.json');
@@ -347,4 +352,31 @@ export function cordovaNode(packageName: string) {
       'ios'
     ]
   }
+}
+
+export function ionicRemoteConfig(configUri: string) {
+  return `import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthConfigService {
+  private authConfig;
+
+  constructor(private http: HttpClient) { }
+
+  loadAuthConfig() {
+    return this.http.get(\`\${environment.apiUrl}/${configUri}\`)
+      .toPromise()
+      .then(data => {
+        this.authConfig = data;
+      });
+  }
+
+  getConfig() {
+    return this.authConfig;
+  }
+}`;
 }

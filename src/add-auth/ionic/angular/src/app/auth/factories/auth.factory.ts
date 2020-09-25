@@ -3,21 +3,26 @@ import { StorageBackend, Requestor } from '@openid/appauth';
 import { AuthService, Browser, ConsoleLogObserver } from 'ionic-appauth';
 import { environment } from 'src/environments/environment';
 import { NgZone } from '@angular/core';
+<% if (configUri) { %>import { AuthConfigService } from '../auth-config.service';<% } %>
 <% if (platform === 'capacitor') { %>import { Plugins } from '@capacitor/core';
 
 const { App } = Plugins;<% } %>
 
-export const authFactory = (platform: Platform, ngZone: NgZone,
+export const authFactory = (platform: Platform, ngZone: NgZone,<% if (configUri) { %> authConfig: AuthConfigService,<% } %>
                           requestor: Requestor, browser: Browser, storage: StorageBackend) => {
 
   const authService = new AuthService(browser, storage, requestor);
-  authService.authConfig = environment.oidcConfig;
 
-  if (onDevice(this.platform)) {
-    authService.authConfig.scopes += ' offline_access';
-    authService.authConfig.redirect_url = 'com.okta.dev-133320:/callback';
-    authService.authConfig.end_session_redirect_url = 'com.okta.dev-133320:/logout';
+  if (<% if (platform === 'cordova') { %>platform.is('cordova')<% } else { %>platform.is('mobile') && !platform.is('mobileweb')<% } %>) {
+    environment.oidcConfig.scopes += ' offline_access';
+    environment.oidcConfig.redirect_url = '<%= packageName %>:/callback';
+    environment.oidcConfig.end_session_redirect_url = '<%= packageName %>:/logout';
   }
+<% if (configUri) { %>  // look up issuer and client ID from API
+  const remoteConfig = authConfig.getConfig();
+  environment.oidcConfig.server_host = config.clientId;
+  environment.oidcConfig.client_id = config.issuer;<% } %>
+  authService.authConfig = environment.oidcConfig;
 
   <% if (platform === 'cordova') { %>if (this.platform.is('cordova')) {
     (window as any).handleOpenURL = (callbackUrl) => {
@@ -25,7 +30,7 @@ export const authFactory = (platform: Platform, ngZone: NgZone,
         authService.authorizationCallback(callbackUrl);
       });
     };
-  }<% } else { %>if (this.platform.is('mobile') && !this.platform.is('mobileweb')) {
+  }<% } else { %>if (platform.is('mobile') && !platform.is('mobileweb')) {
     App.addListener('appUrlOpen', (data: any) => {
       if (data.url !== undefined) {
         ngZone.run(() => {
@@ -38,7 +43,3 @@ export const authFactory = (platform: Platform, ngZone: NgZone,
   authService.addActionObserver(new ConsoleLogObserver());
   return authService;
 };
-
-private onDevice(platform): boolean {
-  return <% if (platform === 'cordova') { %>this.platform.is('cordova')<% } else { %>this.platform.is('mobile') && !this.platform.is('mobileweb')<% } %>;
-}

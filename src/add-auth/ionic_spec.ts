@@ -64,8 +64,9 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
-    expect(tree.files.length).toEqual(27);
-    expect(tree.files.sort()).toEqual([ '/package.json',
+    expect(tree.files.length).toEqual(28);
+    expect(tree.files.sort()).toEqual([
+      '/package.json',
       '/src/app/app-routing.module.ts',
       '/src/app/app.component.spec.ts',
       '/src/app/app.component.ts',
@@ -75,9 +76,9 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
       '/src/app/auth/auth-guard.service.ts',
       '/src/app/auth/auth-http.service.ts',
       '/src/app/auth/auth.module.ts',
-      '/src/app/auth/auth.service.ts',
       '/src/app/auth/end-session/end-session.module.ts',
       '/src/app/auth/end-session/end-session.page.ts',
+      '/src/app/auth/factories/auth.factory.ts',
       '/src/app/auth/factories/browser.factory.ts',
       '/src/app/auth/factories/http.factory.ts',
       '/src/app/auth/factories/index.ts',
@@ -91,16 +92,17 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
       '/src/app/login/login.page.ts',
       '/src/app/tab1/tab1.page.html',
       '/src/app/tab1/tab1.page.spec.ts',
-      '/src/app/tab1/tab1.page.ts' ]);
+      '/src/app/tab1/tab1.page.ts',
+      '/src/environments/environment.ts' ]);
 
     const appModule = tree.readContent('/src/app/app.module.ts');
 
     expect(appModule).toMatch(/AuthModule/);
     expect(appModule).toMatch(/HttpClientModule/);
 
-    const authService = tree.readContent('/src/app/auth/auth.service.ts');
-    expect(authService).toContain(`clientId = '${defaultOptions.clientId}'`);
-    expect(authService).toContain(`issuer = '${defaultOptions.issuer}'`);
+    const env = tree.readContent('/src/environments/environment.ts');
+    expect(env).toContain(`client_id: '${defaultOptions.clientId}'`);
+    expect(env).toContain(`server_host: '${defaultOptions.issuer}'`);
 
     const pkgJson = tree.readContent('/package.json');
     expect(pkgJson).toContain('"cordova":');
@@ -119,18 +121,43 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', capacitorOptions, tree).toPromise();
 
-    expect(tree.files.length).toEqual(27);
+    expect(tree.files.length).toEqual(28);
 
     const appModule = tree.readContent('/src/app/app.module.ts');
 
     expect(appModule).toMatch(/AuthModule/);
     expect(appModule).toMatch(/HttpClientModule/);
 
-    const authService = tree.readContent('/src/app/auth/auth.service.ts');
-    expect(authService).toContain(`clientId = '${defaultOptions.clientId}'`);
-    expect(authService).toContain(`issuer = '${defaultOptions.issuer}'`);
+    const env = tree.readContent('/src/environments/environment.ts');
+    expect(env).toContain(`client_id: '${defaultOptions.clientId}'`);
+    expect(env).toContain(`server_host: '${defaultOptions.issuer}'`);
 
     const pkgJson = tree.readContent('/package.json');
     expect(pkgJson).not.toContain('"cordova":');
+  });
+
+  it('works with jhipster', async () => {
+    const tree = new UnitTestTree(new HostTree);
+
+    tree.create('/package.json', JSON.stringify(packageJson));
+    tree.create('/src/app/app.module.ts', defaultAppModule);
+
+    const jhipsterOptions: any = {
+      configUri: 'auth-info',
+      issuer: 'web_app',
+      clientId: 'http://localhost:9080/auth/realms/jhipster',
+    };
+
+    const runner = new SchematicTestRunner('schematics', collectionPath);
+    await runner.runSchematicAsync('add-auth', jhipsterOptions, tree).toPromise();
+
+    expect(tree.files.length).toEqual(29);
+
+    const authConfig = tree.readContent('src/app/auth/auth-config.service.ts');
+    expect(authConfig).toContain('${environment.apiUrl}/auth-info');
+
+    const env = tree.readContent('/src/environments/environment.ts');
+    expect(env).toContain(`client_id: '${jhipsterOptions.clientId}'`);
+    expect(env).toContain(`server_host: '${jhipsterOptions.issuer}'`);
   });
 });
