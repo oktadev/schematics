@@ -38,7 +38,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     } else if (framework === REACT_NATIVE) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.4.1', name: '@okta/okta-react-native'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '1.15.4', name: 'enzyme-adapter-react-16'});
+      dependencies.push({type: NodeDependencyType.Dev, version: '1.15.5', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
       dependencies.push({type: NodeDependencyType.Dev, version: '16.13.1', name: 'react-dom'});
     } else if (framework === VUE || framework == VUE_TS) {
