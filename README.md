@@ -231,18 +231,15 @@ Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use
 <string name="custom_url_scheme">com.okta.dev-737523</string>
 ```
 
-Set the launchMode to `singleTask` so the URL does not trigger a new instance of the app in `android/app/src/main/AndroidManifest.xml`:
+The [SafariViewController Cordova Plugin](https://github.com/EddyVerbruggen/cordova-plugin-safariviewcontroller) is installed as part of this project. Capacitor uses AndroidX dependencies, but the SafariViewController plugin uses an older non-AndroidX dependency. Use [jetifier](https://developer.android.com/studio/command-line/jetifier) to [patch usages of old support libraries](https://capacitorjs.com/docs/android/troubleshooting#error-package-android-support-does-not-exist) with the following commands:
 
-```xml
-<activity
-      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-      android:name="com.mydomain.app.MainActivity"
-      android:label="@string/title_activity_main"
-      android:launchMode="singleTask"
-      android:theme="@style/AppTheme.NoActionBarLaunch">
 ```
+npm install jetifier
+npx jetify
+npx cap sync android
+```   
 
-Open your project in Android Studio and run your app.
+Then, open your project in Android Studio and run your app.
 
 ```
 npx cap open android
@@ -260,18 +257,15 @@ ionic cordova prepare android
 
 Set the launchMode to `singleTask` so the URL does not trigger a new instance of the app in `platforms/android/app/src/main/AndroidManifest.xml`:
 
-```xml
-<activity
-      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-      android:name="com.mydomain.app.MainActivity"
-      android:label="@string/title_activity_main"
-      android:launchMode="singleTask"
-      android:theme="@style/AppTheme.NoActionBarLaunch">
+```
+android:launchMode="singleTask"
 ```
 
 Open `platforms/android` in Android Studio and run your app.
 
-See [Ionic's iOS](https://ionicframework.com/docs/building/ios) and [Android Development](https://ionicframework.com/docs/building/android) docs for more information.
+If you get a Gradle error in Android Studio, go to **File** > **Project Structure** and change the Android Gradle Plugin to `4.0.1`. Kudos to [Stack Overflow](https://stackoverflow.com/a/63206864).
+
+See [Ionic's iOS](https://ionicframework.com/docs/developing/ios) and [Android Development](https://ionicframework.com/docs/developing/android) docs for more information.
 
 ## React Native
 
