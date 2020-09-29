@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: false,<% if (configUri) { %>
+  apiUrl: 'http://localhost:8080/api',<% } %>
   oidcConfig: {
     client_id: '<%= clientId %>',
     server_host: '<%= issuer %>',
