@@ -35,7 +35,7 @@ then
   npx create-react-app react-app-ts --template typescript
   cd react-app-ts
   # Test with React 17
-  npm install react@17.0.0-rc.0 react-dom@17.0.0-rc.0
+  npm install react@17.0.0 react-dom@17.0.0
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   CI=true npm test
@@ -44,7 +44,7 @@ then
   npx create-react-app react-app
   cd react-app
   # Test with React 17
-  npm install react@17.0.0-rc.0 react-dom@17.0.0-rc.0
+  npm install react@17.0.0 react-dom@17.0.0
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   CI=true npm test
