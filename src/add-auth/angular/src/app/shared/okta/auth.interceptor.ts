@@ -13,11 +13,11 @@ export class AuthInterceptor implements HttpInterceptor {
     return from(this.handleAccess(request, next));
   }
 
-  private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
+  private handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
     // Only add an access token to whitelisted origins
     const allowedOrigins = ['http://localhost'];
     if (allowedOrigins.some(url => request.urlWithParams.includes(url))) {
-      const accessToken = await this.oktaAuth.getAccessToken();
+      const accessToken = this.oktaAuth.getAccessToken();
       request = request.clone({
         setHeaders: {
           Authorization: 'Bearer ' + accessToken
