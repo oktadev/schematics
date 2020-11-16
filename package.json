@@ -30,7 +30,7 @@
   "schematics": "./src/collection.json",
   "dependencies": {
     "@angular-devkit/core": "10.2.0",
-    "@angular-devkit/schematics": "10.2.0",
+    "@angular-devkit/schematics": "11.0.1",
     "@schematics/angular": "11.0.1",
     "rxjs": "6.6.3",
     "schematics-utilities": "2.0.2"
