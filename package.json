@@ -1,6 +1,6 @@
 {
   "name": "@oktadev/schematics",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Schematics for Okta Auth",
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -31,7 +31,7 @@
   "dependencies": {
     "@angular-devkit/core": "10.2.0",
     "@angular-devkit/schematics": "10.2.0",
-    "@schematics/angular": "10.2.0",
+    "@schematics/angular": "11.0.1",
     "rxjs": "6.6.3",
     "schematics-utilities": "2.0.2"
   },
