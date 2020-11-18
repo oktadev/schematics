@@ -9,7 +9,7 @@ describe('OktaDev Schematics: Angular', () => {
   );
 
   const defaultOptions: any = {
-    project: 'bar',
+    project: 'authtest',
     issuer: 'https://dev-737523.okta.com/oauth2/default',
     clientId: '0oaifymbuodpH8nAi0h7'
   };
@@ -20,7 +20,7 @@ describe('OktaDev Schematics: Angular', () => {
   const workspaceOptions: any = {
     name: 'workspace',
     newProjectRoot: 'projects',
-    version: '0.5.0',
+    version: '3.0.0',
   };
 
   // tslint:disable-next-line:no-any
@@ -33,7 +33,7 @@ describe('OktaDev Schematics: Angular', () => {
     skipTests: false,
   };
 
-  beforeEach(async() => {
+  beforeEach(async () => {
     appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions).toPromise();
     appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'application', appOptions, appTree).toPromise();
   });
