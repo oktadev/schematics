@@ -5,7 +5,7 @@ set -e
 
 framework="$1"
 issuer="https://dev-133320.okta.com/oauth2/default"
-clientId="0oa50oyo7l3H4EjO9357"
+clientId="0oa5nak5fmUbfT3O3357"
 
 # build and package this project
 rm -f *.tgz
@@ -103,17 +103,17 @@ EOF
   npm run test:unit
 elif [ $framework == "ionic" ] || [ $framework == "i" ]
 then
-  ionic start ionic-cordova tabs --type angular --cordova --no-interactive
-  cd ionic-cordova
-  npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  npm run build && ng test --watch=false
-elif [ $framework == "ionic-capacitor" ] || [ $framework == "icap" ]
-then
   ionic start ionic-capacitor tabs --type angular --capacitor --no-interactive
   cd ionic-capacitor
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --platform=capacitor
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  npm run build && ng test --watch=false
+elif [ $framework == "ionic-cordova" ] || [ $framework == "icor" ]
+then
+  ionic start ionic-cordova tabs --type angular --cordova --no-interactive
+  cd ionic-cordova
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --platform=cordova
   npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then

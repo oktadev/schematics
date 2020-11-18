@@ -7,25 +7,25 @@ import { Plugins } from '@capacitor/core';
 
 const { SplashScreen } = Plugins;<% } %>
 
-import { AuthService } from './auth/auth.service';
+import { AuthObserver } from 'ionic-appauth';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  authObserver: AuthObserver;
+
   constructor(
     private platform: Platform,<% if (platform === 'cordova') { %>
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,<% } %>
-    private authService: AuthService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.authService.startUpAsync();<% if (platform === 'cordova') { %>
+    this.platform.ready().then(() => {<% if (platform === 'cordova') { %>
       this.statusBar.styleDefault();
       this.splashScreen.hide();<% } else { %>
       if (this.platform.is('mobile') && !this.platform.is('mobileweb')) {
