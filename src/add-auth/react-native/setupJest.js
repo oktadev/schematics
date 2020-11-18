@@ -13,7 +13,7 @@ if (typeof window !== 'object') {
   global.window.navigator = {};
 }
 
-import * as ReactNative from "react-native";
+import * as ReactNative from 'react-native';
 
 jest.doMock('react-native', () => {
   // Extend ReactNative
