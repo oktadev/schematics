@@ -5,8 +5,6 @@ import renderer from 'react-test-renderer';
 import { waitForState } from 'enzyme-async-helpers';
 import { NativeEventEmitter } from 'react-native';
 
-const nativeEmitter = new NativeEventEmitter();
-
 jest
   .mock(
     '../node_modules/react-native/Libraries/Components/StatusBar/StatusBar',
@@ -19,6 +17,8 @@ jest
   .mock(
     '../node_modules/react-native/Libraries/EventEmitter/NativeEventEmitter',
   );
+
+const nativeEmitter = new NativeEventEmitter();
 
 global.fetch = jest
   .fn()
