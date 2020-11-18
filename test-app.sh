@@ -117,11 +117,11 @@ then
   npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
-  react-native init SecureApp
+  npx react-native init SecureApp
   cd SecureApp
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  # npm test -- -u
+  npm test -- -u
 elif [ $framework == "express" ] || [ $framework == "e" ]
 then
   mkdir express-app && cd express-app
