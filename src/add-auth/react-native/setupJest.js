@@ -2,7 +2,6 @@
 
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { NativeModules } from 'react-native';
 
 configure({ adapter: new Adapter() });
 
@@ -14,19 +13,32 @@ if (typeof window !== 'object') {
   global.window.navigator = {};
 }
 
-NativeModules.OktaSdkBridge = {
-  createConfig: jest.fn(),
-  signIn: jest.fn(),
-  signOut: jest.fn(),
-  getAccessToken: jest.fn(),
-  getIdToken: jest.fn(),
-  getUser: jest.fn(),
-  isAuthenticated: jest.fn(),
-  revokeAccessToken: jest.fn(),
-  revokeIdToken: jest.fn(),
-  revokeRefreshToken: jest.fn(),
-  introspectAccessToken: jest.fn(),
-  introspectIdToken: jest.fn(),
-  introspectRefreshToken: jest.fn(),
-  refreshTokens: jest.fn(),
-};
+import * as ReactNative from 'react-native';
+
+jest.doMock('react-native', () => {
+  // Extend ReactNative
+  return Object.setPrototypeOf(
+    {
+      NativeModules: {
+        ...ReactNative.NativeModules,
+        OktaSdkBridge: {
+          createConfig: jest.fn(),
+          signIn: jest.fn(),
+          signOut: jest.fn(),
+          getAccessToken: jest.fn(),
+          getIdToken: jest.fn(),
+          getUser: jest.fn(),
+          isAuthenticated: jest.fn(),
+          revokeAccessToken: jest.fn(),
+          revokeIdToken: jest.fn(),
+          revokeRefreshToken: jest.fn(),
+          introspectAccessToken: jest.fn(),
+          introspectIdToken: jest.fn(),
+          introspectRefreshToken: jest.fn(),
+          refreshTokens: jest.fn(),
+        },
+      },
+    },
+    ReactNative,
+  );
+});

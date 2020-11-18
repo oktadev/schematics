@@ -40,7 +40,7 @@ jobs:
           sudo apt --only-upgrade install google-chrome-stable
           google-chrome --version
       - name: Install CLIs
-        run: npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli @ionic/cli react-native-cli
+        run: npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli @ionic/cli
       - run: npm install
       - name: Create ${{ matrix.framework }} app and test
         run: xvfb-run --server-args="-screen 0 1024x768x24" --auto-servernum ./test-app.sh $APP
