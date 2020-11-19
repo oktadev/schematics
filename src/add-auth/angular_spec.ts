@@ -9,7 +9,6 @@ describe('OktaDev Schematics: Angular', () => {
   );
 
   const defaultOptions: any = {
-    project: 'authtest',
     issuer: 'https://dev-737523.okta.com/oauth2/default',
     clientId: '0oaifymbuodpH8nAi0h7'
   };

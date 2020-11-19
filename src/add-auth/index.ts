@@ -156,16 +156,16 @@ export function addAuth(options: any): Rule {
       }
 
       if (!options.project) {
-        options.project = Object.keys(workspace.projects)[0];
+        options.project = workspace.projects.keys().next().value;
       }
 
       const project = workspace.projects.get(options.project);
       if (!project) {
-        throw new SchematicsException(`Invalid project name (${options.project})`);
+        throw new SchematicsException(`Invalid project name: ${options.project}`);
       }
       projectPath = project.root;
 
-      const buildTarget = project.targets.get('build');
+      const buildTarget = project.targets?.get('build');
       if (!buildTarget) {
         throw targetBuildNotFoundError();
       }
