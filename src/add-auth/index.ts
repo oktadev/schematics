@@ -1,4 +1,4 @@
-import { experimental, getSystemPath, join, JsonParseMode, normalize, parseJson } from '@angular-devkit/core';
+import { getSystemPath, join, normalize } from '@angular-devkit/core';
 import {
   apply,
   chain,
@@ -22,6 +22,9 @@ import {
   NodeDependency,
   NodeDependencyType
 } from 'schematics-utilities';
+import { getWorkspace } from '@schematics/angular/utility/workspace';
+import { targetBuildNotFoundError } from '@schematics/angular/utility/project-targets';
+import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-models';
 
 function addPackageJsonDependencies(framework: string, options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
@@ -90,27 +93,6 @@ function installPackageJsonDependencies(): Rule {
   };
 }
 
-function getWorkspace(
-  host: Tree,
-): { path: string, workspace: experimental.workspace.WorkspaceSchema } {
-  const possibleFiles = ['/angular.json', '/.angular.json'];
-  const path = possibleFiles.filter(path => host.exists(path))[0];
-
-  const configBuffer = host.read(path);
-  if (configBuffer === null) {
-    throw new SchematicsException(`Could not find (${path})`);
-  }
-  const content = configBuffer.toString();
-
-  return {
-    path,
-    workspace: parseJson(
-      content,
-      JsonParseMode.Loose,
-    ) as {} as experimental.workspace.WorkspaceSchema,
-  };
-}
-
 export const ANGULAR = 'angular';
 export const REACT = 'react';
 export const REACT_TS = 'react-ts';
@@ -155,7 +137,7 @@ function getFramework(host: Tree): string {
 }
 
 export function addAuth(options: any): Rule {
-  return (host: Tree, context: SchematicContext) => {
+  return async (host: Tree) => {
     // allow passing the framework in (for testing)
     let framework = options.framework;
 
@@ -167,24 +149,34 @@ export function addAuth(options: any): Rule {
     let projectPath = './';
 
     if (framework === ANGULAR) {
-      const {workspace} = getWorkspace(host);
+      const workspace = await getWorkspace(host);
 
       if (!options.issuer) {
         throw new SchematicsException('You must specify an "issuer".');
       }
 
-      const project = workspace.projects[Object.keys(workspace.projects)[0]];
-      projectPath = project.root;
-
       if (!options.project) {
-        options.project = Object.keys(workspace.projects)[0];
+        options.project = workspace.projects.keys().next().value;
       }
 
-      let style = project.architect?.build.options.styles[0];
-      if (style) {
-        options.style = style.substring(style.lastIndexOf('.') + 1, style.length);
-      } else {
-        options.style = 'css';
+      const project = workspace.projects.get(options.project);
+      if (!project) {
+        throw new SchematicsException(`Invalid project name: ${options.project}`);
+      }
+      projectPath = project.root;
+
+      const buildTarget = project.targets?.get('build');
+      if (!buildTarget) {
+        throw targetBuildNotFoundError();
+      }
+      const buildOptions = (buildTarget.options || {}) as unknown as BrowserBuilderOptions;
+      if (buildOptions.styles) {
+        let style = buildOptions.styles[0] as string;
+        if (style) {
+          options.style = style.substring(style.lastIndexOf('.') + 1, style.length);
+        } else {
+          options.style = 'css';
+        }
       }
 
       // add imports to app.module.ts
@@ -324,7 +316,7 @@ export function addAuth(options: any): Rule {
       options && options.skipPackageJson ? noop() : addPackageJsonDependencies(framework, options),
       options && options.skipPackageJson ? noop() : installPackageJsonDependencies(),
       mergeWith(templateSource, MergeStrategy.Overwrite),
-    ])(host, context);
+    ]);
   };
 }
 
