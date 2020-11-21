@@ -4,12 +4,11 @@ import { OktaAuth } from '@okta/okta-auth-js';
 import { LoginCallback, Security } from '@okta/okta-react';
 import Home from './Home';
 
-const config = {
+const oktaAuth = new OktaAuth({
   issuer: '<%= issuer %>',
-  redirectUri: window.location.origin + '/callback',
-  clientId: '<%= clientId %>'
-};
-const oktaAuth = new OktaAuth(config);
+  clientId: '<%= clientId %>',
+  redirectUri: window.location.origin + '/callback'
+});
 
 class App extends Component {
 
