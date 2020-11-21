@@ -34,7 +34,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
 
     expect(componentContent).toMatch(/class App extends Component/);
     expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
-    expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
+    expect(componentContent).toContain(`clientId: '${defaultOptions.clientId}'`);
   });
 
   it('fail with no package.json', async () => {

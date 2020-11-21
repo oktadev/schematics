@@ -6,8 +6,8 @@ import Home from './Home';
 
 const config: OktaAuthOptions = {
   issuer: '<%= issuer %>',
-  redirect_uri: window.location.origin + '/callback',
-  client_id: '<%= clientId %>'
+  redirectUri: window.location.origin + '/callback',
+  clientId: '<%= clientId %>'
 };
 const oktaAuth = new OktaAuth(config);
 

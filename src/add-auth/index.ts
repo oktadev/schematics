@@ -229,6 +229,20 @@ export function addAuth(options: any): Rule {
         'AuthModule', './auth/auth.module');
     }
 
+    if (framework === REACT || framework === REACT_TS) {
+      const jestConfig = {
+        'moduleNameMapper': {
+          '^@okta/okta-auth-js$': '<rootDir>/node_modules/@okta/okta-auth-js/dist/okta-auth-js.min.js'
+        }
+      }
+      const content: Buffer | null = host.read('./package.json');
+      if (content) {
+        const pkgJson: any = JSON.parse(content.toString());
+        pkgJson.jest = jestConfig;
+        host.overwrite('./package.json', JSON.stringify(pkgJson));
+      }
+    }
+
     if (framework === REACT_NATIVE) {
       // add a package name from the issuer
       const parts = options.issuer.split('.');
