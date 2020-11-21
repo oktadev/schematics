@@ -34,6 +34,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: '3.0.1', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '4.0.0', name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: '4.1.2', name: '@okta/okta-auth-js'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.2.0', name: 'react-router-dom'});
       if (framework === REACT_TS) {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.6', name: '@types/react-router-dom'});
@@ -226,20 +227,6 @@ export function addAuth(options: any): Rule {
         'HttpClientModule', '@angular/common/http');
       addModuleImportToModule(host, 'src/app/app.module.ts',
         'AuthModule', './auth/auth.module');
-    }
-
-    if (framework === REACT || framework === REACT_TS) {
-      const jestConfig = {
-        'moduleNameMapper': {
-          '^@okta/okta-auth-js$': '<rootDir>/node_modules/@okta/okta-auth-js/dist/okta-auth-js.min.js'
-        }
-      }
-      const content: Buffer | null = host.read('./package.json');
-      if (content) {
-        const pkgJson: any = JSON.parse(content.toString());
-        pkgJson.jest = jestConfig;
-        host.overwrite('./package.json', JSON.stringify(pkgJson));
-      }
     }
 
     if (framework === REACT_NATIVE) {
