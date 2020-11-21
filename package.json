@@ -36,12 +36,12 @@
     "schematics-utilities": "2.0.2"
   },
   "devDependencies": {
-    "@types/jasmine": "3.6.1",
-    "@types/node": "14.14.8",
+    "@types/jasmine": "3.6.2",
+    "@types/node": "14.14.9",
     "chalk": "4.1.0",
     "istanbul": "0.4.5",
     "jasmine": "3.6.3",
-    "typescript": "4.0.5"
+    "typescript": "4.1.2"
   },
   "resolutions": {
     "handlebars": "4.5.3"
