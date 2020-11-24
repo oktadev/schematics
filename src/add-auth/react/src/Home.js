@@ -11,11 +11,11 @@ export default withOktaAuth(class Home extends Component {
   }
 
   async login() {
-    await this.props.authService.login();
+    await this.props.oktaAuth.signInWithRedirect();
   }
 
   async logout() {
-    await this.props.authService.logout();
+    await this.props.oktaAuth.signOut();
   }
 
   render() {

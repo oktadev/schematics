@@ -33,7 +33,8 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     if (framework === ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: '3.0.1', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '3.0.10', name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: '4.0.0', name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: '4.2.0', name: '@okta/okta-auth-js'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.2.0', name: 'react-router-dom'});
       if (framework === REACT_TS) {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.6', name: '@types/react-router-dom'});
@@ -51,7 +52,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       }
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: '0.7.4', name: 'ionic-appauth'});
-      dependencies.push({type: NodeDependencyType.Default, version: '5.23.0', name: '@ionic-native/secure-storage'});
+      dependencies.push({type: NodeDependencyType.Default, version: '5.30.0', name: '@ionic-native/secure-storage'});
       if (options.platform === 'capacitor') {
         dependencies.push({
           type: NodeDependencyType.Default,
@@ -64,7 +65,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
           version: '1.6.0',
           name: 'cordova-plugin-safariviewcontroller'
         });
-        dependencies.push({type: NodeDependencyType.Default, version: '5.29.0', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.30.0', name: '@ionic-native/http'});
       } else {
         dependencies.push({type: NodeDependencyType.Default, version: '2.3.1', name: '@ionic/storage'});
       }
@@ -231,7 +232,7 @@ export function addAuth(options: any): Rule {
     if (framework === REACT || framework === REACT_TS) {
       const jestConfig = {
         'moduleNameMapper': {
-          '^@okta/okta-auth-js$': '<rootDir>/node_modules/@okta/okta-auth-js/dist/okta-auth-js.min.js'
+          '^@okta/okta-auth-js$': '<rootDir>/node_modules/@okta/okta-auth-js/dist/okta-auth-js.umd.js'
         }
       }
       const content: Buffer | null = host.read('./package.json');

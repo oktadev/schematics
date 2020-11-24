@@ -27,15 +27,14 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
-    expect(tree.files.length).toEqual(5);
-    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.test.tsx', '/src/App.tsx', '/src/Home.tsx',
-      '/src/okta.d.ts']);
+    expect(tree.files.length).toEqual(4);
+    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.test.tsx', '/src/App.tsx', '/src/Home.tsx']);
 
     const componentContent = tree.readContent('/src/App.tsx');
 
     expect(componentContent).toMatch(/class App extends Component/);
     expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
-    expect(componentContent).toContain(`client_id: '${defaultOptions.clientId}'`);
+    expect(componentContent).toContain(`clientId: '${defaultOptions.clientId}'`);
   });
 
   it('fail with no package.json', async () => {
