@@ -41,6 +41,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       }
     } else if (framework === REACT_NATIVE) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.4.4', name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: '3.2.0', name: 'events'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.5', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
@@ -272,8 +273,11 @@ export function addAuth(options: any): Rule {
         // Upgrade iOS to v11
         const podfile: Buffer | null = host.read('./ios/Podfile');
         if (podfile) {
-          const ios11 = podfile.toString('utf-8').replace('platform :ios, \'9.0\'', 'platform :ios, \'11.0\'');
-          host.overwrite('ios/Podfile', ios11);
+          const ios11 = podfile.toString('utf-8').replace('platform :ios, \'10.0\'', 'platform :ios, \'11.0\'');
+          const oktaOidc = ios11.replace('config = use_native_modules!', 'pod \'OktaOidc\', \'~> 3.0\'\n' +
+            '  \n' +
+            '  config = use_native_modules!')
+          host.overwrite('ios/Podfile', oktaOidc);
         }
 
         // Configure Gradle for Android
