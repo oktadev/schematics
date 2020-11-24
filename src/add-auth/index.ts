@@ -52,7 +52,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       }
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: '0.7.4', name: 'ionic-appauth'});
-      dependencies.push({type: NodeDependencyType.Default, version: '5.23.0', name: '@ionic-native/secure-storage'});
+      dependencies.push({type: NodeDependencyType.Default, version: '5.30.0', name: '@ionic-native/secure-storage'});
       if (options.platform === 'capacitor') {
         dependencies.push({
           type: NodeDependencyType.Default,
