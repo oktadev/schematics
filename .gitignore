@@ -1,7 +1,6 @@
 # Outputs
 src/**/*.js.map
 src/**/*.d.ts
-!src/add-auth/react-ts/src/okta.d.ts
 src/add-auth/*.js
 src/ng-add/*.js
 coverage/
