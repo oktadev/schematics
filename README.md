@@ -33,7 +33,13 @@ cd secure-angular
 
 ### Add an OpenID Connect App in Okta
 
-* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
+1. Install the [Okta CLI](https://cli.okta.com)
+2. Run `okta register` to create an account, followed by `okta apps create`
+3. Choose **Single Page App** and use `http://localhost:4200/callback` for the Redirect URI
+
+You can also use the Okta developer console:
+
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Single Page App (SPA)** as the platform and click **Next**. 
 * Add `http://localhost:4200/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
 
@@ -45,31 +51,39 @@ ng add @oktadev/schematics
 
 You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
 
-See the [Okta Angular SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-angular) for more information.
+Run `npm start`, open `http://localhost:4200` in your browser, and sign in. 🥳
+
+See the [Okta Angular SDK](https://github.com/okta/okta-angular) for more information.
 
 ## React
 
 Create a new project with Create React App.
 
 ```
-npx create-react-app secure-react
+npx create-react-app@4.0.1 secure-react
 cd secure-react
 ```
 
 If you'd like to use TypeScript, add the `--template typescript` flag.
 
 ```
-npx create-react-app secure-react --template typescript
+npx create-react-app@4.0.1 secure-react --template typescript
 cd secure-react
 ```
 
 ### Add an OpenID Connect App in Okta
 
-* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
+1. Install the [Okta CLI](https://cli.okta.com)
+2. Run `okta register` to create an account, followed by `okta apps create`
+3. Choose **Single Page App** and use `http://localhost:3000/callback` for the Redirect URI
+
+You can also use the Okta developer console:
+
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Single Page App (SPA)** as the platform and click **Next**.
 * Add `http://localhost:3000/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
 
-Install Schematics globally.
+Install the Schematics CLI globally.
 
 ```
 npm install -g @angular-devkit/schematics-cli
@@ -84,7 +98,9 @@ schematics @oktadev/schematics:add-auth
 
 You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
 
-See the [Okta React SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react) for more information.
+Run `npm start`, open `http://localhost:3000` in your browser, and sign in. 🎉
+
+See the [Okta React SDK](https://github.com/okta/okta-react) for more information.
 
 ## Vue
 
@@ -98,11 +114,17 @@ cd secure-vue
 
 ### Add an OpenID Connect App in Okta
 
-* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
+1. Install the [Okta CLI](https://cli.okta.com)
+2. Run `okta register` to create an account, followed by `okta apps create`
+3. Choose **Single Page App** and use `http://localhost:8080/callback` for the Redirect URI
+
+You can also use the Okta developer console:
+
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Single Page App (SPA)** as the platform and click **Next**.
 * Select **Authorization Code** for Grant type allowed and click **Done**.
 
-Install Schematics globally.
+Install the Schematics CLI globally.
 
 ```
 npm install -g @angular-devkit/schematics-cli
@@ -111,13 +133,15 @@ npm install -g @angular-devkit/schematics-cli
 Then install and run the `add-auth` schematic in your `secure-vue` project.
 
 ```
-npm i @oktadev/schematics
+npm i -D @oktadev/schematics
 schematics @oktadev/schematics:add-auth
 ```
 
 You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
 
-See the [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-vue) for more information.
+Run `npm run serve`, open `http://localhost:8080` in your browser, and sign in. 💥
+
+See the [Okta Vue SDK](https://github.com/okta/okta-vue) for more information.
 
 ## Ionic
 
@@ -135,7 +159,14 @@ You will need an `issuer` and a `clientId` to begin. You can obtain those from O
 
 ### Create an Application in Okta
 
-Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
+1. Install the [Okta CLI](https://cli.okta.com)
+2. Run `okta register` to create an account, followed by `okta apps create`
+3. Choose **Native** and use `[com.okta.dev-737523:/callback,http://localhost:8100/callback]` for the Login redirect URIs (where `dev-737523.okta.com` is your Okta Org URL)
+4. Use `[com.okta.dev-737523:/logout,http://localhost:8100/logout]` for the Login redirect URIs
+
+You can also use the Okta developer console:
+
+Log in to your Okta instance (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
 
 From the **Applications** page, choose **Add Application**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
  
@@ -160,7 +191,7 @@ ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
 
 **NOTE:** You can switch to Cordova by passing in `--platform=cordova`. The default is Capacitor.
 
-Start your app, and you should be able to authenticate with Okta. 🎉
+Start your app and authenticate with Okta. 🎉
 
 ```
 ionic serve
@@ -269,18 +300,24 @@ See [Ionic's iOS](https://ionicframework.com/docs/developing/ios) and [Android D
 
 ## React Native
 
-Create a new React Native project with React Native CLI. 
+Create a new React Native project with the React Native CLI. 
 
 ```
-npm install -g react-native-cli
-react-native init SecureApp
+npx react-native init SecureApp
 ```
 
 You will need an `issuer` and a `clientId` to begin. You can obtain those from Okta by completing the following steps.
 
 ### Create an Application in Okta
 
-Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
+1. Install the [Okta CLI](https://cli.okta.com)
+2. Run `okta register` to create an account, followed by `okta apps create`
+3. Choose **Native** and accept the default Redirect URI
+4. Modify the Post Logout Redirect URI to match the default Redirect URI (e.g., `com.okta.dev-123456:/callback`). 
+
+You can also use the Okta developer console:
+
+Log in to your Okta instance (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
 
 * From the **Applications** page, choose **Add Application**. 
 * On the Create New Application page, select **Native** as the platform and click **Next**.
@@ -288,7 +325,7 @@ Log in to your Okta Developer account (or [sign up](https://developer.okta.com/s
 * Add a Logout redirect URI that matches the default Login redirect URI (e.g., `com.okta.dev-123456:/callback`). 
 * Click **Done**.
 
-Install Schematics globally.
+Install the Schematics CLI globally.
 
 ```
 npm install -g @angular-devkit/schematics-cli
@@ -298,17 +335,17 @@ Install and run the `add-auth` schematic in your `SecureApp` project. You can fi
 
 ```
 cd SecureApp
-npm i @oktadev/schematics
+npm i -D @oktadev/schematics
 schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
 ```
 
 ### iOS
 
-Configure your [iOS project to use Swift](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native#swift-configuration), since the Okta React Native library is a Swift wrapper.
+Configure your [iOS project to use Swift](https://github.com/okta/okta-react-native#swift-configuration), since the Okta React Native library is a Swift wrapper.
 
 Then run `pod install` from the `ios` directory.
 
-Start your app and you should be able to authenticate with Okta. 🎉
+Start your app and authenticate with Okta. 🎉
 
 ```
 npm run ios
@@ -342,29 +379,42 @@ npx express-generator --view=pug
 
 ### Add an OpenID Connect App in Okta
 
+1. Install the [Okta CLI](https://cli.okta.com)
+2. Run `okta register` to create an account, followed by `okta apps create`
+3. Choose **Web** > **Other** and use `http://localhost:3000/callback` for the Redirect URI
+4. Accept the default Post Logout Redirect URI (`http://localhost:3000`)
+
+You can also use the Okta developer console:
+
+* Log in to your Okta instance
+
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
 * Choose **Web** as the platform and click **Next**.
 * Change the **Login redirect URI** to `http://localhost:3000/callback`.
 * Change the **Logout redirect URI** to `http://localhost:3000`.
 * Select **Done**.
 
-Install Schematics globally.
+Install the Schematics CLI globally.
 
 ```
 npm install -g @angular-devkit/schematics-cli
 ```
 
-Then install and run the `add-auth` schematic in your `express-app` project. The value for `$clientId` and `$clientSecret` are in the app you created on Okta. You can find your `issuer` in your Okta dashboard at **API** > **Authorization Servers**.
+Then install and run the `add-auth` schematic in your `express-app` project. 
+
+If you used the CLI, `.okta.env` will have the values you need. After you use them in the command below, you can delete this file.
+
+If you used the developer console, the values for `$clientId` and `$clientSecret` are in the app you created on Okta. You can find your `issuer` in your Okta dashboard at **API** > **Authorization Servers**.
 
 ```
-npm i @oktadev/schematics
+npm i -D @oktadev/schematics
 schematics @oktadev/schematics:add-auth --issuer=$issuer \
   --clientId=$clientId --clientSecret=$clientSecret
 ```
 
 🚨 An `.env` file will be generated with these values. Make sure to add `*.env` to `.gitignore` and don't check it into source control!
 
-Start your app and authenticate with Okta. 🎊
+Start your app and authenticate with Okta at `http://localhost:3000`. 🎊
 
 ```
 npm start
