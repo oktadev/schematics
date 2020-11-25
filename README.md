@@ -60,14 +60,14 @@ See the [Okta Angular SDK](https://github.com/okta/okta-angular) for more inform
 Create a new project with Create React App.
 
 ```
-npx create-react-app@4.0.1 secure-react
+npx create-react-app secure-react
 cd secure-react
 ```
 
 If you'd like to use TypeScript, add the `--template typescript` flag.
 
 ```
-npx create-react-app@4.0.1 secure-react --template typescript
+npx create-react-app secure-react --template typescript
 cd secure-react
 ```
 
