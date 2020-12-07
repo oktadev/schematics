@@ -1,14 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import Auth from '@okta/okta-vue'
+import { OktaAuth } from '@okta/okta-auth-js'
+import OktaVue, { LoginCallback } from '@okta/okta-vue'
 
 Vue.use(Router)
-Vue.use(Auth, {
+
+const oktaAuth = new OktaAuth({
   issuer: '<%= issuer %>',
-  client_id: '<%= clientId %>',
-  redirect_uri: window.location.origin + '/callback'
+  clientId: '<%= clientId %>',
+  redirectUri: window.location.origin + '/callback'
 })
+
+Vue.use(OktaVue, { oktaAuth })
 
 const router = new Router({
   mode: 'history',
@@ -29,11 +33,9 @@ const router = new Router({
     },
     {
       path: '/callback',
-      component: Auth.handleCallback()
+      component: LoginCallback
     }
   ]
 })
-
-router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
 
 export default router
