@@ -14,7 +14,7 @@ const oktaAuth = new OktaAuth({
 
 Vue.use(OktaVue, { oktaAuth })
 
-const index = new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -38,4 +38,4 @@ const index = new Router({
   ]
 })
 
-export default index
+export default router

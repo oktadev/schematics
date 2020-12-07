@@ -10,7 +10,7 @@ Vue.use(OktaVuePlugin, {
   redirectUri: window.location.origin + '/callback'
 });
 
-const index = new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -31,6 +31,6 @@ const index = new Router({
   ],
 });
 
-index.beforeEach(Vue.prototype.$auth.authRedirectGuard());
+router.beforeEach(Vue.prototype.$auth.authRedirectGuard());
 
-export default index;
+export default router;
