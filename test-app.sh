@@ -5,7 +5,7 @@ set -e
 
 framework="$1"
 issuer="https://dev-133320.okta.com/oauth2/default"
-clientId="0oa5nak5fmUbfT3O3357"
+clientId="0oa6p6fwhmKz3QFDf357"
 
 # build and package this project
 rm -f *.tgz
