@@ -365,7 +365,7 @@ Since all of these modifications are done for you, you can simply start your app
 npm run android
 ```
 
-For more information, see the [Okta React Native SDK documentation](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native#readme).
+For more information, see the [Okta React Native SDK documentation](https://github.com/okta/okta-react-native#readme).
 
 ## Express
 
@@ -483,10 +483,10 @@ See the following blog posts to see OktaDev Schematics in action.
 
 This project uses the following open source libraries from Okta:
 
-* [Okta Angular SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-angular)
-* [Okta React SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react)
-* [Okta Vue SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-vue)
-* [Okta React Native SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react-native)
+* [Okta Angular SDK](https://github.com/okta/okta-angular)
+* [Okta React SDK](https://github.com/okta/okta-react)
+* [Okta Vue SDK](https://github.com/okta/okta-vue)
+* [Okta React Native SDK](https://github.com/okta/okta-react-native)
 
 For Ionic, it uses [Ionic AppAuth](https://github.com/wi3land/ionic-appauth).
 
