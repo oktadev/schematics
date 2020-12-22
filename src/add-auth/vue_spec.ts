@@ -28,12 +28,12 @@ describe('OktaDev Schematics: Vue',() => {
     await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
     expect(tree.files.length).toEqual(3);
-    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.vue', '/src/router.js']);
+    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.vue', '/src/router/index.js']);
 
-    const routerContent = tree.readContent('/src/router.js');
+    const routerContent = tree.readContent('/src/router/index.js');
 
-    expect(routerContent).toMatch(/Auth\.handleCallback\(\)/);
+    expect(routerContent).toMatch(/Vue.use\(OktaVue, { oktaAuth }\)/);
     expect(routerContent).toContain(`issuer: '${defaultOptions.issuer}'`);
-    expect(routerContent).toContain(`client_id: '${defaultOptions.clientId}'`);
+    expect(routerContent).toContain(`clientId: '${defaultOptions.clientId}'`);
   });
 });
