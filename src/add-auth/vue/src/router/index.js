@@ -1,6 +1,8 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+
+// https://github.com/okta/okta-vue/issues/38
+/*
 import { OktaAuth } from '@okta/okta-auth-js'
 import OktaVue, { LoginCallback } from '@okta/okta-vue'
 
@@ -13,29 +15,31 @@ const oktaAuth = new OktaAuth({
 })
 
 Vue.use(OktaVue, { oktaAuth })
+*/
 
-const router = new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-    },
-    {
-      path: '/callback',
-      component: LoginCallback
-    }
-  ]
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: Home
+  },
+  {
+    path: '/about',
+    name: 'about',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  /*{
+    path: '/callback',
+    component: LoginCallback
+  }*/
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
 })
 
 export default router

@@ -4,8 +4,8 @@
 set -e
 
 framework="$1"
-issuer="https://dev-133320.okta.com/oauth2/default"
-clientId="0oa6p6fwhmKz3QFDf357"
+issuer="https://dev-6974382.okta.com/oauth2/default"
+clientId="0oa2urdhlx26eW1HC5d6"
 
 # build and package this project
 rm -f *.tgz
@@ -66,7 +66,8 @@ then
     },
     "@vue/cli-plugin-unit-mocha": {},
     "@vue/cli-plugin-e2e-cypress": {}
-  }
+  },
+  "vueVersion": "3"
 }
 EOF
 )
@@ -92,7 +93,8 @@ then
       ]
     },
     "@vue/cli-plugin-unit-jest": {}
-  }
+  },
+  "vueVersion": "3"
 }
 EOF
 )

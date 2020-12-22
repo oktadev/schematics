@@ -26,7 +26,7 @@ import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { targetBuildNotFoundError } from '@schematics/angular/utility/project-targets';
 import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-models';
 
-const AUTH_JS_VERSION = '4.4.0';
+const AUTH_JS_VERSION = '4.5.0';
 
 function addPackageJsonDependencies(framework: string, options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
@@ -42,7 +42,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.6', name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.4.4', name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.5.0', name: '@okta/okta-react-native'});
       dependencies.push({type: NodeDependencyType.Default, version: '3.2.0', name: 'events'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.5', name: 'enzyme-adapter-react-16'});
@@ -129,7 +129,7 @@ function getFramework(host: Tree): string {
       }
       return REACT;
     } else if (content.dependencies['vue']) {
-      if (content.devDependencies['typescript']) {
+      if (content.devDependencies['@vue/cli-plugin-typescript']) {
         return VUE_TS
       }
       return VUE;
