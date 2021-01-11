@@ -26,7 +26,7 @@ import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { targetBuildNotFoundError } from '@schematics/angular/utility/project-targets';
 import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-models';
 
-const AUTH_JS_VERSION = '4.5.0';
+const AUTH_JS_VERSION = '4.5.1';
 
 function addPackageJsonDependencies(framework: string, options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
@@ -39,7 +39,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.2.0', name: 'react-router-dom'});
       if (framework === REACT_TS) {
-        dependencies.push({type: NodeDependencyType.Default, version: '5.1.6', name: '@types/react-router-dom'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.1.7', name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.5.0', name: '@okta/okta-react-native'});
@@ -49,13 +49,8 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
       dependencies.push({type: NodeDependencyType.Dev, version: '17.0.1', name: 'react-dom'});
     } else if (framework === VUE || framework == VUE_TS) {
-      if (framework === VUE_TS) {
-        dependencies.push({type: NodeDependencyType.Default, version: '2.1.1', name: '@okta/okta-vue'});
-        dependencies.push({type: NodeDependencyType.Dev, version: '1.2.2', name: '@types/okta__okta-vue'});
-      } else {
-        dependencies.push({type: NodeDependencyType.Default, version: '3.0.0', name: '@okta/okta-vue'});
-        dependencies.push({type: NodeDependencyType.Default, version: AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
-      }
+      dependencies.push({type: NodeDependencyType.Default, version: '3.1.0', name: '@okta/okta-vue'});
+      dependencies.push({type: NodeDependencyType.Default, version: AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: '0.7.4', name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.30.0', name: '@ionic-native/secure-storage'});
@@ -77,7 +72,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       }
     } else if (framework === EXPRESS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.17.1', name: 'express-session'});
-      dependencies.push({type: NodeDependencyType.Default, version: '4.0.2', name: '@okta/oidc-middleware'});
+      dependencies.push({type: NodeDependencyType.Default, version: '4.0.3', name: '@okta/oidc-middleware'});
       dependencies.push({type: NodeDependencyType.Default, version: '8.2.0', name: 'dotenv'});
     }
 
