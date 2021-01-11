@@ -5,17 +5,16 @@
   "dependencies": {
     "@okta/okta-angular": "3.0.1",
     "@okta/okta-react": "4.1.0",
-    "@okta/okta-auth-js": "4.5.0",
+    "@okta/okta-auth-js": "4.5.1",
     "react-router-dom": "5.2.0",
-    "@types/react-router-dom": "5.1.6",
+    "@types/react-router-dom": "5.1.7",
     "@okta/okta-react-native": "1.5.0",
     "events": "3.2.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.5",
     "enzyme-async-helpers": "0.9.1",
     "react-dom": "17.0.1",
-    "@okta/okta-vue": "3.0.0",
-    "@types/okta__okta-vue": "1.2.2",
+    "@okta/okta-vue": "3.1.0",
     "ionic-appauth": "0.7.4",
     "@ionic-native/secure-storage": "5.30.0",
     "cordova-plugin-secure-storage-echo": "5.1.1",
@@ -24,7 +23,7 @@
     "@ionic-native/http": "5.30.0",
     "@ionic/storage": "2.3.1",
     "express-session": "1.17.1",
-    "@okta/oidc-middleware": "4.0.2",
+    "@okta/oidc-middleware": "4.0.3",
     "dotenv": "8.2.0"
   }
 }

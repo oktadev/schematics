@@ -32,7 +32,7 @@ describe('OktaDev Schematics: Vue + TypeScript', () => {
 
     const routerContent = tree.readContent('/src/router/index.ts');
 
-    expect(routerContent).toMatch(/OktaVuePlugin\.handleCallback\(\)/);
+    expect(routerContent).toMatch(/Vue.use\(OktaVue, { oktaAuth }\)/);
     expect(routerContent).toContain(`issuer: '${defaultOptions.issuer}'`);
     expect(routerContent).toContain(`clientId: '${defaultOptions.clientId}'`);
   });

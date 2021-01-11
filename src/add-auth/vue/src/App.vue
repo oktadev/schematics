@@ -7,8 +7,8 @@
         <!-- router links that require authentication -->
       </template>
     </div>
-    <button v-if="authState.isAuthenticated" v-on:click="logout()">Logout</button>
-    <button v-else v-on:click="login()">Login</button>
+    <button v-if="authState.isAuthenticated" v-on:click="logout" id="logout">Logout</button>
+    <button v-else v-on:click="login" id="login">Login</button>
     <router-view/>
   </div>
 </template>
