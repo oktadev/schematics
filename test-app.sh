@@ -70,9 +70,9 @@ then
 }
 EOF
 )
-  vue create vue-app-ts -i "$config"
+  vue create vue-app-ts -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-app-ts
-  npm install -D ../../oktadev*.tgz --registry=http://registry.npm.taobao.org
+  npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm run test:unit
 elif [ $framework == "vue" ] || [ $framework == "v" ]
@@ -96,9 +96,9 @@ then
 }
 EOF
 )
-  vue create vue-app -i "$config"
+  vue create vue-app -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-app
-  npm install -D ../../oktadev*.tgz --registry=http://registry.npm.taobao.org
+  npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm run test:unit
 elif [ $framework == "ionic" ] || [ $framework == "i" ]
