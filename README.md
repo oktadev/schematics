@@ -341,9 +341,7 @@ schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
 
 ### iOS
 
-Configure your [iOS project to use Swift](https://github.com/okta/okta-react-native#swift-configuration), since the Okta React Native library is a Swift wrapper.
-
-Then run `pod install` from the `ios` directory.
+Run `pod install --project-directory=ios` to install the [Okta OIDC SDK for iOS](https://github.com/okta/okta-oidc-ios).
 
 Start your app and authenticate with Okta. 🎉
 
