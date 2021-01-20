@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         node_version: [12.16.3]
-        os: [macOS-latest]
+        os: [ubuntu-latest]
         framework:
           - angular
           - react

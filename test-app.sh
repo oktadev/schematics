@@ -121,7 +121,7 @@ then
   cd SecureApp
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  pod install --project-directory=ios
+  # pod install --project-directory=ios
   npm test -- -u
 elif [ $framework == "express" ] || [ $framework == "e" ]
 then
