@@ -42,7 +42,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.7', name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.7.0', name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.8.0', name: '@okta/okta-react-native'});
       dependencies.push({type: NodeDependencyType.Default, version: '3.2.0', name: 'events'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.6', name: 'enzyme-adapter-react-16'});
@@ -53,7 +53,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: '0.7.4', name: 'ionic-appauth'});
-      dependencies.push({type: NodeDependencyType.Default, version: '5.30.0', name: '@ionic-native/secure-storage'});
+      dependencies.push({type: NodeDependencyType.Default, version: '5.31.1', name: '@ionic-native/secure-storage'});
       if (options.platform === 'capacitor') {
         dependencies.push({
           type: NodeDependencyType.Default,
@@ -66,7 +66,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
           version: '1.6.0',
           name: 'cordova-plugin-safariviewcontroller'
         });
-        dependencies.push({type: NodeDependencyType.Default, version: '5.30.0', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: '5.31.1', name: '@ionic-native/http'});
       } else {
         dependencies.push({type: NodeDependencyType.Default, version: '2.3.1', name: '@ionic/storage'});
       }
