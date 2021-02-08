@@ -228,6 +228,18 @@ export function addAuth(options: any): Rule {
         'HttpClientModule', '@angular/common/http');
       addModuleImportToModule(host, 'src/app/app.module.ts',
         'AuthModule', './auth/auth.module');
+
+      // Add new modules to tsconfig.app.json
+      const tsConfig: Buffer | null = host.read('./tsconfig.app.json');
+      if (tsConfig) {
+        let config: string = tsConfig.toString();
+        config = config.replace('"src/polyfills.ts"', `"src/polyfills.ts",
+    "src/app/auth/auth-callback/auth-callback.module.ts",
+    "src/app/auth/end-session/end-session.module.ts",
+    "src/app/login/login.module.ts",
+    "src/app/tabs/tabs.module.ts"`);
+        host.overwrite('./tsconfig.app.json', config);
+      }
     }
 
     if (framework === REACT || framework === REACT_TS) {
