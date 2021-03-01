@@ -32,14 +32,14 @@ then
   ng test --watch=false && ng e2e
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then
-  npx create-react-app@4.0.2 react-app-ts --template typescript
+  npx create-react-app@4.0.3 react-app-ts --template typescript
   cd react-app-ts
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   CI=true npm test
 elif [ $framework == "react" ] || [ $framework == "r" ]
 then
-  npx create-react-app@4.0.2 react-app
+  npx create-react-app@4.0.3 react-app
   cd react-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
