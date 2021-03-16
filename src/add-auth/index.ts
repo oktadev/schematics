@@ -68,7 +68,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         });
         dependencies.push({type: NodeDependencyType.Default, version: '5.31.1', name: '@ionic-native/http'});
       } else {
-        dependencies.push({type: NodeDependencyType.Default, version: '2.3.1', name: '@ionic/storage'});
+        dependencies.push({type: NodeDependencyType.Default, version: '3.0.2', name: '@ionic/storage'});
       }
     } else if (framework === EXPRESS) {
       dependencies.push({type: NodeDependencyType.Default, version: '1.17.1', name: 'express-session'});
