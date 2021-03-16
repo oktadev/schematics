@@ -33,11 +33,11 @@
     "@angular-devkit/schematics": "11.2.4",
     "@schematics/angular": "11.2.4",
     "rxjs": "6.6.6",
-    "schematics-utilities": "^2.0.2"
+    "schematics-utilities": "2.0.2"
   },
   "devDependencies": {
     "@types/jasmine": "3.6.6",
-    "@types/node": "14.14.34",
+    "@types/node": "14.14.35",
     "chalk": "4.1.0",
     "istanbul": "0.4.5",
     "jasmine": "3.6.4",
