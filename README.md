@@ -37,23 +37,25 @@ cd secure-angular
 2. Run `okta register` to create an account, followed by `okta apps create`
 3. Choose **Single Page App** and use `http://localhost:4200/callback` for the Redirect URI
 
-You can also use the Okta developer console:
-
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
-* Choose **Single Page App (SPA)** as the platform and click **Next**. 
-* Add `http://localhost:4200/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
-
 In your `secure-angular` project, add `@oktadev/schematics`:
 
 ```
 ng add @oktadev/schematics
 ```
 
-You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
+Use the values that the Okta CLI provides for the issuer and client ID when prompted.
 
 Run `npm start`, open `http://localhost:4200` in your browser, and sign in. 🥳
 
 See the [Okta Angular SDK](https://github.com/okta/okta-angular) for more information.
+
+You can also use the Okta Admin Console:
+
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Application** > **Add Application** > **Create New App**.
+* Choose **Single Page App (SPA)** as the platform and click **Create**.
+* Add `http://localhost:4200/callback` as a Login redirect UR and `http://localhost:4200` as a logout redirect URI.
+* Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
+* You'll also need to add `http://localhost:4200` as a Trusted Origin in **Security** > **API** > **Trusted Origins**.
 
 ## React
 
@@ -77,12 +79,6 @@ cd secure-react
 2. Run `okta register` to create an account, followed by `okta apps create`
 3. Choose **Single Page App** and use `http://localhost:3000/callback` for the Redirect URI
 
-You can also use the Okta developer console:
-
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
-* Choose **Single Page App (SPA)** as the platform and click **Next**.
-* Add `http://localhost:3000/callback` as a Login redirect URI, select **Authorization Code** for Grant type allowed, and click **Done**.
-
 Install the Schematics CLI globally.
 
 ```
@@ -96,11 +92,19 @@ npm i @oktadev/schematics
 schematics @oktadev/schematics:add-auth
 ```
 
-You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
+Use the values that the Okta CLI provides for the issuer and client ID when prompted.
 
 Run `npm start`, open `http://localhost:3000` in your browser, and sign in. 🎉
 
 See the [Okta React SDK](https://github.com/okta/okta-react) for more information.
+
+You can also use the Okta Admin Console:
+
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Application** > **Add Application** > **Create New App**.
+* Choose **Single Page App (SPA)** as the platform and click **Create**.
+* Add `http://localhost:3000/callback` as a Login redirect UR and `http://localhost:3000` as a logout redirect URI.
+* Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
+* You'll also need to add `http://localhost:3000` as a Trusted Origin in **Security** > **API** > **Trusted Origins**.
 
 ## Vue
 
@@ -118,12 +122,6 @@ cd secure-vue
 2. Run `okta register` to create an account, followed by `okta apps create`
 3. Choose **Single Page App** and use `http://localhost:8080/callback` for the Redirect URI
 
-You can also use the Okta developer console:
-
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
-* Choose **Single Page App (SPA)** as the platform and click **Next**.
-* Select **Authorization Code** for Grant type allowed and click **Done**.
-
 Install the Schematics CLI globally.
 
 ```
@@ -137,11 +135,19 @@ npm i -D @oktadev/schematics
 schematics @oktadev/schematics:add-auth
 ```
 
-You'll be prompted for an issuer, which you can find in your Okta dashboard at **API** > **Authorization Servers**. For the client ID, use the Client ID from the app you created in Okta.
+Use the values that the Okta CLI provides for the issuer and client ID when prompted.
 
 Run `npm run serve`, open `http://localhost:8080` in your browser, and sign in. 💥
 
 See the [Okta Vue SDK](https://github.com/okta/okta-vue) for more information.
+
+You can also use the Okta Admin Console:
+
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Application** > **Add Application** > **Create New App**.
+* Choose **Single Page App (SPA)** as the platform and click **Create**.
+* Add `http://localhost:8080/callback` as a Login redirect UR and `http://localhost:8080` as a logout redirect URI.
+* Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
+* You'll also need to add `http://localhost:8080` as a Trusted Origin in **Security** > **API** > **Trusted Origins**.
 
 ## Ionic
 
@@ -164,30 +170,13 @@ You will need an `issuer` and a `clientId` to begin. You can obtain those from O
 3. Choose **Native** and use `[com.okta.dev-737523:/callback,http://localhost:8100/callback]` for the Login redirect URIs (where `dev-737523.okta.com` is your Okta Org URL)
 4. Use `[com.okta.dev-737523:/logout,http://localhost:8100/logout]` for the Login redirect URIs
 
-You can also use the Okta developer console:
-
-Log in to your Okta instance (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
-
-From the **Applications** page, choose **Add Application**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
- 
-* Login redirect URIs: 
-  * `http://localhost:8100/callback`
-  * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta Org URL)
-* Logout redirect URIs:
-  * `http://localhost:8100/logout`
-  * `com.okta.dev-737523:/logout`
-* Grant type allowed: 
-  - [x] **Authorization Code**
-  - [x] **Refresh Token**
-* Click **Done**
-
-You will also need to add `http://localhost:8100` as a Trusted Origin in **API** > **Trusted Origins**.
-
-Copy your issuer (found under **API** > **Authorization Servers**), and client ID into the following command and run it:
+In your `secure-ionic` project, add `@oktadev/schematics`:
 
 ```
 ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
 ```
+
+Use the values that the Okta CLI provides for the issuer and client ID when prompted.
 
 **NOTE:** You can switch to Cordova by passing in `--platform=cordova`. The default is Capacitor.
 
@@ -196,6 +185,22 @@ Start your app and authenticate with Okta. 🎉
 ```
 ionic serve
 ```
+
+You can also use the Okta Admin Console:
+
+Log in to your Okta instance (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
+
+From the **Applications** page, choose **Add Application** > **Create New App**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
+
+* Login redirect URIs:
+  * `http://localhost:8100/callback`
+  * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta Org URL)
+* Logout redirect URIs:
+  * `http://localhost:8100/logout`
+  * `com.okta.dev-737523:/logout`
+* Click **Save**
+
+You will also need to add `http://localhost:8100` as a Trusted Origin in **API** > **Trusted Origins**.
 
 ### iOS
 
@@ -313,17 +318,7 @@ You will need an `issuer` and a `clientId` to begin. You can obtain those from O
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
 3. Choose **Native** and accept the default Redirect URI
-4. Modify the Post Logout Redirect URI to match the default Redirect URI (e.g., `com.okta.dev-123456:/callback`). 
-
-You can also use the Okta developer console:
-
-Log in to your Okta instance (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
-
-* From the **Applications** page, choose **Add Application**. 
-* On the Create New Application page, select **Native** as the platform and click **Next**.
-* Give your app a memorable name. 
-* Add a Logout redirect URI that matches the default Login redirect URI (e.g., `com.okta.dev-123456:/callback`). 
-* Click **Done**.
+4. Modify the Post Logout Redirect URI to match the default Redirect URI (e.g., `com.okta.dev-123456:/callback`).
 
 Install the Schematics CLI globally.
 
@@ -331,13 +326,20 @@ Install the Schematics CLI globally.
 npm install -g @angular-devkit/schematics-cli
 ```
 
-Install and run the `add-auth` schematic in your `SecureApp` project. You can find your issuer under **API** > **Authorization Servers** on Okta.
+Install and run the `add-auth` schematic in your `SecureApp` project. 
 
 ```
 cd SecureApp
 npm i -D @oktadev/schematics
 schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
 ```
+
+You can also use the Okta Admin Console:
+
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Application** > **Add Application** > **Create New App**.
+* Choose **Native** as the platform and click **Create**.
+* Add `com.okta.dev-123456:/callback` as a Login redirect UR and `com.okta.dev-123456:/callback` as a logout redirect URI (where `dev-123456.okta.com` is your Okta domain).
+* Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
 
 ### iOS
 
@@ -382,15 +384,15 @@ npx express-generator --view=pug
 3. Choose **Web** > **Other** and use `http://localhost:3000/callback` for the Redirect URI
 4. Accept the default Post Logout Redirect URI (`http://localhost:3000`)
 
-You can also use the Okta developer console:
+You can also use the Okta Admin Console:
 
 * Log in to your Okta instance
 
-* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application**.
-* Choose **Web** as the platform and click **Next**.
+* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application** > **Create New App**.
+* Choose **Web** as the platform and click **Create**.
 * Change the **Login redirect URI** to `http://localhost:3000/callback`.
 * Change the **Logout redirect URI** to `http://localhost:3000`.
-* Select **Done**.
+* Select **Save**.
 
 Install the Schematics CLI globally.
 
