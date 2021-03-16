@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { AuthState, OktaAuth } from '@okta/okta-auth-js';
 import { withOktaAuth } from '@okta/okta-react';
 import './App.css';
 import logo from './logo.svg';
 
 interface HomeProps {
-  authService: any;
-  authState: any;
+  oktaAuth: OktaAuth;
+  authState: AuthState;
+  _onAuthRequired: any;
 }
 
 interface HomeState {

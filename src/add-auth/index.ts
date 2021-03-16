@@ -35,7 +35,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     if (framework === ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: '3.0.1', name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '4.1.0', name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: '5.0.0', name: '@okta/okta-react'});
       dependencies.push({type: NodeDependencyType.Default, version: AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
       dependencies.push({type: NodeDependencyType.Default, version: '5.2.0', name: 'react-router-dom'});
       if (framework === REACT_TS) {
