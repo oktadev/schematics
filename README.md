@@ -51,9 +51,9 @@ See the [Okta Angular SDK](https://github.com/okta/okta-angular) for more inform
 
 You can also use the Okta Admin Console:
 
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Application** > **Add Application** > **Create New App**.
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Applications** > **Add Application** > **Create New App**.
 * Choose **Single Page App (SPA)** as the platform and click **Create**.
-* Add `http://localhost:4200/callback` as a Login redirect UR and `http://localhost:4200` as a logout redirect URI.
+* Add `http://localhost:4200/callback` as a Login redirect URI and `http://localhost:4200` as a Logout redirect URI.
 * Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
 * You'll also need to add `http://localhost:4200` as a Trusted Origin in **Security** > **API** > **Trusted Origins**.
 
@@ -100,9 +100,9 @@ See the [Okta React SDK](https://github.com/okta/okta-react) for more informatio
 
 You can also use the Okta Admin Console:
 
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Application** > **Add Application** > **Create New App**.
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Applications** > **Add Application** > **Create New App**.
 * Choose **Single Page App (SPA)** as the platform and click **Create**.
-* Add `http://localhost:3000/callback` as a Login redirect UR and `http://localhost:3000` as a logout redirect URI.
+* Add `http://localhost:3000/callback` as a Login redirect URI and `http://localhost:3000` as a Logout redirect URI.
 * Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
 * You'll also need to add `http://localhost:3000` as a Trusted Origin in **Security** > **API** > **Trusted Origins**.
 
@@ -143,9 +143,9 @@ See the [Okta Vue SDK](https://github.com/okta/okta-vue) for more information.
 
 You can also use the Okta Admin Console:
 
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Application** > **Add Application** > **Create New App**.
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Applications** > **Add Application** > **Create New App**.
 * Choose **Single Page App (SPA)** as the platform and click **Create**.
-* Add `http://localhost:8080/callback` as a Login redirect UR and `http://localhost:8080` as a logout redirect URI.
+* Add `http://localhost:8080/callback` as a Login redirect URI and `http://localhost:8080` as a Logout redirect URI.
 * Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
 * You'll also need to add `http://localhost:8080` as a Trusted Origin in **Security** > **API** > **Trusted Origins**.
 
@@ -173,7 +173,7 @@ You will need an `issuer` and a `clientId` to begin. You can obtain those from O
 In your `secure-ionic` project, add `@oktadev/schematics`:
 
 ```
-ng add @oktadev/schematics --issuer=$issuer --clientId=$clientId
+ng add @oktadev/schematics
 ```
 
 Use the values that the Okta CLI provides for the issuer and client ID when prompted.
@@ -336,9 +336,9 @@ schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
 
 You can also use the Okta Admin Console:
 
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Application** > **Add Application** > **Create New App**.
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Applications** > **Add Application** > **Create New App**.
 * Choose **Native** as the platform and click **Create**.
-* Add `com.okta.dev-123456:/callback` as a Login redirect UR and `com.okta.dev-123456:/callback` as a logout redirect URI (where `dev-123456.okta.com` is your Okta domain).
+* Add `com.okta.dev-123456:/callback` as a Login redirect URI and `com.okta.dev-123456:/callback` as a Logout redirect URI (where `dev-123456.okta.com` is your Okta domain).
 * Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
 
 ### iOS
@@ -384,16 +384,6 @@ npx express-generator --view=pug
 3. Choose **Web** > **Other** and use `http://localhost:3000/callback` for the Redirect URI
 4. Accept the default Post Logout Redirect URI (`http://localhost:3000`)
 
-You can also use the Okta Admin Console:
-
-* Log in to your Okta instance
-
-* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application** > **Create New App**.
-* Choose **Web** as the platform and click **Create**.
-* Change the **Login redirect URI** to `http://localhost:3000/callback`.
-* Change the **Logout redirect URI** to `http://localhost:3000`.
-* Select **Save**.
-
 Install the Schematics CLI globally.
 
 ```
@@ -402,9 +392,7 @@ npm install -g @angular-devkit/schematics-cli
 
 Then install and run the `add-auth` schematic in your `express-app` project. 
 
-If you used the CLI, `.okta.env` will have the values you need. After you use them in the command below, you can delete this file.
-
-If you used the developer console, the values for `$clientId` and `$clientSecret` are in the app you created on Okta. You can find your `issuer` in your Okta dashboard at **API** > **Authorization Servers**.
+The Okta CLI will create an `.okta.env` file in the current directory. It will have the values you need. After you use them in the command below, you can delete this file.
 
 ```
 npm i -D @oktadev/schematics
@@ -412,7 +400,7 @@ schematics @oktadev/schematics:add-auth --issuer=$issuer \
   --clientId=$clientId --clientSecret=$clientSecret
 ```
 
-🚨 An `.env` file will be generated with these values. Make sure to add `*.env` to `.gitignore` and don't check it into source control!
+🚨 This process will create an `.env` file will be generated with your Okta credentials. Make sure to add `*.env` to `.gitignore` and don't check it into source control!
 
 Start your app and authenticate with Okta at `http://localhost:3000`. 🎊
 
@@ -424,13 +412,21 @@ See the [Okta OIDC Middleware SDK](https://github.com/okta/okta-oidc-js/tree/mas
 
 NOTE: If you'd like to see TypeScript support for Express, please [enter an issue](https://github.com/oktadeveloper/schematics/issues/new) and include your preferred Express + TypeScript project generator.
 
+You can also create your app using the Okta Admin Console:
+
+* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application** > **Create New App**.
+* Choose **Web** as the platform, select **OpenID Connect**, and click **Create**.
+* Add a Login redirect URI of `http://localhost:3000/callback`.
+* Add a Logout redirect URI of `http://localhost:3000`.
+* Click **Save**.
+
 ## Testing
 
 This project supports unit tests and integration tests.
 
 `npm test` will run the unit tests, using Jasmine as a runner and test framework.
 
-`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic-capacitor`, `react-native`, and `express`.
+`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic-cordova`, `react-native`, and `express`.
 
 `./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Cordova, Ionic with Capacitor, React Native, and Express.
 
