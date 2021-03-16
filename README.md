@@ -410,8 +410,6 @@ npm start
 
 See the [Okta OIDC Middleware SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/oidc-middleware#readme) for more information.
 
-NOTE: If you'd like to see TypeScript support for Express, please [enter an issue](https://github.com/oktadeveloper/schematics/issues/new) and include your preferred Express + TypeScript project generator.
-
 You can also create your app using the Okta Admin Console:
 
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application** > **Create New App**.
