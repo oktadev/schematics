@@ -269,7 +269,7 @@ export function addAuth(options: any): Rule {
           'preset': 'react-native',
           'automock': false,
           'transformIgnorePatterns': [
-            'node_modules/(?!@okta|react-native)'
+            'node_modules/(?!@okta|@react-native|react-native)'
           ],
           'testMatch': ['**/tests/*.js?(x)', '**/?(*.)(spec|test).js?(x)'],
           'setupFiles': [
