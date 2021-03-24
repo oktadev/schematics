@@ -287,10 +287,7 @@ export function addAuth(options: any): Rule {
         const podfile: Buffer | null = host.read('./ios/Podfile');
         if (podfile) {
           const ios11 = podfile.toString('utf-8').replace('platform :ios, \'10.0\'', 'platform :ios, \'11.0\'');
-          const oktaOidc = ios11.replace('config = use_native_modules!', 'pod \'OktaOidc\'\n' +
-            '  \n' +
-            '  config = use_native_modules!')
-          host.overwrite('ios/Podfile', oktaOidc);
+          host.overwrite('ios/Podfile', ios11);
         }
 
         // Configure Gradle for App
