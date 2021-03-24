@@ -42,12 +42,12 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.7', name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.9.3', name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.10.0', name: '@okta/okta-react-native'});
       dependencies.push({type: NodeDependencyType.Default, version: '3.3.0', name: 'events'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.6', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '17.0.1', name: 'react-dom'});
+      dependencies.push({type: NodeDependencyType.Dev, version: '17.0.2', name: 'react-dom'});
     } else if (framework === VUE || framework == VUE_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '3.1.0', name: '@okta/okta-vue'});
       dependencies.push({type: NodeDependencyType.Default, version: AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
