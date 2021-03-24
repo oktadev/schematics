@@ -268,6 +268,7 @@ export function addAuth(options: any): Rule {
         pkgJson.jest = {
           'preset': 'react-native',
           'automock': false,
+          'testEnvironment': 'jsdom',
           'transformIgnorePatterns': [
             'node_modules/(?!@okta|@react-native|react-native)'
           ],
@@ -290,16 +291,6 @@ export function addAuth(options: any): Rule {
             '  \n' +
             '  config = use_native_modules!')
           host.overwrite('ios/Podfile', oktaOidc);
-        }
-
-        // Configure Gradle for Android
-        const androidBuild: Buffer | null = host.read('./android/build.gradle');
-        if (androidBuild) {
-          const minSDK = androidBuild.toString('utf-8').replace('minSdkVersion = 16', 'minSdkVersion = 19');
-          const maven = minSDK.toString()
-            .replace('maven { url \'https://www.jitpack.io\' }', 'maven { url \'https://www.jitpack.io\' }\n' +
-              '        maven { url \'https://dl.bintray.com/okta/com.okta.android\' }');
-          host.overwrite('android/build.gradle', maven);
         }
 
         // Configure Gradle for App
