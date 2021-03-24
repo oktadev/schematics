@@ -343,7 +343,7 @@ You can also use the Okta Admin Console:
 
 ### iOS
 
-Run `pod install --project-directory=ios` to install the [Okta OIDC SDK for iOS](https://github.com/okta/okta-oidc-ios).
+Run `pod install --project-directory=ios` to install the [Okta OIDC iOS SDK](https://github.com/okta/okta-oidc-ios).
 
 Start your app and authenticate with Okta. 🎉
 
@@ -353,13 +353,11 @@ npm run ios
 
 ### Android
 
-A number of changes are made to Android build files to integrate Okta. 
+One change is made to Android build files to integrate the [Okta OIDC Android SDK](https://github.com/okta/okta-oidc-android). 
 
-1. The `android/build.gradle` is updated to use a `minSdkVersion` of `19`.
-2. Okta's Bintray repo is added under `allprojects` > `repositories`.
-3. In `android/app/build.gradle`, an `appAuthRedirectScheme` is added in `android` > `defaultConfig`.
+* In `android/app/build.gradle`, an `appAuthRedirectScheme` is added in `android` > `defaultConfig`.
 
-Since all of these modifications are done for you, you can simply start your app and authenticate with Okta. 🎊
+Since this modification is done for you, you can simply start your app and authenticate with Okta. 🎊
 
 ```
 npm run android
