@@ -42,12 +42,12 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: '5.1.7', name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.9.3', name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: '1.10.0', name: '@okta/okta-react-native'});
       dependencies.push({type: NodeDependencyType.Default, version: '3.3.0', name: 'events'});
       dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: '1.15.6', name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '17.0.1', name: 'react-dom'});
+      dependencies.push({type: NodeDependencyType.Dev, version: '17.0.2', name: 'react-dom'});
     } else if (framework === VUE || framework == VUE_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: '3.1.0', name: '@okta/okta-vue'});
       dependencies.push({type: NodeDependencyType.Default, version: AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
@@ -268,6 +268,7 @@ export function addAuth(options: any): Rule {
         pkgJson.jest = {
           'preset': 'react-native',
           'automock': false,
+          'testEnvironment': 'jsdom',
           'transformIgnorePatterns': [
             'node_modules/(?!@okta|@react-native|react-native)'
           ],
@@ -290,16 +291,6 @@ export function addAuth(options: any): Rule {
             '  \n' +
             '  config = use_native_modules!')
           host.overwrite('ios/Podfile', oktaOidc);
-        }
-
-        // Configure Gradle for Android
-        const androidBuild: Buffer | null = host.read('./android/build.gradle');
-        if (androidBuild) {
-          const minSDK = androidBuild.toString('utf-8').replace('minSdkVersion = 16', 'minSdkVersion = 19');
-          const maven = minSDK.toString()
-            .replace('maven { url \'https://www.jitpack.io\' }', 'maven { url \'https://www.jitpack.io\' }\n' +
-              '        maven { url \'https://dl.bintray.com/okta/com.okta.android\' }');
-          host.overwrite('android/build.gradle', maven);
         }
 
         // Configure Gradle for App
