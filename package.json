@@ -32,7 +32,7 @@
     "@angular-devkit/core": "11.2.6",
     "@angular-devkit/schematics": "11.2.6",
     "@schematics/angular": "11.2.6",
-    "rxjs": "6.6.6",
+    "rxjs": "6.6.7",
     "schematics-utilities": "2.0.2"
   },
   "devDependencies": {
