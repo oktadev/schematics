@@ -168,7 +168,7 @@ export function addAuth(options: any): Rule {
       const workspace = await getWorkspace(host);
 
       if (!options.issuer) {
-        throw new SchematicsException('You must specify an 'issuer'.');
+        throw new SchematicsException('You must specify an "issuer".');
       }
 
       if (!options.project) {
@@ -247,11 +247,11 @@ export function addAuth(options: any): Rule {
       const tsConfig: Buffer | null = host.read('./tsconfig.app.json');
       if (tsConfig) {
         let config: string = tsConfig.toString();
-        config = config.replace(''src/polyfills.ts'', `'src/polyfills.ts',
-    'src/app/auth/auth-callback/auth-callback.module.ts',
-    'src/app/auth/end-session/end-session.module.ts',
-    'src/app/login/login.module.ts',
-    'src/app/tabs/tabs.module.ts'`);
+        config = config.replace('"src/polyfills.ts"', `"src/polyfills.ts",
+    "src/app/auth/auth-callback/auth-callback.module.ts",
+    "src/app/auth/end-session/end-session.module.ts",
+    "src/app/login/login.module.ts",
+    "src/app/tabs/tabs.module.ts"`);
         host.overwrite('./tsconfig.app.json', config);
       }
     }
@@ -293,7 +293,7 @@ export function addAuth(options: any): Rule {
           // The reason tests are in `tests` instead of `__tests__` is because
           // schematics uses double underscore as a substitution indicator in filenames.
           // If you try to put tests in __tests__, you'll get an error:
-          // Error: Option 'tests' is not defined.
+          // Error: Option "tests" is not defined.
         };
         host.overwrite('./package.json', JSON.stringify(pkgJson));
 
@@ -308,7 +308,7 @@ export function addAuth(options: any): Rule {
         const appBuild: Buffer | null = host.read('./android/app/build.gradle');
         if (appBuild) {
           const redirectScheme = appBuild.toString('utf-8')
-            .replace('versionName '1.0'', 'versionName '1.0'\n        manifestPlaceholders = [ appAuthRedirectScheme: '' + options.packageName + '' ]');
+            .replace('versionName "1.0"', 'versionName "1.0"\n        manifestPlaceholders = [ appAuthRedirectScheme: "' + options.packageName + '" ]');
           host.overwrite('android/app/build.gradle', redirectScheme);
         }
       }
