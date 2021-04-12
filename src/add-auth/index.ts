@@ -25,55 +25,69 @@ import {
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { targetBuildNotFoundError } from '@schematics/angular/utility/project-targets';
 import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-models';
+import packageSdks from '../package-sdks.json';
 
-const AUTH_JS_VERSION = '4.8.0';
+const OKTA_AUTH_JS_VERSION = packageSdks.dependencies['@okta/okta-auth-js'];
+const OKTA_ANGULAR_VERSION = packageSdks.dependencies['@okta/okta-angular'];
+const OKTA_REACT_VERSION = packageSdks.dependencies['@okta/okta-react'];
+const REACT_ROUTER_DOM_VERSION = packageSdks.dependencies['react-router-dom'];
+const REACT_ROUTER_DOM_TYPES_VERSION = packageSdks.dependencies['@types/react-router-dom'];
+const OKTA_REACT_NATIVE_VERSION = packageSdks.dependencies['@okta/okta-react-native'];
+const EVENTS_VERSION = packageSdks.dependencies['events'];
+const ENZYME_VERSION = packageSdks.dependencies['enzyme'];
+const ENZYME_ADAPTER_VERSION = packageSdks.dependencies['enzyme-adapter-react-16'];
+const ENZYME_ASYNC_VERSION = packageSdks.dependencies['enzyme-async-helpers'];
+const REACT_DOM_VERSION = packageSdks.dependencies['react-dom'];
+const OKTA_VUE_VERSION = packageSdks.dependencies['@okta/okta-vue'];
+const IONIC_APPAUTH_VERSION = packageSdks.dependencies['ionic-appauth'];
+const IONIC_SECURE_STORAGE_VERSION = packageSdks.dependencies['@ionic-native/secure-storage'];
+const IONIC_CORDOVA_SECURE_STORAGE_VERSION = packageSdks.dependencies['cordova-plugin-secure-storage-echo'];
+const IONIC_CORDOVA_ADVANCED_HTTP_VERSION = packageSdks.dependencies['cordova-plugin-advanced-http'];
+const IONIC_NATIVE_HTTP_VERSION = packageSdks.dependencies['@ionic-native/http'];
+const IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION = packageSdks.dependencies['cordova-plugin-safariviewcontroller'];
+const IONIC_STORAGE_VERSION = packageSdks.dependencies['@ionic/storage'];
+const EXPRESS_SESSION_VERSION = packageSdks.dependencies['express-session'];
+const OKTA_OIDC_MIDDLEWARE_VERSION = packageSdks.dependencies['@okta/oidc-middleware'];
+const DOTENV_VERSION = packageSdks.dependencies['dotenv'];
 
 function addPackageJsonDependencies(framework: string, options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '3.0.1', name: '@okta/okta-angular'})
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_ANGULAR_VERSION, name: '@okta/okta-angular'})
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '5.0.0', name: '@okta/okta-react'});
-      dependencies.push({type: NodeDependencyType.Default, version: AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
-      dependencies.push({type: NodeDependencyType.Default, version: '5.2.0', name: 'react-router-dom'});
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_REACT_VERSION, name: '@okta/okta-react'});
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
+      dependencies.push({type: NodeDependencyType.Default, version: REACT_ROUTER_DOM_VERSION, name: 'react-router-dom'});
       if (framework === REACT_TS) {
-        dependencies.push({type: NodeDependencyType.Default, version: '5.1.7', name: '@types/react-router-dom'});
+        dependencies.push({type: NodeDependencyType.Default, version: REACT_ROUTER_DOM_TYPES_VERSION, name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.10.0', name: '@okta/okta-react-native'});
-      dependencies.push({type: NodeDependencyType.Default, version: '3.3.0', name: 'events'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '3.11.0', name: 'enzyme'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '1.15.6', name: 'enzyme-adapter-react-16'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '0.9.1', name: 'enzyme-async-helpers'});
-      dependencies.push({type: NodeDependencyType.Dev, version: '17.0.2', name: 'react-dom'});
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_REACT_NATIVE_VERSION, name: '@okta/okta-react-native'});
+      dependencies.push({type: NodeDependencyType.Default, version: EVENTS_VERSION, name: 'events'});
+      dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_VERSION, name: 'enzyme'});
+      dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_ADAPTER_VERSION, name: 'enzyme-adapter-react-16'});
+      dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_ASYNC_VERSION, name: 'enzyme-async-helpers'});
+      dependencies.push({type: NodeDependencyType.Dev, version: REACT_DOM_VERSION, name: 'react-dom'});
     } else if (framework === VUE || framework == VUE_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '3.1.0', name: '@okta/okta-vue'});
-      dependencies.push({type: NodeDependencyType.Default, version: AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_VUE_VERSION, name: '@okta/okta-vue'});
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
     } else if (framework === IONIC_ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: '0.7.4', name: 'ionic-appauth'});
-      dependencies.push({type: NodeDependencyType.Default, version: '5.31.1', name: '@ionic-native/secure-storage'});
+      dependencies.push({type: NodeDependencyType.Default, version: IONIC_APPAUTH_VERSION, name: 'ionic-appauth'});
+      dependencies.push({type: NodeDependencyType.Default, version: IONIC_SECURE_STORAGE_VERSION, name: '@ionic-native/secure-storage'});
       if (options.platform === 'capacitor') {
-        dependencies.push({
-          type: NodeDependencyType.Default,
-          version: '5.1.1',
-          name: 'cordova-plugin-secure-storage-echo'
-        });
-        dependencies.push({type: NodeDependencyType.Default, version: '3.1.0', name: 'cordova-plugin-advanced-http'});
-        dependencies.push({
-          type: NodeDependencyType.Default,
-          version: '2.0.0',
-          name: 'cordova-plugin-safariviewcontroller'
-        });
-        dependencies.push({type: NodeDependencyType.Default, version: '5.31.1', name: '@ionic-native/http'});
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_SECURE_STORAGE_VERSION, name: 'cordova-plugin-secure-storage-echo'});
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_ADVANCED_HTTP_VERSION, name: 'cordova-plugin-advanced-http'});
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION, name: 'cordova-plugin-safariviewcontroller'});
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_NATIVE_HTTP_VERSION, name: '@ionic-native/http'});
       } else {
-        dependencies.push({type: NodeDependencyType.Default, version: '3.0.2', name: '@ionic/storage'});
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_STORAGE_VERSION, name: '@ionic/storage'});
       }
     } else if (framework === EXPRESS) {
-      dependencies.push({type: NodeDependencyType.Default, version: '1.17.1', name: 'express-session'});
-      dependencies.push({type: NodeDependencyType.Default, version: '4.0.3', name: '@okta/oidc-middleware'});
-      dependencies.push({type: NodeDependencyType.Default, version: '8.2.0', name: 'dotenv'});
+      dependencies.push({type: NodeDependencyType.Default, version: EXPRESS_SESSION_VERSION, name: 'express-session'});
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_OIDC_MIDDLEWARE_VERSION, name: '@okta/oidc-middleware'});
+      dependencies.push({type: NodeDependencyType.Default, version: DOTENV_VERSION, name: 'dotenv'});
     }
 
     dependencies.forEach(dependency => {
