@@ -2,8 +2,6 @@ import { getSystemPath, join, normalize } from '@angular-devkit/core';
 import {
   apply,
   chain,
-  FileEntry,
-  forEach,
   MergeStrategy,
   mergeWith,
   move,
@@ -25,30 +23,30 @@ import {
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { targetBuildNotFoundError } from '@schematics/angular/utility/project-targets';
 import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-models';
-import packageSdks from '../package-sdks.json';
+import { dependencies as sdkVersions } from '../sdk-versions.json';
 
-const OKTA_AUTH_JS_VERSION = packageSdks.dependencies['@okta/okta-auth-js'];
-const OKTA_ANGULAR_VERSION = packageSdks.dependencies['@okta/okta-angular'];
-const OKTA_REACT_VERSION = packageSdks.dependencies['@okta/okta-react'];
-const REACT_ROUTER_DOM_VERSION = packageSdks.dependencies['react-router-dom'];
-const REACT_ROUTER_DOM_TYPES_VERSION = packageSdks.dependencies['@types/react-router-dom'];
-const OKTA_REACT_NATIVE_VERSION = packageSdks.dependencies['@okta/okta-react-native'];
-const EVENTS_VERSION = packageSdks.dependencies['events'];
-const ENZYME_VERSION = packageSdks.dependencies['enzyme'];
-const ENZYME_ADAPTER_VERSION = packageSdks.dependencies['enzyme-adapter-react-16'];
-const ENZYME_ASYNC_VERSION = packageSdks.dependencies['enzyme-async-helpers'];
-const REACT_DOM_VERSION = packageSdks.dependencies['react-dom'];
-const OKTA_VUE_VERSION = packageSdks.dependencies['@okta/okta-vue'];
-const IONIC_APPAUTH_VERSION = packageSdks.dependencies['ionic-appauth'];
-const IONIC_SECURE_STORAGE_VERSION = packageSdks.dependencies['@ionic-native/secure-storage'];
-const IONIC_CORDOVA_SECURE_STORAGE_VERSION = packageSdks.dependencies['cordova-plugin-secure-storage-echo'];
-const IONIC_CORDOVA_ADVANCED_HTTP_VERSION = packageSdks.dependencies['cordova-plugin-advanced-http'];
-const IONIC_NATIVE_HTTP_VERSION = packageSdks.dependencies['@ionic-native/http'];
-const IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION = packageSdks.dependencies['cordova-plugin-safariviewcontroller'];
-const IONIC_STORAGE_VERSION = packageSdks.dependencies['@ionic/storage'];
-const EXPRESS_SESSION_VERSION = packageSdks.dependencies['express-session'];
-const OKTA_OIDC_MIDDLEWARE_VERSION = packageSdks.dependencies['@okta/oidc-middleware'];
-const DOTENV_VERSION = packageSdks.dependencies['dotenv'];
+const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
+const OKTA_ANGULAR_VERSION = sdkVersions['@okta/okta-angular'];
+const OKTA_REACT_VERSION = sdkVersions['@okta/okta-react'];
+const REACT_ROUTER_DOM_VERSION = sdkVersions['react-router-dom'];
+const REACT_ROUTER_DOM_TYPES_VERSION = sdkVersions['@types/react-router-dom'];
+const OKTA_REACT_NATIVE_VERSION = sdkVersions['@okta/okta-react-native'];
+const EVENTS_VERSION = sdkVersions['events'];
+const ENZYME_VERSION = sdkVersions['enzyme'];
+const ENZYME_ADAPTER_VERSION = sdkVersions['enzyme-adapter-react-16'];
+const ENZYME_ASYNC_VERSION = sdkVersions['enzyme-async-helpers'];
+const REACT_DOM_VERSION = sdkVersions['react-dom'];
+const OKTA_VUE_VERSION = sdkVersions['@okta/okta-vue'];
+const IONIC_APPAUTH_VERSION = sdkVersions['ionic-appauth'];
+const IONIC_SECURE_STORAGE_VERSION = sdkVersions['@ionic-native/secure-storage'];
+const IONIC_CORDOVA_SECURE_STORAGE_VERSION = sdkVersions['cordova-plugin-secure-storage-echo'];
+const IONIC_CORDOVA_ADVANCED_HTTP_VERSION = sdkVersions['cordova-plugin-advanced-http'];
+const IONIC_NATIVE_HTTP_VERSION = sdkVersions['@ionic-native/http'];
+const IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION = sdkVersions['cordova-plugin-safariviewcontroller'];
+const IONIC_STORAGE_VERSION = sdkVersions['@ionic/storage'];
+const EXPRESS_SESSION_VERSION = sdkVersions['express-session'];
+const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
+const DOTENV_VERSION = sdkVersions['dotenv'];
 
 function addPackageJsonDependencies(framework: string, options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
@@ -320,14 +318,7 @@ export function addAuth(options: any): Rule {
     const templatesPath = join(sourcePath, '');
     const templateSource = apply(url(`./${framework}/${sourceDir}`), [
       template({...options}),
-      move(getSystemPath(templatesPath)),
-      // fix for https://github.com/angular/angular-cli/issues/11337
-      forEach((fileEntry: FileEntry) => {
-        if (host.exists(fileEntry.path)) {
-          host.overwrite(fileEntry.path, fileEntry.content);
-        }
-        return fileEntry;
-      }),
+      move(getSystemPath(templatesPath))
     ]);
 
     // Chain the rules and return
