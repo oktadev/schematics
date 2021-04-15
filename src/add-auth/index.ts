@@ -125,24 +125,24 @@ function getFramework(host: Tree): string {
     throw new SchematicsException(`Could not find (${path})`);
   } else {
     const content = JSON.parse(configBuffer.toString());
-    if (content.sdkVersions['@angular/core'] && !content.sdkVersions['@ionic/angular']) {
+    if (content.dependencies['@angular/core'] && !content.dependencies['@ionic/angular']) {
       return ANGULAR;
-    } else if (content.sdkVersions['react']) {
-      if (content.sdkVersions['react-native']) {
+    } else if (content.dependencies['react']) {
+      if (content.dependencies['react-native']) {
         return REACT_NATIVE;
       }
-      if (content.sdkVersions['typescript']) {
+      if (content.dependencies['typescript']) {
         return REACT_TS
       }
       return REACT;
-    } else if (content.sdkVersions['vue']) {
+    } else if (content.dependencies['vue']) {
       if (content.devDependencies['typescript']) {
         return VUE_TS
       }
       return VUE;
-    } else if (content.sdkVersions['@ionic/angular']) {
+    } else if (content.dependencies['@ionic/angular']) {
       return IONIC_ANGULAR;
-    } else if (content.sdkVersions['express']) {
+    } else if (content.dependencies['express']) {
       return EXPRESS;
     } else {
       throw new SchematicsException('No supported frameworks found in your package.json!');
