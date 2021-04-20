@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "OktaDevSchematics",
+  "$id": "OktaDevSchematics",
   "title": "Okta Auth Options Schema",
   "type": "object",
   "properties": {
