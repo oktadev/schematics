@@ -3,37 +3,30 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-      <template v-if="authenticated"> |
+      <template v-if="authState.isAuthenticated"> |
         <!-- router links that require authentication -->
       </template>
     </div>
-    <button v-if="authenticated" v-on:click="logout">Logout</button>
-    <button v-else v-on:click="$auth.loginRedirect()">Login</button>
+    <button v-if="authState.isAuthenticated" v-on:click="logout" id="logout">Logout</button>
+    <button v-else v-on:click="login" id="login">Login</button>
     <router-view/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import Vue from 'vue'
 
-@Component
-export default class App extends Vue {
-  public authenticated = false;
-
-  private created() {
-    this.isAuthenticated();
+export default Vue.extend({
+  name: 'app',
+  methods: {
+    login () {
+      this.$auth.signInWithRedirect()
+    },
+    async logout () {
+      await this.$auth.signOut()
+    }
   }
-
-  @Watch('$route')
-  private async isAuthenticated() {
-    this.authenticated = await this.$auth.isAuthenticated();
-  }
-
-  private async logout() {
-    await this.$auth.logout();
-    await this.isAuthenticated();
-  }
-}
+})
 </script>
 
 <style>

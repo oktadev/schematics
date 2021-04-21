@@ -4,8 +4,8 @@
 set -e
 
 framework="$1"
-issuer="https://dev-6974382.okta.com/oauth2/default"
-clientId="0oa2urdhlx26eW1HC5d6"
+issuer="https://dev-5597275.okta.com/oauth2/default"
+clientId="0oa3yrnqgg2UI9Lp35d6"
 
 # build and package this project
 rm -f *.tgz
@@ -32,14 +32,14 @@ then
   ng test --watch=false && ng e2e
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then
-  npx create-react-app@4.0.1 react-app-ts --template typescript
+  npx create-react-app@4.0.3 react-app-ts --template typescript
   cd react-app-ts
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   CI=true npm test
 elif [ $framework == "react" ] || [ $framework == "r" ]
 then
-  npx create-react-app@4.0.1 react-app
+  npx create-react-app@4.0.3 react-app
   cd react-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
@@ -66,12 +66,11 @@ then
     },
     "@vue/cli-plugin-unit-mocha": {},
     "@vue/cli-plugin-e2e-cypress": {}
-  },
-  "vueVersion": "3"
+  }
 }
 EOF
 )
-  vue create vue-app-ts -i "$config"
+  vue create vue-app-ts -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-app-ts
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
@@ -93,12 +92,11 @@ then
       ]
     },
     "@vue/cli-plugin-unit-jest": {}
-  },
-  "vueVersion": "3"
+  }
 }
 EOF
 )
-  vue create vue-app -i "$config"
+  vue create vue-app -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
@@ -123,6 +121,7 @@ then
   cd SecureApp
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  # pod install --project-directory=ios
   npm test -- -u
 elif [ $framework == "express" ] || [ $framework == "e" ]
 then
