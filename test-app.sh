@@ -4,8 +4,8 @@
 set -e
 
 framework="$1"
-issuer="https://dev-5597275.okta.com/oauth2/default"
-clientId="0oa3yrnqgg2UI9Lp35d6"
+issuer="https://dev-9323263.okta.com/oauth2/default"
+clientId="0oamj29f6driGie7u5d6"
 
 # build and package this project
 rm -f *.tgz
@@ -98,6 +98,61 @@ EOF
 )
   vue create vue-app -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-app
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  npm run test:unit
+elif [ $framework == "vue3-ts" ] || [ $framework == "v3ts" ]
+then
+  config=$(cat <<EOF
+{
+  "useConfigFiles": true,
+  "plugins": {
+    "@vue/cli-plugin-babel": {},
+    "@vue/cli-plugin-typescript": {
+      "classComponent": false,
+      "useTsWithBabel": true
+    },
+    "@vue/cli-plugin-eslint": {
+      "config": "base",
+      "lintOn": [
+        "save"
+      ]
+    },
+    "@vue/cli-plugin-unit-jest": {}
+  },
+  "vueVersion": "3"
+}
+EOF
+)
+  vue create vue3-app-ts -i "$config" --registry=http://registry.npm.taobao.org
+  cd vue3-app-ts
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  npm run test:unit
+elif [ $framework == "vue3" ] || [ $framework == "v3" ]
+then
+  config=$(cat <<EOF
+{
+  "useConfigFiles": true,
+  "plugins": {
+    "@vue/cli-plugin-babel": {},
+    "@vue/cli-plugin-router": {
+      "historyMode": true
+    },
+    "@vue/cli-plugin-eslint": {
+      "config": "base",
+      "lintOn": [
+        "save"
+      ]
+    },
+    "@vue/cli-plugin-unit-jest": {}
+  },
+  "vueVersion": "3"
+}
+EOF
+)
+  vue create vue3-app -i "$config" --registry=http://registry.npm.taobao.org
+  cd vue3-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
   npm run test:unit
