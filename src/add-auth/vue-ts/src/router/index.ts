@@ -9,7 +9,8 @@ Vue.use(Router)
 const oktaAuth = new OktaAuth({
   issuer: '<%= issuer %>',
   clientId: '<%= clientId %>',
-  redirectUri: window.location.origin + '/callback'
+  redirectUri: window.location.origin + '/callback',
+  scopes: ['openid', 'profile', 'email']
 })
 
 Vue.use(OktaVue, { oktaAuth })

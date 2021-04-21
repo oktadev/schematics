@@ -19,6 +19,8 @@ jobs:
           - react-ts
           - vue
           - vue-ts
+          - vue3
+          - vue3-ts
           - ionic
           - ionic-capacitor
           - react-native
