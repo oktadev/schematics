@@ -108,7 +108,7 @@ You can also use the Okta Admin Console:
 
 ## Vue
 
-Create a new project with Vue CLI. You **must** add routing for this schematic to work. If you specify TypeScript, a `src/router.ts` will be used.
+Create a new project with Vue CLI. You **must** add routing for this schematic to work. If you specify TypeScript, a `src/router/index.ts` will be used.
 
 ```
 npm i -g @vue/cli
