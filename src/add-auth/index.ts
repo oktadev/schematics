@@ -14,18 +14,14 @@ import {
   url
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import {
-  addModuleImportToModule,
-  addPackageJsonDependency,
-  NodeDependency,
-  NodeDependencyType
-} from 'schematics-utilities';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { targetBuildNotFoundError } from '@schematics/angular/utility/project-targets';
 import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-models';
 import { dependencies as sdkVersions } from '../sdk-versions.json';
 import semverSatisfies from 'semver/functions/satisfies';
 import semverCoerce from 'semver/functions/coerce';
+import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
+import { addModuleImportToModule } from '@angular/cdk/schematics';
 
 const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
 const OKTA_ANGULAR_VERSION = sdkVersions['@okta/okta-angular'];
