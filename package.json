@@ -27,7 +27,7 @@
   ],
   "author": "OktaDev <devrel@okta.com>",
   "license": "Apache-2.0",
-  "repository": "git@github.com:oktadeveloper/schematics.git",
+  "repository": "git@github.com:oktadev/schematics.git",
   "schematics": "./src/collection.json",
   "dependencies": {
     "@angular-devkit/core": "11.2.10",
