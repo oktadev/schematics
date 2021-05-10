@@ -32,7 +32,7 @@
   "dependencies": {
     "@angular-devkit/core": "11.2.12",
     "@angular-devkit/schematics": "11.2.12",
-    "@schematics/angular": "11.2.11",
+    "@schematics/angular": "11.2.12",
     "rxjs": "7.0.0",
     "schematics-utilities": "2.0.3",
     "semver": "7.3.5"
