@@ -28,9 +28,6 @@
     "check-deps": "ncu --packageFile src/sdk-versions.json",
     "update-deps": "ncu -u --packageFile src/sdk-versions.json"
   },
-  "resolutions": {
-    "handlebars": "4.5.3"
-  },
   "dependencies": {
     "@angular-devkit/core": "11.2.12",
     "@angular-devkit/schematics": "11.2.12",
