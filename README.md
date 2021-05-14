@@ -492,9 +492,9 @@ Apache 2.0, see [LICENSE](LICENSE).
 
 [npm-image]: https://img.shields.io/npm/v/@oktadev/schematics.svg
 [npm-url]: https://www.npmjs.com/package/@oktadev/schematics
-[github-actions-image]: https://github.com/oktadeveloper/schematics/workflows/Schematics/badge.svg
-[github-actions-url]: https://github.com/oktadeveloper/schematics/actions
-[daviddm-image]: https://david-dm.org/oktadeveloper/schematics.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/oktadeveloper/schematics
+[github-actions-image]: https://github.com/oktadev/schematics/workflows/Schematics/badge.svg
+[github-actions-url]: https://github.com/oktadev/schematics/actions
+[daviddm-image]: https://david-dm.org/oktadev/schematics.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/oktadev/schematics
 [devforum-image]: https://img.shields.io/badge/support-developer%20forum-blue.svg
 [devforum-url]: https://devforum.okta.com

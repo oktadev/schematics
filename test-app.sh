@@ -29,7 +29,7 @@ then
   cd angular-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
-  ng test --watch=false && ng e2e
+  ng test --watch=false
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then
   npx create-react-app@4.0.3 react-app-ts --template typescript
