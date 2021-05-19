@@ -34,7 +34,8 @@
     "@angular/cdk": "12.0.0",
     "@schematics/angular": "12.0.0",
     "rxjs": "6.6.7",
-    "semver": "7.3.5"
+    "semver": "7.3.5",
+    "typescript": "4.2.4"
   },
   "devDependencies": {
     "@types/jasmine": "3.7.4",
@@ -42,8 +43,7 @@
     "@types/semver": "7.3.6",
     "chalk": "4.1.1",
     "istanbul": "0.4.5",
-    "jasmine": "3.7.0",
-    "typescript": "4.2.4"
+    "jasmine": "3.7.0"
   },
   "ng-add": {
     "save": "devDependencies"
