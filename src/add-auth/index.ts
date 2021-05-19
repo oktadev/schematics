@@ -245,12 +245,6 @@ export function addAuth(options: any): Rule {
         // Force Capacitor 2.x until secure-storage is fixed.
         // https://github.com/martinkasa/capacitor-secure-storage-plugin/issues/30
         host.create('npm-shrinkwrap.json', capacitor2x());
-        /*const deps: Buffer | null = host.read('./package.json');
-        if (deps) {
-          const pkgJson: any = JSON.parse(deps.toString());
-          pkgJson.dependencies['@capacitor/core'] = '2.4.7';
-          host.overwrite('./package.json', JSON.stringify(pkgJson));
-        }*/
       }
 
       // add imports to app.module.ts
