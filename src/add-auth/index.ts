@@ -40,6 +40,7 @@ const IONIC_APPAUTH_VERSION = sdkVersions['ionic-appauth'];
 const IONIC_SECURE_STORAGE_VERSION = sdkVersions['@ionic-native/secure-storage'];
 const IONIC_CORDOVA_SECURE_STORAGE_VERSION = sdkVersions['cordova-plugin-secure-storage-echo'];
 const IONIC_CORDOVA_ADVANCED_HTTP_VERSION = sdkVersions['cordova-plugin-advanced-http'];
+const IONIC_CORDOVA_FILE_VERSION = sdkVersions['cordova-plugin-file'];
 const IONIC_NATIVE_HTTP_VERSION = sdkVersions['@ionic-native/http'];
 const IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION = sdkVersions['cordova-plugin-safariviewcontroller'];
 const IONIC_STORAGE_VERSION = sdkVersions['@ionic/storage'];
@@ -77,6 +78,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       if (options.platform === 'capacitor') {
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_SECURE_STORAGE_VERSION, name: 'cordova-plugin-secure-storage-echo'});
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_ADVANCED_HTTP_VERSION, name: 'cordova-plugin-advanced-http'});
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_FILE_VERSION, name: 'cordova-plugin-file'});
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION, name: 'cordova-plugin-safariviewcontroller'});
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_NATIVE_HTTP_VERSION, name: '@ionic-native/http'});
       } else {
@@ -239,6 +241,16 @@ export function addAuth(options: any): Rule {
         }
         addModuleImportToModule(host, 'src/app/app.module.ts',
           'IonicStorageModule.forRoot()', '@ionic/storage');
+      } else {
+        // Force Capacitor 2.x until secure-storage is fixed.
+        // https://github.com/martinkasa/capacitor-secure-storage-plugin/issues/30
+        host.create('npm-shrinkwrap.json', capacitor2x());
+        /*const deps: Buffer | null = host.read('./package.json');
+        if (deps) {
+          const pkgJson: any = JSON.parse(deps.toString());
+          pkgJson.dependencies['@capacitor/core'] = '2.4.7';
+          host.overwrite('./package.json', JSON.stringify(pkgJson));
+        }*/
       }
 
       // add imports to app.module.ts
@@ -391,6 +403,21 @@ export class AuthConfigService {
 
   getConfig() {
     return this.authConfig;
+  }
+}`;
+}
+
+export function capacitor2x() {
+  return `{
+  "dependencies": {
+    "capacitor-secure-storage-plugin": {
+      "version": "0.4.0",
+      "dependencies": {
+        "@capacitor/core": {
+          "version": "2.4.7"
+        }
+      }
+    }
   }
 }`;
 }

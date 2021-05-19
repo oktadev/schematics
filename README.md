@@ -88,7 +88,7 @@ npm install -g @angular-devkit/schematics-cli
 Then install and run the `add-auth` schematic in your `secure-react` project.
 
 ```
-npm i @oktadev/schematics
+npm i -D @oktadev/schematics
 schematics @oktadev/schematics:add-auth
 ```
 
@@ -208,13 +208,8 @@ If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your p
 
 ```
 ionic build
+npm i @capacitor/ios
 npx cap add ios
-```
-
-Open your project in Xcode and configure code signing.
-
-```
-npx cap open ios
 ```
 
 Add your custom scheme to `ios/App/App/Info.plist`:
@@ -232,6 +227,18 @@ Add your custom scheme to `ios/App/App/Info.plist`:
     </array>
   </dict>
 </array>
+```
+
+Then, run your project using the Capacitor CLI:
+
+```
+npx cap run ios
+```
+
+You can also open your project in Xcode and configure code signing.
+
+```
+npx cap open ios
 ```
 
 Then run your app from Xcode.
@@ -258,6 +265,7 @@ If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your p
 
 ```
 ionic build
+npm i @capacitor/android
 npx cap add android
 ```
 
@@ -273,9 +281,15 @@ The [SafariViewController Cordova Plugin](https://github.com/EddyVerbruggen/cord
 npm install jetifier
 npx jetify
 npx cap sync android
-```   
+```
 
-Then, open your project in Android Studio and run your app.
+Then, run your project using the Capacitor CLI:
+
+```
+npx cap run android
+```
+
+You can also open your project in Android Studio and run your app.
 
 ```
 npx cap open android
