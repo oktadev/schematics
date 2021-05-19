@@ -3,7 +3,7 @@ import { Platform } from '@ionic/angular';<% if (platform === 'cordova') { %>
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';<% } %>
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 
@@ -11,7 +11,7 @@ describe('AppComponent', () => {
 
   let <% if (platform === 'cordova') { %>statusBarSpy, splashScreenSpy, <% } %>platformReadySpy, platformIsSpy, platformSpy;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     <% if (platform === 'cordova') { %>statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
     splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);<% } %>
     platformReadySpy = Promise.resolve();
