@@ -24,7 +24,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   async signIn() {
-    await this.authService.signIn();
+    await this.auth.signIn();
   }
 
   private onSignInSuccess(action: IAuthAction) {
