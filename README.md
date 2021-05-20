@@ -51,11 +51,10 @@ See the [Okta Angular SDK](https://github.com/okta/okta-angular) for more inform
 
 You can also use the Okta Admin Console:
 
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Applications** > **Add Application** > **Create New App**.
-* Choose **Single Page App (SPA)** as the platform and click **Create**.
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Create App Integration** > **OIDC**.
+* Choose **Single-Page Application** as the application type and click **Next**.
 * Add `http://localhost:4200/callback` as a Login redirect URI and `http://localhost:4200` as a Logout redirect URI.
-* Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
-* You'll also need to add `http://localhost:4200` as a Trusted Origin in **Security** > **API** > **Trusted Origins**.
+* Specify `http://localhost:4200` as a Trusted Origin and click **Save**.
 
 ## React
 
@@ -88,7 +87,7 @@ npm install -g @angular-devkit/schematics-cli
 Then install and run the `add-auth` schematic in your `secure-react` project.
 
 ```
-npm i @oktadev/schematics
+npm i -D @oktadev/schematics
 schematics @oktadev/schematics:add-auth
 ```
 
@@ -100,11 +99,10 @@ See the [Okta React SDK](https://github.com/okta/okta-react) for more informatio
 
 You can also use the Okta Admin Console:
 
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Applications** > **Add Application** > **Create New App**.
-* Choose **Single Page App (SPA)** as the platform and click **Create**.
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Create App Integration** > **OIDC**.
+* Choose **Single-Page Application** as the application type and click **Next**.
 * Add `http://localhost:3000/callback` as a Login redirect URI and `http://localhost:3000` as a Logout redirect URI.
-* Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
-* You'll also need to add `http://localhost:3000` as a Trusted Origin in **Security** > **API** > **Trusted Origins**.
+* Add `http://localhost:3000` as a Trusted Origin and click **Save**.
 
 ## Vue
 
@@ -143,11 +141,10 @@ See the [Okta Vue SDK](https://github.com/okta/okta-vue) for more information.
 
 You can also use the Okta Admin Console:
 
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Applications** > **Add Application** > **Create New App**.
-* Choose **Single Page App (SPA)** as the platform and click **Create**.
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Create App Integration** > **OIDC**.
+* Choose **Single-Page Application** as the application type and click **Next**.
 * Add `http://localhost:8080/callback` as a Login redirect URI and `http://localhost:8080` as a Logout redirect URI.
-* Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
-* You'll also need to add `http://localhost:8080` as a Trusted Origin in **Security** > **API** > **Trusted Origins**.
+* Add `http://localhost:8080` as a Trusted Origin and click **Save**.
 
 ## Ionic
 
@@ -190,7 +187,9 @@ You can also use the Okta Admin Console:
 
 Log in to your Okta instance (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
 
-From the **Applications** page, choose **Add Application** > **Create New App**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
+From the **Applications** page, choose **Create App Integration** > **OIDC**. Select **Native Application**. 
+
+Give your app a memorable name, and configure it as follows:
 
 * Login redirect URIs:
   * `http://localhost:8100/callback`
@@ -198,9 +197,9 @@ From the **Applications** page, choose **Add Application** > **Create New App**.
 * Logout redirect URIs:
   * `http://localhost:8100/logout`
   * `com.okta.dev-737523:/logout`
+* Trusted Origins:
+  * `http://localhost:8100`
 * Click **Save**
-
-You will also need to add `http://localhost:8100` as a Trusted Origin in **API** > **Trusted Origins**.
 
 ### iOS
 
@@ -208,13 +207,8 @@ If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your p
 
 ```
 ionic build
+npm i @capacitor/ios
 npx cap add ios
-```
-
-Open your project in Xcode and configure code signing.
-
-```
-npx cap open ios
 ```
 
 Add your custom scheme to `ios/App/App/Info.plist`:
@@ -232,6 +226,18 @@ Add your custom scheme to `ios/App/App/Info.plist`:
     </array>
   </dict>
 </array>
+```
+
+Then, run your project using the Capacitor CLI:
+
+```
+npx cap run ios
+```
+
+You can also open your project in Xcode and configure code signing.
+
+```
+npx cap open ios
 ```
 
 Then run your app from Xcode.
@@ -258,6 +264,7 @@ If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your p
 
 ```
 ionic build
+npm i @capacitor/android
 npx cap add android
 ```
 
@@ -273,9 +280,15 @@ The [SafariViewController Cordova Plugin](https://github.com/EddyVerbruggen/cord
 npm install jetifier
 npx jetify
 npx cap sync android
-```   
+```
 
-Then, open your project in Android Studio and run your app.
+Then, run your project using the Capacitor CLI:
+
+```
+npx cap run android
+```
+
+You can also open your project in Android Studio and run your app.
 
 ```
 npx cap open android
@@ -336,10 +349,9 @@ schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
 
 You can also use the Okta Admin Console:
 
-* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Applications** > **Add Application** > **Create New App**.
-* Choose **Native** as the platform and click **Create**.
+* Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Create App Integration** > **OIDC**.
+* Choose **Native** as the application type and click **Next**.
 * Add `com.okta.dev-123456:/callback` as a Login redirect URI and `com.okta.dev-123456:/callback` as a Logout redirect URI (where `dev-123456.okta.com` is your Okta domain).
-* Go to your app's **Assignments** tab, **Assign** > **Assign to Groups** and select the **Everyone** group.
 
 ### iOS
 
@@ -410,8 +422,8 @@ See the [Okta OIDC Middleware SDK](https://github.com/okta/okta-oidc-js/tree/mas
 
 You can also create your app using the Okta Admin Console:
 
-* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Add Application** > **Create New App**.
-* Choose **Web** as the platform, select **OpenID Connect**, and click **Create**.
+* Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Create App Integration** > **OIDC**.
+* Choose **Web** as the application type and click **Next**.
 * Add a Login redirect URI of `http://localhost:3000/callback`.
 * Add a Logout redirect URI of `http://localhost:3000`.
 * Click **Save**.

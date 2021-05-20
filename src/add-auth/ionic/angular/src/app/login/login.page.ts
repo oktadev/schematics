@@ -14,8 +14,8 @@ export class LoginPage implements OnInit, OnDestroy {
   constructor(private auth: AuthService, private navCtrl: NavController) {
   }
 
-  ngOnInit() {
-    this.auth.loadTokenFromStorage();
+  async ngOnInit() {
+    await this.auth.loadTokenFromStorage();
     this.observer = this.auth.addActionListener((action) => this.onSignInSuccess(action));
   }
 
@@ -23,8 +23,8 @@ export class LoginPage implements OnInit, OnDestroy {
     this.auth.removeActionObserver(this.observer);
   }
 
-  public signIn() {
-    this.auth.signIn();
+  async signIn() {
+    await this.auth.signIn();
   }
 
   private onSignInSuccess(action: IAuthAction) {

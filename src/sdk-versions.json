@@ -8,7 +8,7 @@
     "@okta/okta-auth-js": "4.9.1",
     "react-router-dom": "5.2.0",
     "@types/react-router-dom": "5.1.7",
-    "@okta/okta-react-native": "1.11.0",
+    "@okta/okta-react-native": "1.11.1",
     "events": "3.3.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",
@@ -20,10 +20,11 @@
     "@ionic-native/secure-storage": "5.33.0",
     "cordova-plugin-secure-storage-echo": "5.1.1",
     "cordova-plugin-advanced-http": "3.1.0",
+    "cordova-plugin-file": "6.0.2",
     "cordova-plugin-safariviewcontroller": "2.0.0",
     "@ionic-native/http": "5.33.0",
     "@ionic/storage": "3.0.4",
-    "express-session": "1.17.1",
+    "express-session": "1.17.2",
     "@okta/oidc-middleware": "4.1.0",
     "dotenv": "9.0.2"
   }

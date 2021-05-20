@@ -61,10 +61,14 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     // Add app.module.ts
     tree.create('/src/app/app.module.ts', defaultAppModule);
 
+    const cordovaOptions: any = {...defaultOptions};
+    cordovaOptions.platform = 'cordova';
+
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
+    await runner.runSchematicAsync('add-auth', cordovaOptions, tree).toPromise();
 
     expect(tree.files.length).toEqual(28);
+    expect(tree.files.sort()[0]).toMatch('package.json');
     expect(tree.files.sort()).toEqual([
       '/package.json',
       '/src/app/app-routing.module.ts',
@@ -121,7 +125,37 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', capacitorOptions, tree).toPromise();
 
-    expect(tree.files.length).toEqual(28);
+    expect(tree.files.length).toEqual(29);
+    expect(tree.files.sort()).toEqual([
+      '/npm-shrinkwrap.json',
+      '/package.json',
+      '/src/app/app-routing.module.ts',
+      '/src/app/app.component.spec.ts',
+      '/src/app/app.component.ts',
+      '/src/app/app.module.ts',
+      '/src/app/auth/auth-callback/auth-callback.module.ts',
+      '/src/app/auth/auth-callback/auth-callback.page.ts',
+      '/src/app/auth/auth-guard.service.ts',
+      '/src/app/auth/auth-http.service.ts',
+      '/src/app/auth/auth.module.ts',
+      '/src/app/auth/end-session/end-session.module.ts',
+      '/src/app/auth/end-session/end-session.page.ts',
+      '/src/app/auth/factories/auth.factory.ts',
+      '/src/app/auth/factories/browser.factory.ts',
+      '/src/app/auth/factories/http.factory.ts',
+      '/src/app/auth/factories/index.ts',
+      '/src/app/auth/factories/storage.factory.ts',
+      '/src/app/auth/ng-http.service.ts',
+      '/src/app/auth/user-info.model.ts',
+      '/src/app/login/login.module.ts',
+      '/src/app/login/login.page.html',
+      '/src/app/login/login.page.scss',
+      '/src/app/login/login.page.spec.ts',
+      '/src/app/login/login.page.ts',
+      '/src/app/tab1/tab1.page.html',
+      '/src/app/tab1/tab1.page.spec.ts',
+      '/src/app/tab1/tab1.page.ts',
+      '/src/environments/environment.ts' ]);
 
     const appModule = tree.readContent('/src/app/app.module.ts');
 
@@ -151,7 +185,8 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', jhipsterOptions, tree).toPromise();
 
-    expect(tree.files.length).toEqual(29);
+    expect(tree.files.length).toEqual(30);
+    expect(tree.files.sort()[0]).toMatch('npm-shrinkwrap.json');
 
     const authConfig = tree.readContent('src/app/auth/auth-config.service.ts');
     expect(authConfig).toContain('${environment.apiUrl}/auth-info');
