@@ -241,10 +241,6 @@ export function addAuth(options: any): Rule {
         }
         addModuleImportToModule(host, 'src/app/app.module.ts',
           'IonicStorageModule.forRoot()', '@ionic/storage');
-      } else {
-        // Force Capacitor 2.x until secure-storage is fixed.
-        // https://github.com/martinkasa/capacitor-secure-storage-plugin/issues/30
-        host.create('npm-shrinkwrap.json', capacitor2x());
       }
 
       // add imports to app.module.ts
@@ -397,21 +393,6 @@ export class AuthConfigService {
 
   getConfig() {
     return this.authConfig;
-  }
-}`;
-}
-
-export function capacitor2x() {
-  return `{
-  "dependencies": {
-    "capacitor-secure-storage-plugin": {
-      "version": "0.4.0",
-      "dependencies": {
-        "@capacitor/core": {
-          "version": "2.4.7"
-        }
-      }
-    }
   }
 }`;
 }
