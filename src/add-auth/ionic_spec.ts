@@ -103,6 +103,8 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
 
     expect(appModule).toMatch(/AuthModule/);
     expect(appModule).toMatch(/HttpClientModule/);
+    expect(appModule).toMatch(/SplashScreen/);
+    expect(appModule).toMatch(/StatusBar/);
 
     const env = tree.readContent('/src/environments/environment.ts');
     expect(env).toContain(`client_id: '${defaultOptions.clientId}'`);

@@ -21,7 +21,9 @@ import { dependencies as sdkVersions } from '../sdk-versions.json';
 import semverSatisfies from 'semver/functions/satisfies';
 import semverCoerce from 'semver/functions/coerce';
 import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
-import { addModuleImportToModule } from '@angular/cdk/schematics';
+import { addModuleImportToModule, parseSourceFile } from '@angular/cdk/schematics';
+import { addProviderToModule } from '@schematics/angular/utility/ast-utils';
+import { InsertChange } from '@schematics/angular/utility/change';
 
 const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
 const OKTA_ANGULAR_VERSION = sdkVersions['@okta/okta-angular'];
@@ -44,6 +46,9 @@ const IONIC_CORDOVA_FILE_VERSION = sdkVersions['cordova-plugin-file'];
 const IONIC_NATIVE_HTTP_VERSION = sdkVersions['@ionic-native/http'];
 const IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION = sdkVersions['cordova-plugin-safariviewcontroller'];
 const IONIC_STORAGE_VERSION = sdkVersions['@ionic/storage'];
+const IONIC_STORAGE_ANGULAR_VERSION = sdkVersions['@ionic/storage-angular'];
+const IONIC_SPLASH_SCREEN_VERSION = sdkVersions['@ionic-native/splash-screen'];
+const IONIC_STATUS_BAR_VERSION = sdkVersions['@ionic-native/status-bar'];
 const EXPRESS_SESSION_VERSION = sdkVersions['express-session'];
 const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
 const DOTENV_VERSION = sdkVersions['dotenv'];
@@ -83,6 +88,9 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_NATIVE_HTTP_VERSION, name: '@ionic-native/http'});
       } else {
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_STORAGE_VERSION, name: '@ionic/storage'});
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_STORAGE_ANGULAR_VERSION, name: '@ionic/storage-angular'});
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_SPLASH_SCREEN_VERSION, name: '@ionic-native/splash-screen'});
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_STATUS_BAR_VERSION, name: '@ionic-native/status-bar'});
       }
     } else if (framework === EXPRESS) {
       dependencies.push({type: NodeDependencyType.Default, version: EXPRESS_SESSION_VERSION, name: 'express-session'});
@@ -239,8 +247,29 @@ export function addAuth(options: any): Rule {
           }
           host.overwrite('./package.json', JSON.stringify(pkgJson));
         }
+
         addModuleImportToModule(host, 'src/app/app.module.ts',
-          'IonicStorageModule.forRoot()', '@ionic/storage');
+          'IonicStorageModule.forRoot()', '@ionic/storage-angular');
+
+        // add SplashScreen and StatusBar providers for Cordova
+        const moduleSource = parseSourceFile(host, 'src/app/app.module.ts');
+        const splashScreenChanges = addProviderToModule(moduleSource,'src/app/app.module.ts',
+            'SplashScreen', '@ionic-native/splash-screen/ngx');
+        const statusBarChanges = addProviderToModule(moduleSource, 'src/app/app.module.ts',
+            'StatusBar', '@ionic-native/status-bar/ngx');
+
+        const updater = host.beginUpdate('./src/app/app.module.ts');
+        for (const change of splashScreenChanges) {
+          if (change instanceof InsertChange) {
+            updater.insertRight(change.pos, change.toAdd);
+          }
+        }
+        for (const change of statusBarChanges) {
+          if (change instanceof InsertChange) {
+            updater.insertRight(change.pos, change.toAdd);
+          }
+        }
+        host.commitUpdate(updater)
       }
 
       // add imports to app.module.ts
