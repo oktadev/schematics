@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { AuthActions, IAuthAction, AuthObserver, AuthService } from 'ionic-appauth';
+import { AuthActions, IAuthAction, AuthService } from 'ionic-appauth';
+import { Subscription } from 'rxjs';
 
 @Component({
   template: '<p style="margin-left: 10px">Authorizing...</p>'
 })
 export class AuthCallbackPage implements OnInit, OnDestroy {
-  observer: AuthObserver;
+  sub: Subscription;
 
   constructor(
     private auth: AuthService,
@@ -16,21 +17,21 @@ export class AuthCallbackPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.observer = this.auth.addActionListener((action) => this.postCallback(action));
+    this.sub = this.auth.events$.subscribe((action) => this.postCallback(action));
     this.auth.authorizationCallback(window.location.origin + this.router.url);
   }
 
   ngOnDestroy() {
-    this.auth.removeActionObserver(this.observer);
+    this.sub.unsubscribe();
   }
 
-  postCallback(action: IAuthAction) {
+  async postCallback(action: IAuthAction) {
     if (action.action === AuthActions.SignInSuccess) {
-      this.navCtrl.navigateRoot('tabs');
+      await this.navCtrl.navigateRoot('tabs');
     }
 
     if (action.action === AuthActions.SignInFailed) {
-      this.navCtrl.navigateRoot('login');
+      await this.navCtrl.navigateRoot('login');
     }
   }
 }

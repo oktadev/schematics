@@ -9,10 +9,10 @@ import { AuthModule } from './auth/auth.module';
 
 describe('AppComponent', () => {
 
-  let <% if (platform === 'cordova') { %>statusBarSpy, splashScreenSpy, <% } %>platformReadySpy, platformIsSpy, platformSpy;
+  let <% if (platform === 'cordova.addproviderfails') { %>statusBarSpy, splashScreenSpy, <% } %>platformReadySpy, platformIsSpy, platformSpy;
 
   beforeEach(waitForAsync(() => {
-    <% if (platform === 'cordova') { %>statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
+    <% if (platform === 'cordova.addproviderfails') { %>statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
     splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);<% } %>
     platformReadySpy = Promise.resolve();
     platformIsSpy = Promise.resolve();
@@ -21,7 +21,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       imports: [HttpClientTestingModule, AuthModule],
-      providers: [<% if (platform === 'cordova') { %>{ provide: StatusBar, useValue: statusBarSpy },
+      providers: [<% if (platform === 'cordova.addproviderfails') { %>{ provide: StatusBar, useValue: statusBarSpy },
         { provide: SplashScreen, useValue: splashScreenSpy },<% } %>
         { provide: Platform, useValue: platformSpy }
       ],
@@ -38,7 +38,7 @@ describe('AppComponent', () => {
   it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
     expect(platformSpy.ready).toHaveBeenCalled();
-    await platformReadySpy;<% if (platform === 'cordova') { %>expect(statusBarSpy.styleDefault).toHaveBeenCalled();
+    await platformReadySpy;<% if (platform === 'cordova.addproviderfails') { %>expect(statusBarSpy.styleDefault).toHaveBeenCalled();
     expect(splashScreenSpy.hide).toHaveBeenCalled();<% } %>
   });
 

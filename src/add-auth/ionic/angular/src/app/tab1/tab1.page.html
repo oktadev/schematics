@@ -25,20 +25,20 @@
       <ion-button (click)="signOut()">Sign Out</ion-button>
     </ion-card-header>
 
-    <ion-card *ngIf="userInfo">
+    <ion-card *ngIf="user$ | async as user">
       <ion-card-header>
         User Info
       </ion-card-header>
       <ion-card-content>
-        {{userInfo | json}}
+        {{user | json}}
       </ion-card-content>
     </ion-card>
-    <ion-card *ngIf="action">
+    <ion-card *ngIf="events$ | async as event">
       <ion-card-header>
         Action Data
       </ion-card-header>
       <ion-card-content>
-        {{action | json}}
+        {{event | json}}
       </ion-card-content>
     </ion-card>
   </ion-card>
