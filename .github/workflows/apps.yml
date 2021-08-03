@@ -22,7 +22,7 @@ jobs:
           - vue3
           - vue3-ts
           - ionic
-          - ionic-capacitor
+          - ionic-cordova
           - react-native
           - express
     env:
