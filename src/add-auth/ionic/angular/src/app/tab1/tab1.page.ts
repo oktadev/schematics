@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AuthActions, AuthObserver, AuthService, IAuthAction } from 'ionic-appauth';
+import { AuthActions, AuthService, IAuthAction } from 'ionic-appauth';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -8,20 +9,20 @@ import { AuthActions, AuthObserver, AuthService, IAuthAction } from 'ionic-appau
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit, OnDestroy {
-  userInfo = this.auth.session.user;
+  user$ = this.auth.user$;
+  events$ = this.auth.events$;
+  sub: Subscription;
   action: IAuthAction;
-  authObserver: AuthObserver;
 
   constructor(private navCtrl: NavController, private auth: AuthService) {
   }
 
   ngOnInit() {
-    this.auth.loadTokenFromStorage();
-    this.authObserver = this.auth.addActionListener((action) => this.onAction(action));
+    this.sub = this.auth.events$.subscribe((action) => this.onAction(action));
   }
 
   ngOnDestroy() {
-    this.auth.removeActionObserver(this.authObserver);
+    this.sub.unsubscribe();
   }
 
   private onAction(action: IAuthAction) {
@@ -29,15 +30,13 @@ export class Tab1Page implements OnInit, OnDestroy {
       action.action === AuthActions.SignInFailed ||
       action.action === AuthActions.SignOutSuccess) {
       delete this.action;
-    } else if (action.action === AuthActions.LoadUserInfoSuccess) {
-      this.userInfo = action.user;
     } else {
       this.action = action;
     }
   }
 
-  public signOut() {
-    this.auth.signOut();
+  public async signOut() {
+    await this.auth.signOut();
   }
 
   public signIn() {
@@ -45,10 +44,10 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
   public async getUserInfo(): Promise<void> {
-    this.auth.loadUserInfo();
+    await this.auth.loadUserInfo();
   }
 
   public async refreshToken(): Promise<void> {
-    this.auth.refreshToken();
+    await this.auth.refreshToken();
   }
 }

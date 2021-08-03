@@ -1,11 +1,9 @@
 import { Platform } from '@ionic/angular';
 import { StorageBackend, Requestor } from '@openid/appauth';
-import { AuthService, Browser, ConsoleLogObserver } from 'ionic-appauth';
+import { AuthService, Browser } from 'ionic-appauth';
 import { environment } from 'src/environments/environment';
 import { NgZone } from '@angular/core';
-<% if (platform === 'capacitor') { %>import { Plugins } from '@capacitor/core';
-
-const { App } = Plugins;<% } %>
+<% if (platform === 'capacitor') { %>import { App } from '@capacitor/app';<% } %>
 
 export const authFactory = (platform: Platform, ngZone: NgZone,
                             requestor: Requestor, browser: Browser, storage: StorageBackend) => {
@@ -22,19 +20,26 @@ export const authFactory = (platform: Platform, ngZone: NgZone,
   <% if (platform === 'cordova') { %>if (platform.is('cordova')) {
     (window as any).handleOpenURL = (callbackUrl) => {
       ngZone.run(() => {
-        authService.authorizationCallback(callbackUrl);
+        if ((callbackUrl).indexOf(authService.authConfig.redirect_url) === 0) {
+            authService.authorizationCallback(callbackUrl);
+          } else {
+            authService.endSessionCallback();
+          }
       });
     };
   }<% } else { %>if (platform.is('mobile') && !platform.is('mobileweb')) {
     App.addListener('appUrlOpen', (data: any) => {
       if (data.url !== undefined) {
         ngZone.run(() => {
-          authService.authorizationCallback(data.url);
+          if ((data.url).indexOf(authService.authConfig.redirect_url) === 0) {
+            authService.authorizationCallback(data.url);
+          } else {
+            authService.endSessionCallback();
+          }
         });
       }
     });
   }<% } %>
 
-  authService.addActionObserver(new ConsoleLogObserver());
   return authService;
 };

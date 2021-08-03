@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthActions, AuthObserver, AuthService, IAuthAction } from 'ionic-appauth';
 import { NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,17 +11,18 @@ import { NavController } from '@ionic/angular';
 export class LoginPage implements OnInit, OnDestroy {
   action: IAuthAction;
   observer: AuthObserver;
+  events$ = this.auth.events$;
+  sub: Subscription;
 
   constructor(private auth: AuthService, private navCtrl: NavController) {
   }
 
   async ngOnInit() {
-    await this.auth.loadTokenFromStorage();
-    this.observer = this.auth.addActionListener((action) => this.onSignInSuccess(action));
+    this.sub = this.auth.events$.subscribe((action) => this.onSignInSuccess(action));
   }
 
   ngOnDestroy() {
-    this.auth.removeActionObserver(this.observer);
+    this.sub.unsubscribe();
   }
 
   async signIn() {

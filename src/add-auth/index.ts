@@ -21,9 +21,9 @@ import { dependencies as sdkVersions } from '../sdk-versions.json';
 import semverSatisfies from 'semver/functions/satisfies';
 import semverCoerce from 'semver/functions/coerce';
 import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
-import { addModuleImportToModule, parseSourceFile } from '@angular/cdk/schematics';
-import { addProviderToModule } from '@schematics/angular/utility/ast-utils';
-import { InsertChange } from '@schematics/angular/utility/change';
+import { addModuleImportToModule } from '@angular/cdk/schematics';
+/*import { InsertChange } from '@schematics/angular/utility/change';
+import { addProviderToModule } from '@schematics/angular/utility/ast-utils';*/
 
 const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
 const OKTA_ANGULAR_VERSION = sdkVersions['@okta/okta-angular'];
@@ -40,6 +40,7 @@ const OKTA_VUE2_VERSION = sdkVersions['@okta/okta-vue2'];
 const OKTA_VUE3_VERSION = sdkVersions['@okta/okta-vue'];
 const IONIC_APPAUTH_VERSION = sdkVersions['ionic-appauth'];
 const IONIC_SECURE_STORAGE_VERSION = sdkVersions['@ionic-native/secure-storage'];
+const IONIC_CAPACITOR_SPLASH_SCREEN_VERSION = sdkVersions['@capacitor/splash-screen'];
 const IONIC_CORDOVA_SECURE_STORAGE_VERSION = sdkVersions['cordova-plugin-secure-storage-echo'];
 const IONIC_CORDOVA_ADVANCED_HTTP_VERSION = sdkVersions['cordova-plugin-advanced-http'];
 const IONIC_CORDOVA_FILE_VERSION = sdkVersions['cordova-plugin-file'];
@@ -81,6 +82,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_APPAUTH_VERSION, name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_SECURE_STORAGE_VERSION, name: '@ionic-native/secure-storage'});
       if (options.platform === 'capacitor') {
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_SPLASH_SCREEN_VERSION, name: '@capacitor/splash-screen'});
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_SECURE_STORAGE_VERSION, name: 'cordova-plugin-secure-storage-echo'});
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_ADVANCED_HTTP_VERSION, name: 'cordova-plugin-advanced-http'});
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_FILE_VERSION, name: 'cordova-plugin-file'});
@@ -252,7 +254,7 @@ export function addAuth(options: any): Rule {
           'IonicStorageModule.forRoot()', '@ionic/storage-angular');
 
         // add SplashScreen and StatusBar providers for Cordova
-        const moduleSource = parseSourceFile(host, 'src/app/app.module.ts');
+        /*const moduleSource = parseSourceFile(host, 'src/app/app.module.ts');
         const splashScreenChanges = addProviderToModule(moduleSource,'src/app/app.module.ts',
             'SplashScreen', '@ionic-native/splash-screen/ngx');
         const statusBarChanges = addProviderToModule(moduleSource, 'src/app/app.module.ts',
@@ -269,7 +271,7 @@ export function addAuth(options: any): Rule {
             updater.insertRight(change.pos, change.toAdd);
           }
         }
-        host.commitUpdate(updater)
+        host.commitUpdate(updater);*/
       }
 
       // add imports to app.module.ts

@@ -1,7 +1,7 @@
 import { Platform } from '@ionic/angular';
 import { CordovaBrowser } from 'ionic-appauth/lib/cordova';
-import { DefaultBrowser } from 'ionic-appauth';
+import { CapacitorBrowser } from 'ionic-appauth/lib/capacitor';
 
 export const browserFactory = (platform: Platform) => {
-  return platform.is('cordova') ? new CordovaBrowser() : new DefaultBrowser();
+  return platform.is('cordova') ? new CordovaBrowser() : new CapacitorBrowser();
 };

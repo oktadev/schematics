@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-<% if (platform === 'cordova') { %>import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';<% } else { %>
-import { Plugins } from '@capacitor/core';
+<% if (platform === 'cordova.addproviderfails') { %>import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';<% } else if (platform === 'capacitor') { %>
+import { SplashScreen } from '@capacitor/splash-screen';<% } %>
 
-const { SplashScreen } = Plugins;<% } %>
-
-import { AuthObserver } from 'ionic-appauth';
+import { AuthService } from 'ionic-appauth';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  authObserver: AuthObserver;
 
   constructor(
-    private platform: Platform,<% if (platform === 'cordova') { %>
+    private platform: Platform,
+    private auth: AuthService,<% if (platform === 'cordova.addproviderfails') { %>
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,<% } %>
   ) {
@@ -25,11 +23,12 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {<% if (platform === 'cordova') { %>
+    this.platform.ready().then(async () => {
+      await this.auth.init();<% if (platform === 'cordova.addproviderfails') { %>
       this.statusBar.styleDefault();
-      this.splashScreen.hide();<% } else { %>
+      this.splashScreen.hide();<% } else if (platform === 'capacitor') { %>
       if (this.platform.is('mobile') && !this.platform.is('mobileweb')) {
-        SplashScreen.hide();
+        await SplashScreen.hide();
       }
       <% } %>
     });
