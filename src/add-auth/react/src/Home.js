@@ -20,7 +20,7 @@ export default withOktaAuth(class Home extends Component {
 
   render() {
     let body = null;
-    if (this.props.authState.isAuthenticated) {
+    if (this.props.authState?.isAuthenticated) {
       body = (
         <div className="Buttons">
           <button onClick={this.logout}>Logout</button>
