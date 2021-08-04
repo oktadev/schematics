@@ -15,7 +15,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.restoreOriginalUri = async (_oktaAuth, originalUri) => {
-      props.history.replace(toRelativeUrl(originalUri, window.location.origin));
+      props.history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
     };
   }
 
