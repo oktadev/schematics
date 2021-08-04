@@ -26,6 +26,7 @@ import { addModuleImportToModule } from '@angular/cdk/schematics';
 import { addProviderToModule } from '@schematics/angular/utility/ast-utils';*/
 
 const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
+const OKTA_AUTH_JS_VERSION_VUE2 = '4.1.2';
 const OKTA_ANGULAR_VERSION = sdkVersions['@okta/okta-angular'];
 const OKTA_REACT_VERSION = sdkVersions['@okta/okta-react'];
 const REACT_ROUTER_DOM_VERSION = sdkVersions['react-router-dom'];
@@ -76,8 +77,9 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: REACT_DOM_VERSION, name: 'react-dom'});
     } else if (framework === VUE || framework === VUE_TS || framework === VUE3 || framework === VUE3_TS) {
       const oktaVueVersion = (framework === VUE || framework === VUE_TS) ? OKTA_VUE2_VERSION : OKTA_VUE3_VERSION;
+      const authJsVersion = (framework === VUE || framework === VUE_TS) ? OKTA_AUTH_JS_VERSION_VUE2 : OKTA_AUTH_JS_VERSION;
       dependencies.push({type: NodeDependencyType.Default, version: oktaVueVersion, name: '@okta/okta-vue'});
-      dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
+      dependencies.push({type: NodeDependencyType.Default, version: authJsVersion, name: '@okta/okta-auth-js'});
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_APPAUTH_VERSION, name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_SECURE_STORAGE_VERSION, name: '@ionic-native/secure-storage'});
