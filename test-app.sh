@@ -112,6 +112,9 @@ then
       "classComponent": false,
       "useTsWithBabel": true
     },
+    "@vue/cli-plugin-router": {
+      "historyMode": true
+    },
     "@vue/cli-plugin-eslint": {
       "config": "base",
       "lintOn": [
