@@ -1,8 +1,8 @@
+import { NgZone } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { StorageBackend, Requestor } from '@openid/appauth';
 import { AuthService, Browser } from 'ionic-appauth';
-import { environment } from 'src/environments/environment';
-import { NgZone } from '@angular/core';
+import { environment } from '../../../environments/environment';
 <% if (platform === 'capacitor') { %>import { App } from '@capacitor/app';<% } %>
 
 export const authFactory = (platform: Platform, ngZone: NgZone,
