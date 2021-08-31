@@ -35,7 +35,7 @@
     "@schematics/angular": "12.2.3",
     "rxjs": "7.3.0",
     "semver": "7.3.5",
-    "typescript": "4.3.5"
+    "typescript": "4.4.2"
   },
   "devDependencies": {
     "@types/jasmine": "3.8.2",
