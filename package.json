@@ -29,7 +29,7 @@
     "update-deps": "ncu -u --packageFile src/sdk-versions.json"
   },
   "dependencies": {
-    "@angular-devkit/core": "12.2.5",
+    "@angular-devkit/core": "12.2.6",
     "@angular-devkit/schematics": "12.2.5",
     "@angular/cdk": "12.2.5",
     "@schematics/angular": "12.2.5",
