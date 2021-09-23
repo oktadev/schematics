@@ -355,7 +355,7 @@ You can also use the Okta Admin Console:
 
 ### iOS
 
-Run `pod install --project-directory=ios` to install the [Okta OIDC iOS SDK](https://github.com/okta/okta-oidc-ios).
+Run `pod install --project-directory=ios --repo-update` to install the [Okta OIDC iOS SDK](https://github.com/okta/okta-oidc-ios).
 
 Start your app and authenticate with Okta. 🎉
 
