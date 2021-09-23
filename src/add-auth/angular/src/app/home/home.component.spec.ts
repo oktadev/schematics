@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
 import { RouterTestingModule } from '@angular/router/testing';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -11,6 +12,7 @@ describe('HomeComponent', () => {
     clientId: 'fake-client-id',
     redirectUri: 'http://localhost:4200'
   };
+  const oktaAuth = new OktaAuth(oktaConfig);
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -19,7 +21,7 @@ describe('HomeComponent', () => {
         RouterTestingModule,
         OktaAuthModule
       ],
-      providers: [{provide: OKTA_CONFIG, useValue: oktaConfig}]
+      providers: [{provide: OKTA_CONFIG, useValue: { oktaAuth }}]
     })
       .compileComponents();
   }));

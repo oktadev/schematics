@@ -1,12 +1,12 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
-import { OktaAuthService } from '@okta/okta-angular';
 import { Injectable } from '@angular/core';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private oktaAuth: OktaAuthService) {
+  constructor(private oktaAuth: OktaAuth) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
