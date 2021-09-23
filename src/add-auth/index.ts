@@ -351,6 +351,11 @@ export function addAuth(options: any): Rule {
             .replace('versionName "1.0"', 'versionName "1.0"\n        manifestPlaceholders = [ appAuthRedirectScheme: "' + options.packageName + '" ]');
           host.overwrite('android/app/build.gradle', redirectScheme);
         }
+
+        // Force npm 6 peer dependencies, otherwise
+        // Could not resolve dependency:
+        // peer react-native@"^0.63.0" from @okta/okta-react-native@2.1.0
+        host.create('.npmrc', 'legacy-peer-deps=true');
       }
     }
 
