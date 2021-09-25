@@ -81,4 +81,16 @@ describe('OktaDev Schematics: Angular', () => {
       done();
     }, done.fail);
   });
+
+  it('should use Auth0 when --auth0 passed in', (done) => {
+    const auth0Options: any = {...defaultOptions};
+    auth0Options.auth0 = true;
+
+    schematicRunner.runSchematicAsync('add-auth', auth0Options, appTree).toPromise().then(tree => {
+      const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
+      expect(appModule).toContain(`domain: '${defaultOptions.issuer}'`);
+      expect(appModule).toContain(`clientId: '${defaultOptions.clientId}'`);
+      done();
+    }, done.fail);
+  });
 });

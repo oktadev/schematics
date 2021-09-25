@@ -54,14 +54,19 @@ const IONIC_STATUS_BAR_VERSION = sdkVersions['@ionic-native/status-bar'];
 const EXPRESS_SESSION_VERSION = sdkVersions['express-session'];
 const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
 const DOTENV_VERSION = sdkVersions['dotenv'];
+const AUTH0_ANGULAR_VERSION = sdkVersions['@auth0/auth0-angular'];
 
 function addPackageJsonDependencies(framework: string, options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
     const dependencies: NodeDependency[] = [];
 
     if (framework === ANGULAR) {
-      dependencies.push({type: NodeDependencyType.Default, version: OKTA_ANGULAR_VERSION, name: '@okta/okta-angular'});
-      dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
+      if (options.auth0) {
+        dependencies.push({type: NodeDependencyType.Default, version: AUTH0_ANGULAR_VERSION, name: '@auth0/auth0-angular'});
+      } else {
+        dependencies.push({type: NodeDependencyType.Default, version: OKTA_ANGULAR_VERSION, name: '@okta/okta-angular'});
+        dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
+      }
     } else if (framework === REACT || framework === REACT_TS) {
       dependencies.push({type: NodeDependencyType.Default, version: OKTA_REACT_VERSION, name: '@okta/okta-react'});
       dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
@@ -182,6 +187,10 @@ export function addAuth(options: any): Rule {
     }
 
     let projectPath = './';
+
+    if (options.auth0 && framework !== ANGULAR) {
+      throw new SchematicsException(`Auth0 support is only available for Angular!`);
+    }
 
     if (framework === ANGULAR) {
       const workspace = await getWorkspace(host);
@@ -363,7 +372,8 @@ export function addAuth(options: any): Rule {
     const sourceDir = (framework !== REACT_NATIVE && framework !== EXPRESS) ? 'src' : '';
     const sourcePath = join(normalize(projectPath), sourceDir);
     const templatesPath = join(sourcePath, '');
-    const templateSource = apply(url(`./${framework}/${sourceDir}`), [
+    const templateSourcePath = `./${options.auth0 ? 'auth0/' : ''}${framework}/${sourceDir}`;
+    const templateSource = apply(url(templateSourcePath), [
       template({...options}),
       move(getSystemPath(templatesPath))
     ]);
