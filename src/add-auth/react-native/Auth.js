@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 import { SafeAreaView, ScrollView, Button, StyleSheet, Text, View } from 'react-native';
-import { createConfig, signIn, signOut, isAuthenticated, getUser, getUserFromIdToken, EventEmitter } from '@okta/okta-react-native';
+import { createConfig, signInWithBrowser, signOut, isAuthenticated, getUser, getUserFromIdToken, EventEmitter } from '@okta/okta-react-native';
 import configFile from './auth.config';
 
 export default class Auth extends Component {
@@ -39,7 +39,7 @@ export default class Auth extends Component {
       scopes: configFile.oidc.scopes,
       requireHardwareBackedKeyStore: configFile.oidc.requireHardwareBackedKeyStore,
     });
-    this.checkAuthentication();
+    await this.checkAuthentication();
   }
 
   componentWillUnmount() {
@@ -50,7 +50,7 @@ export default class Auth extends Component {
   }
 
   async componentDidUpdate() {
-    this.checkAuthentication();
+    await this.checkAuthentication();
   }
 
   async checkAuthentication() {
@@ -61,11 +61,11 @@ export default class Auth extends Component {
   }
 
   async login() {
-    signIn();
+    await signInWithBrowser();
   }
 
   async logout() {
-    signOut();
+    await signOut();
   }
 
   async getUserIdToken() {
@@ -91,7 +91,7 @@ export default class Auth extends Component {
           <View style={styles.button}>
             <Button
               onPress={async () => {
-                this.getUserIdToken();
+                await this.getUserIdToken();
               }}
               title="Get User From Id Token"
             />
@@ -99,7 +99,7 @@ export default class Auth extends Component {
           <View style={styles.button}>
             <Button
               onPress={async () => {
-                this.getMyUser();
+                await this.getMyUser();
               }}
               title="Get User From Request"
             />
@@ -119,14 +119,14 @@ export default class Auth extends Component {
                 <Button
                   style={styles.button}
                   testID="logoutButton"
-                  onPress={async () => { this.logout() }}
+                  onPress={async () => { await this.logout() }}
                   title="Logout"
                 />
               ) : (
                 <Button
                   style={styles.button}
                   testID="loginButton"
-                  onPress={async () => { this.login() }}
+                  onPress={async () => { await this.login() }}
                   title="Login"
                 />
               )}
