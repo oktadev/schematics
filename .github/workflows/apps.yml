@@ -15,6 +15,7 @@ jobs:
         os: [ubuntu-latest]
         framework:
           - angular
+          - angular-auth0
           - react
           - react-ts
           - vue
