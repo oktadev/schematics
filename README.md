@@ -11,8 +11,9 @@ This library currently supports:
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
-* [Angular](#angular) | [React](#react) | [Vue](#vue) 
-* [Ionic](#ionic) | [React Native](#react-native)
+* Angular with [Okta](#angular) or [Auth0](#angular+auth0) 
+* [React](#react) and [Vue](#vue) 
+* [Ionic](#ionic) and [React Native](#react-native)
 * [Express](#express)
 * [Testing](#testing)
 * [Contributing](#contributing)
@@ -55,6 +56,44 @@ You can also use the Okta Admin Console:
 * Choose **Single-Page Application** as the application type and click **Next**.
 * Add `http://localhost:4200/callback` as a Login redirect URI and `http://localhost:4200` as a Logout redirect URI.
 * Specify `http://localhost:4200` as a Trusted Origin and click **Save**.
+
+## Angular + Auth0
+
+First, create an empty project with Angular CLI. You **must** add Angular routing for this schematic to work.
+
+```
+npm i -g @angular/cli
+ng new secure-angular --routing
+cd secure-angular
+```
+
+### Add an OpenID Connect App in Auth0
+
+1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli)
+2. Run `auth0 login` to register your account, followed by `auth0 apps create`
+3. Specify a name and description of your choosing. 
+4. Select **Single Page Web Application** and use `http://localhost:4200/home` for the Callback URLs.
+5. Use `http://localhost:4200` for the rest of the URLs.
+
+In your `secure-angular` project, add `@oktadev/schematics`:
+
+```
+ng add @oktadev/schematics
+```
+
+Use the values that the Auth0 CLI provides for the issuer and client ID when prompted. 
+
+Run `npm start`, open `http://localhost:4200` in your browser, and sign in. 🤩
+
+See the [Auth0 Angular SDK](https://github.com/auth0/auth0-angular) for more information.
+
+You can also use the Auth0 Console:
+
+* [Log in](https://auth0.com/auth/login) to your Auth0 instance (or [create an account](https://auth0.com/signup) if you don't have one). Go to **Applications** > **Create Application**.
+* Choose **Single Page Web Applications** as the application type and click **Create**.
+* Click **Angular**, then the **Settings** tab.
+* Add `http://localhost:4200/home` as an Allowed Callback URL and `http://localhost:4200` as a Logout URL.
+* Specify `http://localhost:4200` as an Allowed Origin and click **Save Changes** at the bottom.
 
 ## React
 
