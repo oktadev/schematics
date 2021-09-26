@@ -188,8 +188,18 @@ export function addAuth(options: any): Rule {
 
     let projectPath = './';
 
-    if (options.auth0 && framework !== ANGULAR) {
-      throw new SchematicsException(`Auth0 support is only available for Angular!`);
+    if (options.auth0) {
+      if (framework !== ANGULAR) {
+        throw new SchematicsException(`Auth0 support is only available for Angular!`);
+      } else {
+        // convert issuer to domain
+        if (options.issuer.startsWith('https://')) {
+          options.issuer = options.issuer.substring(8);
+        }
+        if (options.issuer.indexOf('/') > -1) {
+          options.issuer = options.issuer.substring(0, options.issuer.indexOf('/'));
+        }
+      }
     }
 
     if (framework === ANGULAR) {

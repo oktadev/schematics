@@ -88,8 +88,36 @@ describe('OktaDev Schematics: Angular', () => {
 
     schematicRunner.runSchematicAsync('add-auth', auth0Options, appTree).toPromise().then(tree => {
       const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
-      expect(appModule).toContain(`domain: '${defaultOptions.issuer}'`);
+      let domain: string = defaultOptions.issuer.substring(8);
+      domain = domain.substring(0, domain.indexOf('/'));
+      expect(appModule).toContain(`domain: '${domain}'`);
+      expect(appModule).not.toContain(`domain: 'https://`);
       expect(appModule).toContain(`clientId: '${defaultOptions.clientId}'`);
+      done();
+    }, done.fail);
+  });
+
+  it('Auth0 should convert issuer to domain', (done) => {
+    const auth0Options: any = {...defaultOptions};
+    auth0Options.auth0 = true;
+
+    schematicRunner.runSchematicAsync('add-auth', auth0Options, appTree).toPromise().then(tree => {
+      const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
+      let domain: string = defaultOptions.issuer.substring(8);
+      domain = domain.substring(0, domain.indexOf('/'));
+      expect(appModule).toContain(`domain: '${domain}'`);
+      done();
+    }, done.fail);
+  });
+
+  it('Auth0 issuer as domain still works', (done) => {
+    const auth0Options: any = {...defaultOptions};
+    auth0Options.issuer = 'jhipster.us.auth0.com';
+    auth0Options.auth0 = true;
+
+    schematicRunner.runSchematicAsync('add-auth', auth0Options, appTree).toPromise().then(tree => {
+      const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
+      expect(appModule).toContain(`domain: 'jhipster.us.auth0.com'`);
       done();
     }, done.fail);
   });

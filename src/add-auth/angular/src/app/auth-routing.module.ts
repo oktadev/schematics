@@ -10,8 +10,8 @@ import { AuthInterceptor } from './shared/okta/auth.interceptor';
 
 const oktaConfig = {
   issuer: '<%= issuer %>',
-  redirectUri: '/callback',
   clientId: '<%= clientId %>',
+  redirectUri: '/callback',
   scopes: ['openid', 'profile']
 };
 

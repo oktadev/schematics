@@ -75,7 +75,7 @@ cd secure-angular
 4. Select **Single Page Web Application** and use `http://localhost:4200/home` for the Callback URLs.
 5. Use `http://localhost:4200` for the rest of the URLs.
 
-In your `secure-angular` project, add `@oktadev/schematics`:
+In your `secure-angular` project, add `@oktadev/schematics` with the `--auth0` flag:
 
 ```
 ng add @oktadev/schematics --auth0
@@ -89,7 +89,7 @@ See the [Auth0 Angular SDK](https://github.com/auth0/auth0-angular) for more inf
 
 You can also use the Auth0 Console:
 
-* [Log in](https://auth0.com/auth/login) to your Auth0 instance (or [create an account](https://auth0.com/signup) if you don't have one). Go to **Applications** > **Create Application**.
+* [Log in](https://auth0.com/auth/login) to Auth0 or [create an account](https://auth0.com/signup) if you don't have one. Go to **Applications** > **Create Application**.
 * Choose **Single Page Web Applications** as the application type and click **Create**.
 * Click **Angular**, then the **Settings** tab.
 * Add `http://localhost:4200/home` as an Allowed Callback URL and `http://localhost:4200` as a Logout URL.
