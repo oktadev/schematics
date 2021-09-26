@@ -11,7 +11,7 @@ This library currently supports:
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
-* Angular with [Okta](#angular) or [Auth0](#angular+auth0) 
+* Angular with [Okta](#angular) or [Auth0](#angular--auth0) 
 * [React](#react) and [Vue](#vue) 
 * [Ionic](#ionic) and [React Native](#react-native)
 * [Express](#express)
