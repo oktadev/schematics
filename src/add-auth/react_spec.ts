@@ -36,4 +36,19 @@ describe('OktaDev Schematics: React', () => {
     expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
     expect(componentContent).toContain(`clientId: '${defaultOptions.clientId}'`);
   });
+
+  it('Auth0 and React fails', async () => {
+    const tree = new UnitTestTree(new HostTree);
+
+    const auth0Options: any = {...defaultOptions};
+    auth0Options.auth0 = true;
+
+    // Add package.json
+    tree.create('/package.json', JSON.stringify(packageJson));
+
+    const runner = new SchematicTestRunner('schematics', collectionPath);
+    const schematic = runner.runSchematicAsync('add-auth', auth0Options, tree);
+
+    await expectAsync(schematic.toPromise()).toBeRejected();
+  });
 });
