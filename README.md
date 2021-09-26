@@ -78,7 +78,7 @@ cd secure-angular
 In your `secure-angular` project, add `@oktadev/schematics`:
 
 ```
-ng add @oktadev/schematics
+ng add @oktadev/schematics --auth0
 ```
 
 Use the values that the Auth0 CLI provides for the issuer and client ID when prompted. 
