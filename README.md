@@ -12,8 +12,8 @@ This library currently supports:
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
 * Angular with [Okta](#angular) or [Auth0](#angular--auth0) 
-* [React](#react) and [Vue](#vue) 
-* [Ionic](#ionic) and [React Native](#react-native)
+* [React](#react) | [Vue](#vue) 
+* [Ionic](#ionic) | [React Native](#react-native)
 * [Express](#express)
 * [Testing](#testing)
 * [Contributing](#contributing)
@@ -34,9 +34,9 @@ cd secure-angular
 
 ### Add an OpenID Connect App in Okta
 
-1. Install the [Okta CLI](https://cli.okta.com)
-2. Run `okta register` to create an account, followed by `okta apps create`
-3. Choose **Single Page App** and use `http://localhost:4200/callback` for the Redirect URI
+1. Install the [Okta CLI](https://cli.okta.com).
+2. Run `okta register` to create an account, followed by `okta apps create`.
+3. Choose **Single Page App** and use `http://localhost:4200/callback` for the Redirect URI.
 
 In your `secure-angular` project, add `@oktadev/schematics`:
 
@@ -69,9 +69,9 @@ cd secure-angular
 
 ### Add an OpenID Connect App in Auth0
 
-1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli)
-2. Run `auth0 login` to register your account, followed by `auth0 apps create`
-3. Specify a name and description of your choosing. 
+1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
+2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
+3. Specify a name and description of your choosing.
 4. Select **Single Page Web Application** and use `http://localhost:4200/home` for the Callback URLs.
 5. Use `http://localhost:4200` for the rest of the URLs.
 
