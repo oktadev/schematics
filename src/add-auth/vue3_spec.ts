@@ -39,4 +39,19 @@ describe('OktaDev Schematics: Vue3',() => {
     expect(mainContent).toContain(`const oktaAuth = new OktaAuth(config)`);
     expect(mainContent).toContain(`.use(OktaVue, {oktaAuth})`);
   });
+
+  it('Auth0 and Vue 3 fails', async () => {
+    const tree = new UnitTestTree(new HostTree);
+
+    const auth0Options: any = {...defaultOptions};
+    auth0Options.auth0 = true;
+
+    // Add package.json
+    tree.create('/package.json', JSON.stringify(packageJson));
+
+    const runner = new SchematicTestRunner('schematics', collectionPath);
+    const schematic = runner.runSchematicAsync('add-auth', auth0Options, tree);
+
+    await expectAsync(schematic.toPromise()).toBeRejected();
+  });
 });
