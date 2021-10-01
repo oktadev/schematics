@@ -375,7 +375,7 @@ You will need an `issuer` and a `clientId` to begin. You can obtain those from O
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
 3. Choose **Native** and accept the default Redirect URI of `com.okta.dev-133337:/callback` (where `dev-133337.okta.com` is your Okta domain)
-4. Use `com.okta.dev-123456:/logout` for the Post Logout Redirect URI
+4. Use `com.okta.dev-133337:/logout` for the Post Logout Redirect URI
 
 Install the Schematics CLI globally.
 
@@ -395,7 +395,7 @@ You can also use the Okta Admin Console:
 
 * Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Create App Integration** > **OIDC**.
 * Choose **Native** as the application type and click **Next**.
-* Add `com.okta.dev-123456:/callback` as a Login redirect URI and `com.okta.dev-123456:/callback` as a Logout redirect URI (where `dev-123456.okta.com` is your Okta domain).
+* Add `com.okta.dev-133337:/callback` as a Login redirect URI and `com.okta.dev-133337:/callback` as a Logout redirect URI (where `dev-133337.okta.com` is your Okta domain).
 
 ### iOS
 
