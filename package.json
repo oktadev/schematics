@@ -31,7 +31,7 @@
   "dependencies": {
     "@angular-devkit/core": "12.2.7",
     "@angular-devkit/schematics": "12.2.7",
-    "@angular/cdk": "12.2.7",
+    "@angular/cdk": "12.2.8",
     "@schematics/angular": "12.2.7",
     "rxjs": "7.3.0",
     "semver": "7.3.5",
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/jasmine": "3.9.1",
-    "@types/node": "16.9.6",
+    "@types/node": "16.10.2",
     "@types/semver": "7.3.8",
     "chalk": "4.1.2",
     "istanbul": "0.4.5",

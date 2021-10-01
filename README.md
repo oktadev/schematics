@@ -164,8 +164,8 @@ You will need an `issuer` and a `clientId` to begin. You can obtain those from O
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
-3. Choose **Native** and use `[com.okta.dev-737523:/callback,http://localhost:8100/callback]` for the Login redirect URIs (where `dev-737523.okta.com` is your Okta Org URL)
-4. Use `[com.okta.dev-737523:/logout,http://localhost:8100/logout]` for the Login redirect URIs
+3. Choose **Native** and use `[com.okta.dev-133337:/callback,http://localhost:8100/callback]` for the Login redirect URIs (where `dev-133337.okta.com` is your Okta domain)
+4. Use `[com.okta.dev-133337:/logout,http://localhost:8100/logout]` for the Logout redirect URIs
 
 In your `secure-ionic` project, add `@oktadev/schematics`:
 
@@ -193,10 +193,10 @@ Give your app a memorable name, and configure it as follows:
 
 * Login redirect URIs:
   * `http://localhost:8100/callback`
-  * `com.okta.dev-737523:/callback` (where `dev-737523.okta.com` is your Okta Org URL)
+  * `com.okta.dev-133337:/callback` (where `dev-133337.okta.com` is your Okta domain)
 * Logout redirect URIs:
   * `http://localhost:8100/logout`
-  * `com.okta.dev-737523:/logout`
+  * `com.okta.dev-133337:/logout`
 * Trusted Origins:
   * `http://localhost:8100`
 * Click **Save**
@@ -222,7 +222,7 @@ Add your custom scheme to `ios/App/App/Info.plist`:
     <key>CFBundleURLSchemes</key>
     <array>
       <string>capacitor</string>
-      <string>com.okta.dev-737523</string>
+      <string>com.okta.dev-133337</string>
     </array>
   </dict>
 </array>
@@ -275,7 +275,7 @@ Add your reverse domain name as the `android:scheme` in `android/app/src/main/An
     <action android:name="android.intent.action.VIEW" />
     <category android:name="android.intent.category.DEFAULT"/>
     <category android:name="android.intent.category.BROWSABLE" />
-    <data android:scheme="com.okta.dev-737523" />
+    <data android:scheme="com.okta.dev-133337" />
 </intent-filter>
 ```
 
@@ -335,8 +335,8 @@ You will need an `issuer` and a `clientId` to begin. You can obtain those from O
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
-3. Choose **Native** and accept the default Redirect URI
-4. Modify the Post Logout Redirect URI to match the default Redirect URI (e.g., `com.okta.dev-123456:/callback`).
+3. Choose **Native** and accept the default Redirect URI of `com.okta.dev-133337:/callback` (where `dev-133337.okta.com` is your Okta domain)
+4. Use `com.okta.dev-123456:/logout` for the Post Logout Redirect URI
 
 Install the Schematics CLI globally.
 
