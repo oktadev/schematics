@@ -1,6 +1,6 @@
 {
   "name": "@oktadev/schematics",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "Schematics for Okta Auth",
   "keywords": [
     "schematics",
