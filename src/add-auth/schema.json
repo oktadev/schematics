@@ -30,6 +30,10 @@
     },
     "configUri": {
       "type": "string"
+    },
+    "auth0": {
+      "type": "boolean",
+      "default": false
     }
   },
   "required": ["issuer", "clientId"]
