@@ -75,11 +75,10 @@ cd secure-angular
 4. Select **Single Page Web Application** and use `http://localhost:4200/home` for the Callback URLs.
 5. Use `http://localhost:4200` for the rest of the URLs.
 
-In your `secure-angular` project, add `@oktadev/schematics`, then run the Schematics CLI with the `--auth0` flag:
+In your `secure-angular` project, add `@oktadev/schematics` with the `--auth0` flag:
 
 ```
-npm i -D @oktadev/schematics
-npx @angular-devkit/schematics-cli @oktadev/schematics:add-auth --auth0
+ng add @oktadev/schematics --auth0
 ```
 
 Use the values that the Auth0 CLI provides for the issuer and client ID when prompted. 
