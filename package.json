@@ -31,7 +31,7 @@
   "dependencies": {
     "@angular-devkit/core": "12.2.8",
     "@angular-devkit/schematics": "12.2.8",
-    "@angular/cdk": "12.2.8",
+    "@angular/cdk": "12.2.9",
     "@schematics/angular": "12.2.8",
     "rxjs": "7.3.1",
     "semver": "7.3.5",
