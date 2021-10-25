@@ -29,18 +29,18 @@
     "update-deps": "ncu -u --packageFile src/sdk-versions.json"
   },
   "dependencies": {
-    "@angular-devkit/core": "12.2.10",
-    "@angular-devkit/schematics": "12.2.10",
-    "@angular/cdk": "12.2.10",
-    "@schematics/angular": "12.2.10",
+    "@angular-devkit/core": "12.2.11",
+    "@angular-devkit/schematics": "12.2.11",
+    "@angular/cdk": "12.2.11",
+    "@schematics/angular": "12.2.11",
     "rxjs": "7.4.0",
     "semver": "7.3.5",
     "typescript": "4.4.4"
   },
   "devDependencies": {
-    "@types/jasmine": "3.10.0",
-    "@types/node": "16.11.1",
-    "@types/semver": "7.3.8",
+    "@types/jasmine": "3.10.1",
+    "@types/node": "16.11.5",
+    "@types/semver": "7.3.9",
     "chalk": "4.1.2",
     "istanbul": "0.4.5",
     "jasmine": "3.10.0"
