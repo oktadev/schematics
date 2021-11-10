@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/jasmine": "3.10.2",
-    "@types/node": "16.11.6",
+    "@types/node": "16.11.7",
     "@types/semver": "7.3.9",
     "chalk": "4.1.2",
     "istanbul": "0.4.5",
