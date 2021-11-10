@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthActions, AuthObserver, AuthService, IAuthAction } from 'ionic-appauth';
 import { NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   async signIn() {
-    await this.auth.signIn();
+    await this.auth.signIn({ audience: environment.oidcConfig.audience });
   }
 
   private onSignInSuccess(action: IAuthAction) {

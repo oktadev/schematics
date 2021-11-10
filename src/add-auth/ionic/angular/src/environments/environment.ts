@@ -11,7 +11,8 @@ export const environment = {
     redirect_url: window.location.origin + '/callback',
     end_session_redirect_url: window.location.origin + '/logout',
     scopes: 'openid profile',
-    pkce: true
+    pkce: true,
+    audience: 'api://default'
   },
   scheme: '<%= packageName %>:/'
 };
