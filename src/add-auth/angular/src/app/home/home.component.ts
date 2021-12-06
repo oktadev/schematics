@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { OktaAuthStateService } from '@okta/okta-angular';
+import { Component, Inject } from '@angular/core';
+import { OKTA_AUTH, OktaAuthStateService } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 
 @Component({
@@ -9,6 +9,6 @@ import { OktaAuth } from '@okta/okta-auth-js';
 })
 export class HomeComponent {
 
-  constructor(public oktaAuth: OktaAuth, public authService: OktaAuthStateService) {
+  constructor(@Inject(OKTA_AUTH) public oktaAuth: OktaAuth, public authService: OktaAuthStateService) {
   }
 }
