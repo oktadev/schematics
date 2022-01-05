@@ -38,7 +38,7 @@
     "typescript": "4.5.4"
   },
   "devDependencies": {
-    "@types/jasmine": "3.10.2",
+    "@types/jasmine": "3.10.3",
     "@types/node": "16.11.12",
     "@types/semver": "7.3.9",
     "chalk": "5.0.0",
