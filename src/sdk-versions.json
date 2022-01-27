@@ -15,7 +15,7 @@
     "enzyme-async-helpers": "0.9.1",
     "react-dom": "17.0.2",
     "@okta/okta-vue2": "3.1.0",
-    "@okta/okta-vue": "5.1.0",
+    "@okta/okta-vue": "5.1.1",
     "ionic-appauth": "0.8.5",
     "@ionic-native/secure-storage": "5.36.0",
     "cordova-plugin-secure-storage-echo": "5.1.1",
