@@ -4,7 +4,7 @@
   "description": "Dependencies for npm-check-updates",
   "dependencies": {
     "@okta/okta-angular": "5.1.1",
-    "@okta/okta-react": "6.4.1",
+    "@okta/okta-react": "6.4.2",
     "@okta/okta-auth-js": "6.0.0",
     "react-router-dom": "5.3.0",
     "@types/react-router-dom": "5.3.3",
@@ -30,7 +30,7 @@
     "@ionic-native/status-bar": "5.36.0",
     "express-session": "1.17.2",
     "@okta/oidc-middleware": "4.5.1",
-    "dotenv": "14.3.2",
+    "dotenv": "15.0.0",
     "@auth0/auth0-angular": "1.8.2"
   }
 }
