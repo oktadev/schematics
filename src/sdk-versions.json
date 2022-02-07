@@ -30,7 +30,7 @@
     "@ionic-native/status-bar": "5.36.0",
     "express-session": "1.17.2",
     "@okta/oidc-middleware": "4.5.1",
-    "dotenv": "15.0.0",
+    "dotenv": "16.0.0",
     "@auth0/auth0-angular": "1.8.2"
   }
 }
