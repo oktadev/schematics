@@ -55,6 +55,7 @@ const EXPRESS_SESSION_VERSION = sdkVersions['express-session'];
 const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
 const DOTENV_VERSION = sdkVersions['dotenv'];
 const AUTH0_ANGULAR_VERSION = sdkVersions['@auth0/auth0-angular'];
+const TS_JEST_VERSION = sdkVersions['ts-jest'];
 
 function addPackageJsonDependencies(framework: string, options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
@@ -86,6 +87,10 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       const authJsVersion = (framework === VUE || framework === VUE_TS) ? OKTA_AUTH_JS_VERSION_VUE2 : OKTA_AUTH_JS_VERSION;
       dependencies.push({type: NodeDependencyType.Default, version: oktaVueVersion, name: '@okta/okta-vue'});
       dependencies.push({type: NodeDependencyType.Default, version: authJsVersion, name: '@okta/okta-auth-js'});
+      // fix for: Cannot find module 'ts-jest/dist/config/config-set'
+      if (framework === VUE3) {
+        dependencies.push({type: NodeDependencyType.Dev, version: TS_JEST_VERSION, name: 'ts-jest'});
+      }
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_APPAUTH_VERSION, name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_SECURE_STORAGE_VERSION, name: '@ionic-native/secure-storage'});

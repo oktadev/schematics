@@ -73,7 +73,8 @@ then
     },
     "@vue/cli-plugin-unit-mocha": {},
     "@vue/cli-plugin-e2e-cypress": {}
-  }
+  },
+  "vueVersion": "2"
 }
 EOF
 )
@@ -99,7 +100,8 @@ then
       ]
     },
     "@vue/cli-plugin-unit-jest": {}
-  }
+  },
+  "vueVersion": "2"
 }
 EOF
 )
