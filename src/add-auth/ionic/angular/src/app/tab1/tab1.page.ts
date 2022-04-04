@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthActions, AuthService, IAuthAction } from 'ionic-appauth';
 import { Subscription } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-tab1',
@@ -18,7 +19,7 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.sub = this.auth.events$.subscribe((action) => this.onAction(action));
+    this.sub = this.events$.subscribe((action: IAuthAction) => this.onAction(action));
   }
 
   ngOnDestroy() {
@@ -40,7 +41,8 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
   public signIn() {
-    this.auth.signIn().catch(error => console.error(`Sign in error: ${error}`));
+    this.auth.signIn({ audience: environment.oidcConfig.audience })
+      .catch(error => console.error(`Sign in error: ${error}`));
   }
 
   public async getUserInfo(): Promise<void> {

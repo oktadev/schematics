@@ -19,7 +19,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.sub = this.auth.events$.subscribe((action) => this.onSignInSuccess(action));
+    this.sub = this.events$.subscribe((action: IAuthAction) => this.onSignInSuccess(action));
   }
 
   ngOnDestroy() {
