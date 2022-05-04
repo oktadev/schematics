@@ -10,7 +10,7 @@ export const authFactory = (platform: Platform, ngZone: NgZone,
 
   const authService = new AuthService(browser, storage, requestor);
 
-  if (<% if (platform === 'cordova') { %>platform.is('cordova')<% } else { %>platform.is('mobile') && !platform.is('mobileweb')<% } %>) {
+  if (<% if (platform === 'cordova') { %>platform.is('cordova')<% } else { %>platform.is('capacitor')<% } %>) {
     environment.oidcConfig.scopes += ' offline_access';
     environment.oidcConfig.redirect_url = '<%= packageName %>:/callback';
     environment.oidcConfig.end_session_redirect_url = '<%= packageName %>:/logout';
@@ -27,7 +27,7 @@ export const authFactory = (platform: Platform, ngZone: NgZone,
           }
       });
     };
-  }<% } else { %>if (platform.is('mobile') && !platform.is('mobileweb')) {
+  }<% } else { %>if (platform.is('capacitor')) {
     App.addListener('appUrlOpen', (data: any) => {
       if (data.url !== undefined) {
         ngZone.run(() => {

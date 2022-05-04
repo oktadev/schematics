@@ -318,14 +318,6 @@ Add your reverse domain name as the `android:scheme` in `android/app/src/main/An
 </intent-filter>
 ```
 
-The [SafariViewController Cordova Plugin](https://github.com/EddyVerbruggen/cordova-plugin-safariviewcontroller) is installed as part of this project. Capacitor uses AndroidX dependencies, but the SafariViewController plugin uses an older non-AndroidX dependency. Use [jetifier](https://developer.android.com/studio/command-line/jetifier) to [patch usages of old support libraries](https://capacitorjs.com/docs/android/troubleshooting#error-package-android-support-does-not-exist) with the following commands:
-
-```
-npm install jetifier
-npx jetify
-npx cap sync android
-```
-
 Then, run your project using the Capacitor CLI:
 
 ```
