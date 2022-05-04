@@ -12,8 +12,8 @@ export const authFactory = (platform: Platform, ngZone: NgZone,
 
   if (<% if (platform === 'cordova') { %>platform.is('cordova')<% } else { %>platform.is('capacitor')<% } %>) {
     environment.oidcConfig.scopes += ' offline_access';
-    environment.oidcConfig.redirect_url = '<%= packageName %>:/callback';
-    environment.oidcConfig.end_session_redirect_url = '<%= packageName %>:/logout';
+    environment.oidcConfig.redirect_url = `${environment.scheme}:/callback`;
+    environment.oidcConfig.end_session_redirect_url = `${environment.scheme}:/logout`;
   }
   authService.authConfig = environment.oidcConfig;
 

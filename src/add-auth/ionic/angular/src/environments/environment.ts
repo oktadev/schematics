@@ -14,7 +14,7 @@ export const environment = {
     pkce: true,
     audience: 'api://default'
   },
-  scheme: '<%= packageName %>:/'
+  scheme: '<%= packageName %>'
 };
 
 /*
