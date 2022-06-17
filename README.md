@@ -195,7 +195,7 @@ ionic start secure-ionic tabs --type=angular --no-interactive
 cd secure-ionic
 ```
 
-You will need an `issuer` and a `clientId` to begin. You can obtain those from Okta by completing the following steps.
+You will need an `issuer` and a `client-id` to begin. You can obtain those from Okta by completing the following steps.
 
 > **NOTE:** OIDC Login for Ionic is possible thanks to the excellent [Ionic AppAuth](https://github.com/wi3land/ionic-appauth#readme) project and its examples. This integration is not Okta-specific and should work with any identity provider that supports PKCE for browser and mobile apps.
 
@@ -360,7 +360,7 @@ Create a new React Native project with the React Native CLI.
 npx react-native init SecureApp
 ```
 
-You will need an `issuer` and a `clientId` to begin. You can obtain those from Okta by completing the following steps.
+You will need an `issuer` and a `client-id` to begin. You can obtain those from Okta by completing the following steps.
 
 ### Create an Application in Okta
 
