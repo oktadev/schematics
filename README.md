@@ -380,7 +380,7 @@ Install and run the `add-auth` schematic in your `SecureApp` project.
 ```
 cd SecureApp
 npm i -D @oktadev/schematics
-schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
 ```
 
 You can also use the Okta Admin Console:
@@ -443,7 +443,7 @@ The Okta CLI will create an `.okta.env` file in the current directory. It will h
 ```
 npm i -D @oktadev/schematics
 schematics @oktadev/schematics:add-auth --issuer=$issuer \
-  --clientId=$clientId --clientSecret=$clientSecret
+  --client-id=$clientId --client-secret=$clientSecret
 ```
 
 🚨 This process will create an `.env` file will be generated with your Okta credentials. Make sure to add `*.env` to `.gitignore` and don't check it into source control!
