@@ -32,6 +32,6 @@
     "@okta/oidc-middleware": "4.5.1",
     "dotenv": "16.0.1",
     "@auth0/auth0-angular": "1.10.1",
-    "ts-jest": "28.0.8"
+    "ts-jest": "27.1.3"
   }
 }
