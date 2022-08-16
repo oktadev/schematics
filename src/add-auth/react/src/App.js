@@ -1,4 +1,6 @@
 import React  from 'react';
+
+import { useNavigate } from 'react-router-dom';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { Security } from '@okta/okta-react';
 import Routes from './Routes';
@@ -20,5 +22,6 @@ const App = () => {
       <Routes />
     </Security>
   );
-};
+}
+
 export default App;

@@ -1,5 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+
+import { createRoot } from 'react-dom/client';
+import { screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
 import App from './App';
 
@@ -17,9 +20,9 @@ afterEach(() => {
 
 test('renders learn react link', async () => {
   await act(async () => {
-    ReactDOM.render(<App/>, container);
+    const root = createRoot(container);
+    root.render(<MemoryRouter><App /></MemoryRouter>);
   });
-
-  const linkElement = container.querySelector('a');
-  expect(linkElement.textContent).toBe('Learn React');
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
 });

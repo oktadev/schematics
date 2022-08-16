@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
 import './App.css';
 import logo from './logo.svg';
 import { useOktaAuth } from '@okta/okta-react';
-import React, { useState, useEffect } from 'react';
 
 const Home = () => {
   const { authState, oktaAuth } = useOktaAuth();
-  const [setUserInfo] = useState(null);
+  // adding userInfo makes 'setUserInfo is not a function' go away
+  // todo: fix me
+  // eslint-disable-next-line
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
     if (!authState || !authState.isAuthenticated) {
@@ -17,7 +20,7 @@ const Home = () => {
         setUserInfo(info);
       });
     }
-  }, [authState, oktaAuth]); // Update if authState changes
+  }, [authState, oktaAuth, setUserInfo]); // Update if authState changes
 
   const login = async () => oktaAuth.signInWithRedirect();
   const logout = async () => oktaAuth.signOut();
@@ -28,7 +31,7 @@ const Home = () => {
     );
   }
 
-  let body = null;
+  let body;
   if (authState.isAuthenticated) {
     body = (
       <div className="Buttons">

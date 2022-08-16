@@ -22,8 +22,6 @@ import semverSatisfies from 'semver/functions/satisfies';
 import semverCoerce from 'semver/functions/coerce';
 import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
 import { addModuleImportToModule } from '@angular/cdk/schematics';
-/*import { InsertChange } from '@schematics/angular/utility/change';
-import { addProviderToModule } from '@schematics/angular/utility/ast-utils';*/
 
 const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
 const OKTA_AUTH_JS_VERSION_VUE2 = '4.1.2';
@@ -330,6 +328,8 @@ export function addAuth(options: any): Rule {
       if (content) {
         const pkgJson: any = JSON.parse(content.toString());
         pkgJson.jest = jestConfig;
+        // workaround for Create React App not supporting Jest's testEnvironment and setupFiles
+        pkgJson.scripts.test = 'react-scripts test --env=jsdom --setupFiles=./src/jest.setup.js'
         host.overwrite('./package.json', JSON.stringify(pkgJson));
       }
     }
