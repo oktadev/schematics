@@ -1,31 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import './App.css';
 import logo from './logo.svg';
 import { useOktaAuth } from '@okta/okta-react';
-import { UserClaims } from '@okta/okta-auth-js';
 
 const Home = () => {
   const { authState, oktaAuth } = useOktaAuth();
-  // adding userInfo makes 'setUserInfo is not a function' go away
-  // todo: fix me
-  // eslint-disable-next-line
-  const [userInfo, setUserInfo] = useState(null);
-
-  useEffect(() => {
-    if (!authState || !authState.isAuthenticated) {
-      // When user isn't authenticated, forget any user info
-      // todo: fix me
-      // @ts-ignore
-      setUserInfo(null);
-    } else {
-      oktaAuth.getUser().then((info: UserClaims) => {
-        // todo: fix me
-        // @ts-ignore
-        setUserInfo(info);
-      });
-    }
-  }, [authState, oktaAuth, setUserInfo]); // Update if authState changes
 
   const login = async () => oktaAuth.signInWithRedirect();
   const logout = async () => oktaAuth.signOut();
