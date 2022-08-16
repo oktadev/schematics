@@ -27,14 +27,15 @@ describe('OktaDev Schematics: React', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
-    expect(tree.files.length).toEqual(4);
-    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.js', '/src/App.test.js', '/src/Home.js']);
+    expect(tree.files.length).toEqual(5);
+    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.js', '/src/App.test.js', '/src/Home.js', '/src/Routes.js']);
 
     const componentContent = tree.readContent('/src/App.js');
 
-    expect(componentContent).toMatch(/class App extends Component/);
+    expect(componentContent).toMatch(/const oktaAuth = new OktaAuth/);
     expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
     expect(componentContent).toContain(`clientId: '${defaultOptions.clientId}'`);
+    expect(componentContent).toContain(`<Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>`);
   });
 
   it('Auth0 and React fails', async () => {
