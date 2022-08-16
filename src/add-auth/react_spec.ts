@@ -27,8 +27,10 @@ describe('OktaDev Schematics: React', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
-    expect(tree.files.length).toEqual(5);
-    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.js', '/src/App.test.js', '/src/Home.js', '/src/Routes.js']);
+    expect(tree.files.length).toEqual(9);
+    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.js', '/src/App.test.js',
+      '/src/Home.js', '/src/Loading.js', '/src/Routes.js', '/src/SecureRoute.js', '/src/index.js',
+      '/src/jest.setup.js']);
 
     const componentContent = tree.readContent('/src/App.js');
 

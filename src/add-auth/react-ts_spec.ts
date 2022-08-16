@@ -18,7 +18,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     await expectAsync(schematic.toPromise()).toBeRejected();
   });
 
-  it('works', async() => {
+  it('works', async () => {
     const tree = new UnitTestTree(new HostTree);
 
     // Add package.json
@@ -27,12 +27,14 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
-    expect(tree.files.length).toEqual(4);
-    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.test.tsx', '/src/App.tsx', '/src/Home.tsx']);
+    expect(tree.files.length).toEqual(9);
+    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.test.tsx', '/src/App.tsx',
+      '/src/Home.tsx', '/src/Loading.tsx', '/src/Routes.tsx', '/src/SecureRoute.tsx', '/src/index.tsx',
+      '/src/jest.setup.js']);
 
     const componentContent = tree.readContent('/src/App.tsx');
 
-    expect(componentContent).toMatch(/class App extends Component/);
+    expect(componentContent).toMatch(/const oktaAuth = new OktaAuth/);
     expect(componentContent).toContain(`issuer: '${defaultOptions.issuer}'`);
     expect(componentContent).toContain(`clientId: '${defaultOptions.clientId}'`);
   });
