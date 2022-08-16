@@ -1,53 +1,66 @@
-import React, { Component } from 'react';
-import { withOktaAuth } from '@okta/okta-react';
+import React, { useState, useEffect } from 'react';
+
 import './App.css';
 import logo from './logo.svg';
+import { useOktaAuth } from '@okta/okta-react';
 
-export default withOktaAuth(class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-  }
+const Home = () => {
+  const { authState, oktaAuth } = useOktaAuth();
+  // adding userInfo makes 'setUserInfo is not a function' go away
+  // todo: fix me
+  // eslint-disable-next-line
+  const [userInfo, setUserInfo] = useState(null);
 
-  async login() {
-    await this.props.oktaAuth.signInWithRedirect();
-  }
-
-  async logout() {
-    await this.props.oktaAuth.signOut();
-  }
-
-  render() {
-    let body = null;
-    if (this.props.authState?.isAuthenticated) {
-      body = (
-        <div className="Buttons">
-          <button onClick={this.logout}>Logout</button>
-          {/* Replace me with your root component. */}
-        </div>
-      );
+  useEffect(() => {
+    if (!authState || !authState.isAuthenticated) {
+      // When user isn't authenticated, forget any user info
+      setUserInfo(null);
     } else {
-      body = (
-        <div className="Buttons">
-          <button onClick={this.login}>Login</button>
-        </div>
-      );
+      oktaAuth.getUser().then((info) => {
+        setUserInfo(info);
+      });
     }
+  }, [authState, oktaAuth, setUserInfo]); // Update if authState changes
 
+  const login = async () => oktaAuth.signInWithRedirect();
+  const logout = async () => oktaAuth.signOut();
+
+  if (!authState) {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo"/>
-          <p>
-            Edit <code>src/Home.js</code> and save to reload.
-          </p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-          {body}
-        </header>
+      <div>Loading...</div>
+    );
+  }
+
+  let body;
+  if (authState.isAuthenticated) {
+    body = (
+      <div className="Buttons">
+        <button onClick={logout}>Logout</button>
+        {/* Replace me with your root component. */}
+      </div>
+    );
+  } else {
+    body = (
+      <div className="Buttons">
+        <button onClick={login}>Login</button>
       </div>
     );
   }
-});
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo"/>
+        <p>
+          Edit <code>src/Home.js</code> and save to reload.
+        </p>
+        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+          Learn React
+        </a>
+        {body}
+      </header>
+    </div>
+  );
+};
+
+export default Home;

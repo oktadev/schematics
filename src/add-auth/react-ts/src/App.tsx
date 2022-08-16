@@ -1,43 +1,27 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
-import { OktaAuth, OktaAuthOptions, toRelativeUrl } from '@okta/okta-auth-js';
-import { LoginCallback, Security } from '@okta/okta-react';
-import Home from './Home';
+import React  from 'react';
 
-const config: OktaAuthOptions = {
+import { useNavigate } from 'react-router-dom';
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+import { Security } from '@okta/okta-react';
+import Routes from './Routes';
+
+const oktaAuth = new OktaAuth({
   issuer: '<%= issuer %>',
   clientId: '<%= clientId %>',
   redirectUri: window.location.origin + '/callback'
+});
+
+const App = () => {
+  const navigate = useNavigate();
+  const restoreOriginalUri = (_oktaAuth: OktaAuth,  originalUri: string) => {
+    navigate(toRelativeUrl(originalUri || '/', window.location.origin));
+  };
+
+  return (
+    <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
+      <Routes />
+    </Security>
+  );
 };
-const oktaAuth = new OktaAuth(config);
 
-class App extends Component {
-  restoreOriginalUri: any;
-
-  constructor(props: any) {
-    super(props);
-    this.restoreOriginalUri = async (_oktaAuth: OktaAuth, originalUri: string) => {
-      props.history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
-    };
-  }
-
-  render() {
-    return (
-      <Security oktaAuth={oktaAuth} restoreOriginalUri={this.restoreOriginalUri}>
-        <Route path="/" exact={true} component={Home}/>
-        <Route path="/callback" component={LoginCallback}/>
-      </Security>
-    );
-  }
-}
-
-// @ts-ignore
-const AppWithRouterAccess = withRouter(App);
-
-class RouterApp extends Component {
-  render() {
-    return (<Router><AppWithRouterAccess/></Router>);
-  }
-}
-
-export default RouterApp;
+export default App;

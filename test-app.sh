@@ -4,8 +4,8 @@
 set -e
 
 framework="$1"
-issuer="https://dev-2530788.okta.com/oauth2/default"
-clientId="0oa1ebjklivAhiM3T5d7"
+issuer="https://dev-17700857.okta.com/oauth2/default"
+clientId="0oa66eo2b0gvHGqwR5d7"
 
 # build and package this project
 rm -f *.tgz
@@ -28,28 +28,28 @@ then
   ng new angular-app --routing --style css --strict
   cd angular-app
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   ng test --watch=false
 elif [ $framework == "angular-0" ] || [ $framework == "a0" ]
 then
   ng new angular-auth0 --routing --style css --strict
   cd angular-auth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
   ng test --watch=false
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then
   npx create-react-app react-app-ts --template typescript
   cd react-app-ts
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   CI=true npm test
 elif [ $framework == "react" ] || [ $framework == "r" ]
 then
   npx create-react-app react-app
   cd react-app
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   CI=true npm test
 elif [ $framework == "vue-ts" ] || [ $framework == "vts" ]
 then
@@ -81,7 +81,7 @@ EOF
   vue create vue-app-ts -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-app-ts
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   npm run test:unit
 elif [ $framework == "vue" ] || [ $framework == "v" ]
 then
@@ -108,7 +108,7 @@ EOF
   vue create vue-app -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-app
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   npm run test:unit
 elif [ $framework == "vue3-ts" ] || [ $framework == "v3ts" ]
 then
@@ -139,7 +139,7 @@ EOF
   vue create vue3-app-ts -i "$config" --registry=http://registry.npm.taobao.org
   cd vue3-app-ts
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   npm run test:unit
 elif [ $framework == "vue3" ] || [ $framework == "v3" ]
 then
@@ -166,28 +166,28 @@ EOF
   vue create vue3-app -i "$config" --registry=http://registry.npm.taobao.org
   cd vue3-app
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   npm run test:unit
 elif [ $framework == "ionic" ] || [ $framework == "i" ]
 then
   ionic start ionic-capacitor tabs --type angular --capacitor --no-interactive
   cd ionic-capacitor
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   npm run build && ng test --watch=false
 elif [ $framework == "ionic-cordova" ] || [ $framework == "icor" ]
 then
   ionic start ionic-cordova tabs --type angular --cordova --no-interactive
   cd ionic-cordova
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --platform=cordova
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --platform=cordova
   npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
   npx react-native init SecureApp
   cd SecureApp
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   # pod install --project-directory=ios
   npm test -- -u
 elif [ $framework == "express" ] || [ $framework == "e" ]
@@ -196,7 +196,7 @@ then
   npx express-generator --view=pug
   npm i
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --clientId=$clientId --clientSecret='may the auth be with you'
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --client-secret='may the auth be with you'
   # npm test -- -u
 else
   echo "No '${framework}' framework found!"
