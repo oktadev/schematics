@@ -315,6 +315,11 @@ export function addAuth(options: any): Rule {
             .replace('versionName "1.0"', 'versionName "1.0"\n        manifestPlaceholders = [ appAuthRedirectScheme: "' + options.packageName + '" ]');
           host.overwrite('android/app/build.gradle', redirectScheme);
         }
+
+        // Force npm 6 peer dependencies, otherwise
+        // Could not resolve dependency:
+        // peer react@"^16.0.0-0" from enzyme-adapter-react-16@1.1
+        host.create('.npmrc', 'legacy-peer-deps=true');
       }
     }
 
