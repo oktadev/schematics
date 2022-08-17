@@ -14,5 +14,6 @@ jest.mock(
 );
 
 it('renders correctly', () => {
-  renderer.create(<App />);
+  const app = renderer.create(<App />);
+  expect(app).not.toBe(null);
 });
