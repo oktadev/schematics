@@ -1,26 +1,24 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <template v-if="authState.isAuthenticated"> |
-        <!-- router links that require authentication -->
-      </template>
-    </nav>
-    <button v-if="authState.isAuthenticated" v-on:click="logout" id="logout">Logout</button>
-    <button v-else v-on:click="login" id="login">Login</button>
-    <router-view/>
-  </div>
+  <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+    <template v-if="authState?.isAuthenticated"> |
+      <!-- router links that require authentication -->
+    </template>
+  </nav>
+  <button v-if="authState?.isAuthenticated" v-on:click="logout" id="logout">Logout</button>
+  <button v-else v-on:click="login" id="login">Login</button>
+  <router-view/>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue';
 
-export default Vue.extend({
+export default defineComponent({
   name: 'app',
   methods: {
     login () {
-      this.$auth.signInWithRedirect()
+      this.$auth.signInWithRedirect({ originalUri: '/' })
     },
     async logout () {
       await this.$auth.signOut()

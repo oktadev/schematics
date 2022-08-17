@@ -59,7 +59,7 @@ then
   "plugins": {
     "@vue/cli-plugin-babel": {},
     "@vue/cli-plugin-typescript": {
-      "classComponent": true,
+      "classComponent": false,
       "useTsWithBabel": true
     },
     "@vue/cli-plugin-router": {
@@ -71,10 +71,9 @@ then
         "save"
       ]
     },
-    "@vue/cli-plugin-unit-mocha": {},
-    "@vue/cli-plugin-e2e-cypress": {}
+    "@vue/cli-plugin-unit-jest": {}
   },
-  "vueVersion": "2"
+  "vueVersion": "3"
 }
 EOF
 )
@@ -101,70 +100,12 @@ then
     },
     "@vue/cli-plugin-unit-jest": {}
   },
-  "vueVersion": "2"
+  "vueVersion": "3"
 }
 EOF
 )
   vue create vue-app -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-app
-  npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
-  npm run test:unit
-elif [ $framework == "vue3-ts" ] || [ $framework == "v3ts" ]
-then
-  config=$(cat <<EOF
-{
-  "useConfigFiles": true,
-  "plugins": {
-    "@vue/cli-plugin-babel": {},
-    "@vue/cli-plugin-typescript": {
-      "classComponent": false,
-      "useTsWithBabel": true
-    },
-    "@vue/cli-plugin-router": {
-      "historyMode": true
-    },
-    "@vue/cli-plugin-eslint": {
-      "config": "base",
-      "lintOn": [
-        "save"
-      ]
-    },
-    "@vue/cli-plugin-unit-jest": {}
-  },
-  "vueVersion": "3"
-}
-EOF
-)
-  vue create vue3-app-ts -i "$config" --registry=http://registry.npm.taobao.org
-  cd vue3-app-ts
-  npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
-  npm run test:unit
-elif [ $framework == "vue3" ] || [ $framework == "v3" ]
-then
-  config=$(cat <<EOF
-{
-  "useConfigFiles": true,
-  "plugins": {
-    "@vue/cli-plugin-babel": {},
-    "@vue/cli-plugin-router": {
-      "historyMode": true
-    },
-    "@vue/cli-plugin-eslint": {
-      "config": "base",
-      "lintOn": [
-        "save"
-      ]
-    },
-    "@vue/cli-plugin-unit-jest": {}
-  },
-  "vueVersion": "3"
-}
-EOF
-)
-  vue create vue3-app -i "$config" --registry=http://registry.npm.taobao.org
-  cd vue3-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   npm run test:unit
@@ -174,13 +115,6 @@ then
   cd ionic-capacitor
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
-  npm run build && ng test --watch=false
-elif [ $framework == "ionic-cordova" ] || [ $framework == "icor" ]
-then
-  ionic start ionic-cordova tabs --type angular --cordova --no-interactive
-  cd ionic-cordova
-  npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --platform=cordova
   npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
