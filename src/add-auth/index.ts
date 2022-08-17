@@ -18,13 +18,10 @@ import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { targetBuildNotFoundError } from '@schematics/angular/utility/project-targets';
 import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-models';
 import { dependencies as sdkVersions } from '../sdk-versions.json';
-import semverSatisfies from 'semver/functions/satisfies';
-import semverCoerce from 'semver/functions/coerce';
 import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
 import { addModuleImportToModule } from '@angular/cdk/schematics';
 
 const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
-const OKTA_AUTH_JS_VERSION_VUE2 = '4.1.2';
 const OKTA_ANGULAR_VERSION = sdkVersions['@okta/okta-angular'];
 const OKTA_REACT_VERSION = sdkVersions['@okta/okta-react'];
 const REACT_ROUTER_DOM_VERSION = sdkVersions['react-router-dom'];
@@ -35,8 +32,7 @@ const ENZYME_VERSION = sdkVersions['enzyme'];
 const ENZYME_ADAPTER_VERSION = sdkVersions['enzyme-adapter-react-16'];
 const ENZYME_ASYNC_VERSION = sdkVersions['enzyme-async-helpers'];
 const REACT_DOM_VERSION = sdkVersions['react-dom'];
-const OKTA_VUE2_VERSION = sdkVersions['@okta/okta-vue2'];
-const OKTA_VUE3_VERSION = sdkVersions['@okta/okta-vue'];
+const OKTA_VUE_VERSION = sdkVersions['@okta/okta-vue'];
 const IONIC_APPAUTH_VERSION = sdkVersions['ionic-appauth'];
 const IONIC_SECURE_STORAGE_VERSION = sdkVersions['@ionic-native/secure-storage'];
 const IONIC_CAPACITOR_SPLASH_SCREEN_VERSION = sdkVersions['@capacitor/splash-screen'];
@@ -80,15 +76,10 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_ADAPTER_VERSION, name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_ASYNC_VERSION, name: 'enzyme-async-helpers'});
       dependencies.push({type: NodeDependencyType.Dev, version: REACT_DOM_VERSION, name: 'react-dom'});
-    } else if (framework === VUE || framework === VUE_TS || framework === VUE3 || framework === VUE3_TS) {
-      const oktaVueVersion = (framework === VUE || framework === VUE_TS) ? OKTA_VUE2_VERSION : OKTA_VUE3_VERSION;
-      const authJsVersion = (framework === VUE || framework === VUE_TS) ? OKTA_AUTH_JS_VERSION_VUE2 : OKTA_AUTH_JS_VERSION;
-      dependencies.push({type: NodeDependencyType.Default, version: oktaVueVersion, name: '@okta/okta-vue'});
-      dependencies.push({type: NodeDependencyType.Default, version: authJsVersion, name: '@okta/okta-auth-js'});
-      // fix for: Cannot find module 'ts-jest/dist/config/config-set'
-      if (framework === VUE3) {
-        dependencies.push({type: NodeDependencyType.Dev, version: TS_JEST_VERSION, name: 'ts-jest'});
-      }
+    } else if (framework === VUE || framework === VUE_TS) {
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_VUE_VERSION, name: '@okta/okta-vue'});
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
+      dependencies.push({type: NodeDependencyType.Dev, version: TS_JEST_VERSION, name: 'ts-jest'});
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_APPAUTH_VERSION, name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_SECURE_STORAGE_VERSION, name: '@ionic-native/secure-storage'});
@@ -136,8 +127,6 @@ export const REACT_TS = 'react-ts';
 export const REACT_NATIVE = 'react-native';
 export const VUE = 'vue';
 export const VUE_TS = 'vue-ts';
-export const VUE3 = 'vue3';
-export const VUE3_TS = 'vue3-ts';
 export const IONIC_ANGULAR = 'ionic/angular';
 export const EXPRESS = 'express';
 
@@ -161,14 +150,10 @@ function getFramework(host: Tree): string {
       }
       return REACT;
     } else if (content.dependencies['vue']) {
-      const vueVersion = content.dependencies['vue'];
-      const currentVersion = semverCoerce(vueVersion)?.version;
-      const vue3 = (currentVersion) ? semverSatisfies(currentVersion, '>=3.0.0') : false;
-      if (vue3) {
-        return (content.devDependencies['@vue/cli-plugin-typescript']) ? VUE3_TS : VUE3;
-      } else {
-        return (content.devDependencies['typescript']) ? VUE_TS : VUE;
+      if (content.devDependencies['typescript']) {
+        return VUE_TS
       }
+      return VUE;
     } else if (content.dependencies['@ionic/angular']) {
       return IONIC_ANGULAR;
     } else if (content.dependencies['express']) {
@@ -254,51 +239,6 @@ export function addAuth(options: any): Rule {
           + parts[0].substring(parts[0].lastIndexOf('/') + 1);
       }
 
-      // create AuthConfigService for JHipster
-      if (options.configUri) {
-        host.create('src/app/auth/auth-config.service.ts', ionicRemoteConfig(options.configUri));
-      }
-
-      // add cordova to package.json
-      if (options.platform === 'cordova') {
-        const content: Buffer | null = host.read('./package.json');
-        if (content) {
-          const pkgJson: any = JSON.parse(content.toString());
-          // save any pre-existing plugins
-          if (pkgJson.cordova && pkgJson.cordova.plugins) {
-            const existingPlugins = pkgJson.cordova.plugins;
-            pkgJson.cordova.plugins = {...cordovaNode(options.packageName).plugins, ...existingPlugins};
-            pkgJson.cordova.platforms = cordovaNode(options.packageName).platforms;
-          } else {
-            pkgJson.cordova = cordovaNode(options.packageName);
-          }
-          host.overwrite('./package.json', JSON.stringify(pkgJson));
-        }
-
-        addModuleImportToModule(host, 'src/app/app.module.ts',
-          'IonicStorageModule.forRoot()', '@ionic/storage-angular');
-
-        // add SplashScreen and StatusBar providers for Cordova
-        /*const moduleSource = parseSourceFile(host, 'src/app/app.module.ts');
-        const splashScreenChanges = addProviderToModule(moduleSource,'src/app/app.module.ts',
-            'SplashScreen', '@ionic-native/splash-screen/ngx');
-        const statusBarChanges = addProviderToModule(moduleSource, 'src/app/app.module.ts',
-            'StatusBar', '@ionic-native/status-bar/ngx');
-
-        const updater = host.beginUpdate('./src/app/app.module.ts');
-        for (const change of splashScreenChanges) {
-          if (change instanceof InsertChange) {
-            updater.insertRight(change.pos, change.toAdd);
-          }
-        }
-        for (const change of statusBarChanges) {
-          if (change instanceof InsertChange) {
-            updater.insertRight(change.pos, change.toAdd);
-          }
-        }
-        host.commitUpdate(updater);*/
-      }
-
       // add imports to app.module.ts
       addModuleImportToModule(host, 'src/app/app.module.ts',
         'HttpClientModule', '@angular/common/http');
@@ -364,8 +304,8 @@ export function addAuth(options: any): Rule {
         // Upgrade iOS to v11
         const podfile: Buffer | null = host.read('./ios/Podfile');
         if (podfile) {
-          const ios11 = podfile.toString('utf-8').replace('platform :ios, \'10.0\'', 'platform :ios, \'11.0\'');
-          host.overwrite('ios/Podfile', ios11);
+          const ios12 = podfile.toString('utf-8').replace('platform :ios, \'10.0\'', 'platform :ios, \'12.4\'');
+          host.overwrite('ios/Podfile', ios12);
         }
 
         // Configure Gradle for App
@@ -378,7 +318,7 @@ export function addAuth(options: any): Rule {
 
         // Force npm 6 peer dependencies, otherwise
         // Could not resolve dependency:
-        // peer react-native@"^0.63.0" from @okta/okta-react-native@2.1.0
+        // peer react@"^16.0.0-0" from enzyme-adapter-react-16@1.1
         host.create('.npmrc', 'legacy-peer-deps=true');
       }
     }
@@ -400,66 +340,4 @@ export function addAuth(options: any): Rule {
       mergeWith(templateSource, MergeStrategy.Overwrite),
     ]);
   };
-}
-
-export function cordovaNode(packageName: string) {
-  return {
-    'plugins': {
-      'cordova-plugin-advanced-http': {},
-      'cordova-plugin-safariviewcontroller': {},
-      'cordova-plugin-inappbrowser': {},
-      'cordova-plugin-secure-storage-echo': {},
-      'cordova-plugin-customurlscheme': {
-        'URL_SCHEME': packageName
-      },
-      'cordova-plugin-whitelist': {},
-      'cordova-plugin-statusbar': {},
-      'cordova-plugin-device': {},
-      'cordova-plugin-splashscreen': {},
-      'cordova-plugin-ionic-webview': {
-        'ANDROID_SUPPORT_ANNOTATIONS_VERSION': '27.+'
-      },
-      'cordova-plugin-ionic-keyboard': {}
-    },
-    'platforms': [
-      'android',
-      'ios'
-    ]
-  }
-}
-
-export function ionicRemoteConfig(configUri: string) {
-  return `import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthConfigService {
-  private authConfig;
-
-  constructor(private http: HttpClient) { }
-
-  loadAuthConfig() {
-    return this.http.get(\`\${environment.apiUrl}/${configUri}\`)
-      .toPromise()
-      .then(data => {
-        this.authConfig = data;
-        if (this.authConfig.issuer.endsWith('/')) {
-          this.authConfig.issuer = this.authConfig.issuer.substring(0, this.authConfig.issuer.length - 1);
-        }
-        // Override issuer and client ID with values from API
-        environment.oidcConfig.server_host = this.authConfig.issuer;
-        environment.oidcConfig.client_id = this.authConfig.clientId;
-      }).catch((error) => {
-        console.error('Failed to fetch remote OIDC configuration.');
-        console.error(error);
-      });
-  }
-
-  getConfig() {
-    return this.authConfig;
-  }
-}`;
 }

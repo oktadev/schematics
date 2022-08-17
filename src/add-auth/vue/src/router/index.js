@@ -1,19 +1,6 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+import { LoginCallback, navigationGuard } from '@okta/okta-vue'
 import HomeView from '../views/HomeView.vue'
-import { OktaAuth } from '@okta/okta-auth-js'
-import OktaVue, { LoginCallback } from '@okta/okta-vue'
-
-Vue.use(VueRouter)
-
-const oktaAuth = new OktaAuth({
-  issuer: '<%= issuer %>',
-  clientId: '<%= clientId %>',
-  redirectUri: window.location.origin + '/callback',
-  scopes: ['openid', 'profile', 'email']
-})
-
-Vue.use(OktaVue, { oktaAuth })
 
 const routes = [
   {
@@ -29,16 +16,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
-  {
-    path: '/callback',
-    component: LoginCallback
-  }
+  { path: '/callback', component: LoginCallback }
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach(navigationGuard)
 
 export default router

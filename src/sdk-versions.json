@@ -14,7 +14,6 @@
     "enzyme-adapter-react-16": "1.15.6",
     "enzyme-async-helpers": "0.9.1",
     "react-dom": "18.2.0",
-    "@okta/okta-vue2": "3.1.0",
     "@okta/okta-vue": "5.3.0",
     "ionic-appauth": "0.8.5",
     "@ionic-native/secure-storage": "5.36.0",
