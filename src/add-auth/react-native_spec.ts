@@ -27,8 +27,8 @@ describe('OktaDev Schematics: React Native', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     tree = await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
-    expect(tree.files.length).toEqual(8);
-    expect(tree.files.sort()).toEqual(['/.npmrc', '/App.js', '/Auth.js', '/auth.config.js',
+    expect(tree.files.length).toEqual(7);
+    expect(tree.files.sort()).toEqual(['/App.js', '/Auth.js', '/auth.config.js',
       '/package.json', '/setupJest.js', '/tests/App-test.js', '/tests/Auth-test.js']);
 
     const authComponent = tree.readContent('/Auth.js');
