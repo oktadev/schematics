@@ -38,7 +38,5 @@
     "src/add-auth/react-ts/**/*",
     "src/add-auth/vue/**/*",
     "src/add-auth/vue-ts/**/*",
-    "src/add-auth/vue3/**/*",
-    "src/add-auth/vue3-ts/**/*"
   ]
 }

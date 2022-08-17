@@ -18,13 +18,10 @@ import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { targetBuildNotFoundError } from '@schematics/angular/utility/project-targets';
 import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-models';
 import { dependencies as sdkVersions } from '../sdk-versions.json';
-import semverSatisfies from 'semver/functions/satisfies';
-import semverCoerce from 'semver/functions/coerce';
 import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
 import { addModuleImportToModule } from '@angular/cdk/schematics';
 
 const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
-const OKTA_AUTH_JS_VERSION_VUE2 = '4.1.2';
 const OKTA_ANGULAR_VERSION = sdkVersions['@okta/okta-angular'];
 const OKTA_REACT_VERSION = sdkVersions['@okta/okta-react'];
 const REACT_ROUTER_DOM_VERSION = sdkVersions['react-router-dom'];
@@ -35,8 +32,7 @@ const ENZYME_VERSION = sdkVersions['enzyme'];
 const ENZYME_ADAPTER_VERSION = sdkVersions['enzyme-adapter-react-16'];
 const ENZYME_ASYNC_VERSION = sdkVersions['enzyme-async-helpers'];
 const REACT_DOM_VERSION = sdkVersions['react-dom'];
-const OKTA_VUE2_VERSION = sdkVersions['@okta/okta-vue2'];
-const OKTA_VUE3_VERSION = sdkVersions['@okta/okta-vue'];
+const OKTA_VUE_VERSION = sdkVersions['@okta/okta-vue'];
 const IONIC_APPAUTH_VERSION = sdkVersions['ionic-appauth'];
 const IONIC_SECURE_STORAGE_VERSION = sdkVersions['@ionic-native/secure-storage'];
 const IONIC_CAPACITOR_SPLASH_SCREEN_VERSION = sdkVersions['@capacitor/splash-screen'];
@@ -80,15 +76,10 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_ADAPTER_VERSION, name: 'enzyme-adapter-react-16'});
       dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_ASYNC_VERSION, name: 'enzyme-async-helpers'});
       dependencies.push({type: NodeDependencyType.Dev, version: REACT_DOM_VERSION, name: 'react-dom'});
-    } else if (framework === VUE || framework === VUE_TS || framework === VUE3 || framework === VUE3_TS) {
-      const oktaVueVersion = (framework === VUE || framework === VUE_TS) ? OKTA_VUE2_VERSION : OKTA_VUE3_VERSION;
-      const authJsVersion = (framework === VUE || framework === VUE_TS) ? OKTA_AUTH_JS_VERSION_VUE2 : OKTA_AUTH_JS_VERSION;
-      dependencies.push({type: NodeDependencyType.Default, version: oktaVueVersion, name: '@okta/okta-vue'});
-      dependencies.push({type: NodeDependencyType.Default, version: authJsVersion, name: '@okta/okta-auth-js'});
-      // fix for: Cannot find module 'ts-jest/dist/config/config-set'
-      if (framework === VUE3) {
-        dependencies.push({type: NodeDependencyType.Dev, version: TS_JEST_VERSION, name: 'ts-jest'});
-      }
+    } else if (framework === VUE || framework === VUE_TS) {
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_VUE_VERSION, name: '@okta/okta-vue'});
+      dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
+      dependencies.push({type: NodeDependencyType.Dev, version: TS_JEST_VERSION, name: 'ts-jest'});
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_APPAUTH_VERSION, name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_SECURE_STORAGE_VERSION, name: '@ionic-native/secure-storage'});
@@ -136,8 +127,6 @@ export const REACT_TS = 'react-ts';
 export const REACT_NATIVE = 'react-native';
 export const VUE = 'vue';
 export const VUE_TS = 'vue-ts';
-export const VUE3 = 'vue3';
-export const VUE3_TS = 'vue3-ts';
 export const IONIC_ANGULAR = 'ionic/angular';
 export const EXPRESS = 'express';
 
@@ -161,14 +150,10 @@ function getFramework(host: Tree): string {
       }
       return REACT;
     } else if (content.dependencies['vue']) {
-      const vueVersion = content.dependencies['vue'];
-      const currentVersion = semverCoerce(vueVersion)?.version;
-      const vue3 = (currentVersion) ? semverSatisfies(currentVersion, '>=3.0.0') : false;
-      if (vue3) {
-        return (content.devDependencies['@vue/cli-plugin-typescript']) ? VUE3_TS : VUE3;
-      } else {
-        return (content.devDependencies['typescript']) ? VUE_TS : VUE;
+      if (content.dependencies['typescript']) {
+        return VUE_TS
       }
+      return VUE;
     } else if (content.dependencies['@ionic/angular']) {
       return IONIC_ANGULAR;
     } else if (content.dependencies['express']) {

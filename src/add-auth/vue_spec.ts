@@ -27,17 +27,20 @@ describe('OktaDev Schematics: Vue',() => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
-    expect(tree.files.length).toEqual(3);
-    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.vue', '/src/router/index.js']);
+    expect(tree.files.length).toEqual(4);
+    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.vue', '/src/main.js', '/src/router/index.js']);
 
     const routerContent = tree.readContent('/src/router/index.js');
+    expect(routerContent).toMatch(/router.beforeEach\(navigationGuard\)/);
 
-    expect(routerContent).toMatch(/Vue.use\(OktaVue, { oktaAuth }\)/);
-    expect(routerContent).toContain(`issuer: '${defaultOptions.issuer}'`);
-    expect(routerContent).toContain(`clientId: '${defaultOptions.clientId}'`);
+    const mainContent = tree.readContent('/src/main.js');
+    expect(mainContent).toContain(`issuer: '${defaultOptions.issuer}'`);
+    expect(mainContent).toContain(`clientId: '${defaultOptions.clientId}'`);
+    expect(mainContent).toContain(`const oktaAuth = new OktaAuth(config)`);
+    expect(mainContent).toContain(`.use(OktaVue, {oktaAuth})`);
   });
 
-  it('Auth0 and Vue 2 fails', async () => {
+  it('Auth0 and Vue 3 fails', async () => {
     const tree = new UnitTestTree(new HostTree);
 
     const auth0Options: any = {...defaultOptions};

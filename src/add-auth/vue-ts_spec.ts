@@ -27,13 +27,16 @@ describe('OktaDev Schematics: Vue + TypeScript', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
 
-    expect(tree.files.length).toEqual(3);
-    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.vue', '/src/router/index.ts']);
+    expect(tree.files.length).toEqual(4);
+    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.vue', '/src/main.ts', '/src/router/index.ts']);
 
     const routerContent = tree.readContent('/src/router/index.ts');
+    expect(routerContent).toMatch(/router.beforeEach\(navigationGuard\);/);
 
-    expect(routerContent).toMatch(/Vue.use\(OktaVue, { oktaAuth }\)/);
-    expect(routerContent).toContain(`issuer: '${defaultOptions.issuer}'`);
-    expect(routerContent).toContain(`clientId: '${defaultOptions.clientId}'`);
+    const mainContent = tree.readContent('/src/main.ts');
+    expect(mainContent).toContain(`issuer: '${defaultOptions.issuer}'`);
+    expect(mainContent).toContain(`clientId: '${defaultOptions.clientId}'`);
+    expect(mainContent).toContain(`const oktaAuth = new OktaAuth(config);`);
+    expect(mainContent).toContain(`.use(OktaVue, {oktaAuth})`);
   });
 });

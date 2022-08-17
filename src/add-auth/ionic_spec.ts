@@ -170,30 +170,4 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const pkgJson = tree.readContent('/package.json');
     expect(pkgJson).not.toContain('"cordova":');
   });
-
-  it('works with jhipster', async () => {
-    const tree = new UnitTestTree(new HostTree);
-
-    tree.create('/package.json', JSON.stringify(packageJson));
-    tree.create('/src/app/app.module.ts', defaultAppModule);
-
-    const jhipsterOptions: any = {
-      configUri: 'auth-info',
-      issuer: 'web_app',
-      clientId: 'http://localhost:9080/auth/realms/jhipster',
-    };
-
-    const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', jhipsterOptions, tree).toPromise();
-
-    expect(tree.files.length).toEqual(29);
-    expect(tree.files.sort()[0]).toMatch('package.json');
-
-    const authConfig = tree.readContent('src/app/auth/auth-config.service.ts');
-    expect(authConfig).toContain('${environment.apiUrl}/auth-info');
-
-    const env = tree.readContent('/src/environments/environment.ts');
-    expect(env).toContain(`client_id: '${jhipsterOptions.clientId}'`);
-    expect(env).toContain(`server_host: '${jhipsterOptions.issuer}'`);
-  });
 });
