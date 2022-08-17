@@ -175,13 +175,6 @@ then
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   npm run build && ng test --watch=false
-elif [ $framework == "ionic-cordova" ] || [ $framework == "icor" ]
-then
-  ionic start ionic-cordova tabs --type angular --cordova --no-interactive
-  cd ionic-cordova
-  npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --platform=cordova
-  npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
   npx -y react-native init SecureApp
