@@ -150,7 +150,7 @@ function getFramework(host: Tree): string {
       }
       return REACT;
     } else if (content.dependencies['vue']) {
-      if (content.dependencies['typescript']) {
+      if (content.devDependencies['typescript']) {
         return VUE_TS
       }
       return VUE;
@@ -239,51 +239,6 @@ export function addAuth(options: any): Rule {
           + parts[0].substring(parts[0].lastIndexOf('/') + 1);
       }
 
-      // create AuthConfigService for JHipster
-      if (options.configUri) {
-        host.create('src/app/auth/auth-config.service.ts', ionicRemoteConfig(options.configUri));
-      }
-
-      // add cordova to package.json
-      if (options.platform === 'cordova') {
-        const content: Buffer | null = host.read('./package.json');
-        if (content) {
-          const pkgJson: any = JSON.parse(content.toString());
-          // save any pre-existing plugins
-          if (pkgJson.cordova && pkgJson.cordova.plugins) {
-            const existingPlugins = pkgJson.cordova.plugins;
-            pkgJson.cordova.plugins = {...cordovaNode(options.packageName).plugins, ...existingPlugins};
-            pkgJson.cordova.platforms = cordovaNode(options.packageName).platforms;
-          } else {
-            pkgJson.cordova = cordovaNode(options.packageName);
-          }
-          host.overwrite('./package.json', JSON.stringify(pkgJson));
-        }
-
-        addModuleImportToModule(host, 'src/app/app.module.ts',
-          'IonicStorageModule.forRoot()', '@ionic/storage-angular');
-
-        // add SplashScreen and StatusBar providers for Cordova
-        /*const moduleSource = parseSourceFile(host, 'src/app/app.module.ts');
-        const splashScreenChanges = addProviderToModule(moduleSource,'src/app/app.module.ts',
-            'SplashScreen', '@ionic-native/splash-screen/ngx');
-        const statusBarChanges = addProviderToModule(moduleSource, 'src/app/app.module.ts',
-            'StatusBar', '@ionic-native/status-bar/ngx');
-
-        const updater = host.beginUpdate('./src/app/app.module.ts');
-        for (const change of splashScreenChanges) {
-          if (change instanceof InsertChange) {
-            updater.insertRight(change.pos, change.toAdd);
-          }
-        }
-        for (const change of statusBarChanges) {
-          if (change instanceof InsertChange) {
-            updater.insertRight(change.pos, change.toAdd);
-          }
-        }
-        host.commitUpdate(updater);*/
-      }
-
       // add imports to app.module.ts
       addModuleImportToModule(host, 'src/app/app.module.ts',
         'HttpClientModule', '@angular/common/http');
@@ -349,8 +304,8 @@ export function addAuth(options: any): Rule {
         // Upgrade iOS to v11
         const podfile: Buffer | null = host.read('./ios/Podfile');
         if (podfile) {
-          const ios11 = podfile.toString('utf-8').replace('platform :ios, \'10.0\'', 'platform :ios, \'11.0\'');
-          host.overwrite('ios/Podfile', ios11);
+          const ios12 = podfile.toString('utf-8').replace('platform :ios, \'10.0\'', 'platform :ios, \'12.4\'');
+          host.overwrite('ios/Podfile', ios12);
         }
 
         // Configure Gradle for App
@@ -360,11 +315,6 @@ export function addAuth(options: any): Rule {
             .replace('versionName "1.0"', 'versionName "1.0"\n        manifestPlaceholders = [ appAuthRedirectScheme: "' + options.packageName + '" ]');
           host.overwrite('android/app/build.gradle', redirectScheme);
         }
-
-        // Force npm 6 peer dependencies, otherwise
-        // Could not resolve dependency:
-        // peer react-native@"^0.63.0" from @okta/okta-react-native@2.1.0
-        host.create('.npmrc', 'legacy-peer-deps=true');
       }
     }
 
@@ -385,66 +335,4 @@ export function addAuth(options: any): Rule {
       mergeWith(templateSource, MergeStrategy.Overwrite),
     ]);
   };
-}
-
-export function cordovaNode(packageName: string) {
-  return {
-    'plugins': {
-      'cordova-plugin-advanced-http': {},
-      'cordova-plugin-safariviewcontroller': {},
-      'cordova-plugin-inappbrowser': {},
-      'cordova-plugin-secure-storage-echo': {},
-      'cordova-plugin-customurlscheme': {
-        'URL_SCHEME': packageName
-      },
-      'cordova-plugin-whitelist': {},
-      'cordova-plugin-statusbar': {},
-      'cordova-plugin-device': {},
-      'cordova-plugin-splashscreen': {},
-      'cordova-plugin-ionic-webview': {
-        'ANDROID_SUPPORT_ANNOTATIONS_VERSION': '27.+'
-      },
-      'cordova-plugin-ionic-keyboard': {}
-    },
-    'platforms': [
-      'android',
-      'ios'
-    ]
-  }
-}
-
-export function ionicRemoteConfig(configUri: string) {
-  return `import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthConfigService {
-  private authConfig;
-
-  constructor(private http: HttpClient) { }
-
-  loadAuthConfig() {
-    return this.http.get(\`\${environment.apiUrl}/${configUri}\`)
-      .toPromise()
-      .then(data => {
-        this.authConfig = data;
-        if (this.authConfig.issuer.endsWith('/')) {
-          this.authConfig.issuer = this.authConfig.issuer.substring(0, this.authConfig.issuer.length - 1);
-        }
-        // Override issuer and client ID with values from API
-        environment.oidcConfig.server_host = this.authConfig.issuer;
-        environment.oidcConfig.client_id = this.authConfig.clientId;
-      }).catch((error) => {
-        console.error('Failed to fetch remote OIDC configuration.');
-        console.error(error);
-      });
-  }
-
-  getConfig() {
-    return this.authConfig;
-  }
-}`;
 }
