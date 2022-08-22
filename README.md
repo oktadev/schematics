@@ -11,9 +11,11 @@ This library currently supports:
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
-* Angular with [Okta](#angular) or [Auth0](#angular--auth0) 
-* [React](#react) | [Vue](#vue) 
-* [Ionic](#ionic) | [React Native](#react-native)
+* Angular with [Okta](#angular) or [Auth0](#angular--auth0)
+* [React](#react)
+* [Vue](#vue)
+* Ionic with [Okta](#ionic) or [Auth0](#ionic--auth0)
+* [React Native](#react-native)
 * [Express](#express)
 * [Testing](#testing)
 * [Contributing](#contributing)
@@ -91,7 +93,7 @@ You can also use the Auth0 Console:
 
 * [Log in](https://auth0.com/auth/login) to Auth0 or [create an account](https://auth0.com/signup) if you don't have one. Go to **Applications** > **Create Application**.
 * Choose **Single Page Web Applications** as the application type and click **Create**.
-* Click **Angular**, then the **Settings** tab.
+* Select the **Settings** tab.
 * Add `http://localhost:4200/home` as an Allowed Callback URL and `http://localhost:4200` as a Logout URL.
 * Specify `http://localhost:4200` as an Allowed Origin and click **Save Changes** at the bottom.
 
@@ -191,7 +193,7 @@ Create a new Ionic + Angular project with Ionic CLI. You **must** use the `tabs`
 
 ```
 npm install -g @ionic/cli
-ionic start secure-ionic tabs --type=angular --no-interactive
+ionic start secure-ionic tabs --type=angular --no-interactive 
 cd secure-ionic
 ```
 
@@ -238,9 +240,38 @@ Give your app a memorable name, and configure it as follows:
   * `http://localhost:8100`
 * Click **Save**
 
+### Create an Application in Auth0
+
+1. Install the [Auth0 CLI](https://cli.okta.com)
+2. Run `okta register` to create an account, followed by `okta apps create`
+3. Choose **Native** and use `[dev.localhost.ionic:/callback,http://localhost:8100/callback]` for the Callback URLs
+4. Use `dev.localhost.ionic:/logout,http://localhost:8100/logout` for the Logout URLs
+
+In your `secure-ionic` project, add `@oktadev/schematics` with the `--auth0` flag:
+
+```
+ng add @oktadev/schematics --auth0
+```
+
+Use the values that the Auth0 CLI provides for the issuer and client ID when prompted.
+
+Start your app and authenticate with Auth0. 🤩
+
+```
+ionic serve
+```
+
+You can also use the Auth0 Console:
+
+* [Log in](https://auth0.com/auth/login) to Auth0 or [create an account](https://auth0.com/signup) if you don't have one. Go to **Applications** > **Create Application**.
+* Choose **Native** as the application type and click **Create**.
+* Select the **Settings** tab.
+* Add `dev.localhost.ionic:/callback,http://localhost:8100/callback` for Allowed Callback URLs and `dev.localhost.ionic:/logout,http://localhost:8100/logout` for the Logout URLs.
+* Specify `http://localhost:8100` as an Allowed Origin (CORS) and click **Save Changes** at the bottom.
+
 ### iOS
 
-If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your project has been configured for Capacitor. Build and add Capacitor for iOS with the following commands:
+Build and add Capacitor for iOS with the following commands:
 
 ```
 ionic build
@@ -281,7 +312,7 @@ Then run your app from Xcode.
 
 ### Android
 
-If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your project has been configured for Capacitor. Build and add Capacitor for Android with the following commands:
+Build and add Capacitor for Android with the following commands:
 
 ```
 ionic build

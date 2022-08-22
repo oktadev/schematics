@@ -4,6 +4,8 @@ import { NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+const { audience } = environment;
+
 @Component({
   selector: 'app-home',
   templateUrl: './login.page.html',
@@ -27,7 +29,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   async signIn() {
-    await this.auth.signIn({ audience: environment.oidcConfig.audience });
+    await this.auth.signIn({ audience });
   }
 
   private onSignInSuccess(action: IAuthAction) {

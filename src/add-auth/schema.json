@@ -28,9 +28,6 @@
       "type": "string",
       "default": "capacitor"
     },
-    "configUri": {
-      "type": "string"
-    },
     "auth0": {
       "type": "boolean",
       "default": false

@@ -111,10 +111,17 @@ EOF
   npm run test:unit
 elif [ $framework == "ionic" ] || [ $framework == "i" ]
 then
-  ionic start ionic-capacitor tabs --type angular --capacitor --no-interactive
-  cd ionic-capacitor
+  ionic start ionic-app tabs --type angular --no-interactive
+  cd ionic-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
+  npm run build && ng test --watch=false
+elif [ $framework == "ionic-0" ] || [ $framework == "i0" ]
+then
+  ionic start ionic-auth0 tabs --type angular --no-interactive
+  cd ionic-auth0
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
   npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then

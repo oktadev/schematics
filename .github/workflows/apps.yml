@@ -21,6 +21,7 @@ jobs:
           - vue
           - vue-ts
           - ionic
+          - ionic-auth0
           - react-native
           - express
     env:
