@@ -203,10 +203,10 @@ You will need an `issuer` and a `client-id` to begin. You can obtain those from 
 
 ### Create an Application in Okta
 
-1. Install the [Okta CLI](https://cli.okta.com)
-2. Run `okta register` to create an account, followed by `okta apps create`
-3. Choose **Native** and use `[com.okta.dev-133337:/callback,http://localhost:8100/callback]` for the Login redirect URIs (where `dev-133337.okta.com` is your Okta domain)
-4. Use `[com.okta.dev-133337:/logout,http://localhost:8100/logout]` for the Logout redirect URIs
+1. Install the [Okta CLI](https://cli.okta.com).
+2. Run `okta register` to create an account, followed by `okta apps create`.
+3. Choose **Native** and use `[com.okta.dev-133337:/callback,http://localhost:8100/callback]` for the Login redirect URIs (where `dev-133337.okta.com` is your Okta domain).
+4. Use `[com.okta.dev-133337:/logout,http://localhost:8100/logout]` for the Logout redirect URIs.
 
 In your `secure-ionic` project, add `@oktadev/schematics`:
 
@@ -242,10 +242,11 @@ Give your app a memorable name, and configure it as follows:
 
 ### Create an Application in Auth0
 
-1. Install the [Auth0 CLI](https://cli.okta.com)
-2. Run `okta register` to create an account, followed by `okta apps create`
-3. Choose **Native** and use `[dev.localhost.ionic:/callback,http://localhost:8100/callback]` for the Callback URLs
-4. Use `dev.localhost.ionic:/logout,http://localhost:8100/logout` for the Logout URLs
+1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
+2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
+3. Specify a name and description of your choosing.
+4. Select **Native** and use `dev.localhost.ionic:/callback,http://localhost:8100/callback` for the Callback URLs.
+5. Use `dev.localhost.ionic:/logout,http://localhost:8100/logout` for the Logout URLs.
 
 In your `secure-ionic` project, add `@oktadev/schematics` with the `--auth0` flag:
 
@@ -267,7 +268,6 @@ You can also use the Auth0 Console:
 * Choose **Native** as the application type and click **Create**.
 * Select the **Settings** tab.
 * Add `dev.localhost.ionic:/callback,http://localhost:8100/callback` for Allowed Callback URLs and `dev.localhost.ionic:/logout,http://localhost:8100/logout` for the Logout URLs.
-* Specify `http://localhost:8100` as an Allowed Origin (CORS) and click **Save Changes** at the bottom.
 
 ### iOS
 
@@ -289,7 +289,7 @@ Add your custom scheme to `ios/App/App/Info.plist`:
     <string>com.getcapacitor.capacitor</string>
     <key>CFBundleURLSchemes</key>
     <array>
-      <string>capacitor</string>
+      <string>dev.localhost.ionic</string>
       <string>com.okta.dev-133337</string>
     </array>
   </dict>
@@ -327,7 +327,7 @@ Add your reverse domain name as the `android:scheme` in `android/app/src/main/An
     <action android:name="android.intent.action.VIEW" />
     <category android:name="android.intent.category.DEFAULT"/>
     <category android:name="android.intent.category.BROWSABLE" />
-    <data android:scheme="com.okta.dev-133337" />
+    <data android:scheme="com.okta.dev-133337" /> <!-- or dev.localhost.ionic -->
 </intent-filter>
 ```
 

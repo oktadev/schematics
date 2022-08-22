@@ -118,6 +118,6 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const env = tree.readContent('/src/environments/environment.ts');
     expect(env).toContain(`client_id: '${defaultOptions.clientId}'`);
     expect(env).toContain(`server_host: '${options.issuer.slice(0, -1)}'`);
-    expect(env).toContain(`audience: '${options.issuer}api/v2'`);
+    expect(env).toContain(`audience: '${options.issuer}api/v2/'`);
   });
 });

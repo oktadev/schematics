@@ -15,7 +15,7 @@ const oidcConfig: IAuthConfig = {
 export const environment = {
   production: false,
   oidcConfig,
-  audience: '<% if (auth0) { %><%= issuer %>/api/v2<% } else { %>api://default<% } %>',
+  audience: '<% if (auth0) { %><%= issuer %>/api/v2/<% } else { %>api://default<% } %>',
   scheme: '<%= packageName %>',
 };
 
