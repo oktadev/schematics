@@ -214,8 +214,6 @@ ng add @oktadev/schematics
 
 Use the values that the Okta CLI provides for the issuer and client ID when prompted.
 
-**NOTE:** You can switch to Cordova by passing in `--platform=cordova`. The default is Capacitor.
-
 Start your app and authenticate with Okta. 🎉
 
 ```
@@ -281,22 +279,6 @@ npx cap open ios
 
 Then run your app from Xcode.
 
-### iOS and Cordova
-
-If you want to use Cordova, you **must** integrate this library with `ng add @oktadev/schematics --platform=cordova`.
-
-Then, generate a native project with the following command:
-
-```
-ionic cordova prepare ios
-```
-
-Open your project in Xcode, configure code signing, and run your app.
-
-```
-open platforms/ios/MyApp.xcworkspace
-```
-
 ### Android
 
 If you ran `ng add @oktadev/schematics` without a `--platform` parameter, your project has been configured for Capacitor. Build and add Capacitor for Android with the following commands:
@@ -329,26 +311,6 @@ You can also open your project in Android Studio and run your app.
 ```
 npx cap open android
 ```
-
-### Android and Cordova
-
-If you want to use Cordova, you **must** add this library with `ng add @oktadev/schematics --platform=cordova`.
-
-Then, generate a native project with the following command:
-
-```
-ionic cordova prepare android
-```
-
-Set the launchMode to `singleTask` so the URL does not trigger a new instance of the app in `platforms/android/app/src/main/AndroidManifest.xml`:
-
-```
-android:launchMode="singleTask"
-```
-
-Open `platforms/android` in Android Studio and run your app.
-
-If you get a Gradle error in Android Studio, go to **File** > **Project Structure** and change the Android Gradle Plugin to `4.0.1`. Kudos to [Stack Overflow](https://stackoverflow.com/a/63206864).
 
 See [Ionic's iOS](https://ionicframework.com/docs/developing/ios) and [Android Development](https://ionicframework.com/docs/developing/android) docs for more information.
 
@@ -472,7 +434,7 @@ This project supports unit tests and integration tests.
 
 `./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic-cordova`, `react-native`, and `express`.
 
-`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Cordova, Ionic with Capacitor, React Native, and Express.
+`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Capacitor, React Native, and Express.
 
 ## Publishing
 
