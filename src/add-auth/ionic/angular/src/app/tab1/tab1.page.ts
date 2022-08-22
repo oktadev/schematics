@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AuthActions, AuthService, IAuthAction } from 'ionic-appauth';
+import { AuthActions, AuthService, Browser, IAuthAction } from 'ionic-appauth';
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
+
+const { audience } = environment;
+
 
 @Component({
   selector: 'app-tab1',
@@ -15,7 +18,7 @@ export class Tab1Page implements OnInit, OnDestroy {
   sub: Subscription;
   action: IAuthAction;
 
-  constructor(private navCtrl: NavController, private auth: AuthService) {
+  constructor(private navCtrl: NavController, private auth: AuthService, private browser: Browser) {
   }
 
   ngOnInit() {
@@ -26,22 +29,21 @@ export class Tab1Page implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  private onAction(action: IAuthAction) {
-    if (action.action === AuthActions.LoadTokenFromStorageFailed ||
-      action.action === AuthActions.SignInFailed ||
-      action.action === AuthActions.SignOutSuccess) {
-      delete this.action;
-    } else {
-      this.action = action;
+  public async signOut() {
+    await this.auth.signOut();
+
+    // Auth0 need special handling since end_session_endpoint is not in oidc-configuration
+    const issuer = environment.oidcConfig.server_host;
+    if (issuer.includes('auth0.com')) {
+      const clientId = environment.oidcConfig.client_id;
+      const returnTo = encodeURIComponent(environment.oidcConfig.end_session_redirect_url);
+      const logoutUrl = `${issuer}/v2/logout?client_id=${clientId}&returnTo=${returnTo}`;
+      await this.browser.showWindow(logoutUrl, returnTo);
     }
   }
 
-  public async signOut() {
-    await this.auth.signOut();
-  }
-
   public signIn() {
-    this.auth.signIn({ audience: environment.oidcConfig.audience })
+    this.auth.signIn({ audience })
       .catch(error => console.error(`Sign in error: ${error}`));
   }
 
@@ -51,5 +53,15 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   public async refreshToken(): Promise<void> {
     await this.auth.refreshToken();
+  }
+
+  private onAction(action: IAuthAction) {
+    if (action.action === AuthActions.LoadTokenFromStorageFailed ||
+      action.action === AuthActions.SignInFailed ||
+      action.action === AuthActions.SignOutSuccess) {
+      delete this.action;
+    } else {
+      this.action = action;
+    }
   }
 }

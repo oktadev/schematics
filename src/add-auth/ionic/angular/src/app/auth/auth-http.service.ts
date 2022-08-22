@@ -21,9 +21,11 @@ export class AuthHttpService {
   }
 
   private addHeaders(token) {
-    return (token) ? {
-      Authorization: `${(token.tokenType === 'bearer') ? 'Bearer' : token.tokenType} ${token.accessToken}`,
-      'Content-Type': 'application/json'
-    } : {};
+    return token
+      ? {
+        Authorization: `${token.tokenType === 'bearer' ? 'Bearer' : token.tokenType} ${token.accessToken}`,
+        'Content-Type': 'application/json',
+      }
+      : {};
   }
 }

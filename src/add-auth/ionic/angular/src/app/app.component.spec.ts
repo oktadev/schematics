@@ -1,7 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Platform } from '@ionic/angular';<% if (platform === 'cordova') { %>
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';<% } %>
+import { Platform } from '@ionic/angular';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { AppComponent } from './app.component';
@@ -9,11 +7,9 @@ import { AuthModule } from './auth/auth.module';
 
 describe('AppComponent', () => {
 
-  let <% if (platform === 'cordova.addproviderfails') { %>statusBarSpy, splashScreenSpy, <% } %>platformReadySpy, platformIsSpy, platformSpy;
+  let platformReadySpy, platformIsSpy, platformSpy;
 
   beforeEach(waitForAsync(() => {
-    <% if (platform === 'cordova.addproviderfails') { %>statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
-    splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);<% } %>
     platformReadySpy = Promise.resolve();
     platformIsSpy = Promise.resolve();
     platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy, is: platformIsSpy });
@@ -21,8 +17,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       imports: [HttpClientTestingModule, AuthModule],
-      providers: [<% if (platform === 'cordova.addproviderfails') { %>{ provide: StatusBar, useValue: statusBarSpy },
-        { provide: SplashScreen, useValue: splashScreenSpy },<% } %>
+      providers: [
         { provide: Platform, useValue: platformSpy }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -38,8 +33,7 @@ describe('AppComponent', () => {
   it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
     expect(platformSpy.ready).toHaveBeenCalled();
-    await platformReadySpy;<% if (platform === 'cordova.addproviderfails') { %>expect(statusBarSpy.styleDefault).toHaveBeenCalled();
-    expect(splashScreenSpy.hide).toHaveBeenCalled();<% } %>
+    await platformReadySpy;
   });
 
   // TODO: add more tests!

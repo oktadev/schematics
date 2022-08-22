@@ -35,16 +35,13 @@ const REACT_DOM_VERSION = sdkVersions['react-dom'];
 const OKTA_VUE_VERSION = sdkVersions['@okta/okta-vue'];
 const IONIC_APPAUTH_VERSION = sdkVersions['ionic-appauth'];
 const IONIC_SECURE_STORAGE_VERSION = sdkVersions['@ionic-native/secure-storage'];
+const IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION = sdkVersions['@capacitor-community/http'];
 const IONIC_CAPACITOR_SPLASH_SCREEN_VERSION = sdkVersions['@capacitor/splash-screen'];
 const IONIC_CORDOVA_SECURE_STORAGE_VERSION = sdkVersions['cordova-plugin-secure-storage-echo'];
 const IONIC_CORDOVA_ADVANCED_HTTP_VERSION = sdkVersions['cordova-plugin-advanced-http'];
 const IONIC_CORDOVA_FILE_VERSION = sdkVersions['cordova-plugin-file'];
 const IONIC_NATIVE_HTTP_VERSION = sdkVersions['@ionic-native/http'];
 const IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION = sdkVersions['cordova-plugin-safariviewcontroller'];
-const IONIC_STORAGE_VERSION = sdkVersions['@ionic/storage'];
-const IONIC_STORAGE_ANGULAR_VERSION = sdkVersions['@ionic/storage-angular'];
-const IONIC_SPLASH_SCREEN_VERSION = sdkVersions['@ionic-native/splash-screen'];
-const IONIC_STATUS_BAR_VERSION = sdkVersions['@ionic-native/status-bar'];
 const EXPRESS_SESSION_VERSION = sdkVersions['express-session'];
 const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
 const DOTENV_VERSION = sdkVersions['dotenv'];
@@ -91,11 +88,7 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_FILE_VERSION, name: 'cordova-plugin-file'});
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION, name: 'cordova-plugin-safariviewcontroller'});
         dependencies.push({type: NodeDependencyType.Default, version: IONIC_NATIVE_HTTP_VERSION, name: '@ionic-native/http'});
-      } else {
-        dependencies.push({type: NodeDependencyType.Default, version: IONIC_STORAGE_VERSION, name: '@ionic/storage'});
-        dependencies.push({type: NodeDependencyType.Default, version: IONIC_STORAGE_ANGULAR_VERSION, name: '@ionic/storage-angular'});
-        dependencies.push({type: NodeDependencyType.Default, version: IONIC_SPLASH_SCREEN_VERSION, name: '@ionic-native/splash-screen'});
-        dependencies.push({type: NodeDependencyType.Default, version: IONIC_STATUS_BAR_VERSION, name: '@ionic-native/status-bar'});
+        dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION, name: '@capacitor-community/http'});
       }
     } else if (framework === EXPRESS) {
       dependencies.push({type: NodeDependencyType.Default, version: EXPRESS_SESSION_VERSION, name: 'express-session'});
@@ -178,15 +171,21 @@ export function addAuth(options: any): Rule {
     let projectPath = './';
 
     if (options.auth0) {
-      if (framework !== ANGULAR) {
-        throw new SchematicsException(`Auth0 support is only available for Angular!`);
+      if (framework !== ANGULAR && framework !== IONIC_ANGULAR) {
+        throw new SchematicsException(`Auth0 support is only available for Angular and Ionic!`);
       } else {
-        // convert issuer to domain
-        if (options.issuer.startsWith('https://')) {
+        // convert issuer to domain for Angular
+        if (framework === ANGULAR && options.issuer.startsWith('https://')) {
           options.issuer = options.issuer.substring(8);
-        }
-        if (options.issuer.indexOf('/') > -1) {
-          options.issuer = options.issuer.substring(0, options.issuer.indexOf('/'));
+          // Check to see if an Okta issuer is used
+          if (options.issuer.indexOf('/') > -1) {
+            options.issuer = options.issuer.substring(0, options.issuer.indexOf('/'));
+          }
+        } else {
+          // remove trailing slash
+          if (options.issuer.indexOf('/') > -1) {
+            options.issuer = options.issuer.substring(0, options.issuer.lastIndexOf('/'));
+          }
         }
       }
     }
@@ -228,9 +227,9 @@ export function addAuth(options: any): Rule {
     }
 
     if (framework == IONIC_ANGULAR) {
-      // add a package name from the issuer
+      // add a package name from the issuer for Okta
       const parts = options.issuer.split('.');
-      if (options.issuer.indexOf('.') === -1) {
+      if (options.issuer.indexOf('.') === -1 || options.auth0) {
         // hard-code a package name for localhost
         options.packageName = 'dev.localhost.ionic';
       } else {
@@ -256,6 +255,14 @@ export function addAuth(options: any): Rule {
     "src/app/login/login.module.ts",
     "src/app/tabs/tabs.module.ts"`);
         host.overwrite('./tsconfig.app.json', config);
+      }
+
+      // add port 8100 to npm start command
+      const content: Buffer | null = host.read('./package.json');
+      if (content) {
+        const pkgJson: any = JSON.parse(content.toString());
+        pkgJson.scripts.start = pkgJson.scripts.start + ' --port 8100';
+        host.overwrite('./package.json', JSON.stringify(pkgJson));
       }
     }
 
@@ -324,11 +331,14 @@ export function addAuth(options: any): Rule {
       }
     }
 
+    // Some frameworks share templates for Auth0 and Okta, so calculate the path accordingly
+    const auth0TemplatePath = (options.auth0 && framework === ANGULAR) ? 'auth0/' : '';
+
     // Setup templates to add to the project
     const sourceDir = (framework !== REACT_NATIVE && framework !== EXPRESS) ? 'src' : '';
     const sourcePath = join(normalize(projectPath), sourceDir);
     const templatesPath = join(sourcePath, '');
-    const templateSourcePath = `./${options.auth0 ? 'auth0/' : ''}${framework}/${sourceDir}`;
+    const templateSourcePath = `./${auth0TemplatePath}${framework}/${sourceDir}`;
     const templateSource = apply(url(templateSourcePath), [
       template({...options}),
       move(getSystemPath(templatesPath))
