@@ -49,6 +49,7 @@ const EXPRESS_SESSION_VERSION = sdkVersions['express-session'];
 const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
 const DOTENV_VERSION = sdkVersions['dotenv'];
 const AUTH0_ANGULAR_VERSION = sdkVersions['@auth0/auth0-angular'];
+// Vue CLI uses Jest 27 by default, that's why this is version 27.1.3
 const TS_JEST_VERSION = sdkVersions['ts-jest'];
 
 function addPackageJsonDependencies(framework: string, options: any): Rule {

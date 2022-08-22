@@ -5,7 +5,7 @@
   "dependencies": {
     "@okta/okta-angular": "5.2.0",
     "@okta/okta-react": "6.6.0",
-    "@okta/okta-auth-js": "6.7.5",
+    "@okta/okta-auth-js": "6.7.6",
     "react-router-dom": "6.3.0",
     "@types/react-router-dom": "5.3.3",
     "@okta/okta-react-native": "2.6.0",
