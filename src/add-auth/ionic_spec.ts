@@ -42,19 +42,19 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     await expectAsync(schematic.toPromise()).toBeRejected();
   });
 
-  it('works with capacitor', async () => {
+  it('works with Okta', async () => {
     const tree = new UnitTestTree(new HostTree);
 
     tree.create('/package.json', JSON.stringify(packageJson));
     tree.create('/src/app/app.module.ts', defaultAppModule);
 
-    const capacitorOptions: any = {...defaultOptions};
-    capacitorOptions.platform = 'capacitor';
+    const options: any = {...defaultOptions};
+    options.platform = 'capacitor';
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', capacitorOptions, tree).toPromise();
+    await runner.runSchematicAsync('add-auth', options, tree).toPromise();
 
-    expect(tree.files.length).toEqual(28);
+    expect(tree.files.length).toEqual(29);
     expect(tree.files.sort()).toEqual([
       '/package.json',
       '/src/app/app-routing.module.ts',
@@ -66,6 +66,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
       '/src/app/auth/auth-guard.service.ts',
       '/src/app/auth/auth-http.service.ts',
       '/src/app/auth/auth.module.ts',
+      '/src/app/auth/cap-http.service.ts',
       '/src/app/auth/end-session/end-session.module.ts',
       '/src/app/auth/end-session/end-session.page.ts',
       '/src/app/auth/factories/auth.factory.ts',
@@ -93,8 +94,30 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const env = tree.readContent('/src/environments/environment.ts');
     expect(env).toContain(`client_id: '${defaultOptions.clientId}'`);
     expect(env).toContain(`server_host: '${defaultOptions.issuer}'`);
+    expect(env).toContain(`audience: 'api://default'`);
 
     const pkgJson = tree.readContent('/package.json');
     expect(pkgJson).not.toContain('"cordova":');
+  });
+
+  it('works with Auth0', async () => {
+    const tree = new UnitTestTree(new HostTree);
+
+    tree.create('/package.json', JSON.stringify(packageJson));
+    tree.create('/src/app/app.module.ts', defaultAppModule);
+
+    const options: any = {...defaultOptions};
+    options.issuer = 'https://dev-06bzs1cu.us.auth0.com/';
+    options.auth0 = true;
+
+    const runner = new SchematicTestRunner('schematics', collectionPath);
+    await runner.runSchematicAsync('add-auth', options, tree).toPromise();
+
+    expect(tree.files.length).toEqual(29);
+
+    const env = tree.readContent('/src/environments/environment.ts');
+    expect(env).toContain(`client_id: '${defaultOptions.clientId}'`);
+    expect(env).toContain(`server_host: '${options.issuer.slice(0, -1)}'`);
+    expect(env).toContain(`audience: '${options.issuer}api/v2'`);
   });
 });

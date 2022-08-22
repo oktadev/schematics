@@ -171,15 +171,21 @@ export function addAuth(options: any): Rule {
     let projectPath = './';
 
     if (options.auth0) {
-      if (framework !== ANGULAR || framework !== IONIC_ANGULAR) {
+      if (framework !== ANGULAR && framework !== IONIC_ANGULAR) {
         throw new SchematicsException(`Auth0 support is only available for Angular and Ionic!`);
       } else {
-        // convert issuer to domain
+        // convert issuer to domain for Angular
         if (framework === ANGULAR && options.issuer.startsWith('https://')) {
           options.issuer = options.issuer.substring(8);
-        }
-        if (options.issuer.indexOf('/') > -1) {
-          options.issuer = options.issuer.substring(0, options.issuer.indexOf('/'));
+          // Check to see if an Okta issuer is used
+          if (options.issuer.indexOf('/') > -1) {
+            options.issuer = options.issuer.substring(0, options.issuer.indexOf('/'));
+          }
+        } else {
+          // remove trailing slash
+          if (options.issuer.indexOf('/') > -1) {
+            options.issuer = options.issuer.substring(0, options.issuer.lastIndexOf('/'));
+          }
         }
       }
     }
@@ -221,9 +227,9 @@ export function addAuth(options: any): Rule {
     }
 
     if (framework == IONIC_ANGULAR) {
-      // add a package name from the issuer
+      // add a package name from the issuer for Okta
       const parts = options.issuer.split('.');
-      if (options.issuer.indexOf('.') === -1) {
+      if (options.issuer.indexOf('.') === -1 || options.auth0) {
         // hard-code a package name for localhost
         options.packageName = 'dev.localhost.ionic';
       } else {
@@ -325,11 +331,14 @@ export function addAuth(options: any): Rule {
       }
     }
 
+    // Some frameworks share templates for Auth0 and Okta, so calculate the path accordingly
+    const auth0TemplatePath = (options.auth0 && framework === ANGULAR) ? 'auth0/' : '';
+
     // Setup templates to add to the project
     const sourceDir = (framework !== REACT_NATIVE && framework !== EXPRESS) ? 'src' : '';
     const sourcePath = join(normalize(projectPath), sourceDir);
     const templatesPath = join(sourcePath, '');
-    const templateSourcePath = `./${options.auth0 ? 'auth0/' : ''}${framework}/${sourceDir}`;
+    const templateSourcePath = `./${auth0TemplatePath}${framework}/${sourceDir}`;
     const templateSource = apply(url(templateSourcePath), [
       template({...options}),
       move(getSystemPath(templatesPath))
