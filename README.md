@@ -112,7 +112,7 @@ cd secure-react
 
 Then, integrate your React app with [Okta](#add-an-oidc-app-in-okta-for-react) or [Auth0](#add-an-oidc-app-in-auth0-for-react).
 
-### ### Add an OIDC App in Okta for React
+### Add an OIDC App in Okta for React
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
