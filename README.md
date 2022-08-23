@@ -11,12 +11,12 @@ This library currently supports:
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
-Use the links below to see how to create an app and integrate auth using OktaDev Schematics.
+Use the links below to see how to create an app and integrate authentication using OktaDev Schematics.
 
-* Angular { [Okta](#angular), [Auth0](#angular--auth0) }
-* React { [Okta](#react), [Auth0](#react--auth0) }
-* Vue { [Okta](#vue), [Auth0](#vue--auth0) }
-* Ionic { [Okta](#ionic), [Auth0](#create-an-application-in-auth0) }
+* [Angular](#angular) 
+* [React](#react)
+* [Vue](#vue)
+* [Ionic](#ionic)
 * [React Native](#react-native)
 * [Express](#express)
 
@@ -39,7 +39,9 @@ ng new secure-angular --routing
 cd secure-angular
 ```
 
-### Add an OIDC App in Okta
+Then, integrate your Angular app with [Okta](#add-an-oidc-app-in-okta-for-angular) or [Auth0](#add-an-oidc-app-in-auth0-for-angular).
+
+### Add an OIDC App in Okta for Angular
 
 1. Install the [Okta CLI](https://cli.okta.com).
 2. Run `okta register` to create an account, followed by `okta apps create`.
@@ -64,17 +66,7 @@ You can also use the Okta Admin Console:
 * Add `http://localhost:4200/callback` as a Login redirect URI and `http://localhost:4200` as a Logout redirect URI.
 * Specify `http://localhost:4200` as a Trusted Origin and click **Save**.
 
-## Angular + Auth0
-
-First, create an empty project with Angular CLI. You **must** add Angular routing for this schematic to work.
-
-```
-npm i -g @angular/cli
-ng new secure-angular --routing
-cd secure-angular
-```
-
-### Add an OIDC App in Auth0
+### Add an OIDC App in Auth0 for Angular
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
@@ -118,7 +110,9 @@ npx create-react-app secure-react --template typescript
 cd secure-react
 ```
 
-### Add an OIDC App in Okta
+Then, integrate your React app with [Okta](#add-an-oidc-app-in-okta-for-react) or [Auth0](#add-an-oidc-app-in-auth0-for-react).
+
+### ### Add an OIDC App in Okta for React
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
@@ -150,23 +144,7 @@ You can also use the Okta Admin Console:
 * Add `http://localhost:3000/callback` as a Login redirect URI and `http://localhost:3000` as a Logout redirect URI.
 * Add `http://localhost:3000` as a Trusted Origin and click **Save**.
 
-## React + Auth0
-
-Create a new project with Create React App.
-
-```
-npx create-react-app secure-react
-cd secure-react
-```
-
-If you'd like to use TypeScript, add the `--template typescript` flag.
-
-```
-npx create-react-app secure-react --template typescript
-cd secure-react
-```
-
-### Add an OIDC App in Auth0
+### Add an OIDC App in Auth0 for React
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
@@ -211,7 +189,9 @@ vue create secure-vue
 cd secure-vue
 ```
 
-### Add an OIDC App in Okta
+Then, integrate your Vue app with [Okta](#add-an-oidc-app-in-okta-for-vue) or [Auth0](#add-an-oidc-app-in-auth0-for-vue).
+
+### Add an OIDC App in Okta for Vue
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
@@ -243,17 +223,7 @@ You can also use the Okta Admin Console:
 * Add `http://localhost:8080/callback` as a Login redirect URI and `http://localhost:8080` as a Logout redirect URI.
 * Add `http://localhost:8080` as a Trusted Origin and click **Save**.
 
-## Vue + Auth0
-
-Create a new project with Vue CLI. You **must** add routing for this schematic to work. If you specify TypeScript, a `src/router/index.ts` will be created.
-
-```
-npm i -g @vue/cli
-vue create secure-vue
-cd secure-vue
-```
-
-### Add an OIDC App in Auth0
+### Add an OIDC App in Auth0 for Vue
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
@@ -298,11 +268,9 @@ ionic start secure-ionic tabs --type=angular --no-interactive
 cd secure-ionic
 ```
 
-You will need an `issuer` and a `client-id` to begin. You can obtain those from Okta by completing the following steps.
+Then, integrate your Ionic app with [Okta](#add-an-oidc-app-in-okta-for-ionic) or [Auth0](#add-an-oidc-app-in-auth0-for-ionic).
 
-> **NOTE:** OIDC Login for Ionic is possible thanks to the excellent [Ionic AppAuth](https://github.com/wi3land/ionic-appauth#readme) project and its examples. This integration is not Okta-specific and should work with any identity provider that supports PKCE for browser and mobile apps.
-
-### Create an Application in Okta
+### Add an OIDC App in Okta for Ionic
 
 1. Install the [Okta CLI](https://cli.okta.com).
 2. Run `okta register` to create an account, followed by `okta apps create`.
@@ -341,7 +309,7 @@ Give your app a memorable name, and configure it as follows:
   * `http://localhost:8100`
 * Click **Save**
 
-### Create an Application in Auth0
+### Add an OIDC App in Auth0 for Ionic
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
