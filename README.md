@@ -575,6 +575,7 @@ You'll need to run `npm run build` whenever you change anything in the schematic
 
 See the following blog posts to see OktaDev Schematics in action.
 
+* [Add OpenID Connect to Angular Apps Quickly](https://auth0.com/blog/add-oidc-to-angular-apps-quickly/)
 * [Use Angular Schematics to Simplify Your Life](https://developer.okta.com/blog/2019/02/13/angular-schematics)
 * [Use Schematics with Vue and Add Authentication in 5 Minutes](https://developer.okta.com/blog/2019/05/21/vue-schematics)
 * [Use Schematics with React and Add OpenID Connect Authentication in 5 Minutes](https://developer.okta.com/blog/2019/03/05/react-schematics)
@@ -590,11 +591,18 @@ This project uses the following open source libraries from Okta:
 * [Okta Vue SDK](https://github.com/okta/okta-vue)
 * [Okta React Native SDK](https://github.com/okta/okta-react-native)
 
+And these from Auth0:
+
+* [Auth0 Angular SDK](https://github.com/auth0/auth0-angular)
+* [Auth0 React SDK](https://github.com/auth0/auth0-react)
+* [Auth0 Vue SDK](https://github.com/auth0/auth0-vue)
+* [Auth0 React Native SDK](https://github.com/auth0/react-native-auth0)
+
 For Ionic, it uses [Ionic AppAuth](https://github.com/wi3land/ionic-appauth).
 
 ## Help
 
-Please post any questions as issues or ask them on the [Okta Developer Forums][devforum-url].
+Please post any questions as issues or ask them on the [Okta Developer Forums][devforum-url] or [Auth0 Community Forums][community-url].
 
 ## License
 
@@ -608,5 +616,6 @@ Apache 2.0, see [LICENSE](LICENSE).
 [daviddm-url]: https://david-dm.org/oktadev/schematics
 [devforum-image]: https://img.shields.io/badge/support-developer%20forum-blue.svg
 [devforum-url]: https://devforum.okta.com
+[community-url]: https://community.auth0.com/
 [snyk-url]: https://snyk.io/test/github/oktadev/schematics
 [snyk-image]: https://snyk.io/test/github/oktadev/schematics/badge.svg
