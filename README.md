@@ -2,7 +2,7 @@
 [![NPM version][npm-image]][npm-url] [![Build Status][github-actions-image]][github-actions-url] [![Dependency Status][daviddm-image]][daviddm-url] <object id="badge" data="https://snyk-widget.herokuapp.com/badge/npm/%40oktadev%2Fschematics/2.2.0/badge.svg" type="image/svg+xml"></object> [![Known Vulnerabilities][snyk-image]][snyk-url]
 > Fast and easy installation of Okta's OIDC SDKs
 
-This project is a Schematics implementation that allows you to easily integrate Okta into your Angular, React, Vue, Ionic, React Native, and Express projects.
+This project is a Schematics implementation that allows you to easily integrate Okta and Auth0 into your Angular, React, Vue, Ionic, React Native, and Express projects.
 
 This library currently supports:
 
@@ -13,7 +13,7 @@ This library currently supports:
 
 * Angular with [Okta](#angular) or [Auth0](#angular--auth0)
 * React with [Okta](#react) or [Auth0](#react--auth0)
-* [Vue](#vue)
+* Vue with [Okta](#vue) or [Auth0](#vue--auth0)
 * Ionic with [Okta](#ionic) or [Auth0](#ionic--auth0)
 * [React Native](#react-native)
 * [Express](#express)
@@ -34,7 +34,7 @@ ng new secure-angular --routing
 cd secure-angular
 ```
 
-### Add an OpenID Connect App in Okta
+### Add an OIDC App in Okta
 
 1. Install the [Okta CLI](https://cli.okta.com).
 2. Run `okta register` to create an account, followed by `okta apps create`.
@@ -69,7 +69,7 @@ ng new secure-angular --routing
 cd secure-angular
 ```
 
-### Add an OpenID Connect App in Auth0
+### Add an OIDC App in Auth0
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
@@ -113,7 +113,7 @@ npx create-react-app secure-react --template typescript
 cd secure-react
 ```
 
-### Add an OpenID Connect App in Okta
+### Add an OIDC App in Okta
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
@@ -161,7 +161,7 @@ npx create-react-app secure-react --template typescript
 cd secure-react
 ```
 
-### Add an OpenID Connect App in Auth0
+### Add an OIDC App in Auth0
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
@@ -206,7 +206,7 @@ vue create secure-vue
 cd secure-vue
 ```
 
-### Add an OpenID Connect App in Okta
+### Add an OIDC App in Okta
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
@@ -248,7 +248,7 @@ vue create secure-vue
 cd secure-vue
 ```
 
-### Add an OpenID Connect App in Auth0
+### Add an OIDC App in Auth0
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
@@ -512,7 +512,7 @@ cd express-app
 npx express-generator --view=pug
 ```
 
-### Add an OpenID Connect App in Okta
+### Add an OIDC App in Okta
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
