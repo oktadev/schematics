@@ -11,12 +11,17 @@ This library currently supports:
 
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
-* Angular with [Okta](#angular) or [Auth0](#angular--auth0)
-* React with [Okta](#react) or [Auth0](#react--auth0)
-* Vue with [Okta](#vue) or [Auth0](#vue--auth0)
-* Ionic with [Okta](#ionic) or [Auth0](#ionic--auth0)
+Use the links below to see how to create an app and integrate auth using OktaDev Schematics.
+
+* Angular { [Okta](#angular), [Auth0](#angular--auth0) }
+* React { [Okta](#react), [Auth0](#react--auth0) }
+* Vue { [Okta](#vue), [Auth0](#vue--auth0) }
+* Ionic { [Okta](#ionic), [Auth0](#ionic--auth0) }
 * [React Native](#react-native)
 * [Express](#express)
+
+To learn more about this project, see the following topics:
+
 * [Testing](#testing)
 * [Contributing](#contributing)
 * [Tutorials](#tutorials)
