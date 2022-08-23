@@ -271,7 +271,7 @@ export function addAuth(options: any): Rule {
       }
     }
 
-    if (!options.auth0 && (framework === REACT || framework === REACT_TS)) {
+    if (framework === REACT || framework === REACT_TS) {
       const jestConfig = {
         'moduleNameMapper': {
           '^@okta/okta-auth-js$': '<rootDir>/node_modules/@okta/okta-auth-js/dist/okta-auth-js.umd.js'
@@ -280,7 +280,9 @@ export function addAuth(options: any): Rule {
       const content: Buffer | null = host.read('./package.json');
       if (content) {
         const pkgJson: any = JSON.parse(content.toString());
-        pkgJson.jest = jestConfig;
+        if (!options.auth0) {
+          pkgJson.jest = jestConfig;
+        }
         // workaround for Create React App not supporting Jest's testEnvironment and setupFiles
         pkgJson.scripts.test = 'react-scripts test --env=jsdom --setupFiles=./src/jest.setup.js'
         host.overwrite('./package.json', JSON.stringify(pkgJson));
