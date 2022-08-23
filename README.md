@@ -85,7 +85,7 @@ ng add @oktadev/schematics --auth0
 
 Use the values that the Auth0 CLI provides for the issuer and client ID when prompted. 
 
-Run `npm start`, open `http://localhost:4200` in your browser, and sign in. 🤩
+Run `npm start`, open `http://localhost:4200` in your browser, and sign in. 🥳
 
 See the [Auth0 Angular SDK](https://github.com/auth0/auth0-angular) for more information.
 
@@ -184,7 +184,7 @@ schematics @oktadev/schematics:add-auth --auth0
 
 Use the values that the Auth0 CLI provides for the issuer and client ID when prompted.
 
-Run `npm start`, open `http://localhost:3000` in your browser, and sign in. 🤩
+Run `npm start`, open `http://localhost:3000` in your browser, and sign in. 🎉
 
 See the [Auth0 React SDK](https://github.com/auth0/auth0-react) for more information.
 
@@ -238,6 +238,51 @@ You can also use the Okta Admin Console:
 * Add `http://localhost:8080/callback` as a Login redirect URI and `http://localhost:8080` as a Logout redirect URI.
 * Add `http://localhost:8080` as a Trusted Origin and click **Save**.
 
+## Vue + Auth0
+
+Create a new project with Vue CLI. You **must** add routing for this schematic to work. If you specify TypeScript, a `src/router/index.ts` will be created.
+
+```
+npm i -g @vue/cli
+vue create secure-vue
+cd secure-vue
+```
+
+### Add an OpenID Connect App in Auth0
+
+1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
+2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
+3. Specify a name and description of your choosing.
+4. Select **Single Page Web Application** and use `http://localhost:8080` for the Callback URL.
+5. Use `http://localhost:8080` for the rest of the URLs.
+
+Install the Schematics CLI globally.
+
+```
+npm install -g @angular-devkit/schematics-cli
+```
+
+Then install and run the `add-auth` schematic in your `secure-react` project with the `--auth0` flag:
+
+```
+npm i -D @oktadev/schematics
+schematics @oktadev/schematics:add-auth --auth0
+```
+
+Use the values that the Auth0 CLI provides for the issuer and client ID when prompted.
+
+Run `npm start`, open `http://localhost:8080` in your browser, and sign in. 💥
+
+See the [Auth0 Vue SDK](https://github.com/auth0/auth0-vue) for more information.
+
+You can also use the Auth0 Console:
+
+* [Log in](https://auth0.com/auth/login) to Auth0 or [create an account](https://auth0.com/signup) if you don't have one. Go to **Applications** > **Create Application**.
+* Choose **Single Page Web Applications** as the application type and click **Create**.
+* Select the **Settings** tab.
+* Add `http://localhost:8080` as an Allowed Callback URL and `http://localhost:8080` as a Logout URL.
+* Specify `http://localhost:8080` as an Allowed Origin and click **Save Changes** at the bottom.
+
 ## Ionic
 
 Create a new Ionic + Angular project with Ionic CLI. You **must** use the `tabs` layout for everything to work currently. 
@@ -267,7 +312,7 @@ ng add @oktadev/schematics
 
 Use the values that the Okta CLI provides for the issuer and client ID when prompted.
 
-Start your app and authenticate with Okta. 🎉
+Start your app and authenticate with Okta. 🎊
 
 ```
 ionic serve
@@ -307,7 +352,7 @@ ng add @oktadev/schematics --auth0
 
 Use the values that the Auth0 CLI provides for the issuer and client ID when prompted.
 
-Start your app and authenticate with Auth0. 🤩
+Start your app and authenticate with Auth0. 🎊
 
 ```
 ionic serve
