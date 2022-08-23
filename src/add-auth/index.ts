@@ -83,9 +83,10 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     } else if (framework === VUE || framework === VUE_TS) {
       if (options.auth0) {
         dependencies.push({type: NodeDependencyType.Default, version: AUTH0_VUE_VERSION, name: '@auth0/auth0-vue'});
+      } else {
+        dependencies.push({type: NodeDependencyType.Default, version: OKTA_VUE_VERSION, name: '@okta/okta-vue'});
+        dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
       }
-      dependencies.push({type: NodeDependencyType.Default, version: OKTA_VUE_VERSION, name: '@okta/okta-vue'});
-      dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
       dependencies.push({type: NodeDependencyType.Dev, version: TS_JEST_VERSION, name: 'ts-jest'});
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_APPAUTH_VERSION, name: 'ionic-appauth'});
@@ -178,7 +179,7 @@ export function addAuth(options: any): Rule {
     let projectPath = './';
 
     if (options.auth0) {
-      if (![ANGULAR, IONIC_ANGULAR, REACT, REACT_TS, VUE].includes(framework)) {
+      if (![ANGULAR, IONIC_ANGULAR, REACT, REACT_TS, VUE, VUE_TS].includes(framework)) {
         throw new SchematicsException(`Auth0 support is only available for Angular, Ionic, React, and Vue!`);
       } else {
         // convert issuer to domain for Angular
@@ -341,7 +342,7 @@ export function addAuth(options: any): Rule {
     }
 
     // Some frameworks share templates for Auth0 and Okta, so calculate the path accordingly
-    const auth0TemplatePath = (options.auth0 && [ANGULAR,REACT,REACT_TS].includes(framework)) ? 'auth0/' : '';
+    const auth0TemplatePath = (options.auth0 && [ANGULAR,REACT,REACT_TS, VUE, VUE_TS].includes(framework)) ? 'auth0/' : '';
 
     // Setup templates to add to the project
     const sourceDir = (framework !== REACT_NATIVE && framework !== EXPRESS) ? 'src' : '';
