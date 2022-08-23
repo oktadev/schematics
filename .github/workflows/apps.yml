@@ -18,6 +18,8 @@ jobs:
           - angular-auth0
           - react
           - react-ts
+          - react-auth0
+          - react-ts-auth0
           - vue
           - vue-ts
           - ionic

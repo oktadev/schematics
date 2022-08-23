@@ -46,6 +46,7 @@ const EXPRESS_SESSION_VERSION = sdkVersions['express-session'];
 const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
 const DOTENV_VERSION = sdkVersions['dotenv'];
 const AUTH0_ANGULAR_VERSION = sdkVersions['@auth0/auth0-angular'];
+const AUTH0_REACT_VERSION = sdkVersions['@auth0/auth0-react'];
 // Vue CLI uses Jest 27 by default, that's why this is version 27.1.3
 const TS_JEST_VERSION = sdkVersions['ts-jest'];
 
@@ -61,8 +62,12 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
       }
     } else if (framework === REACT || framework === REACT_TS) {
-      dependencies.push({type: NodeDependencyType.Default, version: OKTA_REACT_VERSION, name: '@okta/okta-react'});
-      dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
+      if (options.auth0) {
+        dependencies.push({type: NodeDependencyType.Default, version: AUTH0_REACT_VERSION, name: '@auth0/auth0-react'});
+      } else {
+        dependencies.push({type: NodeDependencyType.Default, version: OKTA_REACT_VERSION, name: '@okta/okta-react'});
+        dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
+      }
       dependencies.push({type: NodeDependencyType.Default, version: REACT_ROUTER_DOM_VERSION, name: 'react-router-dom'});
       if (framework === REACT_TS) {
         dependencies.push({type: NodeDependencyType.Default, version: REACT_ROUTER_DOM_TYPES_VERSION, name: '@types/react-router-dom'});
@@ -171,11 +176,11 @@ export function addAuth(options: any): Rule {
     let projectPath = './';
 
     if (options.auth0) {
-      if (framework !== ANGULAR && framework !== IONIC_ANGULAR) {
-        throw new SchematicsException(`Auth0 support is only available for Angular and Ionic!`);
+      if (![ANGULAR, IONIC_ANGULAR, REACT, REACT_TS].includes(framework)) {
+        throw new SchematicsException(`Auth0 support is only available for Angular, Ionic, and React!`);
       } else {
         // convert issuer to domain for Angular
-        if (framework === ANGULAR && options.issuer.startsWith('https://')) {
+        if ([ANGULAR, REACT, REACT_TS].includes(framework) && options.issuer.startsWith('https://')) {
           options.issuer = options.issuer.substring(8);
           // Check to see if an Okta issuer is used
           if (options.issuer.indexOf('/') > -1) {
@@ -266,7 +271,7 @@ export function addAuth(options: any): Rule {
       }
     }
 
-    if (framework === REACT || framework === REACT_TS) {
+    if (!options.auth0 && (framework === REACT || framework === REACT_TS)) {
       const jestConfig = {
         'moduleNameMapper': {
           '^@okta/okta-auth-js$': '<rootDir>/node_modules/@okta/okta-auth-js/dist/okta-auth-js.umd.js'
@@ -332,7 +337,7 @@ export function addAuth(options: any): Rule {
     }
 
     // Some frameworks share templates for Auth0 and Okta, so calculate the path accordingly
-    const auth0TemplatePath = (options.auth0 && framework === ANGULAR) ? 'auth0/' : '';
+    const auth0TemplatePath = (options.auth0 && [ANGULAR,REACT,REACT_TS].includes(framework)) ? 'auth0/' : '';
 
     // Setup templates to add to the project
     const sourceDir = (framework !== REACT_NATIVE && framework !== EXPRESS) ? 'src' : '';
