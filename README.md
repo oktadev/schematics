@@ -16,7 +16,7 @@ Use the links below to see how to create an app and integrate auth using OktaDev
 * Angular { [Okta](#angular), [Auth0](#angular--auth0) }
 * React { [Okta](#react), [Auth0](#react--auth0) }
 * Vue { [Okta](#vue), [Auth0](#vue--auth0) }
-* Ionic { [Okta](#ionic), [Auth0](#ionic--auth0) }
+* Ionic { [Okta](#ionic), [Auth0](#create-an-application-in-auth0) }
 * [React Native](#react-native)
 * [Express](#express)
 
