@@ -2,29 +2,34 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
-    <template v-if="authState?.isAuthenticated"> |
+    <template v-if="isAuthenticated"> |
       <!-- router links that require authentication -->
     </template>
   </nav>
-  <button v-if="authState?.isAuthenticated" v-on:click="logout" id="logout">Logout</button>
+  <button v-if="isAuthenticated" v-on:click="logout" id="logout">Logout</button>
   <button v-else v-on:click="login" id="login">Login</button>
   <router-view/>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
+import { useAuth0 } from '@auth0/auth0-vue';
 
-export default defineComponent({
+export default {
   name: 'app',
-  methods: {
-    login () {
-      this.$auth.signInWithRedirect({ originalUri: '/' })
-    },
-    async logout () {
-      await this.$auth.signOut()
+  setup() {
+    const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+
+    return {
+      login: () => {
+        loginWithRedirect();
+      },
+      logout() {
+        logout({ returnTo: window.location.origin });
+      },
+      isAuthenticated
     }
   }
-});
+}
 </script>
 
 <style>

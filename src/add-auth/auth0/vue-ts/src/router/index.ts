@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { LoginCallback, navigationGuard } from '@okta/okta-vue';
+// import { authGuard } from '@auth0/auth0-vue';
 import HomeView from '../views/HomeView.vue';
 
 const routes = [
@@ -16,14 +16,13 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
-  { path: '/callback', component: LoginCallback }
+  // See https://github.com/auth0/auth0-vue#protect-a-route for how to add a navigation guard
+  // Hint: add `beforeEnter: authGuard` to a route to protect it
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
-
-router.beforeEach(navigationGuard);
 
 export default router;

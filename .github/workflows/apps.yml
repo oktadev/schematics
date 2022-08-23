@@ -22,6 +22,8 @@ jobs:
           - react-ts-auth0
           - vue
           - vue-ts
+          - vue-auth0
+          - vue-ts-auth0
           - ionic
           - ionic-auth0
           - react-native
