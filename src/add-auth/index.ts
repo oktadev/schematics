@@ -182,8 +182,8 @@ export function addAuth(options: any): Rule {
       if (![ANGULAR, IONIC_ANGULAR, REACT, REACT_TS, VUE, VUE_TS].includes(framework)) {
         throw new SchematicsException(`Auth0 support is only available for Angular, Ionic, React, and Vue!`);
       } else {
-        // convert issuer to domain for Angular
-        if ([ANGULAR, REACT, REACT_TS].includes(framework) && options.issuer.startsWith('https://')) {
+        // convert issuer to domain for Auth0 SDKs
+        if ([ANGULAR, REACT, REACT_TS, VUE, VUE_TS].includes(framework) && options.issuer.startsWith('https://')) {
           options.issuer = options.issuer.substring(8);
           // Check to see if an Okta issuer is used
           if (options.issuer.indexOf('/') > -1) {
