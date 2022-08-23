@@ -9,6 +9,7 @@
     "oidc",
     "oauth",
     "okta",
+    "auth0",
     "angular",
     "react",
     "vue",

@@ -6,6 +6,7 @@ set -e
 framework="$1"
 issuer="https://dev-17700857.okta.com/oauth2/default"
 clientId="0oa66eo2b0gvHGqwR5d7"
+auth0Issuer="https://dev-06bzs1cu.us.auth0.com/"
 
 # build and package this project
 rm -f *.tgz
@@ -30,12 +31,12 @@ then
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   ng test --watch=false
-elif [ $framework == "angular-0" ] || [ $framework == "a0" ]
+elif [ $framework == "angular-auth0" ] || [ $framework == "a0" ]
 then
   ng new angular-auth0 --routing --style css --strict
   cd angular-auth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
   ng test --watch=false
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then
@@ -50,6 +51,20 @@ then
   cd react-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
+  CI=true npm test
+elif [ $framework == "react-ts-auth0" ] || [ $framework == "rts0" ]
+then
+  npx create-react-app react-auth0-ts --template typescript
+  cd react-auth0-ts
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
+  CI=true npm test
+elif [ $framework == "react-auth0" ] || [ $framework == "r0" ]
+then
+  npx create-react-app react-auth0
+  cd react-auth0
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
   CI=true npm test
 elif [ $framework == "vue-ts" ] || [ $framework == "vts" ]
 then
@@ -116,7 +131,7 @@ then
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   npm run build && ng test --watch=false
-elif [ $framework == "ionic-0" ] || [ $framework == "i0" ]
+elif [ $framework == "ionic-auth0" ] || [ $framework == "i0" ]
 then
   ionic start ionic-auth0 tabs --type angular --no-interactive
   cd ionic-auth0

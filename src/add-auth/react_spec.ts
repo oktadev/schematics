@@ -18,7 +18,7 @@ describe('OktaDev Schematics: React', () => {
     await expectAsync(schematic.toPromise()).toBeRejected();
   });
 
-  it('works', async () => {
+  it('works with Okta', async () => {
     const tree = new UnitTestTree(new HostTree);
 
     // Add package.json
@@ -40,18 +40,27 @@ describe('OktaDev Schematics: React', () => {
     expect(componentContent).toContain(`<Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>`);
   });
 
-  it('Auth0 and React fails', async () => {
+  it('works with Auth0', async () => {
     const tree = new UnitTestTree(new HostTree);
 
     const auth0Options: any = {...defaultOptions};
     auth0Options.auth0 = true;
+    auth0Options.issuer = 'https://dev-06bzs1cu.us.auth0.com/';
 
     // Add package.json
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const schematic = runner.runSchematicAsync('add-auth', auth0Options, tree);
+    await runner.runSchematicAsync('add-auth', {...auth0Options}, tree).toPromise();
 
-    await expectAsync(schematic.toPromise()).toBeRejected();
+    expect(tree.files.length).toEqual(7);
+    expect(tree.files.sort()).toEqual(['/package.json', '/src/App.js', '/src/App.test.js',
+      '/src/Home.js', '/src/Routes.js', '/src/index.js', '/src/jest.setup.js']);
+
+    const componentContent = tree.readContent('/src/App.js');
+
+    expect(componentContent).toMatch(/Auth0Provider domain/);
+    expect(componentContent).toContain(`domain="${auth0Options.issuer.slice(8, -1)}"`);
+    expect(componentContent).toContain(`clientId="${auth0Options.clientId}"`);
   });
 });
