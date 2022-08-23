@@ -12,7 +12,7 @@ This library currently supports:
 **Prerequisites:** [Node.js](https://nodejs.org/). 
 
 * Angular with [Okta](#angular) or [Auth0](#angular--auth0)
-* [React](#react)
+* React with [Okta](#react) or [Auth0](#react--auth0)
 * [Vue](#vue)
 * Ionic with [Okta](#ionic) or [Auth0](#ionic--auth0)
 * [React Native](#react-native)
@@ -144,6 +144,57 @@ You can also use the Okta Admin Console:
 * Choose **Single-Page Application** as the application type and click **Next**.
 * Add `http://localhost:3000/callback` as a Login redirect URI and `http://localhost:3000` as a Logout redirect URI.
 * Add `http://localhost:3000` as a Trusted Origin and click **Save**.
+
+## React + Auth0
+
+Create a new project with Create React App.
+
+```
+npx create-react-app secure-react
+cd secure-react
+```
+
+If you'd like to use TypeScript, add the `--template typescript` flag.
+
+```
+npx create-react-app secure-react --template typescript
+cd secure-react
+```
+
+### Add an OpenID Connect App in Auth0
+
+1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
+2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
+3. Specify a name and description of your choosing.
+4. Select **Single Page Web Application** and use `http://localhost:3000` for the Callback URL.
+5. Use `http://localhost:3000` for the rest of the URLs.
+
+Install the Schematics CLI globally.
+
+```
+npm install -g @angular-devkit/schematics-cli
+```
+
+Then install and run the `add-auth` schematic in your `secure-react` project with the `--auth0` flag:
+
+```
+npm i -D @oktadev/schematics
+schematics @oktadev/schematics:add-auth --auth0
+```
+
+Use the values that the Auth0 CLI provides for the issuer and client ID when prompted.
+
+Run `npm start`, open `http://localhost:3000` in your browser, and sign in. 🤩
+
+See the [Auth0 React SDK](https://github.com/auth0/auth0-react) for more information.
+
+You can also use the Auth0 Console:
+
+* [Log in](https://auth0.com/auth/login) to Auth0 or [create an account](https://auth0.com/signup) if you don't have one. Go to **Applications** > **Create Application**.
+* Choose **Single Page Web Applications** as the application type and click **Create**.
+* Select the **Settings** tab.
+* Add `http://localhost:3000` as an Allowed Callback URL and `http://localhost:3000` as a Logout URL.
+* Specify `http://localhost:3000` as an Allowed Origin and click **Save Changes** at the bottom.
 
 ## Vue
 
