@@ -47,6 +47,7 @@ const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
 const DOTENV_VERSION = sdkVersions['dotenv'];
 const AUTH0_ANGULAR_VERSION = sdkVersions['@auth0/auth0-angular'];
 const AUTH0_REACT_VERSION = sdkVersions['@auth0/auth0-react'];
+const AUTH0_VUE_VERSION = sdkVersions['@auth0/auth0-vue'];
 // Vue CLI uses Jest 27 by default, that's why this is version 27.1.3
 const TS_JEST_VERSION = sdkVersions['ts-jest'];
 
@@ -80,6 +81,9 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_ASYNC_VERSION, name: 'enzyme-async-helpers'});
       dependencies.push({type: NodeDependencyType.Dev, version: REACT_DOM_VERSION, name: 'react-dom'});
     } else if (framework === VUE || framework === VUE_TS) {
+      if (options.auth0) {
+        dependencies.push({type: NodeDependencyType.Default, version: AUTH0_VUE_VERSION, name: '@auth0/auth0-vue'});
+      }
       dependencies.push({type: NodeDependencyType.Default, version: OKTA_VUE_VERSION, name: '@okta/okta-vue'});
       dependencies.push({type: NodeDependencyType.Default, version: OKTA_AUTH_JS_VERSION, name: '@okta/okta-auth-js'});
       dependencies.push({type: NodeDependencyType.Dev, version: TS_JEST_VERSION, name: 'ts-jest'});
@@ -174,8 +178,8 @@ export function addAuth(options: any): Rule {
     let projectPath = './';
 
     if (options.auth0) {
-      if (![ANGULAR, IONIC_ANGULAR, REACT, REACT_TS].includes(framework)) {
-        throw new SchematicsException(`Auth0 support is only available for Angular, Ionic, and React!`);
+      if (![ANGULAR, IONIC_ANGULAR, REACT, REACT_TS, VUE].includes(framework)) {
+        throw new SchematicsException(`Auth0 support is only available for Angular, Ionic, React, and Vue!`);
       } else {
         // convert issuer to domain for Angular
         if ([ANGULAR, REACT, REACT_TS].includes(framework) && options.issuer.startsWith('https://')) {

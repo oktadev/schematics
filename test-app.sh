@@ -124,6 +124,64 @@ EOF
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   npm run test:unit
+elif [ $framework == "vue-ts-auth0" ] || [ $framework == "vts0" ]
+then
+  config=$(cat <<EOF
+{
+  "useConfigFiles": true,
+  "plugins": {
+    "@vue/cli-plugin-babel": {},
+    "@vue/cli-plugin-typescript": {
+      "classComponent": false,
+      "useTsWithBabel": true
+    },
+    "@vue/cli-plugin-router": {
+      "historyMode": true
+    },
+    "@vue/cli-plugin-eslint": {
+      "config": "base",
+      "lintOn": [
+        "save"
+      ]
+    },
+    "@vue/cli-plugin-unit-jest": {}
+  },
+  "vueVersion": "3"
+}
+EOF
+)
+  vue create vue-auth0-ts -i "$config" --registry=http://registry.npm.taobao.org
+  cd vue-auth0-ts
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
+  npm run test:unit
+elif [ $framework == "vue-auth0" ] || [ $framework == "v0" ]
+then
+  config=$(cat <<EOF
+{
+  "useConfigFiles": true,
+  "plugins": {
+    "@vue/cli-plugin-babel": {},
+    "@vue/cli-plugin-router": {
+      "historyMode": true
+    },
+    "@vue/cli-plugin-eslint": {
+      "config": "base",
+      "lintOn": [
+        "save"
+      ]
+    },
+    "@vue/cli-plugin-unit-jest": {}
+  },
+  "vueVersion": "3"
+}
+EOF
+)
+  vue create vue-auth0 -i "$config" --registry=http://registry.npm.taobao.org
+  cd vue-auth0
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
+  npm run test:unit
 elif [ $framework == "ionic" ] || [ $framework == "i" ]
 then
   ionic start ionic-app tabs --type angular --no-interactive
