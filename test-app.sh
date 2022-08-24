@@ -153,7 +153,7 @@ EOF
   vue create vue-auth0-ts -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-auth0-ts
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
   npm run test:unit
 elif [ $framework == "vue-auth0" ] || [ $framework == "v0" ]
 then
@@ -180,7 +180,7 @@ EOF
   vue create vue-auth0 -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-auth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
   npm run test:unit
 elif [ $framework == "ionic" ] || [ $framework == "i" ]
 then
@@ -194,7 +194,7 @@ then
   ionic start ionic-auth0 tabs --type angular --no-interactive
   cd ionic-auth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
   npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
@@ -209,7 +209,7 @@ then
   npx -y react-native init SecureAuth0
   cd SecureAuth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
   # pod install --project-directory=ios --repo-update
   npm test -- -u
 elif [ $framework == "express" ] || [ $framework == "e" ]
@@ -226,7 +226,7 @@ then
   npx express-generator --view=pug
   npm i
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId \
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId \
     --client-secret='may the auth be with you' --auth0
   # npm test -- -u
 else
