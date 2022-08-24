@@ -20,6 +20,7 @@ import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-mod
 import { dependencies as sdkVersions } from '../sdk-versions.json';
 import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
 import { addModuleImportToModule } from '@angular/cdk/schematics';
+import ncu from 'npm-check-updates';
 
 const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
 const OKTA_ANGULAR_VERSION = sdkVersions['@okta/okta-angular'];
@@ -190,21 +191,17 @@ export function addAuth(options: any): Rule {
     let projectPath = './';
 
     if (options.auth0) {
-      if ([EXPRESS].includes(framework)) {
-        throw new SchematicsException(`Auth0 support is not available for Express!`);
+      // convert issuer to domain for some Auth0 SDKs
+      if ([ANGULAR, REACT, REACT_TS, VUE, VUE_TS, REACT_NATIVE].includes(framework) && options.issuer.startsWith('https://')) {
+        options.issuer = options.issuer.substring(8);
+        // Check to see if an Okta issuer is used
+        if (options.issuer.indexOf('/') > -1) {
+          options.issuer = options.issuer.substring(0, options.issuer.indexOf('/'));
+        }
       } else {
-        // convert issuer to domain for Auth0 SDKs
-        if ([ANGULAR, REACT, REACT_TS, VUE, VUE_TS, REACT_NATIVE].includes(framework) && options.issuer.startsWith('https://')) {
-          options.issuer = options.issuer.substring(8);
-          // Check to see if an Okta issuer is used
-          if (options.issuer.indexOf('/') > -1) {
-            options.issuer = options.issuer.substring(0, options.issuer.indexOf('/'));
-          }
-        } else {
-          // remove trailing slash
-          if (options.issuer.indexOf('/') > -1) {
-            options.issuer = options.issuer.substring(0, options.issuer.lastIndexOf('/'));
-          }
+        // remove trailing slash
+        if (options.issuer.indexOf('/') > -1) {
+          options.issuer = options.issuer.substring(0, options.issuer.lastIndexOf('/'));
         }
       }
     }
@@ -384,6 +381,18 @@ export function addAuth(options: any): Rule {
       }
     }
 
+    if (framework === EXPRESS) {
+      // Upgrade ancient dependencies used by express-generator
+      const contents: Buffer | null = host.read('./package.json');
+      if (contents) {
+        const packageJson = JSON.parse(contents.toString());
+        packageJson.dependencies = await ncu({
+          packageData: packageJson,
+          upgrade: true
+        });
+        host.overwrite('./package.json', JSON.stringify(packageJson));
+      }
+    }
     // Ionic shares templates for Auth0 and Okta, so calculate the path accordingly
     const appTemplatePath = (framework === IONIC_ANGULAR) ? '' : (options.auth0) ? 'auth0/' : 'okta/';
 

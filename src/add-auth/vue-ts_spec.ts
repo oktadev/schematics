@@ -43,15 +43,15 @@ describe('OktaDev Schematics: Vue + TypeScript', () => {
   it('works with Auth0', async () => {
     const tree = new UnitTestTree(new HostTree);
 
-    const auth0Options: any = {...defaultOptions};
-    auth0Options.auth0 = true;
-    auth0Options.issuer = 'https://dev-06bzs1cu.us.auth0.com/';
+    const testOptions: any = {...defaultOptions};
+    testOptions.auth0 = true;
+    testOptions.issuer = 'https://dev-06bzs1cu.us.auth0.com/';
 
     // Add package.json
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', {...auth0Options}, tree).toPromise();
+    await runner.runSchematicAsync('add-auth', {...testOptions}, tree).toPromise();
 
     expect(tree.files.length).toEqual(4);
     expect(tree.files.sort()).toEqual(['/package.json', '/src/App.vue', '/src/main.ts', '/src/router/index.ts']);
@@ -61,8 +61,8 @@ describe('OktaDev Schematics: Vue + TypeScript', () => {
 
     const mainContent = tree.readContent('/src/main.ts');
     expect(mainContent).toContain(`import { createAuth0 } from '@auth0/auth0-vue';`);
-    expect(mainContent).toContain(`domain: '${auth0Options.issuer.slice(8, -1)}'`);
-    expect(mainContent).toContain(`client_id: '${auth0Options.clientId}'`);
+    expect(mainContent).toContain(`domain: '${testOptions.issuer.slice(8, -1)}'`);
+    expect(mainContent).toContain(`client_id: '${testOptions.clientId}'`);
     expect(mainContent).toContain(`.use(createAuth0(config))`);
   });
 });
