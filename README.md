@@ -316,6 +316,7 @@ Give your app a memorable name, and configure it as follows:
 3. Specify a name and description of your choosing.
 4. Select **Native** and use `dev.localhost.ionic:/callback,http://localhost:8100/callback` for the Callback URLs.
 5. Use `dev.localhost.ionic:/logout,http://localhost:8100/logout` for the Logout URLs.
+6. Run `auth0 apps open` and add `http://localhost:8100` to **Allowed Origins (CORS)**. Scroll down and **Save Changes**.
 
 In your `secure-ionic` project, add `@oktadev/schematics` with the `--auth0` flag:
 

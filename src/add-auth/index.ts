@@ -36,13 +36,11 @@ const REACT_DOM_VERSION = sdkVersions['react-dom'];
 const OKTA_VUE_VERSION = sdkVersions['@okta/okta-vue'];
 const IONIC_APPAUTH_VERSION = sdkVersions['ionic-appauth'];
 const IONIC_SECURE_STORAGE_VERSION = sdkVersions['@ionic-native/secure-storage'];
+const IONIC_CAPACITOR_BROWSER_VERSION = sdkVersions['@capacitor/browser'];
 const IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION = sdkVersions['@capacitor-community/http'];
+const IONIC_CAPACITOR_PREFERENCES_VERSION = sdkVersions['@capacitor/preferences'];
 const IONIC_CAPACITOR_SPLASH_SCREEN_VERSION = sdkVersions['@capacitor/splash-screen'];
-const IONIC_CORDOVA_SECURE_STORAGE_VERSION = sdkVersions['cordova-plugin-secure-storage-echo'];
-const IONIC_CORDOVA_ADVANCED_HTTP_VERSION = sdkVersions['cordova-plugin-advanced-http'];
-const IONIC_CORDOVA_FILE_VERSION = sdkVersions['cordova-plugin-file'];
 const IONIC_NATIVE_HTTP_VERSION = sdkVersions['@ionic-native/http'];
-const IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION = sdkVersions['cordova-plugin-safariviewcontroller'];
 const EXPRESS_SESSION_VERSION = sdkVersions['express-session'];
 const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
 const DOTENV_VERSION = sdkVersions['dotenv'];
@@ -98,13 +96,11 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_APPAUTH_VERSION, name: 'ionic-appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_SECURE_STORAGE_VERSION, name: '@ionic-native/secure-storage'});
-      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_SPLASH_SCREEN_VERSION, name: '@capacitor/splash-screen'});
-      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_SECURE_STORAGE_VERSION, name: 'cordova-plugin-secure-storage-echo'});
-      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_ADVANCED_HTTP_VERSION, name: 'cordova-plugin-advanced-http'});
-      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_FILE_VERSION, name: 'cordova-plugin-file'});
-      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CORDOVA_SAFARIVIEWCONTROLLER_VERSION, name: 'cordova-plugin-safariviewcontroller'});
-      dependencies.push({type: NodeDependencyType.Default, version: IONIC_NATIVE_HTTP_VERSION, name: '@ionic-native/http'});
+      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_BROWSER_VERSION, name: '@capacitor/browser'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION, name: '@capacitor-community/http'});
+      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_SPLASH_SCREEN_VERSION, name: '@capacitor/splash-screen'});
+      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_PREFERENCES_VERSION, name: '@capacitor/preferences'});
+      dependencies.push({type: NodeDependencyType.Default, version: IONIC_NATIVE_HTTP_VERSION, name: '@ionic-native/http'});
     } else if (framework === EXPRESS) {
       if (options.auth0) {
         dependencies.push({type: NodeDependencyType.Default, version: AUTH0_EXPRESS_VERSION, name: 'express-openid-connect'});
