@@ -39,9 +39,9 @@ ng new secure-angular --routing
 cd secure-angular
 ```
 
-Then, integrate your Angular app with [Okta](#add-an-oidc-app-in-okta-for-angular) or [Auth0](#add-an-oidc-app-in-auth0-for-angular).
+Then, integrate your Angular app with [Okta](#okta-for-angular) or [Auth0](#auth0-for-angular).
 
-### Add an OIDC App in Okta for Angular
+### Okta for Angular
 
 1. Install the [Okta CLI](https://cli.okta.com).
 2. Run `okta register` to create an account, followed by `okta apps create`.
@@ -66,7 +66,7 @@ You can also use the Okta Admin Console:
 * Add `http://localhost:4200/callback` as a Login redirect URI and `http://localhost:4200` as a Logout redirect URI.
 * Specify `http://localhost:4200` as a Trusted Origin and click **Save**.
 
-### Add an OIDC App in Auth0 for Angular
+### Auth0 for Angular
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
@@ -110,9 +110,9 @@ npx create-react-app secure-react --template typescript
 cd secure-react
 ```
 
-Then, integrate your React app with [Okta](#add-an-oidc-app-in-okta-for-react) or [Auth0](#add-an-oidc-app-in-auth0-for-react).
+Then, integrate your React app with [Okta](#okta-for-react) or [Auth0](#auth0-for-react).
 
-### Add an OIDC App in Okta for React
+### Okta for React
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
@@ -144,7 +144,7 @@ You can also use the Okta Admin Console:
 * Add `http://localhost:3000/callback` as a Login redirect URI and `http://localhost:3000` as a Logout redirect URI.
 * Add `http://localhost:3000` as a Trusted Origin and click **Save**.
 
-### Add an OIDC App in Auth0 for React
+### Auth0 for React
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
@@ -189,9 +189,9 @@ vue create secure-vue
 cd secure-vue
 ```
 
-Then, integrate your Vue app with [Okta](#add-an-oidc-app-in-okta-for-vue) or [Auth0](#add-an-oidc-app-in-auth0-for-vue).
+Then, integrate your Vue app with [Okta](#okta-for-vue) or [Auth0](#auth0-for-vue).
 
-### Add an OIDC App in Okta for Vue
+### Okta for Vue
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
@@ -223,7 +223,7 @@ You can also use the Okta Admin Console:
 * Add `http://localhost:8080/callback` as a Login redirect URI and `http://localhost:8080` as a Logout redirect URI.
 * Add `http://localhost:8080` as a Trusted Origin and click **Save**.
 
-### Add an OIDC App in Auth0 for Vue
+### Auth0 for Vue
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
@@ -268,9 +268,9 @@ ionic start secure-ionic tabs --type=angular --no-interactive
 cd secure-ionic
 ```
 
-Then, integrate your Ionic app with [Okta](#add-an-oidc-app-in-okta-for-ionic) or [Auth0](#add-an-oidc-app-in-auth0-for-ionic).
+Then, integrate your Ionic app with [Okta](#okta-for-ionic) or [Auth0](#auth0-for-ionic).
 
-### Add an OIDC App in Okta for Ionic
+### Okta for Ionic
 
 1. Install the [Okta CLI](https://cli.okta.com).
 2. Run `okta register` to create an account, followed by `okta apps create`.
@@ -309,7 +309,7 @@ Give your app a memorable name, and configure it as follows:
   * `http://localhost:8100`
 * Click **Save**
 
-### Add an OIDC App in Auth0 for Ionic
+### Auth0 for Ionic
 
 1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
 2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
@@ -422,9 +422,9 @@ Create a new React Native project with the React Native CLI.
 npx react-native init SecureApp
 ```
 
-You will need an `issuer` and a `client-id` to begin. You can obtain those from Okta by completing the following steps.
+Then, integrate your React Native app with [Okta](#okta-for-react-native) or [Auth0](#auth0-for-react-native).
 
-### Create an Application in Okta
+### Okta for React Native
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
@@ -437,7 +437,7 @@ Install the Schematics CLI globally.
 npm install -g @angular-devkit/schematics-cli
 ```
 
-Install and run the `add-auth` schematic in your `SecureApp` project. 
+Install and run the `add-auth` schematic in your `SecureApp` project.
 
 ```
 cd SecureApp
@@ -451,9 +451,49 @@ You can also use the Okta Admin Console:
 * Choose **Native** as the application type and click **Next**.
 * Add `com.okta.dev-133337:/callback` as a Login redirect URI and `com.okta.dev-133337:/callback` as a Logout redirect URI (where `dev-133337.okta.com` is your Okta domain).
 
+### Auth0 for React Native
+
+1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
+2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
+3. Specify a name and description of your choosing.
+4. Select **Native** and use the following for your Callback and Logout URLs:
+
+       org.reactjs.native.example.secureapp://<your-auth0-domain>/ios/org.reactjs.native.example.SecureApp/callback,com.secureapp://<your-auth0-domain>/android/com.secureapp/callback
+
+Install the Schematics CLI globally.
+
+```
+npm install -g @angular-devkit/schematics-cli
+```
+
+Install and run the `add-auth` schematic in your `SecureApp` project with the `--auth0` flag. 
+
+```
+cd SecureApp
+npm i -D @oktadev/schematics
+schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
+```
+
+Use the values that the Auth0 CLI provides for the issuer and client ID when prompted.
+
+Start your app and authenticate with Auth0. 🎊
+
+```
+npm start
+```
+
+You can also use the Auth0 Console:
+
+* [Log in](https://auth0.com/auth/login) to Auth0 or [create an account](https://auth0.com/signup) if you don't have one. Go to **Applications** > **Create Application**.
+* Choose **Native** as the application type and click **Create**.
+* Select the **Settings** tab.
+* Add the following for Allowed Callback and Logout URLs:
+
+       org.reactjs.native.example.secureapp://<your-auth0-domain>/ios/org.reactjs.native.example.SecureApp/callback,com.secureapp://<your-auth0-domain>/android/com.secureapp/callback
+
 ### iOS
 
-Run `pod install --project-directory=ios --repo-update` to install the [Okta OIDC iOS SDK](https://github.com/okta/okta-oidc-ios).
+Run `pod install --project-directory=ios --repo-update`.
 
 Start your app and authenticate with Okta. 🎉
 
@@ -463,9 +503,7 @@ npm run ios
 
 ### Android
 
-One change is made to Android build files to integrate the [Okta OIDC Android SDK](https://github.com/okta/okta-oidc-android). 
-
-* In `android/app/build.gradle`, an `appAuthRedirectScheme` is added in `android` > `defaultConfig`.
+One change is made to Android build files. In `android/app/build.gradle`, a `manifestPlaceholders` is added in `android` > `defaultConfig`.
 
 Since this modification is done for you, you can simply start your app and authenticate with Okta. 🎊
 
@@ -473,7 +511,7 @@ Since this modification is done for you, you can simply start your app and authe
 npm run android
 ```
 
-For more information, see the [Okta React Native SDK documentation](https://github.com/okta/okta-react-native#readme).
+For more information, see the [Okta React Native SDK](https://github.com/okta/okta-react-native#readme) and the [Auth0 React Native SDK](https://github.com/auth0/react-native-auth0#readme).
 
 ## Express
 
@@ -485,7 +523,7 @@ cd express-app
 npx express-generator --view=pug
 ```
 
-### Add an OIDC App in Okta
+### Okta
 
 1. Install the [Okta CLI](https://cli.okta.com)
 2. Run `okta register` to create an account, followed by `okta apps create`
