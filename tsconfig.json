@@ -31,12 +31,8 @@
     "src/**/*"
   ],
   "exclude": [
-    "src/add-auth/angular/**/*",
     "src/add-auth/auth0/**/*",
     "src/add-auth/ionic/**/*",
-    "src/add-auth/react/**/*",
-    "src/add-auth/react-ts/**/*",
-    "src/add-auth/vue/**/*",
-    "src/add-auth/vue-ts/**/*",
+    "src/add-auth/okta/**/*",
   ]
 }

@@ -47,6 +47,7 @@ const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
 const DOTENV_VERSION = sdkVersions['dotenv'];
 const AUTH0_ANGULAR_VERSION = sdkVersions['@auth0/auth0-angular'];
 const AUTH0_REACT_VERSION = sdkVersions['@auth0/auth0-react'];
+const AUTH0_REACT_NATIVE_VERSION = sdkVersions['react-native-auth0'];
 const AUTH0_VUE_VERSION = sdkVersions['@auth0/auth0-vue'];
 // Vue CLI uses Jest 27 by default, that's why this is version 27.1.3
 const TS_JEST_VERSION = sdkVersions['ts-jest'];
@@ -74,7 +75,11 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: REACT_ROUTER_DOM_TYPES_VERSION, name: '@types/react-router-dom'});
       }
     } else if (framework === REACT_NATIVE) {
-      dependencies.push({type: NodeDependencyType.Default, version: OKTA_REACT_NATIVE_VERSION, name: '@okta/okta-react-native'});
+      if (options.auth0) {
+        dependencies.push({type: NodeDependencyType.Default, version: AUTH0_REACT_NATIVE_VERSION, name: 'react-native-auth0'});
+      } else {
+        dependencies.push({type: NodeDependencyType.Default, version: OKTA_REACT_NATIVE_VERSION, name: '@okta/okta-react-native'});
+      }
       dependencies.push({type: NodeDependencyType.Default, version: EVENTS_VERSION, name: 'events'});
       dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_VERSION, name: 'enzyme'});
       dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_ADAPTER_VERSION, name: 'enzyme-adapter-react-16'});
@@ -179,11 +184,11 @@ export function addAuth(options: any): Rule {
     let projectPath = './';
 
     if (options.auth0) {
-      if (![ANGULAR, IONIC_ANGULAR, REACT, REACT_TS, VUE, VUE_TS].includes(framework)) {
-        throw new SchematicsException(`Auth0 support is only available for Angular, Ionic, React, and Vue!`);
+      if ([EXPRESS].includes(framework)) {
+        throw new SchematicsException(`Auth0 support is not available for Express!`);
       } else {
         // convert issuer to domain for Auth0 SDKs
-        if ([ANGULAR, REACT, REACT_TS, VUE, VUE_TS].includes(framework) && options.issuer.startsWith('https://')) {
+        if ([ANGULAR, REACT, REACT_TS, VUE, VUE_TS, REACT_NATIVE].includes(framework) && options.issuer.startsWith('https://')) {
           options.issuer = options.issuer.substring(8);
           // Check to see if an Okta issuer is used
           if (options.issuer.indexOf('/') > -1) {
@@ -293,10 +298,12 @@ export function addAuth(options: any): Rule {
     }
 
     if (framework === REACT_NATIVE) {
-      // add a package name from the issuer
-      const parts = options.issuer.split('.');
-      options.packageName = parts[2].substring(0, parts[2].indexOf('/')) + '.'
-        + parts[1] + '.' + parts[0].substring(parts[0].lastIndexOf('/') + 1);
+      if (!options.auth0) {
+        // add a package name from the issuer
+        const parts = options.issuer.split('.');
+        options.packageName = parts[2].substring(0, parts[2].indexOf('/')) + '.'
+          + parts[1] + '.' + parts[0].substring(parts[0].lastIndexOf('/') + 1);
+      }
       const content: Buffer | null = host.read('./package.json');
       if (content) {
         const pkgJson: any = JSON.parse(content.toString());
@@ -329,9 +336,39 @@ export function addAuth(options: any): Rule {
         // Configure Gradle for App
         const appBuild: Buffer | null = host.read('./android/app/build.gradle');
         if (appBuild) {
+          let manifestPlaceholders;
+          if (options.auth0) {
+            manifestPlaceholders = `auth0Domain: "${options.issuer}", auth0Scheme: "\${applicationId}"`
+          } else {
+            manifestPlaceholders = `appAuthRedirectScheme: "${options.packageName}"`
+          }
           const redirectScheme = appBuild.toString('utf-8')
-            .replace('versionName "1.0"', 'versionName "1.0"\n        manifestPlaceholders = [ appAuthRedirectScheme: "' + options.packageName + '" ]');
+            .replace('versionName "1.0"', `versionName "1.0"\n        manifestPlaceholders = [ ${manifestPlaceholders} ]`);
           host.overwrite('android/app/build.gradle', redirectScheme);
+        }
+
+        // Configure iOS for Auth0
+        if (options.auth0) {
+          // Configure Gradle for App
+          const infoPlist: Buffer | null = host.read('./ios/SecureApp/Info.plist');
+          if (infoPlist) {
+            const iosURLs = infoPlist.toString('utf-8')
+              .replace('<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>', `<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+\t<key>CFBundleURLTypes</key>
+\t<array>
+\t\t<dict>
+\t\t\t<key>CFBundleTypeRole</key>
+\t\t\t<string>None</string>
+\t\t\t<key>CFBundleURLName</key>
+\t\t\t<string>auth0</string>
+\t\t\t<key>CFBundleURLSchemes</key>
+\t\t\t<array>
+\t\t\t\t<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+\t\t\t</array>
+\t\t</dict>
+\t</array>`);
+            host.overwrite('ios/SecureApp/Info.plist', iosURLs);
+          }
         }
 
         // Force npm 6 peer dependencies, otherwise
@@ -341,14 +378,14 @@ export function addAuth(options: any): Rule {
       }
     }
 
-    // Some frameworks share templates for Auth0 and Okta, so calculate the path accordingly
-    const auth0TemplatePath = (options.auth0 && [ANGULAR,REACT,REACT_TS, VUE, VUE_TS].includes(framework)) ? 'auth0/' : '';
+    // Ionic shares templates for Auth0 and Okta, so calculate the path accordingly
+    const appTemplatePath = (framework === IONIC_ANGULAR) ? '' : (options.auth0) ? 'auth0/' : 'okta/';
 
     // Setup templates to add to the project
     const sourceDir = (framework !== REACT_NATIVE && framework !== EXPRESS) ? 'src' : '';
     const sourcePath = join(normalize(projectPath), sourceDir);
     const templatesPath = join(sourcePath, '');
-    const templateSourcePath = `./${auth0TemplatePath}${framework}/${sourceDir}`;
+    const templateSourcePath = `./${appTemplatePath}${framework}/${sourceDir}`;
     const templateSource = apply(url(templateSourcePath), [
       template({...options}),
       move(getSystemPath(templatesPath))

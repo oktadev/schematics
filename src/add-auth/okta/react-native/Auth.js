@@ -1,7 +1,22 @@
 import React, { Component, Fragment } from 'react';
 
-import { SafeAreaView, ScrollView, Button, StyleSheet, Text, View } from 'react-native';
-import { createConfig, signInWithBrowser, signOut, isAuthenticated, getUser, getUserFromIdToken, EventEmitter } from '@okta/okta-react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import {
+  createConfig,
+  signIn,
+  signOut,
+  isAuthenticated,
+  getUser,
+  getUserFromIdToken,
+  EventEmitter,
+} from '@okta/okta-react-native';
 import configFile from './auth.config';
 
 export default class Auth extends Component {
@@ -17,11 +32,11 @@ export default class Auth extends Component {
   async componentDidMount() {
     let that = this;
     EventEmitter.addListener('signInSuccess', function (e: Event) {
-      that.setState({authenticated: true});
+      that.setState({ authenticated: true });
       that.setContext('Logged in!');
     });
     EventEmitter.addListener('signOutSuccess', function (e: Event) {
-      that.setState({authenticated: false});
+      that.setState({ authenticated: false });
       that.setContext('Logged out!');
     });
     EventEmitter.addListener('onError', function (e: Event) {
@@ -37,9 +52,10 @@ export default class Auth extends Component {
       endSessionRedirectUri: configFile.oidc.endSessionRedirectUri,
       discoveryUri: configFile.oidc.discoveryUri,
       scopes: configFile.oidc.scopes,
-      requireHardwareBackedKeyStore: configFile.oidc.requireHardwareBackedKeyStore,
+      requireHardwareBackedKeyStore:
+        configFile.oidc.requireHardwareBackedKeyStore,
     });
-    await this.checkAuthentication();
+    this.checkAuthentication();
   }
 
   componentWillUnmount() {
@@ -56,12 +72,12 @@ export default class Auth extends Component {
   async checkAuthentication() {
     const result = await isAuthenticated();
     if (result.authenticated !== this.state.authenticated) {
-      this.setState({authenticated: result.authenticated});
+      this.setState({ authenticated: result.authenticated });
     }
   }
 
   async login() {
-    await signInWithBrowser();
+    await signIn();
   }
 
   async logout() {
@@ -119,14 +135,18 @@ export default class Auth extends Component {
                 <Button
                   style={styles.button}
                   testID="logoutButton"
-                  onPress={async () => { await this.logout() }}
+                  onPress={async () => {
+                    await this.logout();
+                  }}
                   title="Logout"
                 />
               ) : (
                 <Button
                   style={styles.button}
                   testID="loginButton"
-                  onPress={async () => { await this.login() }}
+                  onPress={async () => {
+                    await this.login();
+                  }}
                   title="Login"
                 />
               )}
@@ -135,7 +155,7 @@ export default class Auth extends Component {
           {this.renderButtons()}
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
-            style={styles.context}>
+            style={styles.infoBox}>
             <Text>{this.state.context}</Text>
           </ScrollView>
         </SafeAreaView>
@@ -158,5 +178,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-  }
+  },
+  infoBox: {
+    backgroundColor: 'lightskyblue',
+    borderRadius: 5,
+  },
 });

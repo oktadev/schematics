@@ -29,6 +29,7 @@
     "express-session": "1.17.3",
     "ionic-appauth": "0.8.5",
     "react-dom": "18.2.0",
+    "react-native-auth0": "2.13.3",
     "react-router-dom": "6.3.0",
     "ts-jest": "27.1.3"
   }
