@@ -1,17 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
+const createError = require('http-errors');
+const express = require('express');
 const session = require('express-session');
 const { ExpressOIDC } = require('@okta/oidc-middleware');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
 require('dotenv').config()
 
-var app = express();
+const app = express();
 const oidc = new ExpressOIDC({
   issuer: process.env.OIDC_ISSUER,
   client_id: process.env.OIDC_CLIENT_ID,
