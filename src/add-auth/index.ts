@@ -378,14 +378,14 @@ export function addAuth(options: any): Rule {
       }
     }
 
-    // Some frameworks share templates for Auth0 and Okta, so calculate the path accordingly
-    const auth0TemplatePath = (options.auth0 && [ANGULAR,REACT,REACT_TS,VUE,VUE_TS,REACT_NATIVE].includes(framework)) ? 'auth0/' : '';
+    // Ionic shares templates for Auth0 and Okta, so calculate the path accordingly
+    const appTemplatePath = (framework === IONIC_ANGULAR) ? '' : (options.auth0) ? 'auth0/' : 'okta/';
 
     // Setup templates to add to the project
     const sourceDir = (framework !== REACT_NATIVE && framework !== EXPRESS) ? 'src' : '';
     const sourcePath = join(normalize(projectPath), sourceDir);
     const templatesPath = join(sourcePath, '');
-    const templateSourcePath = `./${auth0TemplatePath}${framework}/${sourceDir}`;
+    const templateSourcePath = `./${appTemplatePath}${framework}/${sourceDir}`;
     const templateSource = apply(url(templateSourcePath), [
       template({...options}),
       move(getSystemPath(templatesPath))
