@@ -474,14 +474,6 @@ npm i -D @oktadev/schematics
 schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
 ```
 
-Use the values that the Auth0 CLI provides for the issuer and client ID when prompted.
-
-Start your app and authenticate with Auth0. 🎊
-
-```
-npm start
-```
-
 You can also use the Auth0 Console:
 
 * [Log in](https://auth0.com/auth/login) to Auth0 or [create an account](https://auth0.com/signup) if you don't have one. Go to **Applications** > **Create Application**.
