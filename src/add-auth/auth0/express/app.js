@@ -13,6 +13,7 @@ require('dotenv').config()
 const app = express();
 const config = {
   authRequired: false,
+  auth0Logout: true,
   baseURL: process.env.BASE_URL,
   clientID: process.env.OIDC_CLIENT_ID,
   issuerBaseURL: process.env.OIDC_ISSUER,

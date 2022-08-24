@@ -3,5 +3,5 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}, #{user.name}!
-  form(method='POST' action='/logout')
+  form(method='GET' action='/logout')
     button(type='submit') Logout
