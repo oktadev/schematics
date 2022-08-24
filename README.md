@@ -1,6 +1,6 @@
 # OktaDev Schematics
 [![NPM version][npm-image]][npm-url] [![Build Status][github-actions-image]][github-actions-url] [![Dependency Status][daviddm-image]][daviddm-url] <object id="badge" data="https://snyk-widget.herokuapp.com/badge/npm/%40oktadev%2Fschematics/2.2.0/badge.svg" type="image/svg+xml"></object> [![Known Vulnerabilities][snyk-image]][snyk-url]
-> Fast and easy installation of Okta's OIDC SDKs
+> Fast and easy installation of Okta and Auth0's OIDC SDKs
 
 This project is a Schematics implementation that allows you to easily integrate Okta and Auth0 into your Angular, React, Vue, Ionic, React Native, and Express projects.
 
@@ -514,8 +514,9 @@ mkdir express-app
 cd express-app
 npx express-generator --view=pug
 ```
+Then, integrate your Express app with [Okta](#okta-for-express) or [Auth0](#auth0-for-express).
 
-### Okta
+### Okta for Express
 
 1. Install the [Okta CLI](https://cli.okta.com).
 2. Run `okta register` to create an account, followed by `okta apps create`.
@@ -538,7 +539,7 @@ schematics @oktadev/schematics:add-auth --issuer=$issuer \
   --client-id=$clientId --client-secret=$clientSecret
 ```
 
-🚨 This process will create an `.env` file will be generated with your Okta credentials. Make sure to add `*.env` to `.gitignore` and don't check it into source control!
+🚨 This process will create an `.env` file will be generated with your credentials. Make sure to add `*.env` to `.gitignore` and don't check it into source control!
 
 Start your app and authenticate with Okta at `http://localhost:3000`. 🎊
 
@@ -556,15 +557,57 @@ You can also create your app using the Okta Admin Console:
 * Add a Logout redirect URI of `http://localhost:3000`.
 * Click **Save**.
 
+### Auth0 for Express
+
+1. Install the [Auth0 CLI](https://github.com/auth0/auth0-cli).
+2. Run `auth0 login` to register your account, followed by `auth0 apps create`.
+3. Specify a name and description of your choosing.
+4. Select **Regular Web Application** and use `http://localhost:3000/callback` for the Callback URL.
+5. Use `http://localhost:3000` for the Logout URL.
+
+Install the Schematics CLI globally.
+
+```
+npm install -g @angular-devkit/schematics-cli
+```
+
+Then install and run the `add-auth` schematic in your `express-app` project with the `--auth0` flag.
+
+Use the values that the Auth0 CLI provides for the issuer and client ID. You may have use `auth0 apps open` to get the client secret for your app.
+
+```
+npm i -D @oktadev/schematics
+schematics @oktadev/schematics:add-auth --issuer=$issuer \
+  --client-id=$clientId --client-secret=$clientSecret --auth0
+```
+
+🚨 This process will create an `.env` file will be generated with your credentials. Make sure to add `*.env` to `.gitignore` and don't check it into source control!
+
+Start your app and authenticate with Auth0 at `http://localhost:3000`. 🎊
+
+```
+npm start
+```
+
+See the [Auth0 Express OpenID Connect SDK](https://github.com/auth0/express-openid-connect#readme) for more information.
+
+You can also use the Auth0 Console:
+
+* [Log in](https://auth0.com/auth/login) to Auth0 or [create an account](https://auth0.com/signup) if you don't have one. Go to **Applications** > **Create Application**.
+* Choose **Regular Web Application** as the application type and click **Create**.
+* Select the **Settings** tab.
+* Add `http://localhost:3000/callback` as an Allowed Callback URL and `http://localhost:3000` as a Logout URL.
+* Click **Save Changes** at the bottom.
+
 ## Testing
 
 This project supports unit tests and integration tests.
 
 `npm test` will run the unit tests, using Jasmine as a runner and test framework.
 
-`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic-cordova`, `react-native`, and `express`.
+`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic`, `react-native`, and `express`. You can also add `-auth0` to any of these options.
 
-`./test-all.sh` will test all the options: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Capacitor, React Native, and Express.
+`./test-all.sh` will test all the options for both Okta and Auth0: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Capacitor, React Native, and Express.
 
 ## Publishing
 
@@ -620,6 +663,7 @@ This project uses the following open source libraries from Okta:
 * [Okta React SDK](https://github.com/okta/okta-react)
 * [Okta Vue SDK](https://github.com/okta/okta-vue)
 * [Okta React Native SDK](https://github.com/okta/okta-react-native)
+* [Okta OIDC Middleware](https://github.com/okta/okta-oidc-middleware)
 
 And these from Auth0:
 
@@ -627,6 +671,7 @@ And these from Auth0:
 * [Auth0 React SDK](https://github.com/auth0/auth0-react)
 * [Auth0 Vue SDK](https://github.com/auth0/auth0-vue)
 * [Auth0 React Native SDK](https://github.com/auth0/react-native-auth0)
+* [Auth0 Express OpenID Connect](https://github.com/auth0/express-openid-connect)
 
 For Ionic, it uses [Ionic AppAuth](https://github.com/wi3land/ionic-appauth).
 
