@@ -29,6 +29,7 @@ jobs:
           - react-native
           - react-native-auth0
           - express
+          - express-auth0
     env:
       APP: ${{ matrix.framework }}
 

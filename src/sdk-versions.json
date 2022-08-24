@@ -28,6 +28,7 @@
     "events": "3.3.0",
     "express-session": "1.17.3",
     "ionic-appauth": "0.8.5",
+    "express-openid-connect": "2.8.0",
     "react-dom": "18.2.0",
     "react-native-auth0": "2.13.3",
     "react-router-dom": "6.3.0",

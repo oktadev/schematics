@@ -20,6 +20,7 @@ import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-mod
 import { dependencies as sdkVersions } from '../sdk-versions.json';
 import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
 import { addModuleImportToModule } from '@angular/cdk/schematics';
+import ncu from 'npm-check-updates';
 
 const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
 const OKTA_ANGULAR_VERSION = sdkVersions['@okta/okta-angular'];
@@ -49,6 +50,7 @@ const AUTH0_ANGULAR_VERSION = sdkVersions['@auth0/auth0-angular'];
 const AUTH0_REACT_VERSION = sdkVersions['@auth0/auth0-react'];
 const AUTH0_REACT_NATIVE_VERSION = sdkVersions['react-native-auth0'];
 const AUTH0_VUE_VERSION = sdkVersions['@auth0/auth0-vue'];
+const AUTH0_EXPRESS_VERSION = sdkVersions['express-openid-connect'];
 // Vue CLI uses Jest 27 by default, that's why this is version 27.1.3
 const TS_JEST_VERSION = sdkVersions['ts-jest'];
 
@@ -104,8 +106,13 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_NATIVE_HTTP_VERSION, name: '@ionic-native/http'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION, name: '@capacitor-community/http'});
     } else if (framework === EXPRESS) {
-      dependencies.push({type: NodeDependencyType.Default, version: EXPRESS_SESSION_VERSION, name: 'express-session'});
-      dependencies.push({type: NodeDependencyType.Default, version: OKTA_OIDC_MIDDLEWARE_VERSION, name: '@okta/oidc-middleware'});
+      if (options.auth0) {
+        dependencies.push({type: NodeDependencyType.Default, version: AUTH0_EXPRESS_VERSION, name: 'express-openid-connect'});
+      } else {
+        dependencies.push({type: NodeDependencyType.Default, version: EXPRESS_SESSION_VERSION, name: 'express-session'});
+        dependencies.push({type: NodeDependencyType.Default, version: OKTA_OIDC_MIDDLEWARE_VERSION, name: '@okta/oidc-middleware'});
+      }
+
       dependencies.push({type: NodeDependencyType.Default, version: DOTENV_VERSION, name: 'dotenv'});
     }
 
@@ -184,21 +191,17 @@ export function addAuth(options: any): Rule {
     let projectPath = './';
 
     if (options.auth0) {
-      if ([EXPRESS].includes(framework)) {
-        throw new SchematicsException(`Auth0 support is not available for Express!`);
+      // convert issuer to domain for some Auth0 SDKs
+      if ([ANGULAR, REACT, REACT_TS, VUE, VUE_TS, REACT_NATIVE].includes(framework) && options.issuer.startsWith('https://')) {
+        options.issuer = options.issuer.substring(8);
+        // Check to see if an Okta issuer is used
+        if (options.issuer.indexOf('/') > -1) {
+          options.issuer = options.issuer.substring(0, options.issuer.indexOf('/'));
+        }
       } else {
-        // convert issuer to domain for Auth0 SDKs
-        if ([ANGULAR, REACT, REACT_TS, VUE, VUE_TS, REACT_NATIVE].includes(framework) && options.issuer.startsWith('https://')) {
-          options.issuer = options.issuer.substring(8);
-          // Check to see if an Okta issuer is used
-          if (options.issuer.indexOf('/') > -1) {
-            options.issuer = options.issuer.substring(0, options.issuer.indexOf('/'));
-          }
-        } else {
-          // remove trailing slash
-          if (options.issuer.indexOf('/') > -1) {
-            options.issuer = options.issuer.substring(0, options.issuer.lastIndexOf('/'));
-          }
+        // remove trailing slash
+        if (options.issuer.indexOf('/') > -1) {
+          options.issuer = options.issuer.substring(0, options.issuer.lastIndexOf('/'));
         }
       }
     }
@@ -378,6 +381,18 @@ export function addAuth(options: any): Rule {
       }
     }
 
+    if (framework === EXPRESS) {
+      // Upgrade ancient dependencies used by express-generator
+      const contents: Buffer | null = host.read('./package.json');
+      if (contents) {
+        const packageJson = JSON.parse(contents.toString());
+        packageJson.dependencies = await ncu({
+          packageData: packageJson,
+          upgrade: true
+        });
+        host.overwrite('./package.json', JSON.stringify(packageJson));
+      }
+    }
     // Ionic shares templates for Auth0 and Okta, so calculate the path accordingly
     const appTemplatePath = (framework === IONIC_ANGULAR) ? '' : (options.auth0) ? 'auth0/' : 'okta/';
 

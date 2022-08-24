@@ -48,15 +48,15 @@ describe('OktaDev Schematics: React Native', () => {
   it('works with Auth0', async () => {
     let tree = new UnitTestTree(new HostTree);
 
-    const auth0Options: any = {...defaultOptions};
-    auth0Options.auth0 = true;
-    auth0Options.issuer = 'https://dev-06bzs1cu.us.auth0.com/';
+    const testOptions: any = {...defaultOptions};
+    testOptions.auth0 = true;
+    testOptions.issuer = 'https://dev-06bzs1cu.us.auth0.com/';
 
     // Add package.json
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    tree = await runner.runSchematicAsync('add-auth', {...auth0Options}, tree).toPromise();
+    tree = await runner.runSchematicAsync('add-auth', {...testOptions}, tree).toPromise();
 
     expect(tree.files.length).toEqual(7);
     expect(tree.files.sort()).toEqual(['/.npmrc', '/App.js', '/Auth.js', '/auth.config.js',
@@ -66,7 +66,7 @@ describe('OktaDev Schematics: React Native', () => {
     expect(authComponent).toMatch(/const auth0 = new Auth0\(authConfig\)/);
 
     const config = tree.readContent('/auth.config.js');
-    expect(config).toContain(`domain: '${auth0Options.issuer.slice(8, -1)}`);
-    expect(config).toContain(`clientId: '${auth0Options.clientId}'`);
+    expect(config).toContain(`domain: '${testOptions.issuer.slice(8, -1)}`);
+    expect(config).toContain(`clientId: '${testOptions.clientId}'`);
   });
 });

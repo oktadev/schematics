@@ -83,10 +83,10 @@ describe('OktaDev Schematics: Angular', () => {
   });
 
   it('should use Auth0 when --auth0 passed in', (done) => {
-    const auth0Options: any = {...defaultOptions};
-    auth0Options.auth0 = true;
+    const testOptions: any = {...defaultOptions};
+    testOptions.auth0 = true;
 
-    schematicRunner.runSchematicAsync('add-auth', auth0Options, appTree).toPromise().then(tree => {
+    schematicRunner.runSchematicAsync('add-auth', testOptions, appTree).toPromise().then(tree => {
       const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
       let domain: string = defaultOptions.issuer.substring(8);
       domain = domain.substring(0, domain.indexOf('/'));
@@ -98,10 +98,10 @@ describe('OktaDev Schematics: Angular', () => {
   });
 
   it('Auth0 should convert issuer to domain', (done) => {
-    const auth0Options: any = {...defaultOptions};
-    auth0Options.auth0 = true;
+    const testOptions: any = {...defaultOptions};
+    testOptions.auth0 = true;
 
-    schematicRunner.runSchematicAsync('add-auth', auth0Options, appTree).toPromise().then(tree => {
+    schematicRunner.runSchematicAsync('add-auth', testOptions, appTree).toPromise().then(tree => {
       const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
       let domain: string = defaultOptions.issuer.substring(8);
       domain = domain.substring(0, domain.indexOf('/'));
@@ -111,11 +111,11 @@ describe('OktaDev Schematics: Angular', () => {
   });
 
   it('Auth0 issuer as domain still works', (done) => {
-    const auth0Options: any = {...defaultOptions};
-    auth0Options.issuer = 'jhipster.us.auth0.com';
-    auth0Options.auth0 = true;
+    const testOptions: any = {...defaultOptions};
+    testOptions.issuer = 'jhipster.us.auth0.com';
+    testOptions.auth0 = true;
 
-    schematicRunner.runSchematicAsync('add-auth', auth0Options, appTree).toPromise().then(tree => {
+    schematicRunner.runSchematicAsync('add-auth', testOptions, appTree).toPromise().then(tree => {
       const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
       expect(appModule).toContain(`domain: 'jhipster.us.auth0.com'`);
       done();
