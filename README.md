@@ -520,7 +520,7 @@ npx express-generator --view=pug
 1. Install the [Okta CLI](https://cli.okta.com).
 2. Run `okta register` to create an account, followed by `okta apps create`.
 3. Choose **Web** > **Other** and use `http://localhost:3000/callback` for the Redirect URI.
-4. Accept the default Post Logout Redirect URI (`http://localhost:3000`).
+4. Accept the default Post Logout Redirect URI (`http://localhost:3000/`).
 
 Install the Schematics CLI globally.
 

@@ -220,6 +220,15 @@ then
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --client-secret='may the auth be with you'
   # npm test -- -u
+elif [ $framework == "express-auth0" ] || [ $framework == "e0" ]
+then
+  mkdir express-auth0 && cd express-auth0
+  npx express-generator --view=pug
+  npm i
+  npm install -D ../../oktadev*.tgz
+  schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId \
+    --client-secret='may the auth be with you' --auth0
+  # npm test -- -u
 else
   echo "No '${framework}' framework found!"
 fi

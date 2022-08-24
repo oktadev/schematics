@@ -49,6 +49,7 @@ const AUTH0_ANGULAR_VERSION = sdkVersions['@auth0/auth0-angular'];
 const AUTH0_REACT_VERSION = sdkVersions['@auth0/auth0-react'];
 const AUTH0_REACT_NATIVE_VERSION = sdkVersions['react-native-auth0'];
 const AUTH0_VUE_VERSION = sdkVersions['@auth0/auth0-vue'];
+const AUTH0_EXPRESS_VERSION = sdkVersions['express-openid-connect'];
 // Vue CLI uses Jest 27 by default, that's why this is version 27.1.3
 const TS_JEST_VERSION = sdkVersions['ts-jest'];
 
@@ -104,8 +105,13 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_NATIVE_HTTP_VERSION, name: '@ionic-native/http'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION, name: '@capacitor-community/http'});
     } else if (framework === EXPRESS) {
-      dependencies.push({type: NodeDependencyType.Default, version: EXPRESS_SESSION_VERSION, name: 'express-session'});
-      dependencies.push({type: NodeDependencyType.Default, version: OKTA_OIDC_MIDDLEWARE_VERSION, name: '@okta/oidc-middleware'});
+      if (options.auth0) {
+        dependencies.push({type: NodeDependencyType.Default, version: AUTH0_EXPRESS_VERSION, name: 'express-openid-connect'});
+      } else {
+        dependencies.push({type: NodeDependencyType.Default, version: EXPRESS_SESSION_VERSION, name: 'express-session'});
+        dependencies.push({type: NodeDependencyType.Default, version: OKTA_OIDC_MIDDLEWARE_VERSION, name: '@okta/oidc-middleware'});
+      }
+
       dependencies.push({type: NodeDependencyType.Default, version: DOTENV_VERSION, name: 'dotenv'});
     }
 
