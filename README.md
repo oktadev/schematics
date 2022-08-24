@@ -1,5 +1,5 @@
 # OktaDev Schematics
-[![NPM version][npm-image]][npm-url] [![Build Status][github-actions-image]][github-actions-url] [![Dependency Status][daviddm-image]][daviddm-url] <object id="badge" data="https://snyk-widget.herokuapp.com/badge/npm/%40oktadev%2Fschematics/2.2.0/badge.svg" type="image/svg+xml"></object> [![Known Vulnerabilities][snyk-image]][snyk-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][github-actions-image]][github-actions-url] <!--[![Dependency Status][daviddm-image]][daviddm-url]--> <object id="badge" data="https://snyk-widget.herokuapp.com/badge/npm/%40oktadev%2Fschematics/2.2.0/badge.svg" type="image/svg+xml"></object> [![Known Vulnerabilities][snyk-image]][snyk-url]
 > Fast and easy installation of Okta and Auth0's OIDC SDKs
 
 This project is a Schematics implementation that allows you to easily integrate Okta and Auth0 into your Angular, React, Vue, Ionic, React Native, and Express projects.
