@@ -206,8 +206,8 @@ then
   npm test -- -u
 elif [ $framework == "react-native-auth0" ] || [ $framework == "rn0" ]
 then
-  npx -y react-native init SecureApp-Auth0
-  cd SecureApp-Auth0
+  npx -y react-native init SecureAuth0
+  cd SecureAuth0
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId --auth0
   # pod install --project-directory=ios --repo-update
