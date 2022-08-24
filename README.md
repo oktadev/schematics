@@ -114,9 +114,9 @@ Then, integrate your React app with [Okta](#okta-for-react) or [Auth0](#auth0-fo
 
 ### Okta for React
 
-1. Install the [Okta CLI](https://cli.okta.com)
-2. Run `okta register` to create an account, followed by `okta apps create`
-3. Choose **Single Page App** and use `http://localhost:3000/callback` for the Redirect URI
+1. Install the [Okta CLI](https://cli.okta.com).
+2. Run `okta register` to create an account, followed by `okta apps create`.
+3. Choose **Single Page App** and use `http://localhost:3000/callback` for the Redirect URI.
 
 Install the Schematics CLI globally.
 
@@ -193,9 +193,9 @@ Then, integrate your Vue app with [Okta](#okta-for-vue) or [Auth0](#auth0-for-vu
 
 ### Okta for Vue
 
-1. Install the [Okta CLI](https://cli.okta.com)
-2. Run `okta register` to create an account, followed by `okta apps create`
-3. Choose **Single Page App** and use `http://localhost:8080/callback` for the Redirect URI
+1. Install the [Okta CLI](https://cli.okta.com).
+2. Run `okta register` to create an account, followed by `okta apps create`.
+3. Choose **Single Page App** and use `http://localhost:8080/callback` for the Redirect URI.
 
 Install the Schematics CLI globally.
 
@@ -426,10 +426,10 @@ Then, integrate your React Native app with [Okta](#okta-for-react-native) or [Au
 
 ### Okta for React Native
 
-1. Install the [Okta CLI](https://cli.okta.com)
-2. Run `okta register` to create an account, followed by `okta apps create`
-3. Choose **Native** and accept the default Redirect URI of `com.okta.dev-133337:/callback` (where `dev-133337.okta.com` is your Okta domain)
-4. Use `com.okta.dev-133337:/logout` for the Post Logout Redirect URI
+1. Install the [Okta CLI](https://cli.okta.com).
+2. Run `okta register` to create an account, followed by `okta apps create`.
+3. Choose **Native** and accept the default Redirect URI of `com.okta.dev-133337:/callback` (where `dev-133337.okta.com` is your Okta domain).
+4. Use `com.okta.dev-133337:/logout` for the Post Logout Redirect URI.
 
 Install the Schematics CLI globally.
 
@@ -517,10 +517,10 @@ npx express-generator --view=pug
 
 ### Okta
 
-1. Install the [Okta CLI](https://cli.okta.com)
-2. Run `okta register` to create an account, followed by `okta apps create`
-3. Choose **Web** > **Other** and use `http://localhost:3000/callback` for the Redirect URI
-4. Accept the default Post Logout Redirect URI (`http://localhost:3000`)
+1. Install the [Okta CLI](https://cli.okta.com).
+2. Run `okta register` to create an account, followed by `okta apps create`.
+3. Choose **Web** > **Other** and use `http://localhost:3000/callback` for the Redirect URI.
+4. Accept the default Post Logout Redirect URI (`http://localhost:3000`).
 
 Install the Schematics CLI globally.
 
