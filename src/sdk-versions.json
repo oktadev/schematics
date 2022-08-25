@@ -19,6 +19,7 @@
     "@okta/okta-react-native": "2.6.0",
     "@okta/okta-vue": "5.3.0",
     "@types/react-router-dom": "5.3.3",
+    "capacitor-secure-storage-plugin": "0.8.0",
     "dotenv": "16.0.1",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",

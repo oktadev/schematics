@@ -98,6 +98,9 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
 
     const pkgJson = tree.readContent('/package.json');
     expect(pkgJson).not.toContain('"cordova":');
+    expect(pkgJson).toContain('@capacitor/browser');
+    expect(pkgJson).toContain('@capacitor/preferences');
+    expect(pkgJson).toContain('capacitor-secure-storage-plugin');
   });
 
   it('works with Auth0', async () => {
@@ -130,8 +133,9 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', defaultOptions, tree).toPromise();
 
-    const env = tree.readContent('/package.json');
-    expect(env).toContain('@capacitor/browser');
-    expect(env).toContain('@capacitor/preferences');
+    const pkgJson = tree.readContent('/package.json');
+    expect(pkgJson).toContain('@capacitor/browser');
+    expect(pkgJson).toContain('@capacitor/preferences');
+    expect(pkgJson).toContain('capacitor-secure-storage-plugin');
   });
 });

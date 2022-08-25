@@ -39,6 +39,7 @@ const IONIC_SECURE_STORAGE_VERSION = sdkVersions['@ionic-native/secure-storage']
 const IONIC_CAPACITOR_BROWSER_VERSION = sdkVersions['@capacitor/browser'];
 const IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION = sdkVersions['@capacitor-community/http'];
 const IONIC_CAPACITOR_PREFERENCES_VERSION = sdkVersions['@capacitor/preferences'];
+const IONIC_CAPACITOR_SECURE_STORAGE_VERSION = sdkVersions['capacitor-secure-storage-plugin'];
 const IONIC_CAPACITOR_SPLASH_SCREEN_VERSION = sdkVersions['@capacitor/splash-screen'];
 const IONIC_NATIVE_HTTP_VERSION = sdkVersions['@ionic-native/http'];
 const EXPRESS_SESSION_VERSION = sdkVersions['express-session'];
@@ -98,8 +99,9 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_SECURE_STORAGE_VERSION, name: '@ionic-native/secure-storage'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_BROWSER_VERSION, name: '@capacitor/browser'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION, name: '@capacitor-community/http'});
-      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_SPLASH_SCREEN_VERSION, name: '@capacitor/splash-screen'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_PREFERENCES_VERSION, name: '@capacitor/preferences'});
+      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_SPLASH_SCREEN_VERSION, name: '@capacitor/splash-screen'});
+      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_SECURE_STORAGE_VERSION, name: 'capacitor-secure-storage-plugin'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_NATIVE_HTTP_VERSION, name: '@ionic-native/http'});
     } else if (framework === EXPRESS) {
       if (options.auth0) {
@@ -304,8 +306,10 @@ export function addAuth(options: any): Rule {
           + parts[1] + '.' + parts[0].substring(parts[0].lastIndexOf('/') + 1);
       }
       const content: Buffer | null = host.read('./package.json');
+      let appName;
       if (content) {
         const pkgJson: any = JSON.parse(content.toString());
+        appName = pkgJson.name;
         // add jest config for tests
         pkgJson.jest = {
           'preset': 'react-native',
@@ -324,35 +328,36 @@ export function addAuth(options: any): Rule {
           // Error: Option "tests" is not defined.
         };
         host.overwrite('./package.json', JSON.stringify(pkgJson));
+      }
 
-        // Upgrade iOS to v11
-        const podfile: Buffer | null = host.read('./ios/Podfile');
-        if (podfile) {
-          const ios12 = podfile.toString('utf-8').replace('platform :ios, \'10.0\'', 'platform :ios, \'12.4\'');
-          host.overwrite('ios/Podfile', ios12);
-        }
+      // Upgrade iOS to v11
+      const podfile: Buffer | null = host.read('./ios/Podfile');
+      if (podfile) {
+        const ios12 = podfile.toString('utf-8').replace('platform :ios, \'10.0\'', 'platform :ios, \'12.4\'');
+        host.overwrite('ios/Podfile', ios12);
+      }
 
-        // Configure Gradle for App
-        const appBuild: Buffer | null = host.read('./android/app/build.gradle');
-        if (appBuild) {
-          let manifestPlaceholders;
-          if (options.auth0) {
-            manifestPlaceholders = `auth0Domain: "${options.issuer}", auth0Scheme: "\${applicationId}"`
-          } else {
-            manifestPlaceholders = `appAuthRedirectScheme: "${options.packageName}"`
-          }
-          const redirectScheme = appBuild.toString('utf-8')
-            .replace('versionName "1.0"', `versionName "1.0"\n        manifestPlaceholders = [ ${manifestPlaceholders} ]`);
-          host.overwrite('android/app/build.gradle', redirectScheme);
-        }
-
-        // Configure iOS for Auth0
+      // Configure Gradle for App
+      const appBuild: Buffer | null = host.read('./android/app/build.gradle');
+      if (appBuild) {
+        let manifestPlaceholders;
         if (options.auth0) {
-          // Configure Gradle for App
-          const infoPlist: Buffer | null = host.read('./ios/SecureApp/Info.plist');
-          if (infoPlist) {
-            const iosURLs = infoPlist.toString('utf-8')
-              .replace('<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>', `<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+          manifestPlaceholders = `auth0Domain: "${options.issuer}", auth0Scheme: "\${applicationId}"`
+        } else {
+          manifestPlaceholders = `appAuthRedirectScheme: "${options.packageName}"`
+        }
+        const redirectScheme = appBuild.toString('utf-8')
+          .replace('versionName "1.0"', `versionName "1.0"\n        manifestPlaceholders = [ ${manifestPlaceholders} ]`);
+        host.overwrite('android/app/build.gradle', redirectScheme);
+      }
+
+      // Configure iOS for Auth0
+      if (options.auth0 && appName) {
+        // Configure Gradle for App
+        const infoPlist: Buffer | null = host.read(`./ios/${appName}/Info.plist`);
+        if (infoPlist) {
+          const iosURLs = infoPlist.toString('utf-8')
+            .replace('<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>', `<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 \t<key>CFBundleURLTypes</key>
 \t<array>
 \t\t<dict>
@@ -366,15 +371,14 @@ export function addAuth(options: any): Rule {
 \t\t\t</array>
 \t\t</dict>
 \t</array>`);
-            host.overwrite('ios/SecureApp/Info.plist', iosURLs);
-          }
+          host.overwrite(`ios/${appName}/Info.plist`, iosURLs);
         }
-
-        // Force npm 6 peer dependencies, otherwise
-        // Could not resolve dependency:
-        // peer react@"^16.0.0-0" from enzyme-adapter-react-16@1.1
-        host.create('.npmrc', 'legacy-peer-deps=true');
       }
+
+      // Force npm 6 peer dependencies, otherwise
+      // Could not resolve dependency:
+      // peer react@"^16.0.0-0" from enzyme-adapter-react-16@1.1
+      host.create('.npmrc', 'legacy-peer-deps=true');
     }
 
     if (framework === EXPRESS) {
