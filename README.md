@@ -460,12 +460,13 @@ You can also use the Okta Admin Console:
 3. Specify a name and description of your choosing.
 4. Select **Native** and use the following for your Callback and Logout URLs:
 
-       org.reactjs.native.example.<yourappname>://<your-auth0-domain>/ios/org.reactjs.native.example.<yourAppName>/callback,com.secureapp://<your-auth0-domain>/android/com.secureapp/callback
+       org.reactjs.native.example.<yourappname>://<your-auth0-domain>/ios/org.reactjs.native.example.<yourAppName>/callback,com.<yourappname>://<your-auth0-domain>/android/com.<yourappname>/callback
 
 **NOTE:** The `<yourappname>` and `<yourAppName>` placeholders is the iOS callback have different cases. The first is all lowercase and the second is camel case. For example:
 
 ```
-org.reactjs.native.example.secureapp://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.SecureApp/callback
+org.reactjs.native.example.secureapp://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.SecureApp/callback,
+com.secureapp://dev-06bzs1cu.us.auth0.com/android/com.secureapp/callback
 ```
 
 Install the Schematics CLI globally.
