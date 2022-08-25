@@ -1,4 +1,4 @@
-name: Apps
+name: Nightly
 
 on:
   workflow_dispatch:
