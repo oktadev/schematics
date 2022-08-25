@@ -1,0 +1,58 @@
+name: Apps
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.framework }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        node_version: [16]
+        os: [ubuntu-latest]
+        framework:
+          - angular
+          - angular-auth0
+          - react
+          - react-ts
+          - react-auth0
+          - react-ts-auth0
+          - vue
+          - vue-ts
+          - vue-auth0
+          - vue-ts-auth0
+          - ionic
+          - ionic-auth0
+          - react-native
+          - react-native-auth0
+          - express
+          - express-auth0
+    env:
+      APP: ${{ matrix.framework }}
+
+    steps:
+      #----------------------------------------------------------------------
+      # Install all tools and check configuration
+      #----------------------------------------------------------------------
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+      - name: Install latest Chrome
+        run: |
+          sudo apt update
+          sudo apt --only-upgrade install google-chrome-stable
+          google-chrome --version
+      - name: Install CLIs
+        run: npm i -g @angular-devkit/schematics-cli @angular/cli @vue/cli @ionic/cli
+      - run: npm install
+      - name: Create ${{ matrix.framework }} app and test
+        run: xvfb-run --server-args="-screen 0 1024x768x24" --auto-servernum ./test-app.sh $APP
