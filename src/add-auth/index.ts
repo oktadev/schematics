@@ -17,7 +17,7 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { targetBuildNotFoundError } from '@schematics/angular/utility/project-targets';
 import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-models';
-import { dependencies as sdkVersions } from '../sdk-versions.json';
+import { dependencies as sdkVersions } from '../package.json';
 import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
 import { addModuleImportToModule } from '@angular/cdk/schematics';
 import ncu from 'npm-check-updates';
