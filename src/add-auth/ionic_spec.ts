@@ -48,11 +48,11 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     tree.create('/package.json', JSON.stringify(packageJson));
     tree.create('/src/app/app.module.ts', defaultAppModule);
 
-    const options: any = {...defaultOptions};
-    options.platform = 'capacitor';
+    const testOptions: any = {...defaultOptions};
+    testOptions.platform = 'capacitor';
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', options, tree).toPromise();
+    await runner.runSchematicAsync('add-auth', testOptions, tree).toPromise();
 
     expect(tree.files.length).toEqual(29);
     expect(tree.files.sort()).toEqual([
@@ -98,6 +98,9 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
 
     const pkgJson = tree.readContent('/package.json');
     expect(pkgJson).not.toContain('"cordova":');
+    expect(pkgJson).toContain('@capacitor/browser');
+    expect(pkgJson).toContain('@capacitor/preferences');
+    expect(pkgJson).toContain('capacitor-secure-storage-plugin');
   });
 
   it('works with Auth0', async () => {
@@ -106,18 +109,33 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     tree.create('/package.json', JSON.stringify(packageJson));
     tree.create('/src/app/app.module.ts', defaultAppModule);
 
-    const options: any = {...defaultOptions};
-    options.issuer = 'https://dev-06bzs1cu.us.auth0.com/';
-    options.auth0 = true;
+    const testOptions: any = {...defaultOptions};
+    testOptions.issuer = 'https://dev-06bzs1cu.us.auth0.com/';
+    testOptions.auth0 = true;
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', options, tree).toPromise();
+    await runner.runSchematicAsync('add-auth', testOptions, tree).toPromise();
 
     expect(tree.files.length).toEqual(29);
 
     const env = tree.readContent('/src/environments/environment.ts');
-    expect(env).toContain(`client_id: '${defaultOptions.clientId}'`);
-    expect(env).toContain(`server_host: '${options.issuer.slice(0, -1)}'`);
-    expect(env).toContain(`audience: '${options.issuer}api/v2/'`);
+    expect(env).toContain(`client_id: '${testOptions.clientId}'`);
+    expect(env).toContain(`server_host: '${testOptions.issuer.slice(0, -1)}'`);
+    expect(env).toContain(`audience: '${testOptions.issuer}api/v2/'`);
+  });
+
+  it('contains Capacitor plugins', async () => {
+    const tree = new UnitTestTree(new HostTree);
+
+    tree.create('/package.json', JSON.stringify(packageJson));
+    tree.create('/src/app/app.module.ts', defaultAppModule);
+
+    const runner = new SchematicTestRunner('schematics', collectionPath);
+    await runner.runSchematicAsync('add-auth', defaultOptions, tree).toPromise();
+
+    const pkgJson = tree.readContent('/package.json');
+    expect(pkgJson).toContain('@capacitor/browser');
+    expect(pkgJson).toContain('@capacitor/preferences');
+    expect(pkgJson).toContain('capacitor-secure-storage-plugin');
   });
 });

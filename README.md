@@ -63,7 +63,7 @@ You can also use the Okta Admin Console:
 
 * Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Create App Integration** > **OIDC**.
 * Choose **Single-Page Application** as the application type and click **Next**.
-* Add `http://localhost:4200/callback` as a Login redirect URI and `http://localhost:4200` as a Logout redirect URI.
+* Add `http://localhost:4200/callback` as a Sign-in redirect URI and `http://localhost:4200` as a Sign-out redirect URI.
 * Specify `http://localhost:4200` as a Trusted Origin and click **Save**.
 
 ### Auth0 for Angular
@@ -141,7 +141,7 @@ You can also use the Okta Admin Console:
 
 * Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Create App Integration** > **OIDC**.
 * Choose **Single-Page Application** as the application type and click **Next**.
-* Add `http://localhost:3000/callback` as a Login redirect URI and `http://localhost:3000` as a Logout redirect URI.
+* Add `http://localhost:3000/callback` as a Sign-in redirect URI and `http://localhost:3000` as a Sign-out redirect URI.
 * Add `http://localhost:3000` as a Trusted Origin and click **Save**.
 
 ### Auth0 for React
@@ -220,7 +220,7 @@ You can also use the Okta Admin Console:
 
 * Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Create App Integration** > **OIDC**.
 * Choose **Single-Page Application** as the application type and click **Next**.
-* Add `http://localhost:8080/callback` as a Login redirect URI and `http://localhost:8080` as a Logout redirect URI.
+* Add `http://localhost:8080/callback` as a Sign-in redirect URI and `http://localhost:8080` as a Sign-out redirect URI.
 * Add `http://localhost:8080` as a Trusted Origin and click **Save**.
 
 ### Auth0 for Vue
@@ -260,7 +260,7 @@ You can also use the Auth0 Console:
 
 ## Ionic
 
-Create a new Ionic + Angular project with Ionic CLI. You **must** use the `tabs` layout for everything to work currently. 
+Create a new Ionic + Angular project with Ionic CLI. You **must** use the `tabs` layout for everything to work correctly. 
 
 ```
 npm install -g @ionic/cli
@@ -299,10 +299,10 @@ From the **Applications** page, choose **Create App Integration** > **OIDC**. Se
 
 Give your app a memorable name, and configure it as follows:
 
-* Login redirect URIs:
+* Sign-in redirect URIs:
   * `http://localhost:8100/callback`
   * `com.okta.dev-133337:/callback` (where `dev-133337.okta.com` is your Okta domain)
-* Logout redirect URIs:
+* Sign-out redirect URIs:
   * `http://localhost:8100/logout`
   * `com.okta.dev-133337:/logout`
 * Trusted Origins:
@@ -316,6 +316,7 @@ Give your app a memorable name, and configure it as follows:
 3. Specify a name and description of your choosing.
 4. Select **Native** and use `dev.localhost.ionic:/callback,http://localhost:8100/callback` for the Callback URLs.
 5. Use `dev.localhost.ionic:/logout,http://localhost:8100/logout` for the Logout URLs.
+6. Run `auth0 apps open` and add `http://localhost:8100,http://localhost` to **Allowed Origins (CORS)**. Scroll down and **Save Changes**.
 
 In your `secure-ionic` project, add `@oktadev/schematics` with the `--auth0` flag:
 
@@ -337,6 +338,7 @@ You can also use the Auth0 Console:
 * Choose **Native** as the application type and click **Create**.
 * Select the **Settings** tab.
 * Add `dev.localhost.ionic:/callback,http://localhost:8100/callback` for Allowed Callback URLs and `dev.localhost.ionic:/logout,http://localhost:8100/logout` for the Logout URLs.
+* Add `http://localhost:8100,http://localhost` to **Allowed Origins (CORS)**. Scroll down and **Save Changes**.
 
 ### iOS
 
@@ -396,7 +398,7 @@ Add your reverse domain name as the `android:scheme` in `android/app/src/main/An
     <action android:name="android.intent.action.VIEW" />
     <category android:name="android.intent.category.DEFAULT"/>
     <category android:name="android.intent.category.BROWSABLE" />
-    <data android:scheme="com.okta.dev-133337" /> <!-- or dev.localhost.ionic -->
+    <data android:scheme="com.okta.dev-133337" /> <!-- use dev.localhost.ionic for Auth0 -->
 </intent-filter>
 ```
 
@@ -449,7 +451,7 @@ You can also use the Okta Admin Console:
 
 * Log in to your Okta instance (or [create an account](https://developer.okta.com/signup) if you don't have one). Go to **Applications** > **Create App Integration** > **OIDC**.
 * Choose **Native** as the application type and click **Next**.
-* Add `com.okta.dev-133337:/callback` as a Login redirect URI and `com.okta.dev-133337:/callback` as a Logout redirect URI (where `dev-133337.okta.com` is your Okta domain).
+* Add `com.okta.dev-133337:/callback` as a Sign-in redirect URI and `com.okta.dev-133337:/callback` as a Sign-out redirect URI (where `dev-133337.okta.com` is your Okta domain).
 
 ### Auth0 for React Native
 
@@ -458,7 +460,14 @@ You can also use the Okta Admin Console:
 3. Specify a name and description of your choosing.
 4. Select **Native** and use the following for your Callback and Logout URLs:
 
-       org.reactjs.native.example.secureapp://<your-auth0-domain>/ios/org.reactjs.native.example.SecureApp/callback,com.secureapp://<your-auth0-domain>/android/com.secureapp/callback
+       org.reactjs.native.example.<yourappname>://<your-auth0-domain>/ios/org.reactjs.native.example.<yourAppName>/callback,com.<yourappname>://<your-auth0-domain>/android/com.<yourappname>/callback
+
+**NOTE:** The `<yourappname>` and `<yourAppName>` placeholders is the iOS callback have different cases. The first is all lowercase and the second is camel case. For example:
+
+```
+org.reactjs.native.example.secureapp://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.SecureApp/callback,
+com.secureapp://dev-06bzs1cu.us.auth0.com/android/com.secureapp/callback
+```
 
 Install the Schematics CLI globally.
 
@@ -492,6 +501,8 @@ Start your app and authenticate with Okta. 🎉
 ```
 npm run ios
 ```
+
+**NOTE:** If you have issues in Simulator, stop the Metro process and run `npm run ios` again.
 
 ### Android
 
@@ -553,8 +564,8 @@ You can also create your app using the Okta Admin Console:
 
 * Log into the Okta Developer Dashboard (or [create an account](https://developer.okta.com/signup) if you don't have one), click **Applications** then **Create App Integration** > **OIDC**.
 * Choose **Web** as the application type and click **Next**.
-* Add a Login redirect URI of `http://localhost:3000/callback`.
-* Add a Logout redirect URI of `http://localhost:3000`.
+* Add a Sign-in redirect URI of `http://localhost:3000/callback`.
+* Add a Sign-out redirect URI of `http://localhost:3000`.
 * Click **Save**.
 
 ### Auth0 for Express
@@ -573,7 +584,7 @@ npm install -g @angular-devkit/schematics-cli
 
 Then install and run the `add-auth` schematic in your `express-app` project with the `--auth0` flag.
 
-Use the values that the Auth0 CLI provides for the issuer and client ID. You may have use `auth0 apps open` to get the client secret for your app.
+Use the values that the Auth0 CLI provides for the issuer and client ID. You may have to use `auth0 apps open` to get the client secret for your app.
 
 ```
 npm i -D @oktadev/schematics
@@ -581,7 +592,7 @@ schematics @oktadev/schematics:add-auth --issuer=$issuer \
   --client-id=$clientId --client-secret=$clientSecret --auth0
 ```
 
-🚨 This process will create an `.env` file will be generated with your credentials. Make sure to add `*.env` to `.gitignore` and don't check it into source control!
+🚨 This process will create an `.env` file with your credentials. Make sure to add `*.env` to `.gitignore` and don't check it into source control!
 
 Start your app and authenticate with Auth0 at `http://localhost:3000`. 🎊
 
@@ -603,7 +614,7 @@ You can also use the Auth0 Console:
 
 This project supports unit tests and integration tests.
 
-`npm test` will run the unit tests, using Jasmine as a runner and test framework.
+`npm test` will run the unit tests, using [Jasmine](https://jasmine.github.io/) as a runner and test framework.
 
 `./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic`, `react-native`, and `express`. You can also add `-auth0` to any of these options.
 
@@ -642,11 +653,11 @@ npm link /path/to/schematics
 
 You'll need to run `npm run build` whenever you change anything in the schematics project.
 
-**NOTE:** You can also use `npm pack` in your schematics project, then `npm install /path/to/artifact.tar.gz` in your test project. This mimics `npm install` more than `npm link`.
+**NOTE:** You can also use `npm pack` in your schematics project, then `npm install /path/to/artifact.tar.gz` in your test project. 
 
 ## Tutorials
 
-See the following blog posts to see OktaDev Schematics in action.
+Check out the following blog posts to see OktaDev Schematics in action.
 
 * [Add OpenID Connect to Angular Apps Quickly](https://auth0.com/blog/add-oidc-to-angular-apps-quickly/)
 * [Use Angular Schematics to Simplify Your Life](https://developer.okta.com/blog/2019/02/13/angular-schematics)
