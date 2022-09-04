@@ -45,7 +45,7 @@
     "chalk": "5.0.1",
     "istanbul": "0.4.5",
     "jasmine": "4.4.0",
-    "npm-check-updates": "16.0.6"
+    "npm-check-updates": "16.1.0"
   },
   "ng-add": {
     "save": "devDependencies"
