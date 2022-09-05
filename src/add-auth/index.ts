@@ -35,13 +35,11 @@ const ENZYME_ASYNC_VERSION = sdkVersions['enzyme-async-helpers'];
 const REACT_DOM_VERSION = sdkVersions['react-dom'];
 const OKTA_VUE_VERSION = sdkVersions['@okta/okta-vue'];
 const IONIC_APPAUTH_VERSION = sdkVersions['ionic-appauth'];
-const IONIC_SECURE_STORAGE_VERSION = sdkVersions['@ionic-native/secure-storage'];
 const IONIC_CAPACITOR_BROWSER_VERSION = sdkVersions['@capacitor/browser'];
 const IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION = sdkVersions['@capacitor-community/http'];
 const IONIC_CAPACITOR_PREFERENCES_VERSION = sdkVersions['@capacitor/preferences'];
 const IONIC_CAPACITOR_SECURE_STORAGE_VERSION = sdkVersions['capacitor-secure-storage-plugin'];
 const IONIC_CAPACITOR_SPLASH_SCREEN_VERSION = sdkVersions['@capacitor/splash-screen'];
-const IONIC_NATIVE_HTTP_VERSION = sdkVersions['@ionic-native/http'];
 const EXPRESS_SESSION_VERSION = sdkVersions['express-session'];
 const OKTA_OIDC_MIDDLEWARE_VERSION = sdkVersions['@okta/oidc-middleware'];
 const DOTENV_VERSION = sdkVersions['dotenv'];
@@ -96,13 +94,11 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: TS_JEST_VERSION, name: 'ts-jest'});
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_APPAUTH_VERSION, name: 'ionic-appauth'});
-      dependencies.push({type: NodeDependencyType.Default, version: IONIC_SECURE_STORAGE_VERSION, name: '@ionic-native/secure-storage'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_BROWSER_VERSION, name: '@capacitor/browser'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION, name: '@capacitor-community/http'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_PREFERENCES_VERSION, name: '@capacitor/preferences'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_SPLASH_SCREEN_VERSION, name: '@capacitor/splash-screen'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_SECURE_STORAGE_VERSION, name: 'capacitor-secure-storage-plugin'});
-      dependencies.push({type: NodeDependencyType.Default, version: IONIC_NATIVE_HTTP_VERSION, name: '@ionic-native/http'});
     } else if (framework === EXPRESS) {
       if (options.auth0) {
         dependencies.push({type: NodeDependencyType.Default, version: AUTH0_EXPRESS_VERSION, name: 'express-openid-connect'});
