@@ -1,19 +1,22 @@
 name: Auto Merge
 
-on:
-  pull_request:
+on: pull_request_target
 
 permissions:
   pull-requests: write
   contents: write
 
 jobs:
-  auto-merge:
+  enable-auto-merge:
     runs-on: ubuntu-latest
+    if: ${{ github.repository == 'oktadev/schematics' && github.event.pull_request.user.login == 'dependabot[bot]' }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: ahmadnassri/action-dependabot-auto-merge@v2
-        with:
-          target: minor
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v1.3.3
+      - name: Enable auto-merge for Dependabot PRs
+        if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
