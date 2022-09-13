@@ -28,7 +28,7 @@
     "express-openid-connect": "2.8.0",
     "react-dom": "18.2.0",
     "react-native-auth0": "2.13.3",
-    "react-router-dom": "6.3.0",
+    "react-router-dom": "6.4.0",
     "ts-jest": "27.1.3"
   }
 }
