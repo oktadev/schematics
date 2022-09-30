@@ -13,7 +13,7 @@
     "@okta/oidc-middleware": "5.0.0",
     "@okta/okta-angular": "5.3.0",
     "@okta/okta-auth-js": "6.8.1",
-    "@okta/okta-react": "6.6.0",
+    "@okta/okta-react": "6.7.0",
     "@okta/okta-react-native": "2.6.0",
     "@okta/okta-vue": "5.5.0",
     "@types/react-router-dom": "5.3.3",
