@@ -5,8 +5,9 @@ set -e
 
 framework="$1"
 issuer="https://dev-17700857.okta.com/oauth2/default"
-clientId="0oa66eo2b0gvHGqwR5d7"
+clientId="0oa6z9egudoINUPfE5d7"
 auth0Issuer="https://dev-06bzs1cu.us.auth0.com/"
+auth0ClientId="xAnQaaAuwV8glZiPX7KOFVDYLYMPOmY3"
 
 # build and package this project
 rm -f *.tgz
@@ -57,14 +58,14 @@ then
   npx create-react-app react-auth0-ts --template typescript
   cd react-auth0-ts
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$auth0ClientId --auth0
   CI=true npm test
 elif [ $framework == "react-auth0" ] || [ $framework == "r0" ]
 then
   npx create-react-app react-auth0
   cd react-auth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$auth0ClientId --auth0
   CI=true npm test
 elif [ $framework == "vue-ts" ] || [ $framework == "vts" ]
 then
@@ -153,7 +154,7 @@ EOF
   vue create vue-auth0-ts -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-auth0-ts
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$auth0ClientId --auth0
   npm run test:unit
 elif [ $framework == "vue-auth0" ] || [ $framework == "v0" ]
 then
@@ -180,7 +181,7 @@ EOF
   vue create vue-auth0 -i "$config" --registry=http://registry.npm.taobao.org
   cd vue-auth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$auth0ClientId --auth0
   npm run test:unit
 elif [ $framework == "ionic" ] || [ $framework == "i" ]
 then
@@ -194,7 +195,7 @@ then
   ionic start ionic-auth0 tabs --type angular --no-interactive
   cd ionic-auth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$auth0ClientId --auth0
   npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
@@ -209,7 +210,7 @@ then
   npx -y react-native init SecureAuth0
   cd SecureAuth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$auth0ClientId --auth0
   # pod install --project-directory=ios --repo-update
   npm test -- -u
 elif [ $framework == "express" ] || [ $framework == "e" ]
@@ -226,7 +227,7 @@ then
   npx express-generator --view=pug
   npm i
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId \
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$auth0ClientId \
     --client-secret='may the auth be with you' --auth0
   # npm test -- -u
 else
