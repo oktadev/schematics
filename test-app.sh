@@ -37,7 +37,7 @@ then
   ng new angular-auth0 --routing --style css --strict
   cd angular-auth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$clientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=auth0ClientId --auth0
   ng test --watch=false
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then

@@ -246,7 +246,7 @@ schematics @oktadev/schematics:add-auth --auth0
 
 Use the values that the Auth0 CLI provides for the issuer and client ID when prompted.
 
-Run `npm start`, open `http://localhost:8080` in your browser, and sign in. 💥
+Run `npm run serve`, open `http://localhost:8080` in your browser, and sign in. 💥
 
 See the [Auth0 Vue SDK](https://github.com/auth0/auth0-vue) for more information.
 
@@ -465,8 +465,7 @@ You can also use the Okta Admin Console:
 **NOTE:** The `<yourappname>` and `<yourAppName>` placeholders is the iOS callback have different cases. The first is all lowercase and the second is camel case. For example:
 
 ```
-org.reactjs.native.example.secureapp://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.SecureApp/callback,
-com.secureapp://dev-06bzs1cu.us.auth0.com/android/com.secureapp/callback
+org.reactjs.native.example.secureapp://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.SecureApp/callback,com.secureapp://dev-06bzs1cu.us.auth0.com/android/com.secureapp/callback
 ```
 
 Install the Schematics CLI globally.
