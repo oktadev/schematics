@@ -501,7 +501,7 @@ Start your app and authenticate with Okta. 🎉
 npm run ios
 ```
 
-**NOTE:** If you have issues in Simulator, stop the Metro process and run `npm run ios` again.
+**NOTE:** If you have issues with compiling, you may have to disable Flipper in `ios/Podfile`. Then delete the `ios/Pods` directory and run `pod install` again.
 
 ### Android
 
