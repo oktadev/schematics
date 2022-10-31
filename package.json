@@ -45,7 +45,7 @@
     "@types/semver": "7.3.13",
     "chalk": "5.1.2",
     "istanbul": "0.4.5",
-    "jasmine": "4.4.0"
+    "jasmine": "4.5.0"
   },
   "ng-add": {
     "save": "devDependencies"
