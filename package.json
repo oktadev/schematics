@@ -32,7 +32,7 @@
   "dependencies": {
     "@angular-devkit/core": "14.2.7",
     "@angular-devkit/schematics": "14.2.7",
-    "@angular/cdk": "14.2.6",
+    "@angular/cdk": "15.0.0",
     "@schematics/angular": "14.2.7",
     "npm-check-updates": "16.3.16",
     "rxjs": "7.5.7",
