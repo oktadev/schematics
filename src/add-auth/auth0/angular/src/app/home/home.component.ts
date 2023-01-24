@@ -17,6 +17,10 @@ export class HomeComponent {
   }
 
   logout(): void {
-    this.auth.logout({ returnTo: this.doc.location.origin });
+    this.auth.logout({
+      logoutParams: {
+        returnTo: this.doc.location.origin
+      }
+    });
   }
 }
