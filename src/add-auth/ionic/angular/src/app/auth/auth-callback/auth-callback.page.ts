@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   template: '<p style="margin-left: 10px">Authorizing...</p>'
 })
 export class AuthCallbackPage implements OnInit, OnDestroy {
-  sub: Subscription;
+  sub!: Subscription;
 
   constructor(
     private auth: AuthService,

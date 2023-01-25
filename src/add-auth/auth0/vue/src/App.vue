@@ -1,6 +1,7 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
+    <router-link to="/">Home</router-link>
+    |
     <router-link to="/about">About</router-link>
     <template v-if="isAuthenticated"> |
       <!-- router links that require authentication -->
@@ -24,7 +25,7 @@ export default {
         loginWithRedirect();
       },
       logout() {
-        logout({ returnTo: window.location.origin });
+        logout({ logoutParams: { returnTo: window.location.origin } });
       },
       isAuthenticated
     }

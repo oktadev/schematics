@@ -12,10 +12,10 @@ const { audience } = environment;
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit, OnDestroy {
-  action: IAuthAction;
-  observer: AuthObserver;
+  action!: IAuthAction;
+  observer!: AuthObserver;
   events$ = this.auth.events$;
-  sub: Subscription;
+  sub!: Subscription;
 
   constructor(private auth: AuthService, private navCtrl: NavController) {
   }

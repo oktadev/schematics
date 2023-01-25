@@ -25,7 +25,7 @@ export default defineComponent({
         loginWithRedirect();
       },
       logout() {
-        logout({ returnTo: window.location.origin });
+        logout({ logoutParams: { returnTo: window.location.origin } });
       },
       isAuthenticated
     }

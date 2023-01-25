@@ -7,7 +7,7 @@ framework="$1"
 issuer="https://dev-17700857.okta.com/oauth2/default"
 clientId="0oa6z9egudoINUPfE5d7"
 auth0Issuer="https://dev-06bzs1cu.us.auth0.com/"
-auth0ClientId="xAnQaaAuwV8glZiPX7KOFVDYLYMPOmY3"
+auth0ClientId="6yEYexTFvzbNKmUCBDWtEFqDc19banpP"
 
 # build and package this project
 rm -f *.tgz
@@ -37,7 +37,7 @@ then
   ng new angular-auth0 --routing --style css --strict
   cd angular-auth0
   npm install -D ../../oktadev*.tgz
-  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=auth0ClientId --auth0
+  schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$auth0ClientId --auth0
   ng test --watch=false
 elif [ $framework == "react-ts" ] || [ $framework == "rts" ]
 then

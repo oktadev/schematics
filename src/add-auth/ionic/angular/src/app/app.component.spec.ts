@@ -7,7 +7,7 @@ import { AuthModule } from './auth/auth.module';
 
 describe('AppComponent', () => {
 
-  let platformReadySpy, platformIsSpy, platformSpy;
+  let platformReadySpy: Promise<void>, platformIsSpy, platformSpy: { ready: any; };
 
   beforeEach(waitForAsync(() => {
     platformReadySpy = Promise.resolve();

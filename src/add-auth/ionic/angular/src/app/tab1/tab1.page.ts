@@ -6,7 +6,6 @@ import { environment } from '../../environments/environment';
 
 const { audience } = environment;
 
-
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -15,8 +14,8 @@ const { audience } = environment;
 export class Tab1Page implements OnInit, OnDestroy {
   user$ = this.auth.user$;
   events$ = this.auth.events$;
-  sub: Subscription;
-  action: IAuthAction;
+  sub!: Subscription;
+  action?: IAuthAction;
 
   constructor(private navCtrl: NavController, private auth: AuthService, private browser: Browser) {
   }

@@ -250,10 +250,20 @@ export function addAuth(options: any): Rule {
       }
 
       // add imports to app.module.ts
-      addModuleImportToModule(host, 'src/app/app.module.ts',
-        'HttpClientModule', '@angular/common/http');
-      addModuleImportToModule(host, 'src/app/app.module.ts',
-        'AuthModule', './auth/auth.module');
+      // addModuleImportToModule no longer works, not sure why.
+      // Error: Cannot read properties of undefined (reading 'kind')
+      // addModuleImportToModule(host, 'src/app/app.module.ts', 'HttpClientModule', '@angular/common/http');
+      // addModuleImportToModule(host, 'src/app/app.module.ts', 'AuthModule', './auth/auth.module');
+      const appModule: Buffer | null = host.read('./src/app/app.module.ts');
+      if (appModule) {
+        let authConfig: string = appModule.toString();
+        authConfig = authConfig.replace("import { AppComponent } from './app.component';", `import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http'
+import { AuthModule } from './auth/auth.module';`);
+        authConfig = authConfig.replace('AppRoutingModule]',
+          `AppRoutingModule, HttpClientModule, AuthModule]`);
+        host.overwrite('./src/app/app.module.ts', authConfig);
+      }
 
       // Add new modules to tsconfig.app.json
       const tsConfig: Buffer | null = host.read('./tsconfig.app.json');
@@ -272,6 +282,8 @@ export function addAuth(options: any): Rule {
       if (content) {
         const pkgJson: any = JSON.parse(content.toString());
         pkgJson.scripts.start = pkgJson.scripts.start + ' --port 8100';
+        // downgrade rxjs for ionic-appauth
+        pkgJson.dependencies.rxjs = '6.6.7';
         host.overwrite('./package.json', JSON.stringify(pkgJson));
       }
     }
@@ -302,9 +314,8 @@ export function addAuth(options: any): Rule {
         pkgJson.jest = {
           'preset': 'react-native',
           'automock': false,
-          'testEnvironment': 'jsdom',
           'transformIgnorePatterns': [
-            'node_modules/(?!@okta|@react-native|react-native)'
+            `node_modules/(?!@${options.auth0 ? 'auth0' : 'okta'}|@react-native|react-native)`
           ],
           'testMatch': ['**/tests/*.js?(x)', '**/?(*.)(spec|test).js?(x)'],
           'setupFiles': [

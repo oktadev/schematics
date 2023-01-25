@@ -62,7 +62,7 @@ describe('OktaDev Schematics: Vue',() => {
     const mainContent = tree.readContent('/src/main.js');
     expect(mainContent).toContain(`import { createAuth0 } from '@auth0/auth0-vue'`);
     expect(mainContent).toContain(`domain: '${testOptions.issuer.slice(8, -1)}'`);
-    expect(mainContent).toContain(`client_id: '${testOptions.clientId}'`);
+    expect(mainContent).toContain(`clientId: '${testOptions.clientId}'`);
     expect(mainContent).toContain(`.use(createAuth0(config))`);
   });
 });

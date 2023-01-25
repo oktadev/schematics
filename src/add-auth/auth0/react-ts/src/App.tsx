@@ -6,7 +6,7 @@ import Routes from './Routes';
 const App = () => {
   return (
     <Auth0Provider domain="<%= issuer %>" clientId="<%= clientId %>"
-      redirectUri={window.location.origin}>
+                   authorizationParams={{redirect_uri: window.location.origin}}>
       <Routes/>
     </Auth0Provider>
   );

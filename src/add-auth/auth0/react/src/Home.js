@@ -17,7 +17,9 @@ const Home = () => {
   if (isAuthenticated) {
     body = (
       <div className="Buttons">
-        <button onClick={() => logout({ returnTo: window.location.origin })}>Logout</button>
+        <button onClick={() => logout({
+          logoutParams: { returnTo: window.location.origin, }
+        })}>Logout</button>
         {/* Replace me with your root component. */}
       </div>
     );
