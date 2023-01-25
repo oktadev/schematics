@@ -55,7 +55,7 @@ export default class Auth extends Component {
       requireHardwareBackedKeyStore:
         configFile.oidc.requireHardwareBackedKeyStore,
     });
-    this.checkAuthentication();
+    await this.checkAuthentication();
   }
 
   componentWillUnmount() {
@@ -71,8 +71,8 @@ export default class Auth extends Component {
 
   async checkAuthentication() {
     const result = await isAuthenticated();
-    if (result.authenticated !== this.state.authenticated) {
-      this.setState({ authenticated: result.authenticated });
+    if (result?.authenticated !== this.state.authenticated) {
+      this.setState({ authenticated: result?.authenticated });
     }
   }
 
