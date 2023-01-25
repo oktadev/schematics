@@ -26,7 +26,7 @@ const Home = () => {
   } else {
     body = (
       <div className="Buttons">
-        <button onClick={loginWithRedirect}>Login</button>
+        <button onClick={() => loginWithRedirect()}>Login</button>
       </div>
     );
   }
