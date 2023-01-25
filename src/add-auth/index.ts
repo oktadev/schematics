@@ -329,13 +329,6 @@ import { AuthModule } from './auth/auth.module';`);
         host.overwrite('./package.json', JSON.stringify(pkgJson));
       }
 
-      // Upgrade iOS to v11
-      const podfile: Buffer | null = host.read('./ios/Podfile');
-      if (podfile) {
-        const ios12 = podfile.toString('utf-8').replace('platform :ios, \'10.0\'', 'platform :ios, \'12.4\'');
-        host.overwrite('ios/Podfile', ios12);
-      }
-
       // Configure Gradle for App
       const appBuild: Buffer | null = host.read('./android/app/build.gradle');
       if (appBuild) {

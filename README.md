@@ -493,7 +493,7 @@ You can also use the Auth0 Console:
 
 ### iOS
 
-Run `pod install --project-directory=ios --repo-update`.
+Run `npx pod-install`.
 
 Start your app and authenticate with Okta. 🎉
 
@@ -501,7 +501,7 @@ Start your app and authenticate with Okta. 🎉
 npm run ios
 ```
 
-**NOTE:** If you have issues with compiling, you may have to disable Flipper in `ios/Podfile`. Then delete the `ios/Pods` directory and run `pod install` again.
+**NOTE:** If you have issues with compiling, you may have to disable Flipper in `ios/Podfile`. Then run `npx pod-install` again.
 
 ### Android
 
