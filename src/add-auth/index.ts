@@ -314,9 +314,8 @@ import { AuthModule } from './auth/auth.module';`);
         pkgJson.jest = {
           'preset': 'react-native',
           'automock': false,
-          'testEnvironment': 'jsdom',
           'transformIgnorePatterns': [
-            'node_modules/(?!@okta|@react-native|react-native)'
+            `node_modules/(?!@${options.auth0 ? 'auth0' : 'okta'}|@react-native|react-native)`
           ],
           'testMatch': ['**/tests/*.js?(x)', '**/?(*.)(spec|test).js?(x)'],
           'setupFiles': [
