@@ -33,7 +33,7 @@
     "@angular-devkit/core": "15.2.0",
     "@angular-devkit/schematics": "15.1.2",
     "@angular/cdk": "15.1.1",
-    "@schematics/angular": "15.1.2",
+    "@schematics/angular": "15.2.0",
     "npm-check-updates": "16.7.4",
     "rxjs": "7.8.0",
     "semver": "7.3.8",
