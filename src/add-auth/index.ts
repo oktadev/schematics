@@ -282,8 +282,6 @@ import { AuthModule } from './auth/auth.module';`);
       if (content) {
         const pkgJson: any = JSON.parse(content.toString());
         pkgJson.scripts.start = pkgJson.scripts.start + ' --port 8100';
-        // downgrade rxjs for ionic-appauth
-        pkgJson.dependencies.rxjs = '6.6.7';
         host.overwrite('./package.json', JSON.stringify(pkgJson));
       }
     }
