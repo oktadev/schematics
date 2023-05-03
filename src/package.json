@@ -9,7 +9,7 @@
     "@capacitor-community/http": "1.4.1",
     "@capacitor/browser": "4.1.1",
     "@capacitor/preferences": "4.0.2",
-    "@capacitor/splash-screen": "4.2.0",
+    "@capacitor/splash-screen": "5.0.0",
     "@okta/oidc-middleware": "5.1.0",
     "@okta/okta-angular": "6.2.0",
     "@okta/okta-auth-js": "7.3.0",
