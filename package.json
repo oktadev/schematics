@@ -30,7 +30,7 @@
     "update-deps": "ncu -u --packageFile src/package.json"
   },
   "dependencies": {
-    "@angular-devkit/core": "15.2.0",
+    "@angular-devkit/core": "16.0.0",
     "@angular-devkit/schematics": "15.2.0",
     "@angular/cdk": "15.2.0",
     "@schematics/angular": "16.0.0",
