@@ -7,7 +7,7 @@
     "@auth0/auth0-react": "2.0.0",
     "@auth0/auth0-vue": "2.2.0",
     "@capacitor-community/http": "1.4.1",
-    "@capacitor/browser": "4.1.1",
+    "@capacitor/browser": "5.0.1",
     "@capacitor/preferences": "4.0.2",
     "@capacitor/splash-screen": "4.2.0",
     "@okta/oidc-middleware": "5.1.0",
