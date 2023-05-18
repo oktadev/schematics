@@ -13,7 +13,7 @@ describe('OktaDev Schematics: ng-add', () => {
     clientId: '0oaifymbuodpH8nAi0h7'
   };
 
-  let appTree: UnitTestTree;
+  let appTree: UnitTestTree | undefined;
 
   // tslint:disable-next-line:no-any
   const workspaceOptions: any = {
@@ -33,14 +33,14 @@ describe('OktaDev Schematics: ng-add', () => {
   };
 
   beforeEach(async () => {
-    appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions).toPromise();
-    appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'application', appOptions, appTree).toPromise();
+    appTree = await schematicRunner.runExternalSchematic('@schematics/angular', 'workspace', workspaceOptions);
+    appTree = await schematicRunner.runExternalSchematic('@schematics/angular', 'application', appOptions, appTree);
   });
 
   it('should create home component files', (done) => {
     const files = ['home.component.css', 'home.component.html', 'home.component.spec.ts', 'home.component.ts'];
     const homePath = '/projects/authtest/src/app/home/';
-    schematicRunner.runSchematicAsync('ng-add', defaultOptions, appTree).toPromise().then(tree => {
+    schematicRunner.runSchematic('ng-add', defaultOptions, appTree).then(tree => {
       files.forEach(f => {
         const path = `${homePath}${f}`;
         expect(tree.exists(path)).toEqual(true);
@@ -50,7 +50,7 @@ describe('OktaDev Schematics: ng-add', () => {
   });
 
   it('should set the issuer & clientId in app and oidc modules', (done) => {
-    schematicRunner.runSchematicAsync('ng-add', defaultOptions, appTree).toPromise().then(tree => {
+    schematicRunner.runSchematic('ng-add', defaultOptions, appTree).then(tree => {
       const appModule = tree.readContent('/projects/authtest/src/app/app.module.ts');
       expect(appModule).toMatch(/AuthRoutingModule/);
       const authModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');

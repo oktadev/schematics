@@ -13,7 +13,7 @@ describe('OktaDev Schematics: Angular', () => {
     clientId: '0oaifymbuodpH8nAi0h7'
   };
 
-  let appTree: UnitTestTree;
+  let appTree: UnitTestTree | undefined;
 
   // tslint:disable-next-line:no-any
   const workspaceOptions: any = {
@@ -40,7 +40,7 @@ describe('OktaDev Schematics: Angular', () => {
   it('should create home component files with scss', (done) => {
     const files = ['home.component.scss', 'home.component.html', 'home.component.spec.ts', 'home.component.ts'];
     const homePath = '/projects/authtest/src/app/home/';
-    schematicRunner.runSchematicAsync('add-auth', defaultOptions, appTree).toPromise().then(tree => {
+    schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
       files.forEach(f => {
         const path = `${homePath}${f}`;
         expect(tree.exists(path)).toEqual(true);
@@ -50,7 +50,7 @@ describe('OktaDev Schematics: Angular', () => {
   });
 
   it('should use scss for style', (done) => {
-    schematicRunner.runSchematicAsync('add-auth', defaultOptions, appTree).toPromise().then(tree => {
+    schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
       const routingModule = tree.readContent('/projects/authtest/src/app/app.component.ts');
       expect(routingModule).toContain(`styleUrls: ['./app.component.scss']`);
       done();

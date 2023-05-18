@@ -25,7 +25,7 @@ describe('OktaDev Schematics: React Native', () => {
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    tree = await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
+    tree = await runner.runSchematic('add-auth', {...defaultOptions}, tree);
 
     expect(tree.files.length).toEqual(8);
     expect(tree.files.sort()).toEqual(['/.npmrc', '/App.js', '/Auth.js', '/auth.config.js',
@@ -46,7 +46,7 @@ describe('OktaDev Schematics: React Native', () => {
   });
 
   it('works with Auth0', async () => {
-    let tree = new UnitTestTree(new HostTree);
+    let tree: UnitTestTree = new UnitTestTree(new HostTree);
 
     const testOptions: any = {...defaultOptions};
     testOptions.auth0 = true;
@@ -56,7 +56,7 @@ describe('OktaDev Schematics: React Native', () => {
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    tree = await runner.runSchematicAsync('add-auth', {...testOptions}, tree).toPromise();
+    tree = await runner.runSchematic('add-auth', {...testOptions}, tree);
 
     expect(tree.files.length).toEqual(7);
     expect(tree.files.sort()).toEqual(['/.npmrc', '/App.js', '/Auth.js', '/auth.config.js',

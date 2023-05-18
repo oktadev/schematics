@@ -144,7 +144,7 @@ function getFramework(host: Tree): string {
 
   const configBuffer = host.read(path);
   if (configBuffer === null) {
-    throw new SchematicsException(`Could not find (${path})`);
+    throw new SchematicsException(`Could not find path: ${path}`);
   } else {
     const content = JSON.parse(configBuffer.toString());
     if (content.dependencies['@angular/core'] && !content.dependencies['@ionic/angular']) {
