@@ -23,7 +23,7 @@
     "enzyme-adapter-react-16": "1.15.7",
     "enzyme-async-helpers": "0.9.1",
     "events": "3.3.0",
-    "express-openid-connect": "2.15.0",
+    "express-openid-connect": "2.16.0",
     "express-session": "1.17.3",
     "ionic-appauth": "2.0.0",
     "react-dom": "18.2.0",
