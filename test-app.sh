@@ -5,9 +5,9 @@ set -e
 
 framework="$1"
 issuer="https://dev-17700857.okta.com/oauth2/default"
-clientId="0oa6z9egudoINUPfE5d7"
+clientId="0oa9nr5n8dgfTLgk05d7"
 auth0Issuer="https://dev-06bzs1cu.us.auth0.com/"
-auth0ClientId="6yEYexTFvzbNKmUCBDWtEFqDc19banpP"
+auth0ClientId="y2ja8SGsAShxXBx4WQYYMaBNwWvNB8i9"
 
 # build and package this project
 rm -f *.tgz
