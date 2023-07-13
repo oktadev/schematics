@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Dependencies for npm-check-updates",
   "dependencies": {
-    "@auth0/auth0-angular": "2.1.0",
+    "@auth0/auth0-angular": "2.2.0",
     "@auth0/auth0-react": "2.1.0",
     "@auth0/auth0-vue": "2.2.0",
     "@capacitor-community/http": "1.4.1",
