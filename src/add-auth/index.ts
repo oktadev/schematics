@@ -326,7 +326,9 @@ import { AuthModule } from './auth/auth.module';`);
         };
         host.overwrite('./package.json', JSON.stringify(pkgJson));
         // delete the jest.config.js file that comes from react-native init
-        host.delete('./jest.config.js');
+        if (host.read('./jest.config.js') != null) {
+          host.delete('./jest.config.js');
+        }
       }
 
       // Configure Gradle for App
