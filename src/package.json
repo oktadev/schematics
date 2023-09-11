@@ -12,7 +12,7 @@
     "@capacitor/splash-screen": "5.0.2",
     "@okta/oidc-middleware": "5.1.0",
     "@okta/okta-angular": "6.2.0",
-    "@okta/okta-auth-js": "7.3.0",
+    "@okta/okta-auth-js": "7.4.2",
     "@okta/okta-react": "6.7.0",
     "@okta/okta-react-native": "2.8.0",
     "@okta/okta-vue": "5.6.0",
