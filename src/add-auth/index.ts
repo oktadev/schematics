@@ -325,6 +325,10 @@ import { AuthModule } from './auth/auth.module';`);
           // Error: Option "tests" is not defined.
         };
         host.overwrite('./package.json', JSON.stringify(pkgJson));
+        // delete the jest.config.js file that comes from react-native init
+        if (host.read('./jest.config.js') != null) {
+          host.delete('./jest.config.js');
+        }
       }
 
       // Configure Gradle for App

@@ -36,12 +36,12 @@
     "@schematics/angular": "16.0.0",
     "npm-check-updates": "16.10.9",
     "rxjs": "7.8.0",
-    "semver": "7.5.0",
+    "semver": "7.5.2",
     "typescript": "5.0.4"
   },
   "devDependencies": {
     "@types/jasmine": "4.3.1",
-    "@types/node": "20.3.1",
+    "@types/node": "20.6.0",
     "@types/semver": "7.3.13",
     "chalk": "5.2.0",
     "istanbul": "0.4.5",
