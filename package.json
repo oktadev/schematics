@@ -33,11 +33,11 @@
     "@angular-devkit/core": "16.2.1",
     "@angular-devkit/schematics": "16.2.1",
     "@angular/cdk": "16.2.3",
-    "@schematics/angular": "16.2.1",
+    "@schematics/angular": "16.0.0",
     "npm-check-updates": "16.13.3",
-    "rxjs": "7.8.1",
+    "rxjs": "7.8.0",
     "semver": "7.5.4",
-    "typescript": "5.2.2"
+    "typescript": "5.0.4"
   },
   "devDependencies": {
     "@types/jasmine": "4.3.5",
