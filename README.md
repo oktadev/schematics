@@ -461,12 +461,12 @@ You can also use the Okta Admin Console:
 3. Specify a name and description of your choosing.
 4. Select **Native** and use the following for your Callback and Logout URLs:
 
-       org.reactjs.native.example.<yourappname>://<your-auth0-domain>/ios/org.reactjs.native.example.<yourAppName>/callback,com.<yourappname>://<your-auth0-domain>/android/com.<yourappname>/callback
+       org.reactjs.native.example.<yourappname>.auth0://<your-auth0-domain>/ios/org.reactjs.native.example.<yourappname>/callback,com.<yourappname>.auth0://<your-auth0-domain>/android/com.<yourappname>/callback
 
-**NOTE:** The `<yourappname>` and `<yourAppName>` placeholders is the iOS callback have different cases. The first is all lowercase and the second is camel case. For example:
+For example:
 
 ```
-org.reactjs.native.example.secureauth0://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.SecureAuth0/callback, com.secureauth0://dev-06bzs1cu.us.auth0.com/android/com.secureauth0/callback
+org.reactjs.native.example.secureauth0.auth0://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.secureauth0/callback, com.secureauth0.auth0://dev-06bzs1cu.us.auth0.com/android/com.secureauth0/callback
 ```
 
 Install the Schematics CLI globally.
@@ -490,12 +490,12 @@ You can also use the Auth0 Console:
 * Select the **Settings** tab.
 * Add the following for Allowed Callback and Logout URLs:
 
-       org.reactjs.native.example.<yourappname>://<your-auth0-domain>/ios/org.reactjs.native.example.<yourAppName>/callback,com.<yourappname>://<your-auth0-domain>/android/com.<yourappname>/callback
+       org.reactjs.native.example.<yourappname>.auth0://<your-auth0-domain>/ios/org.reactjs.native.example.<yourappname>/callback,com.<yourappname>.auth0://<your-auth0-domain>/android/com.<yourappname>/callback
 
 For example:
 
 ```
-org.reactjs.native.example.secureauth0://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.SecureAuth0/callback, com.secureauth0://dev-06bzs1cu.us.auth0.com/android/com.secureauth0/callback
+org.reactjs.native.example.secureauth0.auth0://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.secureauth0/callback, com.secureauth0.auth0://dev-06bzs1cu.us.auth0.com/android/com.secureauth0/callback
 ```
 
 ### iOS
