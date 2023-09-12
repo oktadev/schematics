@@ -34,7 +34,7 @@
     "@angular-devkit/schematics": "16.2.1",
     "@angular/cdk": "16.2.3",
     "@schematics/angular": "16.0.0",
-    "npm-check-updates": "16.10.9",
+    "npm-check-updates": "16.13.3",
     "rxjs": "7.8.0",
     "semver": "7.5.2",
     "typescript": "5.0.4"
