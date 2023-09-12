@@ -336,7 +336,7 @@ import { AuthModule } from './auth/auth.module';`);
       if (appBuild) {
         let manifestPlaceholders;
         if (options.auth0) {
-          manifestPlaceholders = `auth0Domain: "${options.issuer}", auth0Scheme: "\${applicationId}"`
+          manifestPlaceholders = `auth0Domain: "${options.issuer}", auth0Scheme: "\${applicationId}.auth0"`
         } else {
           manifestPlaceholders = `appAuthRedirectScheme: "${options.packageName}"`
         }
@@ -361,11 +361,19 @@ import { AuthModule } from './auth/auth.module';`);
 \t\t\t<string>auth0</string>
 \t\t\t<key>CFBundleURLSchemes</key>
 \t\t\t<array>
-\t\t\t\t<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+\t\t\t\t<string>$(PRODUCT_BUNDLE_IDENTIFIER).auth0</string>
 \t\t\t</array>
 \t\t</dict>
 \t</array>`);
           host.overwrite(`ios/${appName}/Info.plist`, iosURLs);
+
+          // Update Podfile to require iOS 13
+          const podfile: Buffer | null = host.read(`./ios/Podfile`);
+          if (podfile) {
+            const podfileContents = podfile.toString('utf-8')
+                .replace('platform :ios, min_ios_version_supported', 'platform :ios, \'13.0\'');
+            host.overwrite(`ios/Podfile`, podfileContents);
+          }
         }
       }
 
