@@ -5,7 +5,7 @@
   "dependencies": {
     "@auth0/auth0-angular": "2.2.1",
     "@auth0/auth0-react": "2.2.1",
-    "@auth0/auth0-vue": "2.2.0",
+    "@auth0/auth0-vue": "2.3.1",
     "@capacitor-community/http": "1.4.1",
     "@capacitor/browser": "5.0.2",
     "@capacitor/preferences": "5.0.2",
