@@ -7,7 +7,7 @@ framework="$1"
 issuer="https://dev-17700857.okta.com/oauth2/default"
 clientId="0oa9nr5n8dgfTLgk05d7"
 auth0Issuer="https://dev-06bzs1cu.us.auth0.com/"
-auth0ClientId="y2ja8SGsAShxXBx4WQYYMaBNwWvNB8i9"
+auth0ClientId="KW1uEoUtqQKdiDpdhn82Z3KKIwSJLwjo"
 
 # build and package this project
 rm -f *.tgz
