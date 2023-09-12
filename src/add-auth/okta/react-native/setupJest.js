@@ -7,6 +7,7 @@ configure({ adapter: new Adapter() });
 
 global.XMLHttpRequest = jest.fn();
 global.fetch = jest.fn();
+global.self = global;
 
 if (typeof window !== 'object') {
   global.window = global;
