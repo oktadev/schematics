@@ -274,7 +274,7 @@ Then, integrate your Ionic app with [Okta](#okta-for-ionic) or [Auth0](#auth0-fo
 
 1. Install the [Okta CLI](https://cli.okta.com).
 2. Run `okta register` to create an account, followed by `okta apps create`.
-3. Choose **Native** and use `[com.okta.dev-133337:/callback,http://localhost:8100/callback]` for the Login redirect URIs (where `dev-133337.okta.com` is your Okta domain).
+3. Choose **Native** and use `[com.okta.dev-133337:/callback,http://localhost:8100/callback,https://localhost]` for the Login redirect URIs (where `dev-133337.okta.com` is your Okta domain).
 4. Use `[com.okta.dev-133337:/logout,http://localhost:8100/logout]` for the Logout redirect URIs.
 
 In your `secure-ionic` project, add `@oktadev/schematics`:
@@ -302,6 +302,7 @@ Give your app a memorable name, and configure it as follows:
 * Sign-in redirect URIs:
   * `http://localhost:8100/callback`
   * `com.okta.dev-133337:/callback` (where `dev-133337.okta.com` is your Okta domain)
+  * `https://localhost`
 * Sign-out redirect URIs:
   * `http://localhost:8100/logout`
   * `com.okta.dev-133337:/logout`
@@ -338,7 +339,7 @@ You can also use the Auth0 Console:
 * Choose **Native** as the application type and click **Create**.
 * Select the **Settings** tab.
 * Add `dev.localhost.ionic:/callback,http://localhost:8100/callback` for Allowed Callback URLs and `dev.localhost.ionic:/logout,http://localhost:8100/logout` for the Logout URLs.
-* Add `http://localhost:8100,http://localhost` to **Allowed Origins (CORS)**. Scroll down and **Save Changes**.
+* Add `http://localhost:8100,https://localhost` to **Allowed Origins (CORS)**. Scroll down and **Save Changes**.
 
 ### iOS
 
@@ -465,7 +466,7 @@ You can also use the Okta Admin Console:
 **NOTE:** The `<yourappname>` and `<yourAppName>` placeholders is the iOS callback have different cases. The first is all lowercase and the second is camel case. For example:
 
 ```
-org.reactjs.native.example.secureapp://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.SecureApp/callback,com.secureapp://dev-06bzs1cu.us.auth0.com/android/com.secureapp/callback
+org.reactjs.native.example.secureauth0://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.SecureAuth0/callback, com.secureauth0://dev-06bzs1cu.us.auth0.com/android/com.secureauth0/callback
 ```
 
 Install the Schematics CLI globally.
@@ -489,7 +490,13 @@ You can also use the Auth0 Console:
 * Select the **Settings** tab.
 * Add the following for Allowed Callback and Logout URLs:
 
-       org.reactjs.native.example.secureapp://<your-auth0-domain>/ios/org.reactjs.native.example.SecureApp/callback,com.secureapp://<your-auth0-domain>/android/com.secureapp/callback
+       org.reactjs.native.example.<yourappname>://<your-auth0-domain>/ios/org.reactjs.native.example.<yourAppName>/callback,com.<yourappname>://<your-auth0-domain>/android/com.<yourappname>/callback
+
+For example:
+
+```
+org.reactjs.native.example.secureauth0://dev-06bzs1cu.us.auth0.com/ios/org.reactjs.native.example.SecureAuth0/callback, com.secureauth0://dev-06bzs1cu.us.auth0.com/android/com.secureauth0/callback
+```
 
 ### iOS
 
