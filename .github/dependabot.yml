@@ -11,6 +11,11 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-patch"]
+    groups:
+      angular:
+        patterns:
+          - '@angular/*'
+          - '@angular-devkit/*'
   - package-ecosystem: "npm"
     directory: "/src"
     schedule:
@@ -18,3 +23,8 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-patch"]
+    groups:
+      capacitor:
+        patterns:
+          - '@capacitor/*'
+          - 'capacitor-secure-storage-plugin'
