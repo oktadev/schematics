@@ -1,32 +1,53 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+import { AuthState, IDToken } from '@okta/okta-auth-js';
+import { of } from 'rxjs';
 import { HomeComponent } from './home.component';
-import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
-import { RouterTestingModule } from '@angular/router/testing';
-import { OktaAuth } from '@okta/okta-auth-js';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  const config = {
-    issuer: 'https://not-real.okta.com',
-    clientId: 'fake-client-id',
-    redirectUri: 'http://localhost:4200'
-  };
-  const oktaAuth = new OktaAuth(config);
+  let oktaAuthSpy: unknown;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [HomeComponent],
-      imports: [
-        RouterTestingModule,
-        OktaAuthModule
+  const idToken: IDToken = {
+    idToken: 'token',
+    clientId: 'client',
+    issuer: 'issuer',
+    authorizeUrl: 'authorize',
+    expiresAt: 123,
+    scopes: [],
+    claims: {
+      sub: 'sub',
+      name: 'Test Name'
+    }
+  };
+
+  const authState: AuthState = {
+    isAuthenticated: true,
+    idToken
+  };
+
+  let oktaStateSpy = jasmine.createSpyObj<OktaAuthStateService>([],['authState$']);
+
+  beforeEach(async () => {
+    oktaAuthSpy = jasmine.createSpyObj('OktaAuth', ['signInWithRedirect']);
+    await TestBed.configureTestingModule({
+      declarations: [],
+      providers: [
+        {
+          provide: OktaAuthStateService,
+          useValue: oktaStateSpy,
+        },
+        {
+          provide: OKTA_AUTH,
+          useValue: oktaAuthSpy,
+        },
       ],
-      providers: [{provide: OKTA_CONFIG, useValue: { oktaAuth }}]
-    })
-      .compileComponents();
-  }));
+    }).compileComponents();
+  });
 
   beforeEach(() => {
+    (Object.getOwnPropertyDescriptor(oktaStateSpy, 'authState$')?.get as jasmine.Spy).and.returnValue(of(authState));
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

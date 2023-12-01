@@ -27,14 +27,14 @@ cd apps
 
 if [ $framework == "angular" ] || [ $framework == "a" ]
 then
-  ng new angular-app --routing --style css --strict
+  ng new angular-app --routing --style css --strict --ssr false
   cd angular-app
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
   ng test --watch=false
 elif [ $framework == "angular-auth0" ] || [ $framework == "a0" ]
 then
-  ng new angular-auth0 --routing --style css --strict
+  ng new angular-auth0 --routing --style css --strict --ssr false
   cd angular-auth0
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$auth0ClientId --auth0

@@ -19,7 +19,6 @@ import { targetBuildNotFoundError } from '@schematics/angular/utility/project-ta
 import { BrowserBuilderOptions } from '@schematics/angular/utility/workspace-models';
 import { dependencies as sdkVersions } from '../package.json';
 import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from '@schematics/angular/utility/dependencies';
-import { addModuleImportToModule } from '@angular/cdk/schematics';
 import ncu from 'npm-check-updates';
 
 const OKTA_AUTH_JS_VERSION = sdkVersions['@okta/okta-auth-js'];
@@ -230,10 +229,6 @@ export function addAuth(options: any): Rule {
           options.style = 'css';
         }
       }
-
-      // add imports to app.module.ts
-      addModuleImportToModule(host, projectPath + '/src/app/app.module.ts',
-        'AuthRoutingModule', './auth-routing.module');
     }
 
     if (framework == IONIC_ANGULAR) {

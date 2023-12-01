@@ -51,31 +51,23 @@ describe('OktaDev Schematics: Angular', () => {
 
   it('should create an auth interceptor', (done) => {
     schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
-      expect(tree.exists('/projects/authtest/src/app/shared/okta/auth.interceptor.ts')).toEqual(true);
+      expect(tree.exists('/projects/authtest/src/app/auth.interceptor.ts')).toEqual(true);
       done();
     }, done.fail);
   });
 
   it('should add routes for callback', (done) => {
     schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
-      const routingModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
+      const routingModule = tree.readContent('/projects/authtest/src/app/app.routes.ts');
       expect(routingModule).toContain(`path: 'home'`);
       expect(routingModule).toContain(`path: 'callback'`);
       done();
     }, done.fail);
   });
 
-  it('should import the auth-routing module in the app module file', (done) => {
+  it('should set the issuer & clientId in the app.config file', (done) => {
     schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
-      const appModule = tree.readContent('/projects/authtest/src/app/app.module.ts');
-      expect(appModule).toMatch(/AuthRoutingModule/);
-      done();
-    }, done.fail);
-  });
-
-  it('should set the issuer & clientId in the auth-routing module file', (done) => {
-    schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
-      const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
+      const appModule = tree.readContent('/projects/authtest/src/app/app.config.ts');
       expect(appModule).toContain(`issuer: '${defaultOptions.issuer}'`);
       expect(appModule).toContain(`clientId: '${defaultOptions.clientId}'`);
       done();
@@ -87,7 +79,7 @@ describe('OktaDev Schematics: Angular', () => {
     testOptions.auth0 = true;
 
     schematicRunner.runSchematic('add-auth', testOptions, appTree).then(tree => {
-      const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
+      const appModule = tree.readContent('/projects/authtest/src/app/app.config.ts');
       let domain: string = defaultOptions.issuer.substring(8);
       domain = domain.substring(0, domain.indexOf('/'));
       expect(appModule).toContain(`domain: '${domain}'`);
@@ -102,7 +94,7 @@ describe('OktaDev Schematics: Angular', () => {
     testOptions.auth0 = true;
 
     schematicRunner.runSchematic('add-auth', testOptions, appTree).then(tree => {
-      const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
+      const appModule = tree.readContent('/projects/authtest/src/app/app.config.ts');
       let domain: string = defaultOptions.issuer.substring(8);
       domain = domain.substring(0, domain.indexOf('/'));
       expect(appModule).toContain(`domain: '${domain}'`);
@@ -116,7 +108,7 @@ describe('OktaDev Schematics: Angular', () => {
     testOptions.auth0 = true;
 
     schematicRunner.runSchematic('add-auth', testOptions, appTree).then(tree => {
-      const appModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
+      const appModule = tree.readContent('/projects/authtest/src/app/app.config.ts');
       expect(appModule).toContain(`domain: 'jhipster.us.auth0.com'`);
       done();
     }, done.fail);
