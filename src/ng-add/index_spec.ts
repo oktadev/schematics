@@ -49,11 +49,9 @@ describe('OktaDev Schematics: ng-add', () => {
     }, done.fail);
   });
 
-  it('should set the issuer & clientId in app and oidc modules', (done) => {
+  it('should set the issuer & clientId in app.config', (done) => {
     schematicRunner.runSchematic('ng-add', defaultOptions, appTree).then(tree => {
-      const appModule = tree.readContent('/projects/authtest/src/app/app.module.ts');
-      expect(appModule).toMatch(/AuthRoutingModule/);
-      const authModule = tree.readContent('/projects/authtest/src/app/auth-routing.module.ts');
+      const authModule = tree.readContent('/projects/authtest/src/app/app.config.ts');
       expect(authModule).toContain(`issuer: '${defaultOptions.issuer}'`);
       expect(authModule).toContain(`clientId: '${defaultOptions.clientId}'`);
       done();
