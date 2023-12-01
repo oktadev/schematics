@@ -2,10 +2,12 @@ import { Component, inject } from '@angular/core';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState } from '@okta/okta-auth-js';
 import { Observable, filter, map } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
+  imports: [AsyncPipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.<%= style %>']
 })
