@@ -25,7 +25,7 @@ describe('OktaDev Schematics: Vue',() => {
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
+    await runner.runSchematic('add-auth', {...defaultOptions}, tree);
 
     expect(tree.files.length).toEqual(4);
     expect(tree.files.sort()).toEqual(['/package.json', '/src/App.vue', '/src/main.js', '/src/router/index.js']);
@@ -51,7 +51,7 @@ describe('OktaDev Schematics: Vue',() => {
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', {...testOptions}, tree).toPromise();
+    await runner.runSchematic('add-auth', {...testOptions}, tree);
 
     expect(tree.files.length).toEqual(4);
     expect(tree.files.sort()).toEqual(['/package.json', '/src/App.vue', '/src/main.js', '/src/router/index.js']);
