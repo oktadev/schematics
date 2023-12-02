@@ -139,7 +139,7 @@ export const EXPRESS = 'express';
 
 function getFramework(host: Tree): string {
   let possibleFiles = ['/package.json'];
-  let path = possibleFiles.filter(path => host.exists(path))[0];
+  const path = possibleFiles.filter(path => host.exists(path))[0];
 
   const configBuffer = host.read(path);
   if (configBuffer === null) {
