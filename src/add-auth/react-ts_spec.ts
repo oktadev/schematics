@@ -14,7 +14,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
   it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const schematic = runner.runSchematic('add-auth', {issuer:'foo',clientId:'bar'}, Tree.empty());
+    const schematic = runner.runSchematic('add-auth', {}, Tree.empty());
     await expectAsync(schematic).toBeRejected();
   });
 
