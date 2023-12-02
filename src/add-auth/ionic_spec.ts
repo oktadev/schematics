@@ -57,10 +57,10 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     expect(tree.files.length).toEqual(30);
     expect(tree.files.sort()).toEqual([
       '/package.json',
-      '/src/app/app-routing.module.ts',
       '/src/app/app.component.spec.ts',
       '/src/app/app.component.ts',
       '/src/app/app.module.ts',
+      '/src/app/app.routes.ts',
       '/src/app/auth/auth-callback/auth-callback.module.ts',
       '/src/app/auth/auth-callback/auth-callback.page.ts',
       '/src/app/auth/auth-guard.service.ts',
