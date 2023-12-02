@@ -14,8 +14,8 @@ describe('OktaDev Schematics: React + TypeScript', () => {
   it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const schematic = await runner.runSchematicAsync('add-auth', {}, Tree.empty());
-    await expectAsync(schematic.toPromise()).toBeRejected();
+    const schematic = await runner.runSchematic('add-auth', {}, Tree.empty());
+    await expectAsync(schematic).toBeRejected();
   });
 
   it('works with Okta', async () => {
@@ -25,7 +25,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', {...defaultOptions}, tree).toPromise();
+    await runner.runSchematic('add-auth', {...defaultOptions}, tree);
 
     expect(tree.files.length).toEqual(9);
     expect(tree.files.sort()).toEqual(['/package.json', '/src/App.test.tsx', '/src/App.tsx',
@@ -41,8 +41,8 @@ describe('OktaDev Schematics: React + TypeScript', () => {
 
   it('fail with no package.json', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const schematic = await runner.runSchematicAsync('add-auth', {...defaultOptions}, Tree.empty());
-    await expectAsync(schematic.toPromise()).toBeRejected();
+    const schematic = await runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
+    await expectAsync(schematic).toBeRejected();
   });
 
   it('fail when no frameworks', async () => {
@@ -53,8 +53,8 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     tree.create('/package.json', JSON.stringify(pkgNoFrameworks));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const schematic = await runner.runSchematicAsync('add-auth', {...defaultOptions}, Tree.empty());
-    await expectAsync(schematic.toPromise()).toBeRejected();
+    const schematic = await runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
+    await expectAsync(schematic).toBeRejected();
   });
 
   it('works with Auth0', async () => {
@@ -68,7 +68,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', {...testOptions}, tree).toPromise();
+    await runner.runSchematic('add-auth', {...testOptions}, tree);
 
     expect(tree.files.length).toEqual(7);
     expect(tree.files.sort()).toEqual(['/package.json', '/src/App.test.tsx', '/src/App.tsx',

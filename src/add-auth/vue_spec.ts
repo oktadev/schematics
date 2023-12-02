@@ -14,8 +14,8 @@ describe('OktaDev Schematics: Vue',() => {
   it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const schematic = await runner.runSchematicAsync('add-auth', {}, Tree.empty());
-    await expectAsync(schematic.toPromise()).toBeRejected();
+    const schematic = await runner.runSchematic('add-auth', {}, Tree.empty());
+    await expectAsync(schematic).toBeRejected();
   });
 
   it('works with Okta', async () => {

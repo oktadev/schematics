@@ -33,8 +33,8 @@ describe('OktaDev Schematics: Angular', () => {
   };
 
   beforeEach(async() => {
-    appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions).toPromise();
-    appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'application', appOptions, appTree).toPromise();
+    appTree = await schematicRunner.runExternalSchematic('@schematics/angular', 'workspace', workspaceOptions);
+    appTree = await schematicRunner.runExternalSchematic('@schematics/angular', 'application', appOptions, appTree);
   });
 
   it('should create home component files with scss', (done) => {
