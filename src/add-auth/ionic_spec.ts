@@ -14,8 +14,8 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
   it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const schematic = await runner.runSchematicAsync('add-auth', {}, Tree.empty());
-    await expectAsync(schematic.toPromise()).toBeRejected();
+    const schematic = runner.runSchematic('add-auth', {}, Tree.empty());
+    await expectAsync(schematic).toBeRejectedWithError(/required property 'issuer'/);
   });
 
   it('works with Okta', async () => {
@@ -27,7 +27,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     testOptions.platform = 'capacitor';
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', testOptions, tree).toPromise();
+    await runner.runSchematic('add-auth', testOptions, tree);
 
     expect(tree.files.length).toEqual(30);
     expect(tree.files.sort()).toEqual([
@@ -90,7 +90,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     testOptions.auth0 = true;
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', testOptions, tree).toPromise();
+    await runner.runSchematic('add-auth', testOptions, tree);
 
     expect(tree.files.length).toEqual(30);
 
@@ -106,7 +106,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     tree.create('/package.json', JSON.stringify(packageJson));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    await runner.runSchematicAsync('add-auth', defaultOptions, tree).toPromise();
+    await runner.runSchematic('add-auth', defaultOptions, tree);
 
     const pkgJson = tree.readContent('/package.json');
     expect(pkgJson).toContain('@capacitor/browser');
