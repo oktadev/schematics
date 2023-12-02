@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { AuthService } from 'ionic-appauth';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  imports: [IonApp, IonRouterOutlet]
 })
 export class AppComponent {
 

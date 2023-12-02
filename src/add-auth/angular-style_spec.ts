@@ -52,7 +52,7 @@ describe('OktaDev Schematics: Angular', () => {
   it('should use scss for style', (done) => {
     schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
       const routingModule = tree.readContent('/projects/authtest/src/app/app.component.ts');
-      expect(routingModule).toContain(`styleUrls: ['./app.component.scss']`);
+      expect(routingModule).toContain(`styleUrl: './app.component.scss'`);
       done();
     }, done.fail);
   });

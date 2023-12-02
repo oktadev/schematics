@@ -65,7 +65,15 @@ describe('OktaDev Schematics: Angular', () => {
     }, done.fail);
   });
 
-  it('should set the issuer & clientId in the app.config file', (done) => {
+  it('should import OktaAuthModule in the app config file', (done) => {
+    schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
+      const appModule = tree.readContent('/projects/authtest/src/app/app.config.ts');
+      expect(appModule).toMatch(/OktaAuthModule/);
+      done();
+    }, done.fail);
+  });
+
+  it('should set the issuer & clientId in the app config file', (done) => {
     schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
       const appModule = tree.readContent('/projects/authtest/src/app/app.config.ts');
       expect(appModule).toContain(`issuer: '${defaultOptions.issuer}'`);
