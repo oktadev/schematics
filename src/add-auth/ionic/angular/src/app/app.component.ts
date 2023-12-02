@@ -6,6 +6,7 @@ import { AuthService } from 'ionic-appauth';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   templateUrl: 'app.component.html',
   imports: [IonApp, IonRouterOutlet]
 })

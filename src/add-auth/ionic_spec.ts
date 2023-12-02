@@ -29,7 +29,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', testOptions, tree).toPromise();
 
-    expect(tree.files.length).toEqual(29);
+    expect(tree.files.length).toEqual(30);
     expect(tree.files.sort()).toEqual([
       '/package.json',
       '/src/app/app.component.spec.ts',
@@ -59,7 +59,9 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
       '/src/app/tab1/tab1.page.spec.ts',
       '/src/app/tab1/tab1.page.ts',
       '/src/environments/environment.prod.ts',
-      '/src/environments/environment.ts' ]);
+      '/src/environments/environment.ts',
+      '/src/main.ts'
+    ]);
 
     const appModule = tree.readContent('/src/app/auth/auth.module.ts');
 
@@ -90,7 +92,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematicAsync('add-auth', testOptions, tree).toPromise();
 
-    expect(tree.files.length).toEqual(29);
+    expect(tree.files.length).toEqual(30);
 
     const env = tree.readContent('/src/environments/environment.ts');
     expect(env).toContain(`client_id: '${testOptions.clientId}'`);
