@@ -14,7 +14,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
   it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const schematic = await runner.runSchematic('add-auth', {}, Tree.empty());
+    const schematic = await runner.runSchematic('add-auth', {issuer:'foo',clientId:'bar'}, Tree.empty());
     await expectAsync(schematic).toBeRejected();
   });
 
@@ -54,7 +54,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
     const schematic = await runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
-    await expectAsync(schematic).toBeRejected();
+    await expectAsync(schematic).toBeRejectedWithError(/required property 'issuer'/)
   });
 
   it('works with Auth0', async () => {
