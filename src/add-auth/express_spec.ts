@@ -16,7 +16,7 @@ describe('OktaDev Schematics: Express', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
     const schematic = runner.runSchematic('add-auth', {}, Tree.empty());
-    await expectAsync(schematic).toBeRejectedWithError(/ required property 'issuer'/);
+    await expectAsync(schematic).toBeRejectedWithError(/required property 'issuer'/);
   });
 
   it('works with Okta', async () => {
