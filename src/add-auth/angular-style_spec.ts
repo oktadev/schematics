@@ -1,7 +1,6 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 
-// tslint:disable:max-line-length
 describe('OktaDev Schematics: Angular', () => {
   const schematicRunner = new SchematicTestRunner(
     'schematics',

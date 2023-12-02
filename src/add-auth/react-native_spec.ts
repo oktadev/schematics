@@ -14,8 +14,8 @@ describe('OktaDev Schematics: React Native', () => {
   it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const schematic = await runner.runSchematic('add-auth', {issuer:'foo',clientId:'bar'}, Tree.empty());
-    await expectAsync(schematic).toBeRejectedWithError(/required property 'issuer'/);
+    const schematic = runner.runSchematic('add-auth', {}, Tree.empty());
+    await expectAsync(schematic).toBeRejectedWithError(/ required property 'issuer'/);
   });
 
   it('works with Okta', async () => {
@@ -41,7 +41,7 @@ describe('OktaDev Schematics: React Native', () => {
 
   it('fail with no package.json', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const schematic = await runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
+    const schematic = runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
     await expectAsync(schematic).toBeRejected();
   });
 

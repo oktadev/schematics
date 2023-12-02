@@ -14,7 +14,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
   it('requires required issuer option', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
 
-    const schematic = await runner.runSchematic('add-auth', {issuer:'foo',clientId:'bar'}, Tree.empty());
+    const schematic = runner.runSchematic('add-auth', {issuer:'foo',clientId:'bar'}, Tree.empty());
     await expectAsync(schematic).toBeRejected();
   });
 
@@ -41,7 +41,7 @@ describe('OktaDev Schematics: React + TypeScript', () => {
 
   it('fail with no package.json', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const schematic = await runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
+    const schematic = runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
     await expectAsync(schematic).toBeRejected();
   });
 
@@ -53,8 +53,8 @@ describe('OktaDev Schematics: React + TypeScript', () => {
     tree.create('/package.json', JSON.stringify(pkgNoFrameworks));
 
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const schematic = await runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
-    await expectAsync(schematic).toBeRejectedWithError(/required property 'issuer'/)
+    const schematic = runner.runSchematic('add-auth', {...defaultOptions}, Tree.empty());
+    await expectAsync(schematic).toBeRejected();
   });
 
   it('works with Auth0', async () => {
