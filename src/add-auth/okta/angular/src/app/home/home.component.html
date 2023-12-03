@@ -1,7 +1,7 @@
 <div style="text-align: center">
-  @if ((isAuthenticated$ | async) === false) {
-  <button (click)="login()">Login</button>
-  } @else {
-  <button (click)="logout()">Logout</button>
-  }
+@if ((isAuthenticated$ | async) === false) {
+  <button (click)="login()" id="login">Login</button>
+} @else {
+  <button (click)="logout()" id="logout">Logout</button>
+}
 </div>
