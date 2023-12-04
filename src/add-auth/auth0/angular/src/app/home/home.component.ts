@@ -7,7 +7,7 @@ import { AsyncPipe, DOCUMENT } from '@angular/common';
   selector: 'app-home',
   imports: [AsyncPipe],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.<%= style %>']
+  styleUrl: './home.component.<%= style %>'
 })
 export class HomeComponent {
 
