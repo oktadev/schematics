@@ -65,10 +65,10 @@ describe('OktaDev Schematics: Angular', () => {
     }, done.fail);
   });
 
-  it('should import OktaAuthModule in the app config file', (done) => {
+  it('should provide Okta auth in the app config file', (done) => {
     schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
       const appModule = tree.readContent('/projects/authtest/src/app/app.config.ts');
-      expect(appModule).toMatch(/OktaAuthModule/);
+      expect(appModule).toContain('provideOktaAuth(withOktaConfig({ oktaAuth }))');
       done();
     }, done.fail);
   });
@@ -120,5 +120,64 @@ describe('OktaDev Schematics: Angular', () => {
       expect(appModule).toContain(`domain: 'jhipster.us.auth0.com'`);
       done();
     }, done.fail);
+  });
+  it('should not replace the app spec', (done) => {
+    const appSpec = (tree0: UnitTestTree) => tree0.readContent('/projects/authtest/src/app/app.component.spec.ts');
+    const before = appSpec(appTree!);
+    schematicRunner.runSchematic('add-auth', defaultOptions, appTree).then(tree => {
+      expect(appSpec(tree)).toEqual(before);
+      done();
+    }, done.fail);
+  });
+
+  describe('with Angular 20+ file names', () => {
+    const appPath = '/projects/authtest/src/app';
+
+    beforeEach(() => {
+      // ng new 20+ generates app.ts, class App, and adds provideBrowserGlobalErrorListeners()
+      appTree!.rename(`${appPath}/app.component.ts`, `${appPath}/app.ts`);
+      appTree!.rename(`${appPath}/app.component.spec.ts`, `${appPath}/app.spec.ts`);
+      appTree!.overwrite(`${appPath}/app.config.ts`, `import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes)
+  ]
+};
+`);
+    });
+
+    for (const auth0 of [false, true]) {
+      const provider = auth0 ? 'Auth0' : 'Okta';
+
+      it(`should create home files without a suffix with ${provider}`, (done) => {
+        schematicRunner.runSchematic('add-auth', {...defaultOptions, auth0}, appTree).then(tree => {
+          ['home.css', 'home.html', 'home.spec.ts', 'home.ts'].forEach(f => expect(tree.exists(`${appPath}/home/${f}`)).toEqual(true));
+          expect(tree.exists(`${appPath}/home/home.component.ts`)).toEqual(false);
+          expect(tree.readContent(`${appPath}/home/home.ts`)).toContain('export class Home {');
+          expect(tree.readContent(`${appPath}/home/home.ts`)).toContain(`templateUrl: './home.html'`);
+          expect(tree.readContent(`${appPath}/app.routes.ts`)).toContain(`import { Home } from './home/home';`);
+          expect(tree.exists(`${appPath}/app.component.spec.ts`)).toEqual(false);
+          done();
+        }, done.fail);
+      });
+
+      it(`should keep provideBrowserGlobalErrorListeners with ${provider}`, (done) => {
+        schematicRunner.runSchematic('add-auth', {...defaultOptions, auth0}, appTree).then(tree => {
+          expect(tree.readContent(`${appPath}/app.config.ts`)).toContain('provideBrowserGlobalErrorListeners(),');
+          done();
+        }, done.fail);
+      });
+
+      it(`should not use jasmine in the home spec with ${provider}`, (done) => {
+        schematicRunner.runSchematic('add-auth', {...defaultOptions, auth0}, appTree).then(tree => {
+          expect(tree.readContent(`${appPath}/home/home.spec.ts`)).not.toContain('jasmine');
+          done();
+        }, done.fail);
+      });
+    }
   });
 });

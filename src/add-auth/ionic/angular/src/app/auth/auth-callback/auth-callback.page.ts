@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/lazy';
 import { Router } from '@angular/router';
 import { AuthActions, IAuthAction, AuthService } from 'ionic-appauth';
 import { Subscription } from 'rxjs';
 
 @Component({
-  template: '<p style="margin-left: 10px">Authorizing...</p>'
+  template: '<p style="margin-left: 10px">Authorizing...</p>',
+  standalone: false,
 })
 export class AuthCallbackPage implements OnInit, OnDestroy {
   sub!: Subscription;

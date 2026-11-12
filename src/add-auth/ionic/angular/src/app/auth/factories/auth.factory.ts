@@ -1,5 +1,5 @@
 import { NgZone } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 import { StorageBackend, Requestor } from '@openid/appauth';
 import { AuthService, Browser } from 'ionic-appauth';
 import { environment } from '../../../environments/environment';

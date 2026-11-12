@@ -199,7 +199,7 @@ then
   npm run build && ng test --watch=false
 elif [ $framework == "react-native" ] || [ $framework == "rn" ]
 then
-  npx -y react-native init SecureApp
+  npx -y @react-native-community/cli@20.2.0 init SecureApp
   cd SecureApp
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$issuer --client-id=$clientId
@@ -207,7 +207,7 @@ then
   npm test -- -u
 elif [ $framework == "react-native-auth0" ] || [ $framework == "rn0" ]
 then
-  npx -y react-native init SecureAuth0
+  npx -y @react-native-community/cli@20.2.0 init SecureAuth0
   cd SecureAuth0
   npm install -D ../../oktadev*.tgz
   schematics @oktadev/schematics:add-auth --issuer=$auth0Issuer --client-id=$auth0ClientId --auth0

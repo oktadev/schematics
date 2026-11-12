@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthActions, AuthObserver, AuthService, IAuthAction } from 'ionic-appauth';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/lazy';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 
 const { audience } = environment;
 
@@ -10,6 +10,7 @@ const { audience } = environment;
   selector: 'app-home',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  standalone: false,
 })
 export class LoginPage implements OnInit, OnDestroy {
   action!: IAuthAction;

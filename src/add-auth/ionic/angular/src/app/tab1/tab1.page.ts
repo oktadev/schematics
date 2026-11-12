@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/lazy';
 import { AuthActions, AuthService, Browser, IAuthAction } from 'ionic-appauth';
 import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -9,7 +9,8 @@ const { audience } = environment;
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  styleUrls: ['tab1.page.scss'],
+  standalone: false,
 })
 export class Tab1Page implements OnInit, OnDestroy {
   user$ = this.auth.user$;

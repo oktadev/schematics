@@ -1,149 +1,91 @@
 import React from 'react';
+import { DeviceEventEmitter, NativeModules } from 'react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import Auth from '../Auth';
-import { shallow } from 'enzyme';
-import renderer from 'react-test-renderer';
-import { waitForState } from 'enzyme-async-helpers';
-import { NativeEventEmitter } from 'react-native';
 
-jest
-  .mock(
-    '../node_modules/react-native/Libraries/Components/StatusBar/StatusBar',
-    () => 'StatusBar',
-  )
-  .mock(
-    '../node_modules/react-native/Libraries/Components/ScrollView/ScrollView',
-    () => 'ScrollView',
-  )
-  .mock(
-    '../node_modules/react-native/Libraries/EventEmitter/NativeEventEmitter',
-  );
+const { OktaSdkBridge } = NativeModules;
 
-const nativeEmitter = new NativeEventEmitter();
-
-global.fetch = jest
-  .fn()
-  .mockImplementation(() => {
-    return new Promise((resolve, reject) => {
-      resolve({
-        json: () => {
-          return {
-            user: [{ foo: 'foo', bar: 'bar' }],
-          }
-        },
-        ok: true,
-      });
-    });
-  })
-  .mockImplementationOnce(() => {
-    return new Promise((resolve, reject) => {
-      resolve({
-        json: () => {
-          return {
-            userinfo_endpoint: 'dummy_endpoint',
-          }
-        },
-        ok: true,
-      });
-    });
+// The Okta SDK's EventEmitter listens on the device event emitter
+const emit = async event => {
+  await act(async () => {
+    DeviceEventEmitter.emit(event);
   });
+};
+
+const login = async () => {
+  OktaSdkBridge.isAuthenticated.mockResolvedValue({ authenticated: true });
+  await emit('signInSuccess');
+};
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  OktaSdkBridge.isAuthenticated.mockResolvedValue({ authenticated: false });
+});
 
 describe('auth setup', () => {
-  it('should render without crashing', () => {
-    const rendered = renderer.create(<Auth/>).toJSON();
-    expect(rendered).toBeTruthy();
+  it('should render correctly', async () => {
+    await render(<Auth />);
+    expect(screen.toJSON()).toMatchSnapshot();
   });
 
-  it('should render correctly', () => {
-    const rendered = renderer.create(<Auth/>).toJSON();
-    expect(rendered).toMatchSnapshot();
+  it('should render login button if not authenticated', async () => {
+    await render(<Auth />);
+    expect(screen.getByText('Login')).toBeTruthy();
+    expect(screen.queryByText('Logout')).toBeNull();
+    expect(screen.queryByText('Get User From Id Token')).toBeNull();
+    expect(screen.queryByText('Get User From Request')).toBeNull();
   });
 
-  it('should initialize with default state', () => {
-    const wrapper = shallow(<Auth/>);
-    expect(wrapper.state().authenticated).toBe(false);
-    expect(wrapper.state().context).toBe(null);
-  });
-
-  it('should render login button if not authenticated', () => {
-    const wrapper = shallow(<Auth/>);
-    const loginButton = wrapper.find('Button').get(0);
-    expect(loginButton.props.title).toBe('Login');
-  });
-
-  it('should render logout and get user info buttons if authenticated', () => {
-    const wrapper = shallow(<Auth/>);
-    wrapper.setState({ authenticated: true });
-    const logoutButton = wrapper.find('Button').get(0);
-    const getUserFromIdButton = wrapper.find('Button').get(1);
-    const getUserButton = wrapper.find('Button').get(2);
-    expect(logoutButton.props.title).toBe('Logout');
-    expect(getUserFromIdButton.props.title).toBe('Get User From Id Token');
-    expect(getUserButton.props.title).toBe('Get User From Request');
-  });
-
-  it('should not render login button if authenticated', () => {
-    const wrapper = shallow(<Auth/>);
-    wrapper.setState({ authenticated: true });
-    const loginButton = wrapper.find('Button').get(0);
-    expect(loginButton.props.title).not.toBe('Login');
-  });
-
-  it('should not render logout and get user info buttons if not authenticated', () => {
-    const wrapper = shallow(<Auth/>);
-    const logoutButton = wrapper.find('Button').get(0);
-    const getUserFromIdButton = wrapper.find('Button').get(1);
-    const getUserButton = wrapper.find('Button').get(2);
-    expect(logoutButton.props.title).not.toBe('Logout');
-    expect(getUserFromIdButton).toBe(undefined);
-    expect(getUserButton).toBe(undefined);
+  it('should render logout and get user info buttons if authenticated', async () => {
+    await render(<Auth />);
+    await login();
+    expect(screen.queryByText('Login')).toBeNull();
+    expect(screen.getByText('Logout')).toBeTruthy();
+    expect(screen.getByText('Get User From Id Token')).toBeTruthy();
+    expect(screen.getByText('Get User From Request')).toBeTruthy();
   });
 });
 
 describe('authentication flow', () => {
+  it('should sign in when the login button is pressed', async () => {
+    await render(<Auth />);
+    await fireEvent.press(screen.getByText('Login'));
+    expect(OktaSdkBridge.signIn).toHaveBeenCalled();
+  });
+
   it('should detect when the user has logged in', async () => {
-    const wrapper = shallow(<Auth/>);
-    const loginButton = wrapper.find('Button').get(0);
-    await loginButton.props.onPress();
-    expect(loginButton.props.title).toBe('Login');
-    nativeEmitter.emit('signInSuccess');
-    expect(wrapper.state().authenticated).toBe(true);
-    expect(wrapper.state().context).toBe('Logged in!');
+    await render(<Auth />);
+    await login();
+    expect(screen.getByText('Logged in!')).toBeTruthy();
   });
 
   it('should detect when the user has signed out', async () => {
-    const wrapper = shallow(<Auth/>);
-    wrapper.setState({ authenticated: true });
-    const logoutButton = wrapper.find('Button').get(0);
-    await logoutButton.props.onPress();
-    expect(logoutButton.props.title).toBe('Logout');
-    nativeEmitter.emit('signOutSuccess');
-    expect(wrapper.state().authenticated).toBe(false);
-    expect(wrapper.state().context).toBe('Logged out!');
+    await render(<Auth />);
+    await login();
+    await fireEvent.press(screen.getByText('Logout'));
+    expect(OktaSdkBridge.signOut).toHaveBeenCalled();
+    OktaSdkBridge.isAuthenticated.mockResolvedValue({ authenticated: false });
+    await emit('signOutSuccess');
+    expect(screen.getByText('Login')).toBeTruthy();
+    expect(screen.getByText('Logged out!')).toBeTruthy();
   });
 
   it('should return user profile information from id token', async () => {
-    const mockGetIdToken = require('react-native').NativeModules.OktaSdkBridge.getIdToken;
-    mockGetIdToken.mockImplementationOnce(() => {
-      // id_token returns { a: 'b' }
-      return { 'id_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhIjoiYiJ9.jiMyrsmD8AoHWeQgmxZ5yq8z0lXS67_QGs52AzC8Ru8' };
-    });
-    const wrapper = shallow(<Auth/>);
-    wrapper.setState({ authenticated: true });
-    const profileButton = wrapper.find('Button').get(1);
-    await profileButton.props.onPress();
-    await waitForState(wrapper, state => state.context !== null);
-    expect(profileButton.props.title).toBe('Get User From Id Token');
-    expect(wrapper.state().context).toContain('"a": "b"');
+    // An unsigned test token whose payload is { a: 'b' }
+    const encode = value => Buffer.from(JSON.stringify(value)).toString('base64url');
+    const idToken = [encode({ alg: 'none', typ: 'JWT' }), encode({ a: 'b' }), 'signature'].join('.');
+    OktaSdkBridge.getIdToken.mockResolvedValue({ id_token: idToken });
+    await render(<Auth />);
+    await login();
+    await fireEvent.press(screen.getByText('Get User From Id Token'));
+    expect(await screen.findByText(/"a": "b"/)).toBeTruthy();
   });
 
   it('should return user profile information from getUser method', async () => {
-    const mockGetUser = require('react-native').NativeModules.OktaSdkBridge.getUser;
-    mockGetUser.mockResolvedValue({ "name": "Mock User" });
-    const wrapper = shallow(<Auth/>);
-    wrapper.setState({ authenticated: true });
-    const profileButton = wrapper.find('Button').get(2);
-    await profileButton.props.onPress();
-    await waitForState(wrapper, state => state.context !== null);
-    expect(profileButton.props.title).toBe('Get User From Request');
+    OktaSdkBridge.getUser.mockResolvedValue({ name: 'Mock User' });
+    await render(<Auth />);
+    await login();
+    await fireEvent.press(screen.getByText('Get User From Request'));
+    expect(await screen.findByText(/Mock User/)).toBeTruthy();
   });
 });

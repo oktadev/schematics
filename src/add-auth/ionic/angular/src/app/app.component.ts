@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { AuthService } from 'ionic-appauth';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  standalone: false,
 })
 export class AppComponent {
 

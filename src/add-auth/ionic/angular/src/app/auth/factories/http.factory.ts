@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 import { NgHttpService } from '../ng-http.service';
 import { CapacitorHttpService } from '../cap-http.service';
 

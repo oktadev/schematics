@@ -14,25 +14,37 @@ const defaultAppModule: string = `import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular/lazy';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, IonicModule, AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}`;
+
+const defaultAppRoutingModule: string = `import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  {
+    path: '',
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+  }
+];
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+  ],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}`;
 
 describe('OktaDev Schematics: Ionic/Angular', () => {
   it('requires required issuer option', async () => {
@@ -47,6 +59,7 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
 
     tree.create('/package.json', JSON.stringify(packageJson));
     tree.create('/src/app/app.module.ts', defaultAppModule);
+    tree.create('/src/app/app-routing.module.ts', defaultAppRoutingModule);
 
     const testOptions: any = {...defaultOptions};
     testOptions.platform = 'capacitor';
@@ -54,9 +67,10 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     await runner.runSchematic('add-auth', testOptions, tree);
 
-    expect(tree.files.length).toEqual(30);
+    expect(tree.files.length).toEqual(31);
     expect(tree.files.sort()).toEqual([
       '/package.json',
+      '/src/app/app-routing.module.ts',
       '/src/app/app.component.spec.ts',
       '/src/app/app.component.ts',
       '/src/app/app.module.ts',
@@ -89,8 +103,12 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
 
     const appModule = tree.readContent('/src/app/app.module.ts');
 
-    expect(appModule).toMatch(/AuthModule/);
-    expect(appModule).toMatch(/HttpClientModule/);
+    expect(appModule).toContain('AppRoutingModule, AuthModule]');
+    expect(appModule).toContain('provideHttpClient(),');
+
+    const appRouting = tree.readContent('/src/app/app-routing.module.ts');
+    expect(appRouting).toContain(`import { routes } from './app.routes';`);
+    expect(appRouting).not.toContain('const routes');
 
     const env = tree.readContent('/src/environments/environment.ts');
     expect(env).toContain(`client_id: '${defaultOptions.clientId}'`);
@@ -102,6 +120,8 @@ describe('OktaDev Schematics: Ionic/Angular', () => {
     expect(pkgJson).toContain('@capacitor/browser');
     expect(pkgJson).toContain('@capacitor/preferences');
     expect(pkgJson).toContain('capacitor-secure-storage-plugin');
+    expect(pkgJson).toContain('"@openid/appauth": "1.3.2"');
+    expect(pkgJson).not.toContain('@capacitor-community/http');
   });
 
   it('works with Auth0', async () => {

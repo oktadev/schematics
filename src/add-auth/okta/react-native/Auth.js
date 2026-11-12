@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
 import {
-  SafeAreaView,
   ScrollView,
   Button,
   StyleSheet,
@@ -128,7 +127,7 @@ export default class Auth extends Component {
   render() {
     return (
       <Fragment>
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
           <View style={styles.buttonContainer}>
             <View style={styles.button}>
               {this.state.authenticated ? (
@@ -158,7 +157,7 @@ export default class Auth extends Component {
             style={styles.infoBox}>
             <Text>{this.state.context}</Text>
           </ScrollView>
-        </SafeAreaView>
+        </View>
       </Fragment>
     );
   }

@@ -1,7 +1,7 @@
 import { NgModule, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/lazy';
 import { Requestor, StorageBackend } from '@openid/appauth';
 import { authFactory, browserFactory, httpFactory, storageFactory } from './factories';
 import { AuthService, Browser } from 'ionic-appauth';

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular/lazy';
 import { AuthService } from 'ionic-appauth';
 
 @Component({
-  template: '<p style="margin-left: 10px">Signing out...</p>'
+  template: '<p style="margin-left: 10px">Signing out...</p>',
+  standalone: false,
 })
 export class EndSessionPage implements OnInit {
 

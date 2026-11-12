@@ -27,12 +27,17 @@ describe('OktaDev Schematics: React Native', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     tree = await runner.runSchematic('add-auth', {...defaultOptions}, tree);
 
-    expect(tree.files.length).toEqual(8);
-    expect(tree.files.sort()).toEqual(['/.npmrc', '/App.js', '/Auth.js', '/auth.config.js',
+    expect(tree.files.length).toEqual(7);
+    expect(tree.files.sort()).toEqual(['/App.js', '/Auth.js', '/auth.config.js',
       '/package.json', '/setupJest.js', '/tests/App-test.js', '/tests/Auth-test.js']);
 
     const authComponent = tree.readContent('/Auth.js');
     expect(authComponent).toMatch(/class Auth extends Component/);
+
+    const pkgJson = JSON.parse(tree.readContent('/package.json'));
+    expect(pkgJson.jest.preset).toEqual('@react-native/jest-preset');
+    expect(pkgJson.devDependencies['@testing-library/react-native']).toBeDefined();
+    expect(pkgJson.devDependencies['enzyme']).toBeUndefined();
 
     const config = tree.readContent('/auth.config.js');
     expect(config).toContain(`discoveryUri: '${defaultOptions.issuer}'`);
@@ -58,8 +63,8 @@ describe('OktaDev Schematics: React Native', () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
     tree = await runner.runSchematic('add-auth', {...testOptions}, tree);
 
-    expect(tree.files.length).toEqual(7);
-    expect(tree.files.sort()).toEqual(['/.npmrc', '/App.js', '/Auth.js', '/auth.config.js',
+    expect(tree.files.length).toEqual(6);
+    expect(tree.files.sort()).toEqual(['/App.js', '/Auth.js', '/auth.config.js',
       '/package.json', '/setupJest.js', '/tests/App-test.js']);
 
     const authComponent = tree.readContent('/Auth.js');

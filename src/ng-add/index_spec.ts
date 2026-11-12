@@ -52,7 +52,7 @@ describe('OktaDev Schematics: ng-add', () => {
   it('should set the issuer & clientId in app config file', (done) => {
     schematicRunner.runSchematic('ng-add', defaultOptions, appTree).then(tree => {
       const appConfig = tree.readContent('/projects/authtest/src/app/app.config.ts');
-      expect(appConfig).toMatch(/OktaAuthModule/);
+      expect(appConfig).toContain('provideOktaAuth(withOktaConfig({ oktaAuth }))');
       expect(appConfig).toContain(`issuer: '${defaultOptions.issuer}'`);
       expect(appConfig).toContain(`clientId: '${defaultOptions.clientId}'`);
       done();

@@ -1,5 +1,5 @@
 # OktaDev Schematics
-[![NPM version][npm-image]][npm-url] [![Build Status][github-actions-image]][github-actions-url] <!--[![Dependency Status][daviddm-image]][daviddm-url]--> <object id="badge" data="https://snyk-widget.herokuapp.com/badge/npm/%40oktadev%2Fschematics/6.1.0/badge.svg" type="image/svg+xml"></object> [![Known Vulnerabilities][snyk-image]][snyk-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][github-actions-image]][github-actions-url] <!--[![Dependency Status][daviddm-image]][daviddm-url]--> [![Known Vulnerabilities][snyk-image]][snyk-url]
 > Fast and easy installation of Okta and Auth0's OIDC SDKs
 
 This project is a Schematics implementation that allows you to easily integrate Okta and Auth0 into your Angular, React, Vue, Ionic, React Native, and Express projects.
@@ -9,7 +9,7 @@ This library currently supports:
 - [OAuth 2.0 Authorization Code Flow](https://tools.ietf.org/html/rfc6749#section-1.3.1)
 - [Proof Key for Code Exchange (PKCE)](https://tools.ietf.org/html/rfc7636)
 
-**Prerequisites:** [Node.js](https://nodejs.org/). 
+**Prerequisites:** [Node.js](https://nodejs.org/) 22 or later.
 
 Use the links below to see how to create an app and integrate authentication using OktaDev Schematics.
 
@@ -35,7 +35,7 @@ First, create an empty project with Angular CLI. You **must** add Angular routin
 
 ```
 npm i -g @angular/cli
-ng new secure-angular --routing
+ng new secure-angular --routing --ssr false
 cd secure-angular
 ```
 
@@ -237,7 +237,7 @@ Install the Schematics CLI globally.
 npm install -g @angular-devkit/schematics-cli
 ```
 
-Then install and run the `add-auth` schematic in your `secure-react` project with the `--auth0` flag:
+Then install and run the `add-auth` schematic in your `secure-vue` project with the `--auth0` flag:
 
 ```
 npm i -D @oktadev/schematics
@@ -422,7 +422,7 @@ See [Ionic's iOS](https://ionicframework.com/docs/developing/ios) and [Android D
 Create a new React Native project with the React Native CLI. 
 
 ```
-npx react-native init SecureApp
+npx @react-native-community/cli@20.2.0 init SecureApp
 ```
 
 Then, integrate your React Native app with [Okta](#okta-for-react-native) or [Auth0](#auth0-for-react-native).
@@ -508,8 +508,6 @@ Start your app and authenticate with Okta. 🎉
 npm run ios
 ```
 
-**NOTE:** If you have issues with compiling, you may have to disable Flipper in `ios/Podfile`. Then run `npx pod-install` again.
-
 ### Android
 
 One change is made to Android build files. In `android/app/build.gradle`, a `manifestPlaceholders` is added in `android` > `defaultConfig`.
@@ -564,7 +562,7 @@ Start your app and authenticate with Okta at `http://localhost:3000`. 🎊
 npm start
 ```
 
-See the [Okta OIDC Middleware SDK](https://github.com/okta/okta-oidc-js/tree/master/packages/oidc-middleware#readme) for more information.
+See the [Okta OIDC Middleware SDK](https://github.com/okta/okta-oidc-middleware#readme) for more information.
 
 You can also create your app using the Okta Admin Console:
 
@@ -622,19 +620,18 @@ This project supports unit tests and integration tests.
 
 `npm test` will run the unit tests, using [Jasmine](https://jasmine.github.io/) as a runner and test framework.
 
-`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `ionic`, `react-native`, and `express`. You can also add `-auth0` to any of these options.
+`./test-app.sh angular` will create an Angular project with Angular CLI, install this project, and make sure all the project's tests pass. Other options include `react`, `react-ts`, `vue`, `vue-ts`, `ionic`, `react-native`, and `express`. You can also add `-auth0` to any of these options.
 
 `./test-all.sh` will test all the options for both Okta and Auth0: Angular, React, React with TypeScript, Vue, Vue with TypeScript, Ionic with Capacitor, React Native, and Express.
 
 ## Publishing
 
-To publish, simply do:
+To publish a new version:
 
-```bash
-npm publish
-```
+1. Update the `version` in `package.json` and merge it to `main`.
+2. Create a GitHub release with a tag that matches the version (for example, `v8.0.0`).
 
-That's it!
+Publishing the release triggers the [Publish workflow](.github/workflows/publish.yml), which builds the project and publishes it to npm.
 
 ## Contributing
 

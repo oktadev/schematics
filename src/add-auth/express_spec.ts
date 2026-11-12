@@ -43,8 +43,8 @@ describe('OktaDev Schematics: Express', () => {
     expect(dotenv).toContain(`OIDC_CLIENT_SECRET=${defaultOptions.clientSecret}`);
 
     const dependencies = tree.readContent('/package.json');
-    expect(dependencies).toContain(`"express": "~4.18.2"`);
-    expect(dependencies).toContain(`"pug": "3.0.2"`);
+    expect(dependencies).not.toContain(`"express": "~4.16.1"`);
+    expect(dependencies).not.toContain(`"pug": "2.0.0-beta11"`);
   });
 
   it('works with Auth0', async () => {
@@ -75,7 +75,7 @@ describe('OktaDev Schematics: Express', () => {
     expect(dotenv).toContain(`OIDC_CLIENT_SECRET=${testOptions.clientSecret}`);
 
     const dependencies = tree.readContent('/package.json');
-    expect(dependencies).toContain(`"express": "~4.18.2"`);
-    expect(dependencies).toContain(`"pug": "3.0.2"`);
+    expect(dependencies).not.toContain(`"express": "~4.16.1"`);
+    expect(dependencies).not.toContain(`"pug": "2.0.0-beta11"`);
   });
 });

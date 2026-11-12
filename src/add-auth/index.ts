@@ -28,14 +28,12 @@ const REACT_ROUTER_DOM_VERSION = sdkVersions['react-router-dom'];
 const REACT_ROUTER_DOM_TYPES_VERSION = sdkVersions['@types/react-router-dom'];
 const OKTA_REACT_NATIVE_VERSION = sdkVersions['@okta/okta-react-native'];
 const EVENTS_VERSION = sdkVersions['events'];
-const ENZYME_VERSION = sdkVersions['enzyme'];
-const ENZYME_ADAPTER_VERSION = sdkVersions['enzyme-adapter-react-16'];
-const ENZYME_ASYNC_VERSION = sdkVersions['enzyme-async-helpers'];
-const REACT_DOM_VERSION = sdkVersions['react-dom'];
+const RN_TESTING_LIBRARY_VERSION = sdkVersions['@testing-library/react-native'];
+const TEST_RENDERER_VERSION = sdkVersions['test-renderer'];
 const OKTA_VUE_VERSION = sdkVersions['@okta/okta-vue'];
 const IONIC_APPAUTH_VERSION = sdkVersions['ionic-appauth'];
+const IONIC_OPENID_APPAUTH_VERSION = sdkVersions['@openid/appauth'];
 const IONIC_CAPACITOR_BROWSER_VERSION = sdkVersions['@capacitor/browser'];
-const IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION = sdkVersions['@capacitor-community/http'];
 const IONIC_CAPACITOR_PREFERENCES_VERSION = sdkVersions['@capacitor/preferences'];
 const IONIC_CAPACITOR_SECURE_STORAGE_VERSION = sdkVersions['capacitor-secure-storage-plugin'];
 const IONIC_CAPACITOR_SPLASH_SCREEN_VERSION = sdkVersions['@capacitor/splash-screen'];
@@ -79,10 +77,8 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
         dependencies.push({type: NodeDependencyType.Default, version: OKTA_REACT_NATIVE_VERSION, name: '@okta/okta-react-native'});
       }
       dependencies.push({type: NodeDependencyType.Default, version: EVENTS_VERSION, name: 'events'});
-      dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_VERSION, name: 'enzyme'});
-      dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_ADAPTER_VERSION, name: 'enzyme-adapter-react-16'});
-      dependencies.push({type: NodeDependencyType.Dev, version: ENZYME_ASYNC_VERSION, name: 'enzyme-async-helpers'});
-      dependencies.push({type: NodeDependencyType.Dev, version: REACT_DOM_VERSION, name: 'react-dom'});
+      dependencies.push({type: NodeDependencyType.Dev, version: RN_TESTING_LIBRARY_VERSION, name: '@testing-library/react-native'});
+      dependencies.push({type: NodeDependencyType.Dev, version: TEST_RENDERER_VERSION, name: 'test-renderer'});
     } else if (framework === VUE || framework === VUE_TS) {
       if (options.auth0) {
         dependencies.push({type: NodeDependencyType.Default, version: AUTH0_VUE_VERSION, name: '@auth0/auth0-vue'});
@@ -93,8 +89,9 @@ function addPackageJsonDependencies(framework: string, options: any): Rule {
       dependencies.push({type: NodeDependencyType.Dev, version: TS_JEST_VERSION, name: 'ts-jest'});
     } else if (framework === IONIC_ANGULAR) {
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_APPAUTH_VERSION, name: 'ionic-appauth'});
+      // ionic-appauth imports from @openid/appauth/built, which 1.4.0 moved to built/src
+      dependencies.push({type: NodeDependencyType.Default, version: IONIC_OPENID_APPAUTH_VERSION, name: '@openid/appauth'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_BROWSER_VERSION, name: '@capacitor/browser'});
-      dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_COMMUNITY_HTTP_VERSION, name: '@capacitor-community/http'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_PREFERENCES_VERSION, name: '@capacitor/preferences'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_SPLASH_SCREEN_VERSION, name: '@capacitor/splash-screen'});
       dependencies.push({type: NodeDependencyType.Default, version: IONIC_CAPACITOR_SECURE_STORAGE_VERSION, name: 'capacitor-secure-storage-plugin'});
@@ -229,6 +226,15 @@ export function addAuth(options: any): Rule {
           options.style = 'css';
         }
       }
+
+      // Angular 20+ names files without a type suffix (app.ts, class App)
+      const appPath = join(normalize(projectPath), 'src/app');
+      const suffixless = host.exists(join(appPath, 'app.ts'));
+      options.suffix = suffixless ? '' : '.component';
+      options.homeClass = suffixless ? 'Home' : 'HomeComponent';
+      // Keep the providers that ng new adds to app.config.ts
+      const appConfig = host.read(join(appPath, 'app.config.ts'))?.toString() || '';
+      options.errorListeners = appConfig.includes('provideBrowserGlobalErrorListeners');
     }
 
     if (framework == IONIC_ANGULAR) {
@@ -253,11 +259,23 @@ export function addAuth(options: any): Rule {
       if (appModule) {
         let authConfig: string = appModule.toString();
         authConfig = authConfig.replace("import { AppComponent } from './app.component';", `import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http'
+import { provideHttpClient } from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';`);
-        authConfig = authConfig.replace('AppRoutingModule]',
-          `AppRoutingModule, HttpClientModule, AuthModule]`);
+        authConfig = authConfig.replace('AppRoutingModule]', 'AppRoutingModule, AuthModule]');
+        authConfig = authConfig.replace('{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },',
+          `{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideHttpClient(),`);
         host.overwrite('./src/app/app.module.ts', authConfig);
+      }
+
+      // Route to the login, callback, and logout pages from app.routes.ts
+      const appRouting: Buffer | null = host.read('./src/app/app-routing.module.ts');
+      if (appRouting) {
+        const routing = appRouting.toString()
+          .replace(/import \{ PreloadAllModules, RouterModule, Routes \} from '@angular\/router';/,
+            `import { PreloadAllModules, RouterModule } from '@angular/router';\nimport { routes } from './app.routes';`)
+          .replace(/\nconst routes: Routes = \[[\s\S]*?\n\];\n/, '\n');
+        host.overwrite('./src/app/app-routing.module.ts', routing);
       }
 
       // Add new modules to tsconfig.app.json
@@ -305,7 +323,7 @@ import { AuthModule } from './auth/auth.module';`);
         appName = pkgJson.name;
         // add jest config for tests
         pkgJson.jest = {
-          'preset': 'react-native',
+          'preset': '@react-native/jest-preset',
           'automock': false,
           'transformIgnorePatterns': [
             `node_modules/(?!@${options.auth0 ? 'auth0' : 'okta'}|@react-native|react-native)`
@@ -320,9 +338,11 @@ import { AuthModule } from './auth/auth.module';`);
           // Error: Option "tests" is not defined.
         };
         host.overwrite('./package.json', JSON.stringify(pkgJson));
-        // delete the jest.config.js file that comes from react-native init
-        if (host.read('./jest.config.js') != null) {
-          host.delete('./jest.config.js');
+        // delete the files from react-native init that this schematic replaces
+        for (const file of ['./jest.config.js', './App.tsx', './__tests__/App.test.tsx']) {
+          if (host.exists(file)) {
+            host.delete(file);
+          }
         }
       }
 
@@ -361,21 +381,8 @@ import { AuthModule } from './auth/auth.module';`);
 \t\t</dict>
 \t</array>`);
           host.overwrite(`ios/${appName}/Info.plist`, iosURLs);
-
-          // Update Podfile to require iOS 13
-          const podfile: Buffer | null = host.read(`./ios/Podfile`);
-          if (podfile) {
-            const podfileContents = podfile.toString('utf-8')
-                .replace('platform :ios, min_ios_version_supported', 'platform :ios, \'13.0\'');
-            host.overwrite(`ios/Podfile`, podfileContents);
-          }
         }
       }
-
-      // Force npm 6 peer dependencies, otherwise
-      // Could not resolve dependency:
-      // peer react@"^16.0.0-0" from enzyme-adapter-react-16@1.1
-      host.create('.npmrc', 'legacy-peer-deps=true');
     }
 
     if (framework === EXPRESS) {

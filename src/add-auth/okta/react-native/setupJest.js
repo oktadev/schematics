@@ -1,10 +1,5 @@
 // Required to correctly polyfill React-Native
 
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
-
 global.XMLHttpRequest = jest.fn();
 global.fetch = jest.fn();
 global.self = global;
@@ -37,6 +32,9 @@ jest.doMock('react-native', () => {
           introspectIdToken: jest.fn(),
           introspectRefreshToken: jest.fn(),
           refreshTokens: jest.fn(),
+          // required by NativeEventEmitter
+          addListener: jest.fn(),
+          removeListeners: jest.fn(),
         },
       },
     },

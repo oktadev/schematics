@@ -1,28 +1,33 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { Platform } from '@ionic/angular/lazy';
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
+import { AppModule } from './app.module';
 
 describe('AppComponent', () => {
 
-  let platformReadySpy: Promise<void>, platformIsSpy, platformSpy: { ready: any; };
+  let readyCalled: boolean;
 
-  beforeEach(waitForAsync(() => {
-    platformReadySpy = Promise.resolve();
-    platformIsSpy = Promise.resolve();
-    platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy, is: platformIsSpy });
+  beforeEach(async () => {
+    readyCalled = false;
+    const platform = {
+      ready: () => {
+        readyCalled = true;
+        return Promise.resolve('dom');
+      },
+      is: () => false,
+      // NavController subscribes to the back button
+      backButton: { subscribeWithPriority: () => ({ unsubscribe: () => undefined }) },
+    };
 
-    TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      imports: [HttpClientTestingModule, AuthModule],
+    await TestBed.configureTestingModule({
+      imports: [AppModule],
       providers: [
-        { provide: Platform, useValue: platformSpy }
+        { provide: Platform, useValue: platform },
+        provideHttpClientTesting(),
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
-  }));
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -30,10 +35,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should initialize the app', async () => {
+  it('should initialize the app', () => {
     TestBed.createComponent(AppComponent);
-    expect(platformSpy.ready).toHaveBeenCalled();
-    await platformReadySpy;
+    expect(readyCalled).toBe(true);
   });
 
   // TODO: add more tests!
